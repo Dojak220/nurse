@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:nurse/theme/app_theme.dart';
 
 class MainButton extends StatelessWidget {
+  final Widget newPage;
+
   const MainButton({
     Key? key,
+    required this.newPage,
   }) : super(key: key);
 
   @override
@@ -11,7 +14,7 @@ class MainButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () => Navigator.pop(context),
         style: AppTheme.mainButtonStyle(context),
         child: Text(
           "Vacinar",

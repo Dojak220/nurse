@@ -89,7 +89,9 @@ class _HomeState extends State<Home> {
               listView: lastEntriesListView,
               color: CustomColors.cinza,
             ),
-            MainButton(),
+            MainButton(
+              newPage: Vaccination(title: widget.title),
+            ),
           ],
         ),
       ),
