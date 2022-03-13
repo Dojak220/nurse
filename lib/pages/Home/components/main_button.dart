@@ -14,7 +14,11 @@ class MainButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
       child: ElevatedButton(
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => newPage,
+            )),
         style: AppTheme.mainButtonStyle(context),
         child: Text(
           "Vacinar",
