@@ -8,7 +8,7 @@
 // Azul sodalina: #253668
 
 import 'package:flutter/material.dart';
-import 'package:nurse/theme/colors.dart';
+import 'package:nurse/app/theme/colors.dart';
 
 class AppTheme {
   AppTheme._();

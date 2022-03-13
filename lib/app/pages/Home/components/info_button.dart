@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/theme/app_theme.dart';
-import 'package:nurse/theme/colors.dart';
+import 'package:nurse/app/theme/app_theme.dart';
+import 'package:nurse/app/theme/colors.dart';
 
 class InfoButton extends StatelessWidget {
   const InfoButton({

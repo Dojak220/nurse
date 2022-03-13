@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/theme/colors.dart';
+import 'package:nurse/app/theme/colors.dart';
 
 class VaccinationEntryDetails extends StatelessWidget {
   const VaccinationEntryDetails({

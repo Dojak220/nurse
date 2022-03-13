@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/theme/app_theme.dart';
+import 'package:nurse/app/theme/app_theme.dart';
 
 class MainButton extends StatelessWidget {
   final Widget newPage;

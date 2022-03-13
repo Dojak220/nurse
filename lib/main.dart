@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/pages/Home/home.dart';
-import 'package:nurse/theme/app_theme.dart';
+import 'package:nurse/app/pages/Home/home.dart';
+import 'package:nurse/app/theme/app_theme.dart';
 
 void main() {
   runApp(Nurse());
