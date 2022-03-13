@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/pages/Home/_home.dart';
+import 'package:nurse/pages/Home/home.dart';
 import 'package:nurse/theme/app_theme.dart';
 
 void main() {

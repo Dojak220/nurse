@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/pages/Home/entry_card.dart';
-import 'package:nurse/pages/Home/info_button.dart';
-import 'package:nurse/pages/Home/main_button.dart';
-import 'package:nurse/pages/Home/titled_list_view.dart';
-import 'package:nurse/pages/Vaccination/_vaccination.dart';
+import 'package:nurse/pages/Home/components/entry_card.dart';
+import 'package:nurse/pages/Home/components/info_button.dart';
+import 'package:nurse/pages/Home/components/main_button.dart';
+import 'package:nurse/pages/Home/components/titled_list_view.dart';
+import 'package:nurse/pages/VaccinationEntry/vaccination_entry.dart';
 import 'package:nurse/theme/colors.dart';
 
 class Home extends StatefulWidget {
@@ -90,7 +90,7 @@ class _HomeState extends State<Home> {
               color: CustomColors.cinza,
             ),
             MainButton(
-              newPage: Vaccination(title: widget.title),
+              newPage: VaccinationEntry(title: widget.title),
             ),
           ],
         ),
