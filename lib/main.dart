@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:nurse/app/pages/Home/home.dart';
+import 'package:nurse/app/modules/Home/home.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/app/theme/app_theme.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/pages/VaccinationEntry/components/entry_details.dart';
-import 'package:nurse/app/pages/VaccinationEntry/components/form.dart';
+import 'package:nurse/app/modules/VaccinationEntry/components/entry_details.dart';
+import 'package:nurse/app/modules/VaccinationEntry/components/form.dart';
 
 class VaccinationEntry extends StatefulWidget {
   const VaccinationEntry({Key? key, required this.title}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/pages/Home/components/entry_card.dart';
-import 'package:nurse/app/pages/Home/components/info_button.dart';
-import 'package:nurse/app/pages/Home/components/main_button.dart';
-import 'package:nurse/app/pages/Home/components/titled_list_view.dart';
-import 'package:nurse/app/pages/VaccinationEntry/vaccination_entry.dart';
+import 'package:nurse/app/modules/Home/components/entry_card.dart';
+import 'package:nurse/app/modules/Home/components/info_button.dart';
+import 'package:nurse/app/modules/Home/components/main_button.dart';
+import 'package:nurse/app/modules/Home/components/titled_list_view.dart';
+import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry.dart';
 import 'package:nurse/app/theme/colors.dart';
 
 class Home extends StatefulWidget {
