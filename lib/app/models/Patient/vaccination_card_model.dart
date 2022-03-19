@@ -3,7 +3,7 @@ import 'package:nurse/app/models/Vaccination/application_model.dart';
 
 class VaccinationCardModel {
   final int id;
-  final PatientModel patient;
+  final Patient patient;
   final ApplicationModel application;
 
   VaccinationCardModel(

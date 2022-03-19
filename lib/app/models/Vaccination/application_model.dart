@@ -5,7 +5,7 @@ import 'package:nurse/app/models/Vaccination/vaccine_batch_model.dart';
 
 class ApplicationModel {
   final int id;
-  final PatientModel patient;
+  final Patient patient;
   final DateTime applicationDate;
   final ApplierModel applier;
   final VaccineBatchModel vaccineBatch;

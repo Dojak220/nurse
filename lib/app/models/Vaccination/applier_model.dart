@@ -4,7 +4,7 @@ class ApplierModel {
   final String cns;
   final String cpf;
   final String name;
-  final EstablishmentModel establishment;
+  final Establishment establishment;
 
   ApplierModel(
     this.cns,

@@ -4,7 +4,7 @@ class PersonModel {
   final String cpf;
   final String name;
   final DateTime birthDate;
-  final LocalityModel locality;
+  final Locality locality;
   final String gender; //or sex?
   final String motherName;
   final String fatherName;
