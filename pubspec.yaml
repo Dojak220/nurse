@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   sqflite_sqlcipher: ^2.1.0
+  path: ^1.8.0
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +24,7 @@ flutter:
   assets:
     - assets/script_v1.sql
     - assets/images/
+    - .env
 
   fonts:
     - family: Righteous
