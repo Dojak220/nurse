@@ -33,6 +33,9 @@ pubspec.lock
 .pub/
 /build/
 
+# Generated files
+/test/**/*.mocks.dart
+
 # Web related
 lib/generated_plugin_registrant.dart
 
