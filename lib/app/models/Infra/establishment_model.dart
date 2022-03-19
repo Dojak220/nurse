@@ -1,5 +1,5 @@
-import 'package:nurse/app/models/infra/locality_model.dart';
 import 'package:nurse/app/models/generic_model.dart';
+import 'package:nurse/app/models/infra/locality_model.dart';
 
 class Establishment implements GenericModel {
   @override
@@ -20,10 +20,13 @@ class Establishment implements GenericModel {
     if (id <= 0) {
       throw Exception('Establishment id must be greater than 0');
     }
-    if (cnes.length != 7) {
+    if (cnes.trim().length != 7) {
       throw Exception('Establishment cnes must be 7 characters long');
     }
-    if (name.isEmpty) {
+    if (int.tryParse(cnes) == null) {
+      throw Exception('Establishment cnes must be numeric');
+    }
+    if (name.trim().isEmpty) {
       throw Exception('Establishment name must be filled');
     }
   }
@@ -49,5 +52,19 @@ class Establishment implements GenericModel {
   @override
   String toString() {
     return 'Establishment(id: $id, cnes: $cnes, name: $name, locality: $locality)';
+  }
+
+  Establishment copyWith({
+    int? id,
+    String? cnes,
+    String? name,
+    Locality? locality,
+  }) {
+    return Establishment(
+      id: id ?? this.id,
+      cnes: cnes ?? this.cnes,
+      name: name ?? this.name,
+      locality: locality ?? this.locality,
+    );
   }
 }

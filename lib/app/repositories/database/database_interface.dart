@@ -1,14 +1,15 @@
 import 'package:nurse/app/models/generic_model.dart';
+import 'package:nurse/app/repositories/database/database_manager.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
-class RepositoryInterface<T extends GenericModel> {
-  final Database db;
+class DatabaseInterface<T extends GenericModel> {
+  final DatabaseManager dbManager;
   final String tableName;
 
-  RepositoryInterface(this.db, this.tableName);
+  DatabaseInterface(this.dbManager, this.tableName);
 
   Future<int> create(T entity) async {
-    final int result = await db.insert(
+    final int result = await dbManager.db.insert(
       tableName,
       entity.toMap(),
       conflictAlgorithm: ConflictAlgorithm.rollback,
@@ -18,20 +19,24 @@ class RepositoryInterface<T extends GenericModel> {
   }
 
   Future<int> delete(int id) async {
-    final int result = await db.delete(
+    if (id <= 0) {
+      throw Exception('Id must be greater than 0');
+    }
+
+    final int count = await dbManager.db.delete(
       tableName,
       where: 'id = ?',
       whereArgs: [id],
     );
 
-    return result;
+    return count;
   }
 
   Future<T> get<T>(int id, Function fromMapConstructor) async {
     List<Map<String, dynamic>> entityMap;
 
     try {
-      entityMap = await db.query(
+      entityMap = await dbManager.db.query(
         tableName,
         where: 'id = ?',
         whereArgs: [id],
@@ -48,7 +53,8 @@ class RepositoryInterface<T extends GenericModel> {
   }
 
   Future<List<T>> getAll<T>(Function fromMapConstructor) async {
-    final List<Map<String, dynamic>> entities = await db.query(tableName);
+    final List<Map<String, dynamic>> entities =
+        await dbManager.db.query(tableName);
 
     return List<T>.generate(entities.length, (index) {
       return fromMapConstructor(entities[index]);
@@ -56,13 +62,13 @@ class RepositoryInterface<T extends GenericModel> {
   }
 
   Future<int> update(T entity) async {
-    final int result = await db.update(
+    final int count = await dbManager.db.update(
       tableName,
       entity.toMap(),
       where: 'id = ?',
       whereArgs: [entity.id],
     );
 
-    return result;
+    return count;
   }
 }

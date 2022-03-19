@@ -1,14 +1,14 @@
 import 'package:nurse/app/models/infra/establishment_model.dart';
+import 'package:nurse/app/repositories/database/database_manager.dart';
+import 'package:nurse/app/repositories/database/database_interface.dart';
 import 'package:nurse/app/repositories/establishment_repository.dart';
-import 'package:nurse/app/repositories/repository_interface.dart';
-import 'package:sqflite_sqlcipher/sqflite.dart';
 
-class DatabaseEstablishmentRepository extends RepositoryInterface
+class DatabaseEstablishmentRepository extends DatabaseInterface
     implements EstablishmentRepository {
   static const String TABLE = "establishment";
-  final Database db;
+  final DatabaseManager dbManager;
 
-  DatabaseEstablishmentRepository(this.db) : super(db, TABLE);
+  DatabaseEstablishmentRepository(this.dbManager) : super(dbManager, TABLE);
 
   @override
   Future<int> createEstablishment(Establishment establishment) async {
@@ -19,9 +19,9 @@ class DatabaseEstablishmentRepository extends RepositoryInterface
 
   @override
   Future<int> deleteEstablishment(int id) async {
-    final int result = await delete(id);
+    final int count = await delete(id);
 
-    return result;
+    return count;
   }
 
   @override
@@ -45,8 +45,8 @@ class DatabaseEstablishmentRepository extends RepositoryInterface
 
   @override
   Future<int> updateEstablishment(Establishment establishment) async {
-    final int result = await update(establishment);
+    final int count = await update(establishment);
 
-    return result;
+    return count;
   }
 }
