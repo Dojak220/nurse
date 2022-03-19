@@ -1,4 +1,4 @@
-import 'package:nurse/app/models/patient/priority_group_model.dart';
+import 'package:nurse/shared/models/patient/priority_group_model.dart';
 
 class PriorityCategory {
   final int id;

@@ -1,5 +1,5 @@
-import 'package:nurse/app/models/generic_model.dart';
-import 'package:nurse/app/repositories/database/database_manager.dart';
+import 'package:nurse/shared/models/generic_model.dart';
+import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
 class DatabaseInterface<T extends GenericModel> {

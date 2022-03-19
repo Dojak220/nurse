@@ -1,4 +1,4 @@
-import 'package:nurse/app/models/infra/locality_model.dart';
+import 'package:nurse/shared/models/infra/locality_model.dart';
 
 class PersonModel {
   final String cpf;

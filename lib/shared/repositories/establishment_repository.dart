@@ -1,4 +1,4 @@
-import 'package:nurse/app/models/infra/establishment_model.dart';
+import 'package:nurse/shared/models/infra/establishment_model.dart';
 
 abstract class EstablishmentRepository {
   Future<int> createEstablishment(Establishment establishment);

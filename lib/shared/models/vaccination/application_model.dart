@@ -1,7 +1,7 @@
-import 'package:nurse/app/models/infra/campaign_model.dart';
-import 'package:nurse/app/models/patient/patient_model.dart';
-import 'package:nurse/app/models/vaccination/applier_model.dart';
-import 'package:nurse/app/models/vaccination/vaccine_batch_model.dart';
+import 'package:nurse/shared/models/infra/campaign_model.dart';
+import 'package:nurse/shared/models/patient/patient_model.dart';
+import 'package:nurse/shared/models/vaccination/applier_model.dart';
+import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
 
 class ApplicationModel {
   final int id;

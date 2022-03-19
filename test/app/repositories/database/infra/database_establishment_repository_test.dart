@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:nurse/app/models/infra/establishment_model.dart';
-import 'package:nurse/app/models/infra/locality_model.dart';
-import 'package:nurse/app/repositories/database/database_manager.dart';
-import 'package:nurse/app/repositories/database/infra/database_establishment_repository.dart';
+import 'package:nurse/shared/models/infra/establishment_model.dart';
+import 'package:nurse/shared/models/infra/locality_model.dart';
+import 'package:nurse/shared/repositories/database/database_manager.dart';
+import 'package:nurse/shared/repositories/database/infra/database_establishment_repository.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
 import 'database_establishment_repository_test.mocks.dart';
