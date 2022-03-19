@@ -1,4 +1,4 @@
-import 'package:nurse/app/models/Infra/locality_model.dart';
+import 'package:nurse/app/models/infra/locality_model.dart';
 import 'package:nurse/app/models/generic_model.dart';
 
 class Establishment implements GenericModel {

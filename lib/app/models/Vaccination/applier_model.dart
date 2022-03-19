@@ -1,4 +1,4 @@
-import 'package:nurse/app/models/Infra/establishment_model.dart';
+import 'package:nurse/app/models/infra/establishment_model.dart';
 
 class ApplierModel {
   final String cns;

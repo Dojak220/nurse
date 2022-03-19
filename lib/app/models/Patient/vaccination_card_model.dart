@@ -1,5 +1,5 @@
-import 'package:nurse/app/models/Patient/patient_model.dart';
-import 'package:nurse/app/models/Vaccination/application_model.dart';
+import 'package:nurse/app/models/patient/patient_model.dart';
+import 'package:nurse/app/models/vaccination/application_model.dart';
 
 class VaccinationCardModel {
   final int id;

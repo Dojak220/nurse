@@ -1,4 +1,4 @@
-import 'package:nurse/app/models/Vaccination/vaccine_batch_model.dart';
+import 'package:nurse/app/models/vaccination/vaccine_batch_model.dart';
 
 class Vaccine {
   final String sipniCode;

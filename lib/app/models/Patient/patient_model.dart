@@ -1,6 +1,6 @@
-import 'package:nurse/app/models/Infra/locality_model.dart';
-import 'package:nurse/app/models/Patient/priority_group_model.dart';
-import 'package:nurse/app/models/Patient/person_model.dart';
+import 'package:nurse/app/models/infra/locality_model.dart';
+import 'package:nurse/app/models/patient/priority_group_model.dart';
+import 'package:nurse/app/models/patient/person_model.dart';
 
 class Patient extends PersonModel {
   final String cns;
