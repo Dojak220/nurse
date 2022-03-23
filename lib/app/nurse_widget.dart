@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/modules/Home/home.dart';
+import 'package:nurse/app/modules/Home/home_page.dart';
 import 'package:nurse/app/theme/app_theme.dart';
 
 class Nurse extends StatelessWidget {

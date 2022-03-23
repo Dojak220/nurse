@@ -8,14 +8,15 @@ class Establishment implements GenericModel {
   final String name;
   final Locality locality;
 
-  Establishment({
-    required this.id,
-    required this.cnes,
-    required this.name,
-    required this.locality,
-  }) {
+  Establishment(
+    this.id,
+    this.cnes,
+    this.name,
+    this.locality,
+  ) {
     validateEstablishment();
   }
+
   void validateEstablishment() {
     if (id <= 0) {
       throw Exception('Establishment id must be greater than 0');
@@ -42,10 +43,10 @@ class Establishment implements GenericModel {
 
   factory Establishment.fromMap(Map<String, dynamic> map) {
     return Establishment(
-      id: map['id']?.toInt() ?? 0,
-      cnes: map['cnes'] ?? '',
-      name: map['name'] ?? '',
-      locality: Locality.fromMap(map['locality']),
+      map['id'] ?? 0,
+      map['cnes'] ?? '',
+      map['name'] ?? '',
+      map['locality'] ?? Locality.fromMap(map['locality']),
     );
   }
 
@@ -61,10 +62,25 @@ class Establishment implements GenericModel {
     Locality? locality,
   }) {
     return Establishment(
-      id: id ?? this.id,
-      cnes: cnes ?? this.cnes,
-      name: name ?? this.name,
-      locality: locality ?? this.locality,
+      id ?? this.id,
+      cnes ?? this.cnes,
+      name ?? this.name,
+      locality ?? this.locality,
     );
+  }
+
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Establishment &&
+        other.id == id &&
+        other.cnes == cnes &&
+        other.name == name &&
+        other.locality == locality;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^ cnes.hashCode ^ name.hashCode ^ locality.hashCode;
   }
 }

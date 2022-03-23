@@ -29,10 +29,10 @@ void testCreateEstablishment(
   DatabaseEstablishmentRepository repository,
 ) {
   final validEstablishment = Establishment(
-    id: 1,
-    cnes: "1234567",
-    name: "Test",
-    locality: Locality(1, "Nome da localidade", "Brasília", "DF", "IBGECode"),
+    1,
+    "1234567",
+    "Test",
+    Locality(1, "Nome da localidade", "Brasília", "DF", "IBGECode"),
   );
   group('create valid establishment', () {
     setUp(() {
