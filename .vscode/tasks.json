@@ -37,6 +37,24 @@
 			"type": "flutter",
 			"command": "flutter",
 			"args": [
+				"test",
+				"--coverage",
+				"--test-randomize-ordering-seed",
+				"random",
+				"--reporter",
+				"expanded"
+			],
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"label": "flutter test verbose",
+			"problemMatcher": []
+		},
+		{
+			"type": "flutter",
+			"command": "flutter",
+			"args": [
 				"pub",
 				"run",
 				"build_runner",

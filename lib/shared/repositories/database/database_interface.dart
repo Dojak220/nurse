@@ -1,17 +1,16 @@
-import 'package:nurse/shared/models/generic_model.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
-class DatabaseInterface<T extends GenericModel> {
+class DatabaseInterface {
   final DatabaseManager dbManager;
   final String tableName;
 
   DatabaseInterface(this.dbManager, this.tableName);
 
-  Future<int> create(T entity) async {
+  Future<int> create(Map<String, dynamic> entity) async {
     final int result = await dbManager.db.insert(
       tableName,
-      entity.toMap(),
+      entity,
       conflictAlgorithm: ConflictAlgorithm.rollback,
     );
 
@@ -32,41 +31,35 @@ class DatabaseInterface<T extends GenericModel> {
     return count;
   }
 
-  Future<T> get<T>(int id, Function fromMapConstructor) async {
+  Future<Map<String, dynamic>> get(int id) async {
     List<Map<String, dynamic>> entityMap;
 
+    entityMap = await dbManager.db.query(
+      tableName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
     try {
-      entityMap = await dbManager.db.query(
-        tableName,
-        where: 'id = ?',
-        whereArgs: [id],
-      );
-
-      final T entity = entityMap.isNotEmpty
-          ? fromMapConstructor(entityMap.first)
-          : throw Exception('Entity ${T.runtimeType} not found');
-
-      return entity;
+      return entityMap.single;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<List<T>> getAll<T>(Function fromMapConstructor) async {
-    final List<Map<String, dynamic>> entities =
+  Future<List<Map<String, dynamic>>> getAll() async {
+    final List<Map<String, dynamic>> entityMaps =
         await dbManager.db.query(tableName);
 
-    return List<T>.generate(entities.length, (index) {
-      return fromMapConstructor(entities[index]);
-    });
+    return entityMaps;
   }
 
-  Future<int> update(T entity) async {
+  Future<int> update(Map<String, dynamic> entity) async {
     final int count = await dbManager.db.update(
       tableName,
-      entity.toMap(),
+      entity,
       where: 'id = ?',
-      whereArgs: [entity.id],
+      whereArgs: [entity['id']],
     );
 
     return count;
