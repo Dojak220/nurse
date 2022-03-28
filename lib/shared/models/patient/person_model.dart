@@ -1,21 +1,25 @@
+import 'package:nurse/shared/models/generic_model.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
-class PersonModel {
+class Person implements GenericModel {
+  @override
+  final int id;
   final String cpf;
   final String name;
   final DateTime birthDate;
   final Locality locality;
-  final String gender; //or sex?
+  final Gender gender; //or sex?
   final String motherName;
   final String fatherName;
 
-  PersonModel({
+  Person({
+    required this.id,
     required this.cpf,
     required this.name,
     required this.birthDate,
     required this.locality,
-    this.gender = "",
+    this.gender = Gender.NONE,
     this.motherName = "",
     this.fatherName = "",
   }) {
@@ -28,3 +32,5 @@ class PersonModel {
     ]);
   }
 }
+
+enum Gender { FEMALE, MALE, NONE }

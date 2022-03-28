@@ -2,9 +2,13 @@ import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/models/patient/priority_group_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
-class Patient extends PersonModel {
+import '../generic_model.dart';
+
+class Patient extends Person implements GenericModel {
+  @override
+  final int id;
   final String cns;
-  final PriorityGroupModel priorityGroup;
+  final PriorityGroup priorityGroup;
   final MaternalCondition maternalCondition;
 
   Patient({

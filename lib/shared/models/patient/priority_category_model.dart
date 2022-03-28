@@ -2,7 +2,7 @@ import 'package:nurse/shared/models/patient/priority_group_model.dart';
 
 class PriorityCategory {
   final int id;
-  final PriorityGroupModel priorityGroup;
+  final PriorityGroup priorityGroup;
   final String categoryCode;
   final String name;
   final String description;

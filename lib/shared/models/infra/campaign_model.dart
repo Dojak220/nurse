@@ -1,6 +1,6 @@
 import 'package:nurse/shared/models/generic_model.dart';
 
-class CampaignModel implements GenericModel {
+class Campaign implements GenericModel {
   @override
   final int id;
   final String title;
@@ -8,7 +8,7 @@ class CampaignModel implements GenericModel {
   final DateTime startDate;
   final DateTime endDate;
 
-  CampaignModel({
+  Campaign({
     required this.id,
     DateTime? endDate,
     String? description,
@@ -18,7 +18,7 @@ class CampaignModel implements GenericModel {
         this.endDate = endDate ?? startDate.add(Duration(days: 365));
 
   @override
-  Map<String, dynamic> toMap() {
+  Map<String, Object> toMap() {
     return {
       'title': title,
       'description': description,
@@ -27,8 +27,8 @@ class CampaignModel implements GenericModel {
     };
   }
 
-  factory CampaignModel.fromMap(Map<String, dynamic> map) {
-    return CampaignModel(
+  factory Campaign.fromMap(Map<String, dynamic> map) {
+    return Campaign(
       id: map['id'] ?? 0,
       title: map['title'] ?? '',
       description: map['description'] ?? '',

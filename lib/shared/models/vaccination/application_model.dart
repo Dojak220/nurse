@@ -10,7 +10,7 @@ class ApplicationModel {
   final ApplierModel applier;
   final VaccineBatchModel vaccineBatch;
   final VaccineDose vaccineDose;
-  final CampaignModel campaign;
+  final Campaign campaign;
   final DateTime dueDate;
 
   ApplicationModel(
