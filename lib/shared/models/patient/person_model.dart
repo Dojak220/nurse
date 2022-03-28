@@ -31,6 +31,60 @@ class Person implements GenericModel {
       ValidationPair(ValidatorType.BirthDate, birthDate),
     ]);
   }
+
+  @override
+  Map<String, Object> toMap() {
+    return {
+      'id': id,
+      'cpf': cpf,
+      'name': name,
+      'birthDate': birthDate.millisecondsSinceEpoch,
+      'locality': locality.toMap(),
+      'gender': gender,
+      'motherName': motherName,
+      'fatherName': fatherName,
+    };
+  }
+
+  factory Person.fromMap(Map<String, dynamic> map) {
+    return Person(
+      id: map['id']?.toInt() ?? 0,
+      cpf: map['cpf']?.toInt() ?? 0,
+      name: map['name'] ?? '',
+      birthDate: DateTime.fromMillisecondsSinceEpoch(map['birthDate']),
+      locality: Locality.fromMap(map['locality']),
+      gender: map['gender'] ?? '',
+      motherName: map['motherName'] ?? '',
+      fatherName: map['fatherName'] ?? '',
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Person &&
+        other.id == id &&
+        other.cpf == cpf &&
+        other.name == name &&
+        other.birthDate == birthDate &&
+        other.locality == locality &&
+        other.gender == gender &&
+        other.motherName == motherName &&
+        other.fatherName == fatherName;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        cpf.hashCode ^
+        name.hashCode ^
+        birthDate.hashCode ^
+        locality.hashCode ^
+        gender.hashCode ^
+        motherName.hashCode ^
+        fatherName.hashCode;
+  }
 }
 
 enum Gender { FEMALE, MALE, NONE }
