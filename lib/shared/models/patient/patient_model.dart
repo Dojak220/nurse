@@ -1,6 +1,6 @@
 import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/models/patient/priority_group_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
+import 'package:nurse/shared/utils/validator.dart';
 
 class Patient extends PersonModel {
   final String cns;
@@ -19,14 +19,10 @@ class Patient extends PersonModel {
     String motherName = "",
     String fatherName = "",
   }) : super(
-          cpf: cpf,
-          name: name,
-          birthDate: birthDate,
-          locality: locality,
-          gender: gender,
-          motherName: motherName,
-          fatherName: fatherName,
-        );
+        ) {
+    Validator.validate(ValidatorType.Id, id);
+    Validator.validate(ValidatorType.CNS, cns);
+  }
 }
 
 enum MaternalCondition { NENHUM, GESTANTE, PUERPERA }

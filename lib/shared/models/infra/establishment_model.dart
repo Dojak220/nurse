@@ -1,5 +1,6 @@
 import 'package:nurse/shared/models/generic_model.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
+import 'package:nurse/shared/utils/validator.dart';
 
 class Establishment implements GenericModel {
   @override
@@ -14,21 +15,19 @@ class Establishment implements GenericModel {
     this.name,
     this.locality,
   ) {
+    /// TODO: Add validation below to Validator class.
     validateEstablishment();
   }
 
   void validateEstablishment() {
-    if (id <= 0) {
-      throw Exception('Establishment id must be greater than 0');
-    }
+    Validator.validate(ValidatorType.Id, id);
+    Validator.validate(ValidatorType.String, name);
+
     if (cnes.trim().length != 7) {
       throw Exception('Establishment cnes must be 7 characters long');
     }
     if (int.tryParse(cnes) == null) {
       throw Exception('Establishment cnes must be numeric');
-    }
-    if (name.trim().isEmpty) {
-      throw Exception('Establishment name must be filled');
     }
   }
 

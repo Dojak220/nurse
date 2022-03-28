@@ -1,4 +1,5 @@
 import 'package:nurse/shared/models/generic_model.dart';
+import 'package:nurse/shared/utils/validator.dart';
 
 class Locality implements GenericModel {
   @override
@@ -19,22 +20,21 @@ class Locality implements GenericModel {
   }
 
   void validateLocality() {
-    if (id <= 0) {
-      throw Exception('Locality id must be greater than 0');
-    }
-
-    if (name.trim().isEmpty) {
-      throw Exception('Locality name must be filled');
-    }
-
-    if (city.trim().isEmpty) {
-      throw Exception('Locality city must be filled');
-    }
-
-    if (state.trim().isEmpty) {
-      throw Exception('Locality state must be filled');
-    }
+    Validator.validateAll(
+      [
+        ValidationPair(ValidatorType.Id, id),
+        ValidationPair(ValidatorType.String, name),
+        ValidationPair(ValidatorType.String, city),
+        ValidationPair(ValidatorType.String, state),
+        ValidationPair(ValidatorType.String, ibgeCode),
+      ],
+    );
   }
+
+
+
+
+
 
   Map<String, dynamic> toMap() {
     return {
