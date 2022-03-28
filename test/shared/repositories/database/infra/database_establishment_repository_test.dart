@@ -21,16 +21,15 @@ void main() {
     when(dbManager.db).thenReturn(db);
   });
 
-  testCreateEstablishment(db, dbManager, repository);
-  testDeleteEstablishment(db, dbManager, repository);
-  testGetEstablishment(db, dbManager, repository);
-  testGetEstablishments(db, dbManager, repository);
-  testUpdateEstablishment(db, dbManager, repository);
+  testCreateEstablishment(db, repository);
+  testDeleteEstablishment(db, repository);
+  testGetEstablishment(db, repository);
+  testGetEstablishments(db, repository);
+  testUpdateEstablishment(db, repository);
 }
 
 void testCreateEstablishment(
   MockDatabase db,
-  MockDatabaseManager dbManager,
   DatabaseEstablishmentRepository repository,
 ) {
   group("createEstablishment function:", () {
@@ -52,7 +51,7 @@ void testCreateEstablishment(
 
     group('try to create a valid establishment', () {
       setUp(() {
-        when(db.insert(any, any,
+        when(db.insert(DatabaseEstablishmentRepository.TABLE, any,
                 conflictAlgorithm: anyNamed("conflictAlgorithm")))
             .thenAnswer((_) => Future.value(1));
       });
@@ -153,14 +152,13 @@ void testCreateEstablishment(
           ),
           throwsException,
         );
-      }, skip: true);
+      });
     });
   });
 }
 
 void testDeleteEstablishment(
   MockDatabase db,
-  MockDatabaseManager dbManager,
   DatabaseEstablishmentRepository repository,
 ) {
   group("deleteEstablishment function:", () {
@@ -219,7 +217,6 @@ void testDeleteEstablishment(
 
 void testGetEstablishment(
   MockDatabase db,
-  MockDatabaseManager dbManager,
   DatabaseEstablishmentRepository repository,
 ) {
   group("getEstablishment function:", () {
@@ -247,10 +244,10 @@ void testGetEstablishment(
           whereArgs: [validEstablishmentId],
         )).thenAnswer((_) => Future.value([
               {
-                "id": validEstablishmentId,
-                "cnes": "1234567",
-                "name": "Test",
-                "locality": validLocalityId,
+                "id": expectedEstablishment.id,
+                "cnes": expectedEstablishment.cnes,
+                "name": expectedEstablishment.name,
+                "locality": expectedEstablishment.locality.id,
               }
             ]));
         when(db.query(
@@ -259,11 +256,11 @@ void testGetEstablishment(
           whereArgs: [validLocalityId],
         )).thenAnswer((_) => Future.value([
               {
-                "id": validLocalityId,
-                "name": "Local",
-                "city": "Brasília",
-                "state": "DF",
-                "ibgeCode": "IBGECode",
+                "id": expectedLocality.id,
+                "name": expectedLocality.name,
+                "city": expectedLocality.city,
+                "state": expectedLocality.state,
+                "ibgeCode": expectedLocality.ibgeCode,
               }
             ]));
       });
@@ -312,7 +309,6 @@ void testGetEstablishment(
 
 void testGetEstablishments(
   MockDatabase db,
-  MockDatabaseManager dbManager,
   DatabaseEstablishmentRepository repository,
 ) {
   group("getEstablishments function:", () {
@@ -321,21 +317,21 @@ void testGetEstablishments(
     final expectedLocalities = [
       Locality(
         validLocalityId,
-        "Local1",
+        "Primeiro Local",
         "Brasília",
         "DF",
         "IBGECode",
       ),
       Locality(
         validLocalityId + 1,
-        "Local2",
+        "Segundo Local",
         "Brasília",
         "DF",
         "IBGECode",
       ),
       Locality(
         validLocalityId + 2,
-        "Local3",
+        "Terceiro Local",
         "Brasília",
         "DF",
         "IBGECode",
@@ -351,7 +347,7 @@ void testGetEstablishments(
       Establishment(
         validEstablishmentId + 1,
         "1234568",
-        "Test2",
+        "Segundo Estabelecimento",
         expectedLocalities[1],
       ),
     ];
@@ -362,41 +358,41 @@ void testGetEstablishments(
           DatabaseEstablishmentRepository.TABLE,
         )).thenAnswer((_) => Future.value([
               {
-                "id": validEstablishmentId,
-                "cnes": "1234567",
-                "name": "Test",
-                "locality": validLocalityId,
+                "id": expectedEstablishments[0].id,
+                "cnes": expectedEstablishments[0].cnes,
+                "name": expectedEstablishments[0].name,
+                "locality": expectedEstablishments[0].locality.id,
               },
               {
-                "id": validEstablishmentId + 1,
-                "cnes": "1234568",
-                "name": "Test2",
-                "locality": validLocalityId + 1,
+                "id": expectedEstablishments[1].id,
+                "cnes": expectedEstablishments[1].cnes,
+                "name": expectedEstablishments[1].name,
+                "locality": expectedEstablishments[1].locality.id,
               },
             ]));
         when(db.query(
           DatabaseLocalityRepository.TABLE,
         )).thenAnswer((_) => Future.value([
               {
-                "id": validLocalityId,
-                "name": "Local1",
-                "city": "Brasília",
-                "state": "DF",
-                "ibgeCode": "IBGECode",
+                "id": expectedLocalities[0].id,
+                "name": expectedLocalities[0].name,
+                "city": expectedLocalities[0].city,
+                "state": expectedLocalities[0].state,
+                "ibgeCode": expectedLocalities[0].ibgeCode,
               },
               {
-                "id": validLocalityId + 1,
-                "name": "Local2",
-                "city": "Brasília",
-                "state": "DF",
-                "ibgeCode": "IBGECode",
+                "id": expectedLocalities[1].id,
+                "name": expectedLocalities[1].name,
+                "city": expectedLocalities[1].city,
+                "state": expectedLocalities[1].state,
+                "ibgeCode": expectedLocalities[1].ibgeCode,
               },
               {
-                "id": validLocalityId + 2,
-                "name": "Local3",
-                "city": "Brasília",
-                "state": "DF",
-                "ibgeCode": "IBGECode",
+                "id": expectedLocalities[2].id,
+                "name": expectedLocalities[2].name,
+                "city": expectedLocalities[2].city,
+                "state": expectedLocalities[2].state,
+                "ibgeCode": expectedLocalities[2].ibgeCode,
               },
             ]));
       });
@@ -430,7 +426,6 @@ void testGetEstablishments(
 
 void testUpdateEstablishment(
   MockDatabase db,
-  MockDatabaseManager dbManager,
   DatabaseEstablishmentRepository repository,
 ) {
   group("updateEstablishment function:", () {
@@ -557,7 +552,7 @@ void testUpdateEstablishment(
           ),
           throwsException,
         );
-      }, skip: true);
+      });
     });
   });
 }
