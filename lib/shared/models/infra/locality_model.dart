@@ -9,13 +9,13 @@ class Locality implements GenericModel {
   final String state;
   final String ibgeCode;
 
-  Locality(
-    this.id,
-    this.name,
-    this.city,
-    this.state,
-    this.ibgeCode,
-  ) {
+  Locality({
+    required this.id,
+    required this.name,
+    required this.city,
+    required this.state,
+    required this.ibgeCode,
+  }) {
     validateLocality();
   }
 
@@ -31,6 +31,22 @@ class Locality implements GenericModel {
     );
   }
 
+  Locality copyWith({
+    int? id,
+    String? name,
+    String? city,
+    String? state,
+    String? ibgeCode,
+  }) {
+    return Locality(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      city: city ?? this.city,
+      state: state ?? this.state,
+      ibgeCode: ibgeCode ?? this.ibgeCode,
+    );
+  }
+
   Map<String, Object> toMap() {
     return {
       'id': id,
@@ -43,17 +59,12 @@ class Locality implements GenericModel {
 
   factory Locality.fromMap(Map<String, dynamic> map) {
     return Locality(
-      map['id'] ?? 0,
-      map['name'] ?? '',
-      map['city'] ?? '',
-      map['state'] ?? '',
-      map['ibgeCode'] ?? '',
+      id: map['id'] ?? 0,
+      name: map['name'] ?? '',
+      city: map['city'] ?? '',
+      state: map['state'] ?? '',
+      ibgeCode: map['ibgeCode'] ?? '',
     );
-  }
-
-  @override
-  String toString() {
-    return 'Locality(id: $id, name: $name, city: $city, state: $state, ibgeCode: $ibgeCode)';
   }
 
   @override
@@ -75,21 +86,5 @@ class Locality implements GenericModel {
         city.hashCode ^
         state.hashCode ^
         ibgeCode.hashCode;
-  }
-
-  Locality copyWith({
-    int? id,
-    String? name,
-    String? city,
-    String? state,
-    String? ibgeCode,
-  }) {
-    return Locality(
-      id ?? this.id,
-      name ?? this.name,
-      city ?? this.city,
-      state ?? this.state,
-      ibgeCode ?? this.ibgeCode,
-    );
   }
 }

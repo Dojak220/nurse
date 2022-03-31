@@ -33,6 +33,28 @@ class Person implements GenericModel {
     ]);
   }
 
+  Person copyWith({
+    int? id,
+    String? cpf,
+    String? name,
+    DateTime? birthDate,
+    Locality? locality,
+    Gender? gender,
+    String? motherName,
+    String? fatherName,
+  }) {
+    return Person(
+      id: id ?? this.id,
+      cpf: cpf ?? this.cpf,
+      name: name ?? this.name,
+      birthDate: birthDate ?? this.birthDate,
+      locality: locality ?? this.locality,
+      gender: gender ?? this.gender,
+      motherName: motherName ?? this.motherName,
+      fatherName: fatherName ?? this.fatherName,
+    );
+  }
+
   @override
   Map<String, Object> toMap() {
     return {

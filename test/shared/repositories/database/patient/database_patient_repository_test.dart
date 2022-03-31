@@ -40,17 +40,17 @@ void testCreatePatient(
 
     final expectedPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
-      groupCode: "",
+      groupCode: "Pessoas com mais de 60 anos",
       name: "",
       description: "",
     );
 
     final expectedLocality = Locality(
-      validLocalityId,
-      "Local",
-      "Brasília",
-      "DF",
-      "IBGECode",
+      id: validLocalityId,
+      name: "Local",
+      city: "Brasília",
+      state: "DF",
+      ibgeCode: "1234567",
     );
 
     final validPatient = Patient(
@@ -82,81 +82,13 @@ void testCreatePatient(
 
         expect(createdId, 1);
       });
-    });
 
-    group('try to create invalid patient', () {
-      test("should throw exception if id is 0", () async {
-        expect(
-          () async => await repository.createPatient(
-            validPatient.copyWith(id: 0),
-          ),
-          throwsException,
-          reason: "it's not possible to create an patient with id 0",
-        );
-      });
-
-      test("should throw exception if id is negative", () async {
-        expect(
-          () async => await repository.createPatient(
-            validPatient.copyWith(id: -1),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if cns length != 15", () async {
-        expect(
-          () async => await repository.createPatient(
-            validPatient.copyWith(cns: "12345678901234"),
-          ),
-          throwsException,
+      test("should create a new patient entry and return its id", () async {
+        final createdId = await repository.createPatient(
+          validPatient.copyWith(cns: "856359713320003"),
         );
 
-        expect(
-          () async => await repository.createPatient(
-            validPatient.copyWith(cns: " 2345678901234 "),
-          ),
-          throwsException,
-        );
-
-        expect(
-          () async => await repository.createPatient(
-            validPatient.copyWith(cns: "1234567890123456"),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if cns has no numeric characters", () async {
-        expect(
-          () async => await repository.createPatient(
-            validPatient.copyWith(cns: "12345678901234A"),
-          ),
-          throwsException,
-        );
-
-        expect(
-          () async => await repository.createPatient(
-            validPatient.copyWith(cns: "12 45 7890 2 45"),
-          ),
-          throwsException,
-        );
-
-        expect(
-          () async => await repository.createPatient(
-            validPatient.copyWith(cns: "1-3/%6789_12+4*"),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if cns is 0 * 15", () async {
-        expect(
-          () async => await repository.createPatient(
-            validPatient.copyWith(cns: "0" * 15),
-          ),
-          throwsException,
-        );
+        expect(createdId, 1);
       });
     });
   });
@@ -234,7 +166,7 @@ void testDeletePatient(
 //       "Local",
 //       "Brasília",
 //       "DF",
-//       "IBGECode",
+//       "1234567",
 //     );
 //     final expectedPatient = Patient(
 //       validPatientId,
@@ -267,7 +199,7 @@ void testDeletePatient(
 //                 "name": "Local",
 //                 "city": "Brasília",
 //                 "state": "DF",
-//                 "ibgeCode": "IBGECode",
+//                 "ibgeCode": "1234567",
 //               }
 //             ]));
 //       });
@@ -328,21 +260,21 @@ void testDeletePatient(
 //         "Local1",
 //         "Brasília",
 //         "DF",
-//         "IBGECode",
+//         "1234567",
 //       ),
 //       Locality(
 //         validLocalityId + 1,
 //         "Local2",
 //         "Brasília",
 //         "DF",
-//         "IBGECode",
+//         "1234567",
 //       ),
 //       Locality(
 //         validLocalityId + 2,
 //         "Local3",
 //         "Brasília",
 //         "DF",
-//         "IBGECode",
+//         "1234567",
 //       ),
 //     ];
 //     final expectedPatients = [
@@ -386,21 +318,21 @@ void testDeletePatient(
 //                 "name": "Local1",
 //                 "city": "Brasília",
 //                 "state": "DF",
-//                 "ibgeCode": "IBGECode",
+//                 "ibgeCode": "1234567",
 //               },
 //               {
 //                 "id": validLocalityId + 1,
 //                 "name": "Local2",
 //                 "city": "Brasília",
 //                 "state": "DF",
-//                 "ibgeCode": "IBGECode",
+//                 "ibgeCode": "1234567",
 //               },
 //               {
 //                 "id": validLocalityId + 2,
 //                 "name": "Local3",
 //                 "city": "Brasília",
 //                 "state": "DF",
-//                 "ibgeCode": "IBGECode",
+//                 "ibgeCode": "1234567",
 //               },
 //             ]));
 //       });
@@ -445,7 +377,7 @@ void testDeletePatient(
 //       "Local",
 //       "Brasília",
 //       "DF",
-//       "IBGECode",
+//       "1234567",
 //     );
 //     final validPatient = Patient(
 //       validPatientId,

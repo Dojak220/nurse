@@ -4,29 +4,21 @@ import 'package:nurse/shared/utils/validator.dart';
 
 import '../generic_model.dart';
 
-class Patient extends Person implements GenericModel {
+class Patient implements GenericModel {
   @override
   final int id;
   final String cns;
   final PriorityGroup priorityGroup;
   final MaternalCondition maternalCondition;
+  final Person person;
 
   Patient({
     required this.id,
     required this.cns,
     required this.priorityGroup,
     required this.maternalCondition,
-    required Person person,
-  }) : super(
-          id: id,
-          cpf: person.cpf,
-          name: person.name,
-          birthDate: person.birthDate,
-          locality: person.locality,
-          gender: person.gender,
-          motherName: person.motherName,
-          fatherName: person.fatherName,
-        ) {
+    required this.person,
+  }) {
     Validator.validate(ValidatorType.Id, id);
     Validator.validate(ValidatorType.CNS, cns);
   }
@@ -43,16 +35,7 @@ class Patient extends Person implements GenericModel {
       cns: cns ?? this.cns,
       priorityGroup: priorityGroup ?? this.priorityGroup,
       maternalCondition: maternalCondition ?? this.maternalCondition,
-      person: Person(
-        id: person?.id ?? this.id,
-        cpf: person?.cpf ?? this.cpf,
-        name: person?.name ?? this.name,
-        birthDate: person?.birthDate ?? this.birthDate,
-        locality: person?.locality ?? this.locality,
-        gender: person?.gender ?? this.gender,
-        motherName: person?.motherName ?? this.motherName,
-        fatherName: person?.fatherName ?? this.fatherName,
-      ),
+      person: person ?? this.person,
     );
   }
 
@@ -63,14 +46,14 @@ class Patient extends Person implements GenericModel {
       'cns': cns,
       'priorityGroup': priorityGroup.toMap(),
       'maternalCondition': maternalCondition.name,
-      'person': super.toMap(),
+      'person': person.toMap(),
     };
   }
 
   factory Patient.fromMap(Map<String, dynamic> map) {
     return Patient(
       id: map['id']?.toInt() ?? 0,
-      cns: map['cns']?.toInt() ?? 0,
+      cns: map['cns'] ?? "",
       priorityGroup: PriorityGroup.fromMap(map['priorityGroup']),
       maternalCondition:
           MaternalConditionExtension.fromString(map['maternalCondition']),
@@ -87,13 +70,7 @@ class Patient extends Person implements GenericModel {
         other.cns == cns &&
         other.priorityGroup == priorityGroup &&
         other.maternalCondition == maternalCondition &&
-        other.cpf == cpf &&
-        other.name == name &&
-        other.birthDate == birthDate &&
-        other.locality == locality &&
-        other.gender == gender &&
-        other.motherName == motherName &&
-        other.fatherName == fatherName;
+        other.person == person;
   }
 
   @override
@@ -102,13 +79,7 @@ class Patient extends Person implements GenericModel {
         cns.hashCode ^
         priorityGroup.hashCode ^
         maternalCondition.hashCode ^
-        cpf.hashCode ^
-        name.hashCode ^
-        birthDate.hashCode ^
-        locality.hashCode ^
-        gender.hashCode ^
-        motherName.hashCode ^
-        fatherName.hashCode;
+        person.hashCode;
   }
 }
 

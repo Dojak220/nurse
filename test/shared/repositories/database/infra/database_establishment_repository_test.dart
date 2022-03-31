@@ -36,11 +36,11 @@ void testCreateEstablishment(
     final int validEstablishmentId = 1;
     final int validLocalityId = 1;
     final expectedLocality = Locality(
-      validLocalityId,
-      "Local",
-      "Brasília",
-      "DF",
-      "IBGECode",
+      id: validLocalityId,
+      name: "Local",
+      city: "Brasília",
+      state: "DF",
+      ibgeCode: "1234567",
     );
     final validEstablishment = Establishment(
       validEstablishmentId,
@@ -223,11 +223,11 @@ void testGetEstablishment(
     final int validEstablishmentId = 1;
     final int validLocalityId = 1;
     final expectedLocality = Locality(
-      validLocalityId,
-      "Local",
-      "Brasília",
-      "DF",
-      "IBGECode",
+      id: validLocalityId,
+      name: "Local",
+      city: "Brasília",
+      state: "DF",
+      ibgeCode: "1234567",
     );
     final expectedEstablishment = Establishment(
       validEstablishmentId,
@@ -316,25 +316,25 @@ void testGetEstablishments(
     final int validEstablishmentId = 1;
     final expectedLocalities = [
       Locality(
-        validLocalityId,
-        "Primeiro Local",
-        "Brasília",
-        "DF",
-        "IBGECode",
+        id: validLocalityId,
+        name: "Primeiro Local",
+        city: "Brasília",
+        state: "DF",
+        ibgeCode: "1234567",
       ),
       Locality(
-        validLocalityId + 1,
-        "Segundo Local",
-        "Brasília",
-        "DF",
-        "IBGECode",
+        id: validLocalityId + 1,
+        name: "Segundo Local",
+        city: "Brasília",
+        state: "DF",
+        ibgeCode: "1234567",
       ),
       Locality(
-        validLocalityId + 2,
-        "Terceiro Local",
-        "Brasília",
-        "DF",
-        "IBGECode",
+        id: validLocalityId + 2,
+        name: "Terceiro Local",
+        city: "Brasília",
+        state: "DF",
+        ibgeCode: "1234567",
       ),
     ];
     final expectedEstablishments = [
@@ -432,11 +432,11 @@ void testUpdateEstablishment(
     final int validEstablishmentId = 1;
     final int validLocalityId = 1;
     final expectedLocality = Locality(
-      validLocalityId,
-      "Local",
-      "Brasília",
-      "DF",
-      "IBGECode",
+      id: validLocalityId,
+      name: "Local",
+      city: "Brasília",
+      state: "DF",
+      ibgeCode: "1234567",
     );
     final validEstablishment = Establishment(
       validEstablishmentId,

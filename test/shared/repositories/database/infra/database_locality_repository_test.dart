@@ -33,11 +33,11 @@ void testCreateLocality(
   group("createLocality function:", () {
     final int validLocalityId = 1;
     final validLocality = Locality(
-      validLocalityId,
-      "Local",
-      "Brasília",
-      "DF",
-      "IBGECode",
+      id: validLocalityId,
+      name: "Local",
+      city: "Brasília",
+      state: "DF",
+      ibgeCode: "1234567",
     );
 
     group('try to create a valid locality', () {
@@ -51,117 +51,6 @@ void testCreateLocality(
         final createdId = await repository.createLocality(validLocality);
 
         expect(createdId, 1);
-      });
-    });
-
-    group('try to create invalid locality', () {
-      test("should throw exception if id is 0", () async {
-        expect(
-          () async => await repository.createLocality(
-            validLocality.copyWith(id: 0),
-          ),
-          throwsException,
-          reason: "it's not possible to create an locality with id 0",
-        );
-      });
-
-      test("should throw exception if id is negative", () async {
-        expect(
-          () async => await repository.createLocality(
-            validLocality.copyWith(id: -1),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name is empty", () async {
-        expect(
-          () async => await repository.createLocality(
-            validLocality.copyWith(name: ""),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name has only spaces", () async {
-        expect(
-          () async => await repository.createLocality(
-            validLocality.copyWith(name: "   "),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name has weird characters", () async {
-        expect(
-          () async => await repository.createLocality(
-            validLocality.copyWith(
-              name:
-                  "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
-            ),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if city is empty", () async {
-        expect(
-          () async => await repository.createLocality(
-            validLocality.copyWith(city: ""),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if city has only spaces", () async {
-        expect(
-          () async => await repository.createLocality(
-            validLocality.copyWith(city: "   "),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if city has weird characters", () async {
-        expect(
-          () async => await repository.createLocality(
-            validLocality.copyWith(
-              city:
-                  "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
-            ),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if state is empty", () async {
-        expect(
-          () async => await repository.createLocality(
-            validLocality.copyWith(state: ""),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if state has only spaces", () async {
-        expect(
-          () async => await repository.createLocality(
-            validLocality.copyWith(state: "   "),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if state has weird characters", () async {
-        expect(
-          () async => await repository.createLocality(
-            validLocality.copyWith(
-              state:
-                  "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
-            ),
-          ),
-          throwsException,
-        );
       });
     });
   });
@@ -184,7 +73,7 @@ void testDeleteLocality(
         )).thenAnswer((_) => Future.value(1));
       });
 
-      test("should delete an locality entry and returns 1", () async {
+      test("should delete a locality entry and returns 1", () async {
         final deletedCount = await repository.deleteLocality(validLocalityId);
 
         expect(deletedCount, 1);
@@ -198,20 +87,6 @@ void testDeleteLocality(
           where: anyNamed("where"),
           whereArgs: [invalidLocalityId],
         )).thenAnswer((_) => Future.value(0));
-      });
-
-      test("should throw exception if id is 0", () async {
-        expect(
-          () async => await repository.deleteLocality(0),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if id is negative", () async {
-        expect(
-          () async => await repository.deleteLocality(-1),
-          throwsException,
-        );
       });
 
       test("should return 0 if id doesn't exist", () async {
@@ -230,11 +105,11 @@ void testGetLocality(
   group("getLocality function:", () {
     final int validLocalityId = 1;
     final expectedLocality = Locality(
-      validLocalityId,
-      "Local",
-      "Brasília",
-      "DF",
-      "IBGECode",
+      id: validLocalityId,
+      name: "Local",
+      city: "Brasília",
+      state: "DF",
+      ibgeCode: "1234567",
     );
 
     group('try to get valid locality', () {
@@ -268,22 +143,8 @@ void testGetLocality(
         when(db.query(
           DatabaseLocalityRepository.TABLE,
           where: anyNamed("where"),
-          whereArgs: [anyOf(-1, 0, 2)],
+          whereArgs: [2],
         )).thenAnswer((_) => Future.value([]));
-      });
-
-      test("should throw exception if id is 0", () async {
-        expect(
-          () async => await repository.getLocalityById(0),
-          throwsStateError,
-        );
-      });
-
-      test("should throw exception if id is negative", () async {
-        expect(
-          () async => await repository.getLocalityById(-1),
-          throwsStateError,
-        );
       });
 
       test("should throw exception if id doesn't exist", () async {
@@ -304,25 +165,25 @@ void testGetLocalities(
     final int validLocalityId = 1;
     final expectedLocalities = [
       Locality(
-        validLocalityId,
-        "Primeiro Local",
-        "Brasília",
-        "DF",
-        "IBGECode",
+        id: validLocalityId,
+        name: "Primeiro Local",
+        city: "Brasília",
+        state: "DF",
+        ibgeCode: "1234567",
       ),
       Locality(
-        validLocalityId + 1,
-        "Segundo Local",
-        "Brasília",
-        "DF",
-        "IBGECode",
+        id: validLocalityId + 1,
+        name: "Segundo Local",
+        city: "Brasília",
+        state: "DF",
+        ibgeCode: "1234567",
       ),
       Locality(
-        validLocalityId + 2,
-        "Terceiro Local",
-        "Brasília",
-        "DF",
-        "IBGECode",
+        id: validLocalityId + 2,
+        name: "Terceiro Local",
+        city: "Brasília",
+        state: "DF",
+        ibgeCode: "1234567",
       ),
     ];
 
@@ -388,12 +249,13 @@ void testUpdateLocality(
 ) {
   group("updateLocality function:", () {
     final int validLocalityId = 1;
+    final int invalidLocalityId = 2;
     final validLocality = Locality(
-      validLocalityId,
-      "Local",
-      "Brasília",
-      "DF",
-      "IBGECode",
+      id: validLocalityId,
+      name: "Local",
+      city: "Brasília",
+      state: "DF",
+      ibgeCode: "1234567",
     );
 
     group('try to update a valid locality', () {
@@ -415,145 +277,24 @@ void testUpdateLocality(
       });
     });
 
-    group('try to update with invalid locality', () {
-      test("should throw exception if id is 0", () async {
-        expect(
-          () async => await repository.updateLocality(
-            validLocality.copyWith(id: 0),
-          ),
-          throwsException,
-          reason: "there is no locality with id 0",
-        );
+    group('try to update invalid locality', () {
+      setUp(() {
+        when(db.update(
+          DatabaseLocalityRepository.TABLE,
+          validLocality
+              .copyWith(id: invalidLocalityId, name: "Updated")
+              .toMap(),
+          where: anyNamed("where"),
+          whereArgs: [invalidLocalityId],
+        )).thenAnswer((_) => Future.value(0));
       });
 
-      test("should throw exception if id is negative", () async {
-        expect(
-          () async => await repository.updateLocality(
-            validLocality.copyWith(id: -1),
-          ),
-          throwsException,
-          reason: "there is no locality with negative id",
+      test("should return 0 if id doesn't exist", () async {
+        final updatedCount = await repository.updateLocality(
+          validLocality.copyWith(id: invalidLocalityId, name: "Updated"),
         );
-      });
 
-      test("should throw exception if name is empty", () async {
-        expect(
-          () async => await repository.updateLocality(
-            validLocality.copyWith(name: ""),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name has only spaces", () async {
-        expect(
-          () async => await repository.updateLocality(
-            validLocality.copyWith(name: "   "),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name has weird characters", () async {
-        expect(
-          () async => await repository.updateLocality(
-            validLocality.copyWith(
-              name:
-                  "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
-            ),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if city is empty", () async {
-        expect(
-          () async => await repository.updateLocality(
-            validLocality.copyWith(city: ""),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if city has only spaces", () async {
-        expect(
-          () async => await repository.updateLocality(
-            validLocality.copyWith(city: "   "),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if city has weird characters", () async {
-        expect(
-          () async => await repository.updateLocality(
-            validLocality.copyWith(
-              city:
-                  "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
-            ),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if state is empty", () async {
-        expect(
-          () async => await repository.updateLocality(
-            validLocality.copyWith(state: ""),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if state has only spaces", () async {
-        expect(
-          () async => await repository.updateLocality(
-            validLocality.copyWith(state: "   "),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if state has weird characters", () async {
-        expect(
-          () async => await repository.updateLocality(
-            validLocality.copyWith(
-              state:
-                  "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
-            ),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if ibgeCode is empty", () async {
-        expect(
-          () async => await repository.updateLocality(
-            validLocality.copyWith(ibgeCode: ""),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if ibgeCode has only spaces", () async {
-        expect(
-          () async => await repository.updateLocality(
-            validLocality.copyWith(ibgeCode: "   "),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if ibgeCode has weird characters", () async {
-        expect(
-          () async => await repository.updateLocality(
-            validLocality.copyWith(
-              ibgeCode:
-                  "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
-            ),
-          ),
-          throwsException,
-        );
+        expect(updatedCount, 0);
       });
     });
   });

@@ -1,4 +1,5 @@
 import 'package:nurse/shared/models/generic_model.dart';
+import 'package:nurse/shared/utils/validator.dart';
 
 class PriorityGroup implements GenericModel {
   @override
@@ -8,11 +9,24 @@ class PriorityGroup implements GenericModel {
   final String description;
 
   PriorityGroup({
-    String name = "",
     required this.id,
     required this.groupCode,
+    String name = "",
     this.description = "",
-  }) : this.name = name != "" ? name : groupCode;
+  }) : this.name = name.isEmpty ? groupCode : name {
+    validatePriorityGroup();
+  }
+
+  void validatePriorityGroup() {
+    Validator.validateAll(
+      [
+        ValidationPair(ValidatorType.Id, id),
+        ValidationPair(ValidatorType.Name, groupCode),
+        ValidationPair(ValidatorType.Name, name),
+        ValidationPair(ValidatorType.OptionalName, description),
+      ],
+    );
+  }
 
   @override
   Map<String, Object> toMap() {
