@@ -1,12 +1,15 @@
 class Validator {
   static const _CPF_LENGTH = 11;
   static const _CNS_LENGTH = 15;
+  static const IBGE_CODE_LENGTH = 7;
+
   static RegExp get _validCharactersRegex => RegExp(
-        r"^[a-zA-Z-\sáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$",
+        r"^[a-zA-Z0-9-\sáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]*$",
       );
 
   static bool validateAll(
-      List<ValidationPair<ValidatorType, Object>> evaluatees) {
+    List<ValidationPair<ValidatorType, Object>> evaluatees,
+  ) {
     evaluatees.forEach((evaluatee) {
       validate(evaluatee.type, evaluatee.value);
     });
@@ -21,9 +24,13 @@ class Validator {
         return _isType<int>(value)
             ? _validateId(value as int)
             : throw ValidatorException.incompatibleType(int, value);
-      case ValidatorType.String:
+      case ValidatorType.Name:
         return _isType<String>(value)
-            ? _validateString(value as String)
+            ? _validateName(value as String)
+            : throw ValidatorException.incompatibleType(String, value);
+      case ValidatorType.OptionalName:
+        return _isType<String>(value)
+            ? _validateOptionalName(value as String)
             : throw ValidatorException.incompatibleType(String, value);
       case ValidatorType.CPF:
         return _isType<String>(value)
@@ -37,6 +44,10 @@ class Validator {
         return _isType<DateTime>(value)
             ? _validateBirth(value as DateTime)
             : throw ValidatorException.incompatibleType(DateTime, value);
+      case ValidatorType.IBGECode:
+        return _isType<String>(value)
+            ? _validateIBGECode(value as String)
+            : throw ValidatorException.incompatibleType(String, value);
       default:
         throw ValidatorException.unimplementedType(type);
     }
@@ -46,13 +57,21 @@ class Validator {
     return value is T;
   }
 
-  static bool _validateString(String value) {
+  static bool _validateName(String value) {
     final isEmpty = value.trim().isEmpty;
     final allCharactersValid = _validCharactersRegex.hasMatch(value);
 
     return !isEmpty && allCharactersValid
         ? true
-        : throw ValidatorException.invalid(ValidatorType.String, value);
+        : throw ValidatorException.invalid(ValidatorType.Name, value);
+  }
+
+  static bool _validateOptionalName(String value) {
+    final allCharactersValid = _validCharactersRegex.hasMatch(value);
+
+    return allCharactersValid
+        ? true
+        : throw ValidatorException.invalid(ValidatorType.Name, value);
   }
 
   static bool _validateCPF(String cpf) {
@@ -191,6 +210,15 @@ class Validator {
     return true;
   }
 
+  static bool _validateIBGECode(String code) {
+    final isCorrectLength = code.length == IBGE_CODE_LENGTH;
+    final isOnlyNumbers = int.tryParse(code) != null;
+
+    return isCorrectLength && isOnlyNumbers
+        ? true
+        : throw ValidatorException.invalid(ValidatorType.IBGECode, code);
+  }
+
   static bool _validateId(int id) {
     if (id <= 0) {
       throw Exception('Id must be greater than 0');
@@ -207,17 +235,20 @@ class ValidationPair<ValidatorType, Object> {
   ValidationPair(this.type, this.value);
 }
 
-enum ValidatorType { Id, String, CPF, CNS, BirthDate }
+enum ValidatorType {
+  Id,
+  Name,
+  OptionalName,
+  Description,
+  CPF,
+  CNS,
+  BirthDate,
+  IBGECode,
+  Email
+}
 
 class ValidatorException implements Exception {
   final String message;
-
-  ValidatorException(this.message);
-
-  @override
-  String toString() {
-    return message;
-  }
 
   ValidatorException.incompatibleType(Type type, Object value)
       : message = '''

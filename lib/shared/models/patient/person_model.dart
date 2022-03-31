@@ -24,10 +24,11 @@ class Person implements GenericModel {
     this.fatherName = "",
   }) {
     Validator.validateAll([
+      ValidationPair(ValidatorType.Id, id),
       ValidationPair(ValidatorType.CPF, cpf),
-      ValidationPair(ValidatorType.String, name),
-      ValidationPair(ValidatorType.String, motherName),
-      ValidationPair(ValidatorType.String, fatherName),
+      ValidationPair(ValidatorType.Name, name),
+      ValidationPair(ValidatorType.OptionalName, motherName),
+      ValidationPair(ValidatorType.OptionalName, fatherName),
       ValidationPair(ValidatorType.BirthDate, birthDate),
     ]);
   }
