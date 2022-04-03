@@ -36,6 +36,7 @@ void main() {
     ),
   );
   final expectedApplier = Applier(
+      id: 1,
       cns: "279197866950004",
       person: Person(
         id: 1,

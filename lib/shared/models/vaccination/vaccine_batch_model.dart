@@ -1,6 +1,8 @@
+import 'package:nurse/shared/models/generic_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
-class VaccineBatch {
+class VaccineBatch implements GenericModel {
+  @override
   final int id;
   final String batchNo;
   final int quantity;
@@ -36,7 +38,7 @@ class VaccineBatch {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, Object> toMap() {
     return {
       'id': id,
       'batchNo': batchNo,

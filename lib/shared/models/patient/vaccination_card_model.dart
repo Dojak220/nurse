@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
-
+import 'package:nurse/shared/models/generic_model.dart';
 import 'package:nurse/shared/models/vaccination/application_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
-class VaccinationCard {
+class VaccinationCard implements GenericModel {
+  @override
   final int id;
   final List<Application> applications;
 
@@ -19,7 +20,7 @@ class VaccinationCard {
       throw Exception('Vaccination card must have at least one application');
     }
 
-    Validator.validate(ValidatorType.Id, id);
+    Validator.validate(ValidatorType.Id, this.id);
   }
 
   VaccinationCard copyWith({
@@ -32,7 +33,7 @@ class VaccinationCard {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, Object> toMap() {
     return {
       'id': id,
       'applications': applications.map((x) => x.toMap()).toList(),

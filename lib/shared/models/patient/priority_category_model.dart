@@ -1,7 +1,9 @@
+import 'package:nurse/shared/models/generic_model.dart';
 import 'package:nurse/shared/models/patient/priority_group_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
-class PriorityCategory {
+class PriorityCategory implements GenericModel {
+  @override
   final int id;
   final PriorityGroup priorityGroup;
   final String categoryCode;
@@ -9,8 +11,8 @@ class PriorityCategory {
   final String description;
 
   PriorityCategory({
-    String name = "",
     required this.id,
+    String name = "",
     required this.priorityGroup,
     required String categoryCode,
     String description = "",
@@ -26,7 +28,7 @@ class PriorityCategory {
         ValidationPair(ValidatorType.Id, id),
         ValidationPair(ValidatorType.Name, categoryCode),
         ValidationPair(ValidatorType.Name, name),
-        ValidationPair(ValidatorType.Description, description),
+        ValidationPair(ValidatorType.Description, this.description),
       ],
     );
   }
@@ -47,7 +49,8 @@ class PriorityCategory {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  @override
+  Map<String, Object> toMap() {
     return {
       'id': id,
       'priorityGroup': priorityGroup.toMap(),

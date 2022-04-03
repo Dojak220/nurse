@@ -7,6 +7,9 @@ class DatabaseInterface {
 
   DatabaseInterface(this.dbManager, this.tableName);
 
+  /// TODO: Garantir que não criem-se dois registros com o mesmo id.
+  /// Coloquei esse todo aqui, mas possa ser que a implementação seja feita
+  /// nas classes que extendem essa.
   Future<int> create(Map<String, dynamic> entity) async {
     final int result = await dbManager.db.insert(
       tableName,
