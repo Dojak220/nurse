@@ -64,96 +64,6 @@ void testCreateEstablishment(
         expect(createdId, 1);
       });
     });
-    group('try to create invalid establishment', () {
-      test("should throw exception if id is 0", () async {
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(id: 0),
-          ),
-          throwsException,
-          reason: "it's not possible to create an establishment with id 0",
-        );
-      });
-
-      test("should throw exception if id is negative", () async {
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(id: -1),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if cnes length != 7", () async {
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(cnes: "123456"),
-          ),
-          throwsException,
-        );
-
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(cnes: " 23456 "),
-          ),
-          throwsException,
-        );
-
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(cnes: "123456789"),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if cnes has no numeric characters",
-          () async {
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(cnes: "123456A"),
-          ),
-          throwsException,
-        );
-
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(cnes: "12 45 7"),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name is empty", () async {
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(name: ""),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name has only spaces", () async {
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(name: "   "),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name has weird characters", () async {
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(
-              name:
-                  "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
-            ),
-          ),
-          throwsException,
-        );
-      });
-    });
   });
 }
 
@@ -189,20 +99,6 @@ void testDeleteEstablishment(
           where: anyNamed("where"),
           whereArgs: [invalidEstablishmentId],
         )).thenAnswer((_) => Future.value(0));
-      });
-
-      test("should throw exception if id is 0", () async {
-        expect(
-          () async => await repository.deleteEstablishment(0),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if id is negative", () async {
-        expect(
-          () async => await repository.deleteEstablishment(-1),
-          throwsException,
-        );
       });
 
       test("should return 0 if id doesnt exist", () async {
@@ -250,19 +146,22 @@ void testGetEstablishment(
                 "locality": expectedEstablishment.locality.id,
               }
             ]));
+
         when(db.query(
           DatabaseLocalityRepository.TABLE,
           where: anyNamed("where"),
           whereArgs: [validLocalityId],
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": expectedLocality.id,
-                "name": expectedLocality.name,
-                "city": expectedLocality.city,
-                "state": expectedLocality.state,
-                "ibgeCode": expectedLocality.ibgeCode,
-              }
-            ]));
+        )).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": expectedLocality.id,
+              "name": expectedLocality.name,
+              "city": expectedLocality.city,
+              "state": expectedLocality.state,
+              "ibgeCode": expectedLocality.ibgeCode,
+            }
+          ]),
+        );
       });
 
       test("should get an establishment entry by its id", () async {
@@ -281,20 +180,6 @@ void testGetEstablishment(
           where: anyNamed("where"),
           whereArgs: [anyOf(-1, 0, 2)],
         )).thenAnswer((_) => Future.value([]));
-      });
-
-      test("should throw exception if id is 0", () async {
-        expect(
-          () async => await repository.getEstablishmentById(0),
-          throwsStateError,
-        );
-      });
-
-      test("should throw exception if id is negative", () async {
-        expect(
-          () async => await repository.getEstablishmentById(-1),
-          throwsStateError,
-        );
       });
 
       test("should throw exception if id doesn't exist", () async {
@@ -428,6 +313,7 @@ void testUpdateEstablishment(
   MockDatabase db,
   DatabaseEstablishmentRepository repository,
 ) {
+  final int invalidEstablishmentId = 2;
   group("updateEstablishment function:", () {
     final int validEstablishmentId = 1;
     final int validLocalityId = 1;
@@ -464,94 +350,24 @@ void testUpdateEstablishment(
       });
     });
     group('try to update with invalid establishment', () {
-      test("should throw exception if id is 0", () async {
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(id: 0),
-          ),
-          throwsException,
-          reason: "there is no establishment with id 0",
-        );
+      setUp(() {
+        when(db.update(
+          DatabaseEstablishmentRepository.TABLE,
+          validEstablishment
+              .copyWith(id: invalidEstablishmentId, name: "Updated")
+              .toMap(),
+          where: anyNamed("where"),
+          whereArgs: [invalidEstablishmentId],
+        )).thenAnswer((_) => Future.value(0));
       });
 
-      test("should throw exception if id is negative", () async {
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(id: -1),
-          ),
-          throwsException,
-          reason: "there is no establishment with negative id",
-        );
-      });
-
-      test("should throw exception if cnes length != 7", () async {
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(cnes: "123456"),
-          ),
-          throwsException,
+      test("should return 0 if id doesn't exist", () async {
+        final updatedCount = await repository.updateEstablishment(
+          validEstablishment.copyWith(
+              id: invalidEstablishmentId, name: "Updated"),
         );
 
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(cnes: " 23456 "),
-          ),
-          throwsException,
-        );
-
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(cnes: "123456789"),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if cnes has no numeric characters",
-          () async {
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(cnes: "123456A"),
-          ),
-          throwsException,
-        );
-
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(cnes: "12 45 7"),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name is empty", () async {
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(name: ""),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name has only spaces", () async {
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(name: "   "),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name has weird characters", () async {
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(
-              name:
-                  "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
-            ),
-          ),
-          throwsException,
-        );
+        expect(updatedCount, 0);
       });
     });
   });

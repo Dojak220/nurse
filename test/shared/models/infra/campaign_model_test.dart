@@ -35,10 +35,12 @@ void main() {
     });
 
     test("should create a valid instance of a future campaign", () {
+      final tomorrow = DateTime.now().add(Duration(days: 1));
       final actualCampaign = validCampaign.copyWith(
-          startDate: DateTime.now().add(Duration(days: 1)));
+        startDate: tomorrow,
+      );
 
-      expect(actualCampaign.startDate, DateTime.now().add(Duration(days: 1)));
+      expect(actualCampaign.startDate, tomorrow);
     });
 
     test("should create a valid instance of a past campaign", () {
