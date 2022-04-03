@@ -1,8 +1,7 @@
+import 'package:nurse/shared/models/generic_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
 import 'package:nurse/shared/models/patient/priority_group_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
-
-import '../generic_model.dart';
 
 class Patient implements GenericModel {
   @override
@@ -19,8 +18,8 @@ class Patient implements GenericModel {
     required this.maternalCondition,
     required this.person,
   }) {
-    Validator.validate(ValidatorType.Id, id);
-    Validator.validate(ValidatorType.CNS, cns);
+    Validator.validate(ValidatorType.Id, this.id);
+    Validator.validate(ValidatorType.CNS, this.cns);
   }
 
   Patient copyWith({

@@ -20,8 +20,8 @@ class Establishment implements GenericModel {
   }
 
   void _validateEstablishment() {
-    Validator.validate(ValidatorType.Id, id);
-    Validator.validate(ValidatorType.Name, name);
+    Validator.validate(ValidatorType.Id, this.id);
+    Validator.validate(ValidatorType.Name, this.name);
 
     if (cnes.trim().length != 7) {
       throw Exception('Establishment cnes must be 7 characters long');

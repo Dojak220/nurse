@@ -29,11 +29,11 @@ class Campaign implements GenericModel {
 
     Validator.validateAll(
       [
-        ValidationPair(ValidatorType.Id, id),
-        ValidationPair(ValidatorType.Name, title),
-        ValidationPair(ValidatorType.Description, description),
-        ValidationPair(ValidatorType.Date, startDate),
-        ValidationPair(ValidatorType.Date, endDate),
+        ValidationPair(ValidatorType.Id, this.id),
+        ValidationPair(ValidatorType.Name, this.title),
+        ValidationPair(ValidatorType.Description, this.description),
+        ValidationPair(ValidatorType.Date, this.startDate),
+        ValidationPair(ValidatorType.Date, this.endDate),
       ],
     );
   }

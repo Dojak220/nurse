@@ -19,8 +19,8 @@ class VaccineBatch {
     }
 
     Validator.validateAll([
-      ValidationPair(ValidatorType.Id, id),
-      ValidationPair(ValidatorType.NumericalString, batchNo),
+      ValidationPair(ValidatorType.Id, this.id),
+      ValidationPair(ValidatorType.NumericalString, this.batchNo),
     ]);
   }
 

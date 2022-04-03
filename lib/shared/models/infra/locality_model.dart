@@ -22,11 +22,11 @@ class Locality implements GenericModel {
   void _validateLocality() {
     Validator.validateAll(
       [
-        ValidationPair(ValidatorType.Id, id),
-        ValidationPair(ValidatorType.Name, name),
-        ValidationPair(ValidatorType.Name, city),
-        ValidationPair(ValidatorType.Name, state),
-        ValidationPair(ValidatorType.IBGECode, ibgeCode),
+        ValidationPair(ValidatorType.Id, this.id),
+        ValidationPair(ValidatorType.Name, this.name),
+        ValidationPair(ValidatorType.Name, this.city),
+        ValidationPair(ValidatorType.Name, this.state),
+        ValidationPair(ValidatorType.IBGECode, this.ibgeCode),
       ],
     );
   }

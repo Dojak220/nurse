@@ -22,10 +22,10 @@ class PriorityGroup implements GenericModel {
   void _validatePriorityGroup() {
     Validator.validateAll(
       [
-        ValidationPair(ValidatorType.Id, id),
-        ValidationPair(ValidatorType.Name, groupCode),
-        ValidationPair(ValidatorType.Name, name),
-        ValidationPair(ValidatorType.Description, description),
+        ValidationPair(ValidatorType.Id, this.id),
+        ValidationPair(ValidatorType.Name, this.groupCode),
+        ValidationPair(ValidatorType.Name, this.name),
+        ValidationPair(ValidatorType.Description, this.description),
       ],
     );
   }

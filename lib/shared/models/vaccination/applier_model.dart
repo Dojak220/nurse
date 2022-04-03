@@ -12,7 +12,10 @@ class Applier {
     required this.person,
     required this.establishment,
   }) {
-    Validator.validate(ValidatorType.CNS, cns);
+    Validator.validateAll([
+      ValidationPair(ValidatorType.Id, this.id),
+      ValidationPair(ValidatorType.CNS, this.cns),
+    ]);
   }
 
   Applier copyWith({
