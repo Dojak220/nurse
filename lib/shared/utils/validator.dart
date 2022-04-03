@@ -32,6 +32,10 @@ class Validator {
         return _isType<String>(value)
             ? _validateOptionalName(value as String)
             : throw ValidatorException.incompatibleType(String, value);
+      case ValidatorType.Description:
+        return _isType<String>(value)
+            ? _validateDescription(value as String)
+            : throw ValidatorException.incompatibleType(String, value);
       case ValidatorType.CPF:
         return _isType<String>(value)
             ? _validateCPF(value as String)
@@ -40,6 +44,10 @@ class Validator {
         return _isType<String>(value)
             ? _validateCNS(value as String)
             : throw ValidatorException.incompatibleType(String, value);
+      case ValidatorType.Date:
+        return _isType<DateTime>(value)
+            ? _validateDate(value as DateTime)
+            : throw ValidatorException.incompatibleType(DateTime, value);
       case ValidatorType.BirthDate:
         return _isType<DateTime>(value)
             ? _validateBirth(value as DateTime)
@@ -69,7 +77,11 @@ class Validator {
   static bool _validateOptionalName(String value) {
     final allCharactersValid = _validCharactersRegex.hasMatch(value);
 
-    return allCharactersValid
+  static bool _validateDescription(String value) {
+    final isTooLong = value.length > _DESCRIPTION_MAX_LENGTH;
+    final allCharactersValid = _validCharactersRegex.hasMatch(value);
+
+    return !isTooLong && allCharactersValid
         ? true
         : throw ValidatorException.invalid(ValidatorType.Name, value);
   }
@@ -199,6 +211,19 @@ class Validator {
     }
   }
 
+  static bool _validateDate(DateTime date) {
+    final isBefore1900 = date.year < 1900;
+    final isAfter5YearsFromNow = date.isAfter(
+      DateTime.now().add(Duration(days: 365 * 5)),
+    );
+
+    if (isBefore1900 || isAfter5YearsFromNow) {
+      throw ValidatorException.invalid(ValidatorType.Date, date);
+    }
+
+    return true;
+  }
+
   static bool _validateBirth(DateTime birth) {
     final isBefore1900 = birth.year < 1900;
     final isAfterNow = birth.isAfter(DateTime.now());
@@ -242,6 +267,7 @@ enum ValidatorType {
   Description,
   CPF,
   CNS,
+  Date,
   BirthDate,
   IBGECode,
   Email

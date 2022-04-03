@@ -1,4 +1,5 @@
 import 'package:nurse/shared/models/generic_model.dart';
+import 'package:nurse/shared/utils/validator.dart';
 
 class Campaign implements GenericModel {
   @override
@@ -10,12 +11,48 @@ class Campaign implements GenericModel {
 
   Campaign({
     required this.id,
-    DateTime? endDate,
-    String? description,
-    required this.title,
+    required String title,
     required this.startDate,
-  })  : this.description = description ?? "Campanha $title",
-        this.endDate = endDate ?? startDate.add(Duration(days: 365));
+    DateTime? endDate,
+    String description = "",
+  })  : this.title = title.trim(),
+        this.description =
+            description.trim().isEmpty ? "Campanha $title" : description,
+        this.endDate = endDate ?? startDate.add(Duration(days: 365)) {
+    _validateCampaign();
+  }
+
+  void _validateCampaign() {
+    if (endDate.isBefore(startDate)) {
+      throw Exception('End date must be after start date');
+    }
+
+    Validator.validateAll(
+      [
+        ValidationPair(ValidatorType.Id, id),
+        ValidationPair(ValidatorType.Name, title),
+        ValidationPair(ValidatorType.Description, description),
+        ValidationPair(ValidatorType.Date, startDate),
+        ValidationPair(ValidatorType.Date, endDate),
+      ],
+    );
+  }
+
+  Campaign copyWith({
+    int? id,
+    String? title,
+    String? description,
+    DateTime? startDate,
+    DateTime? endDate,
+  }) {
+    return Campaign(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+    );
+  }
 
   @override
   Map<String, Object> toMap() {

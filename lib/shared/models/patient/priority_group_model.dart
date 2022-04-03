@@ -23,7 +23,7 @@ class PriorityGroup implements GenericModel {
         ValidationPair(ValidatorType.Id, id),
         ValidationPair(ValidatorType.Name, groupCode),
         ValidationPair(ValidatorType.Name, name),
-        ValidationPair(ValidatorType.OptionalName, description),
+        ValidationPair(ValidatorType.Description, description),
       ],
     );
   }
