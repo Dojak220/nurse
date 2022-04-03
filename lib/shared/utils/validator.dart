@@ -46,6 +46,10 @@ class Validator {
         return _isType<String>(value)
             ? _validateCNS(value as String)
             : throw ValidatorException.incompatibleType(String, value);
+      case ValidatorType.NumericalString:
+        return _isType<String>(value)
+            ? _validateNumericalString(value as String)
+            : throw ValidatorException.incompatibleType(String, value);
       case ValidatorType.Date:
         return _isType<DateTime>(value)
             ? _validateDate(value as DateTime)
@@ -168,6 +172,18 @@ class Validator {
     return true;
   }
 
+  static bool _validateNumericalString(String value) {
+    final isEmpty = value.trim().isEmpty;
+    final allCharactersValid = RegExp(r"^[0-9]*$").hasMatch(value);
+
+    return !isEmpty && allCharactersValid
+        ? true
+        : throw ValidatorException.invalid(
+            ValidatorType.NumericalString,
+            value,
+          );
+  }
+
   static void _validateCnsStartingWith1Or2(String cns) {
     int soma = 0;
     int resto = 0, dv = 0;
@@ -276,6 +292,7 @@ enum ValidatorType {
   Description,
   CPF,
   CNS,
+  NumericalString,
   Date,
   BirthDate,
   IBGECode,

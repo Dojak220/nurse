@@ -1,3 +1,5 @@
+import 'package:nurse/shared/utils/validator.dart';
+
 class VaccineBatch {
   final int id;
   final String batchNo;
@@ -5,9 +7,22 @@ class VaccineBatch {
 
   VaccineBatch({
     required this.id,
-    required this.batchNo,
+    required String batchNo,
     required this.quantity,
-  });
+  }) : this.batchNo = batchNo.trim() {
+    _validateVaccineBatch();
+  }
+
+  void _validateVaccineBatch() {
+    if (quantity <= 0) {
+      throw Exception('Quantity must be greater than 0');
+    }
+
+    Validator.validateAll([
+      ValidationPair(ValidatorType.Id, id),
+      ValidationPair(ValidatorType.NumericalString, batchNo),
+    ]);
+  }
 
   VaccineBatch copyWith({
     int? id,
