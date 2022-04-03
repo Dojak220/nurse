@@ -1,7 +1,9 @@
 class Validator {
   static const _CPF_LENGTH = 11;
   static const _CNS_LENGTH = 15;
-  static const IBGE_CODE_LENGTH = 7;
+  static const _IBGE_CODE_LENGTH = 7;
+  static const _NAME_MAX_LENGTH = 50;
+  static const _DESCRIPTION_MAX_LENGTH = 50;
 
   static RegExp get _validCharactersRegex => RegExp(
         r"^[a-zA-Z0-9-\sáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]*$",
@@ -67,15 +69,22 @@ class Validator {
 
   static bool _validateName(String value) {
     final isEmpty = value.trim().isEmpty;
+    final isTooLong = value.length > _NAME_MAX_LENGTH;
     final allCharactersValid = _validCharactersRegex.hasMatch(value);
 
-    return !isEmpty && allCharactersValid
+    return !isEmpty && !isTooLong && allCharactersValid
         ? true
         : throw ValidatorException.invalid(ValidatorType.Name, value);
   }
 
   static bool _validateOptionalName(String value) {
+    final isTooLong = value.length > _NAME_MAX_LENGTH;
     final allCharactersValid = _validCharactersRegex.hasMatch(value);
+
+    return !isTooLong && allCharactersValid
+        ? true
+        : throw ValidatorException.invalid(ValidatorType.Name, value);
+  }
 
   static bool _validateDescription(String value) {
     final isTooLong = value.length > _DESCRIPTION_MAX_LENGTH;
@@ -236,7 +245,7 @@ class Validator {
   }
 
   static bool _validateIBGECode(String code) {
-    final isCorrectLength = code.length == IBGE_CODE_LENGTH;
+    final isCorrectLength = code.length == _IBGE_CODE_LENGTH;
     final isOnlyNumbers = int.tryParse(code) != null;
 
     return isCorrectLength && isOnlyNumbers

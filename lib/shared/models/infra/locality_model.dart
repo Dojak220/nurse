@@ -16,10 +16,10 @@ class Locality implements GenericModel {
     required this.state,
     required this.ibgeCode,
   }) {
-    validateLocality();
+    _validateLocality();
   }
 
-  void validateLocality() {
+  void _validateLocality() {
     Validator.validateAll(
       [
         ValidationPair(ValidatorType.Id, id),

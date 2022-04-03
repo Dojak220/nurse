@@ -16,10 +16,10 @@ class Establishment implements GenericModel {
     this.locality,
   ) {
     /// TODO: Add validation below to Validator class.
-    validateEstablishment();
+    _validateEstablishment();
   }
 
-  void validateEstablishment() {
+  void _validateEstablishment() {
     Validator.validate(ValidatorType.Id, id);
     Validator.validate(ValidatorType.Name, name);
 

@@ -10,14 +10,16 @@ class PriorityGroup implements GenericModel {
 
   PriorityGroup({
     required this.id,
-    required this.groupCode,
+    required String groupCode,
     String name = "",
-    this.description = "",
-  }) : this.name = name.isEmpty ? groupCode : name {
-    validatePriorityGroup();
+    String description = "",
+  })  : this.groupCode = groupCode.trim(),
+        this.name = name.isEmpty ? groupCode : name.trim(),
+        this.description = description.trim() {
+    _validatePriorityGroup();
   }
 
-  void validatePriorityGroup() {
+  void _validatePriorityGroup() {
     Validator.validateAll(
       [
         ValidationPair(ValidatorType.Id, id),
