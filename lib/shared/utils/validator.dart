@@ -55,6 +55,7 @@ class Validator {
             ? _validateDate(value as DateTime)
             : throw ValidatorException.incompatibleType(DateTime, value);
       case ValidatorType.BirthDate:
+      case ValidatorType.PastDate:
         return _isType<DateTime>(value)
             ? _validateBirth(value as DateTime)
             : throw ValidatorException.incompatibleType(DateTime, value);
@@ -154,7 +155,6 @@ class Validator {
   }
 
   static bool _validateCNS(String cns) {
-    // Fonte: https://integracao.esusab.ufsc.br/v211/docs/algoritmo_CNS.html
     String cleanCNS = cns.replaceAll('.', '').replaceAll('-', '').trim();
 
     if (cleanCNS.length != _CNS_LENGTH) {
@@ -291,10 +291,19 @@ enum ValidatorType {
   OptionalName,
   Description,
   CPF,
+
+  /// Fonte: https://integracao.esusab.ufsc.br/v211/docs/algoritmo_CNS.html
   CNS,
   NumericalString,
+
+  /// Date must be between 1900 and 5 years from now
   Date,
+
+  /// Date must be between 1900 and now
   BirthDate,
+
+  /// Date must be between 1900 and now (equals to BirthDate)
+  PastDate,
   IBGECode,
   Email
 }
