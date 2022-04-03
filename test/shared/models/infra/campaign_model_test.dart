@@ -35,7 +35,13 @@ void main() {
     });
 
     test("should create a valid instance of a future campaign", () {
-      final tomorrow = DateTime.now().add(Duration(days: 1));
+      final today = DateTime.now();
+      final tomorrow = DateTime(
+        today.year,
+        today.month,
+        today.day,
+      ).add(Duration(days: 1));
+
       final actualCampaign = validCampaign.copyWith(
         startDate: tomorrow,
       );
@@ -44,12 +50,19 @@ void main() {
     });
 
     test("should create a valid instance of a past campaign", () {
+      final today = DateTime.now();
+      final yesterday = DateTime(
+        today.year,
+        today.month,
+        today.day,
+      ).add(Duration(days: -1));
+
       final actualCampaign = validCampaign.copyWith(
         startDate: DateTime(2022),
-        endDate: DateTime.now().add(Duration(days: -1)),
+        endDate: yesterday,
       );
 
-      expect(actualCampaign.endDate, DateTime.now().add(Duration(days: -1)));
+      expect(actualCampaign.endDate, yesterday);
     });
 
     test(
