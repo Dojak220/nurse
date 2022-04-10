@@ -43,10 +43,10 @@ void testCreateEstablishment(
       ibgeCode: "1234567",
     );
     final validEstablishment = Establishment(
-      validEstablishmentId,
-      "1234567",
-      "Test",
-      expectedLocality,
+      id: validEstablishmentId,
+      cnes: "1234567",
+      name: "Test",
+      locality: expectedLocality,
     );
 
     group('try to create a valid establishment', () {
@@ -126,10 +126,10 @@ void testGetEstablishment(
       ibgeCode: "1234567",
     );
     final expectedEstablishment = Establishment(
-      validEstablishmentId,
-      "1234567",
-      "Test",
-      expectedLocality,
+      id: validEstablishmentId,
+      cnes: "1234567",
+      name: "Test",
+      locality: expectedLocality,
     );
 
     group('try to get valid establishment', () {
@@ -224,16 +224,16 @@ void testGetEstablishments(
     ];
     final expectedEstablishments = [
       Establishment(
-        validEstablishmentId,
-        "1234567",
-        "Test",
-        expectedLocalities[0],
+        id: validEstablishmentId,
+        cnes: "1234567",
+        name: "Test",
+        locality: expectedLocalities[0],
       ),
       Establishment(
-        validEstablishmentId + 1,
-        "1234568",
-        "Segundo Estabelecimento",
-        expectedLocalities[1],
+        id: validEstablishmentId + 1,
+        cnes: "1234568",
+        name: "Segundo Estabelecimento",
+        locality: expectedLocalities[1],
       ),
     ];
 
@@ -325,10 +325,10 @@ void testUpdateEstablishment(
       ibgeCode: "1234567",
     );
     final validEstablishment = Establishment(
-      validEstablishmentId,
-      "1234567",
-      "Old Name",
-      expectedLocality,
+      id: validEstablishmentId,
+      cnes: "1234567",
+      name: "Old Name",
+      locality: expectedLocality,
     );
 
     group('try to update a valid establishment', () {

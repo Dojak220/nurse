@@ -16,10 +16,10 @@ void main() {
     );
 
     validEstablishment = Establishment(
-      1,
-      "1234567",
-      "Establishment Name",
-      expectedLocality,
+      id: 1,
+      cnes: "1234567",
+      name: "Establishment Name",
+      locality: expectedLocality,
     );
   });
 

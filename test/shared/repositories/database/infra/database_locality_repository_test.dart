@@ -6,7 +6,7 @@ import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
-import 'database_establishment_repository_test.mocks.dart';
+import 'database_locality_repository_test.mocks.dart';
 
 @GenerateMocks([DatabaseManager, Database, DatabaseLocalityRepository])
 void main() {

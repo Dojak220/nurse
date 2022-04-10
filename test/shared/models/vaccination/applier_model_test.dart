@@ -27,10 +27,10 @@ void main() {
           locality: expectedLocality,
         ),
         establishment: Establishment(
-          1,
-          "1234567",
-          "Old Name",
-          Locality(
+          id: 1,
+          cnes: "1234567",
+          name: "Old Name",
+          locality: Locality(
             id: 1,
             name: "Locality Name",
             city: "City Name",

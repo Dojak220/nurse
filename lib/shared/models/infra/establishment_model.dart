@@ -9,12 +9,12 @@ class Establishment implements GenericModel {
   final String name;
   final Locality locality;
 
-  Establishment(
-    this.id,
-    this.cnes,
-    this.name,
-    this.locality,
-  ) {
+  Establishment({
+    required this.id,
+    required this.cnes,
+    required this.name,
+    required this.locality,
+  }) {
     /// TODO: Add validation below to Validator class.
     _validateEstablishment();
   }
@@ -42,10 +42,10 @@ class Establishment implements GenericModel {
 
   factory Establishment.fromMap(Map<String, dynamic> map) {
     return Establishment(
-      map['id'] ?? 0,
-      map['cnes'] ?? '',
-      map['name'] ?? '',
-      map['locality'] ?? Locality.fromMap(map['locality']),
+      id: map['id'] ?? 0,
+      cnes: map['cnes'] ?? '',
+      name: map['name'] ?? '',
+      locality: map['locality'] ?? Locality.fromMap(map['locality']),
     );
   }
 
@@ -61,10 +61,10 @@ class Establishment implements GenericModel {
     Locality? locality,
   }) {
     return Establishment(
-      id ?? this.id,
-      cnes ?? this.cnes,
-      name ?? this.name,
-      locality ?? this.locality,
+      id: id ?? this.id,
+      cnes: cnes ?? this.cnes,
+      name: name ?? this.name,
+      locality: locality ?? this.locality,
     );
   }
 
