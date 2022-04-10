@@ -63,7 +63,7 @@ class Person implements GenericModel {
       'name': name,
       'birthDate': birthDate.millisecondsSinceEpoch,
       'locality': locality.toMap(),
-      'gender': gender,
+      'gender': gender.name,
       'motherName': motherName,
       'fatherName': fatherName,
     };
@@ -71,12 +71,12 @@ class Person implements GenericModel {
 
   factory Person.fromMap(Map<String, dynamic> map) {
     return Person(
-      id: map['id']?.toInt() ?? 0,
-      cpf: map['cpf']?.toInt() ?? 0,
+      id: map['id'] ?? 0,
+      cpf: map['cpf'] ?? "",
       name: map['name'] ?? '',
       birthDate: DateTime.fromMillisecondsSinceEpoch(map['birthDate']),
       locality: Locality.fromMap(map['locality']),
-      gender: map['gender'] ?? '',
+      gender: GenderExtension.fromString(map['gender'] ?? Gender.NONE.name),
       motherName: map['motherName'] ?? '',
       fatherName: map['fatherName'] ?? '',
     );
@@ -111,3 +111,17 @@ class Person implements GenericModel {
 }
 
 enum Gender { FEMALE, MALE, NONE }
+
+extension GenderExtension on Gender {
+  static Gender fromString(String value) {
+    switch (value.toUpperCase()) {
+      case "GESTANTE":
+        return Gender.FEMALE;
+      case "PUERPERA":
+        return Gender.MALE;
+      case "NENHUM":
+      default:
+        return Gender.NONE;
+    }
+  }
+}
