@@ -47,7 +47,7 @@ class Applier implements GenericModel {
 
   factory Applier.fromMap(Map<String, dynamic> map) {
     return Applier(
-      id: map['id']?.toInt() ?? 0,
+      id: map['id'] ?? 0,
       cns: map['cns'] ?? '',
       person: Person.fromMap(map['person']),
       establishment: Establishment.fromMap(map['establishment']),

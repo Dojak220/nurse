@@ -59,7 +59,7 @@ class Vaccine implements GenericModel {
 
   factory Vaccine.fromMap(Map<String, dynamic> map) {
     return Vaccine(
-      id: map['id']?.toInt() ?? 0,
+      id: map['id'] ?? 0,
       sipniCode: map['sipniCode'] ?? '',
       name: map['name'] ?? '',
       laboratory: map['laboratory'] ?? '',

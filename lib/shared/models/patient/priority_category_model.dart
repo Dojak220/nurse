@@ -63,8 +63,7 @@ class PriorityCategory implements GenericModel {
   factory PriorityCategory.fromMap(Map<String, dynamic> map) {
     return PriorityCategory(
       id: map['id'] ?? 0,
-      priorityGroup:
-          map['priorityGroup'] ?? PriorityGroup.fromMap(map['priorityGroup']),
+      priorityGroup: PriorityGroup.fromMap(map['priorityGroup']),
       categoryCode: map['categoryCode'] ?? '',
       name: map['name'] ?? '',
       description: map['description'] ?? '',

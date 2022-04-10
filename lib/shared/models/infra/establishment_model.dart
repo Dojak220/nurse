@@ -45,7 +45,7 @@ class Establishment implements GenericModel {
       id: map['id'] ?? 0,
       cnes: map['cnes'] ?? '',
       name: map['name'] ?? '',
-      locality: map['locality'] ?? Locality.fromMap(map['locality']),
+      locality: Locality.fromMap(map['locality']),
     );
   }
 

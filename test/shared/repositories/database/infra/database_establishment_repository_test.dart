@@ -178,7 +178,7 @@ void testGetEstablishment(
         when(db.query(
           DatabaseEstablishmentRepository.TABLE,
           where: anyNamed("where"),
-          whereArgs: [anyOf(-1, 0, 2)],
+          whereArgs: [2],
         )).thenAnswer((_) => Future.value([]));
       });
 

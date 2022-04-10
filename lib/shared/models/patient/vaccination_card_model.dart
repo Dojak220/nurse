@@ -42,7 +42,7 @@ class VaccinationCard implements GenericModel {
 
   factory VaccinationCard.fromMap(Map<String, dynamic> map) {
     return VaccinationCard(
-      id: map['id']?.toInt() ?? 0,
+      id: map['id'] ?? 0,
       applications: List<Application>.from(
           map['applications']?.map((x) => Application.fromMap(x))),
     );

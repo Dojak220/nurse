@@ -73,7 +73,7 @@ class Application implements GenericModel {
 
   factory Application.fromMap(Map<String, dynamic> map) {
     return Application(
-      id: map['id']?.toInt() ?? 0,
+      id: map['id'] ?? 0,
       applier: Applier.fromMap(map['applier']),
       patient: Patient.fromMap(map['patient']),
       campaign: Campaign.fromMap(map['campaign']),

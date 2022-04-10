@@ -48,7 +48,7 @@ class VaccineBatch implements GenericModel {
 
   factory VaccineBatch.fromMap(Map<String, dynamic> map) {
     return VaccineBatch(
-      id: map['id']?.toInt() ?? 0,
+      id: map['id'] ?? 0,
       batchNo: map['batchNo'] ?? '',
       quantity: map['quantity']?.toInt() ?? 0,
     );

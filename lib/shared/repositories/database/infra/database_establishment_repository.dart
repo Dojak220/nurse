@@ -7,7 +7,7 @@ import 'package:nurse/shared/repositories/establishment_repository.dart';
 
 class DatabaseEstablishmentRepository extends DatabaseInterface
     implements EstablishmentRepository {
-  static const String TABLE = "establishment";
+  static const String TABLE = "Establishment";
   final DatabaseManager dbManager;
 
   DatabaseEstablishmentRepository(this.dbManager) : super(dbManager, TABLE);
@@ -60,7 +60,7 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
         return l.id == e["locality"];
       });
 
-      e["locality"] = locality;
+      e["locality"] = locality.toMap();
     });
 
     final establishments = establishmentMaps
