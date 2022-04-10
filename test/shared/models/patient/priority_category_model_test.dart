@@ -11,7 +11,7 @@ void main() {
       id: 1,
       groupCode: "Pessoas com mais de 60 anos",
       name: "Idosos",
-      description: "Grupo para pessoas com mais de 60 anos",
+      description: "Grupo de pessoas com mais de 60 anos",
     );
 
     validPriorityCategory = PriorityCategory(
@@ -41,7 +41,7 @@ void main() {
       expect(expectedPriorityGroup.name, "Idosos");
       expect(
         expectedPriorityGroup.description,
-        "Grupo para pessoas com mais de 60 anos",
+        "Grupo de pessoas com mais de 60 anos",
       );
     });
 

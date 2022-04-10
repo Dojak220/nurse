@@ -12,9 +12,9 @@ class PriorityCategory implements GenericModel {
 
   PriorityCategory({
     required this.id,
-    String name = "",
     required this.priorityGroup,
     required String categoryCode,
+    String name = "",
     String description = "",
   })  : this.name = name.isEmpty ? categoryCode : name,
         this.categoryCode = categoryCode.trim(),
@@ -62,8 +62,9 @@ class PriorityCategory implements GenericModel {
 
   factory PriorityCategory.fromMap(Map<String, dynamic> map) {
     return PriorityCategory(
-      id: map['id']?.toInt() ?? 0,
-      priorityGroup: PriorityGroup.fromMap(map['priorityGroup']),
+      id: map['id'] ?? 0,
+      priorityGroup:
+          map['priorityGroup'] ?? PriorityGroup.fromMap(map['priorityGroup']),
       categoryCode: map['categoryCode'] ?? '',
       name: map['name'] ?? '',
       description: map['description'] ?? '',

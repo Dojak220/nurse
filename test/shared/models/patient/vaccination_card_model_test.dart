@@ -4,6 +4,7 @@ import 'package:nurse/shared/models/infra/establishment_model.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/models/patient/patient_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
+import 'package:nurse/shared/models/patient/priority_category_model.dart';
 import 'package:nurse/shared/models/patient/priority_group_model.dart';
 import 'package:nurse/shared/models/patient/vaccination_card_model.dart';
 import 'package:nurse/shared/models/vaccination/application_model.dart';
@@ -12,6 +13,7 @@ import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
 
 void main() {
   late VaccinationCard validVaccinationCard;
+
   final expectedLocality = Locality(
     id: 1,
     name: "Locality Name",
@@ -19,14 +21,25 @@ void main() {
     state: "State Name",
     ibgeCode: "1234567",
   );
+
+  final expectedPriorityGroup = PriorityGroup(
+    id: 1,
+    groupCode: "Pessoas com mais de 60 anos",
+  );
+
+  final expectedPriorityCategory = PriorityCategory(
+    id: 1,
+    priorityGroup: expectedPriorityGroup,
+    categoryCode: "Pessoas idosas",
+    name: "Idosos",
+    description: "Categoria para pessoas idosas",
+  );
+
   final expectedPatient = Patient(
     id: 1,
     cns: "748477761910001",
     maternalCondition: MaternalCondition.GESTANTE,
-    priorityGroup: PriorityGroup(
-      id: 1,
-      groupCode: "Pessoas com mais de 60 anos",
-    ),
+    priorityCategory: expectedPriorityCategory,
     person: Person(
       id: 1,
       cpf: "67732120817",

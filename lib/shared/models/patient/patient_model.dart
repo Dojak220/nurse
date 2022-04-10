@@ -1,20 +1,20 @@
 import 'package:nurse/shared/models/generic_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/models/patient/priority_group_model.dart';
+import 'package:nurse/shared/models/patient/priority_category_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
 class Patient implements GenericModel {
   @override
   final int id;
   final String cns;
-  final PriorityGroup priorityGroup;
+  final PriorityCategory priorityCategory;
   final MaternalCondition maternalCondition;
   final Person person;
 
   Patient({
     required this.id,
     required this.cns,
-    required this.priorityGroup,
+    required this.priorityCategory,
     required this.maternalCondition,
     required this.person,
   }) {
@@ -25,14 +25,14 @@ class Patient implements GenericModel {
   Patient copyWith({
     int? id,
     String? cns,
-    PriorityGroup? priorityGroup,
+    PriorityCategory? priorityCategory,
     MaternalCondition? maternalCondition,
     Person? person,
   }) {
     return Patient(
       id: id ?? this.id,
       cns: cns ?? this.cns,
-      priorityGroup: priorityGroup ?? this.priorityGroup,
+      priorityCategory: priorityCategory ?? this.priorityCategory,
       maternalCondition: maternalCondition ?? this.maternalCondition,
       person: person ?? this.person,
     );
@@ -43,7 +43,7 @@ class Patient implements GenericModel {
     return {
       'id': id,
       'cns': cns,
-      'priorityGroup': priorityGroup.toMap(),
+      'priorityCategory': priorityCategory.toMap(),
       'maternalCondition': maternalCondition.name,
       'person': person.toMap(),
     };
@@ -53,7 +53,7 @@ class Patient implements GenericModel {
     return Patient(
       id: map['id']?.toInt() ?? 0,
       cns: map['cns'] ?? "",
-      priorityGroup: PriorityGroup.fromMap(map['priorityGroup']),
+      priorityCategory: PriorityCategory.fromMap(map['priorityCategory']),
       maternalCondition:
           MaternalConditionExtension.fromString(map['maternalCondition']),
       person: Person.fromMap(map['person']),
@@ -67,7 +67,7 @@ class Patient implements GenericModel {
     return other is Patient &&
         other.id == id &&
         other.cns == cns &&
-        other.priorityGroup == priorityGroup &&
+        other.priorityCategory == priorityCategory &&
         other.maternalCondition == maternalCondition &&
         other.person == person;
   }
@@ -76,7 +76,7 @@ class Patient implements GenericModel {
   int get hashCode {
     return id.hashCode ^
         cns.hashCode ^
-        priorityGroup.hashCode ^
+        priorityCategory.hashCode ^
         maternalCondition.hashCode ^
         person.hashCode;
   }
