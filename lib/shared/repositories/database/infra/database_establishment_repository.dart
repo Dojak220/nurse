@@ -33,7 +33,7 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
 
       final locality = await _getLocality(establishmentMap["locality"]);
 
-      establishmentMap["locality"] = locality;
+      establishmentMap["locality"] = locality.toMap();
 
       final establishment = Establishment.fromMap(establishmentMap);
 
