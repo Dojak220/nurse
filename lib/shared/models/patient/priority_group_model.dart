@@ -56,7 +56,7 @@ class PriorityGroup implements GenericModel {
 
   factory PriorityGroup.fromMap(Map<String, dynamic> map) {
     return PriorityGroup(
-      id: map['id']?.toInt() ?? 0,
+      id: map['id'] ?? 0,
       groupCode: map['groupCode'] ?? '',
       name: map['name'] ?? '',
       description: map['description'] ?? '',

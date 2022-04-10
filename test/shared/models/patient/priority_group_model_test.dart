@@ -9,7 +9,7 @@ void main() {
       id: 1,
       groupCode: "Pessoas com mais de 60 anos",
       name: "Idosos",
-      description: "Grupo para pessoas com mais de 60 anos",
+      description: "Grupo de pessoas com mais de 60 anos",
     );
   });
 
@@ -21,7 +21,7 @@ void main() {
       expect(validPriorityGroup.name, "Idosos");
       expect(
         validPriorityGroup.description,
-        "Grupo para pessoas com mais de 60 anos",
+        "Grupo de pessoas com mais de 60 anos",
       );
     });
 
