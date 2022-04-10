@@ -35,7 +35,7 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
         priorityCategoryMap["priorityGroup"],
       );
 
-      priorityCategoryMap["priorityGroup"] = priorityGroup;
+      priorityCategoryMap["priorityGroup"] = priorityGroup.toMap();
 
       final priorityCategory = PriorityCategory.fromMap(priorityCategoryMap);
 

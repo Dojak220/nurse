@@ -51,11 +51,11 @@ class Patient implements GenericModel {
 
   factory Patient.fromMap(Map<String, dynamic> map) {
     return Patient(
-      id: map['id']?.toInt() ?? 0,
+      id: map['id'] ?? 0,
       cns: map['cns'] ?? "",
       priorityCategory: PriorityCategory.fromMap(map['priorityCategory']),
-      maternalCondition:
-          MaternalConditionExtension.fromString(map['maternalCondition']),
+      maternalCondition: MaternalConditionExtension.fromString(
+          map['maternalCondition'] ?? MaternalCondition.NENHUM.name),
       person: Person.fromMap(map['person']),
     );
   }

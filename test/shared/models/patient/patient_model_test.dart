@@ -2,20 +2,31 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/models/patient/patient_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
+import 'package:nurse/shared/models/patient/priority_category_model.dart';
 import 'package:nurse/shared/models/patient/priority_group_model.dart';
 
 void main() {
+  late PriorityCategory expectedPriorityCategory;
+  late PriorityGroup expectedPriorityGroup;
   late Patient validPatient;
 
   setUp(() {
+    expectedPriorityGroup = PriorityGroup(
+      id: 1,
+      groupCode: "Pessoas com mais de 60 anos",
+    );
+    expectedPriorityCategory = PriorityCategory(
+      id: 1,
+      priorityGroup: expectedPriorityGroup,
+      categoryCode: "Pessoas idosas",
+      name: "Idosos",
+      description: "Categoria para pessoas idosas",
+    );
     validPatient = Patient(
       id: 1,
       cns: "748477761910001",
       maternalCondition: MaternalCondition.GESTANTE,
-      priorityGroup: PriorityGroup(
-        id: 1,
-        groupCode: "Pessoas com mais de 60 anos",
-      ),
+      priorityCategory: expectedPriorityCategory,
       person: Person(
         id: 1,
         cpf: "67732120817",
@@ -38,11 +49,8 @@ void main() {
       expect(validPatient.id, 1);
       expect(validPatient.cns, "748477761910001");
       expect(validPatient.maternalCondition, MaternalCondition.GESTANTE);
-      expect(validPatient.priorityGroup.id, 1);
-      expect(
-        validPatient.priorityGroup.groupCode,
-        "Pessoas com mais de 60 anos",
-      );
+      expect(validPatient.priorityCategory.id, 1);
+      expect(validPatient.priorityCategory.categoryCode, "Pessoas idosas");
       expect(validPatient.person.id, 1);
       expect(validPatient.person.cpf, "67732120817");
       expect(validPatient.person.name, "Name Middlename Lastname");

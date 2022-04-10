@@ -4,9 +4,14 @@ import 'package:mockito/mockito.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/models/patient/patient_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
+import 'package:nurse/shared/models/patient/priority_category_model.dart';
 import 'package:nurse/shared/models/patient/priority_group_model.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
+import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
 import 'package:nurse/shared/repositories/database/patient/database_patient_repository.dart';
+import 'package:nurse/shared/repositories/database/patient/database_person_repository.dart';
+import 'package:nurse/shared/repositories/database/patient/database_priority_category_repository.dart';
+import 'package:nurse/shared/repositories/database/patient/database_priority_group_repository.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
 import 'database_patient_repository_test.mocks.dart';
@@ -23,10 +28,10 @@ void main() {
   });
 
   testCreatePatient(db, repository);
-  // testDeletePatient(db, repository);
-  // testGetPatient(db, repository);
-  // testGetPatients(db, repository);
-  // testUpdatePatient(db, repository);
+  testDeletePatient(db, repository);
+  testGetPatient(db, repository);
+  testGetPatients(db, repository);
+  testUpdatePatient(db, repository);
 }
 
 void testCreatePatient(
@@ -36,16 +41,25 @@ void testCreatePatient(
   group("createPatient function:", () {
     final int validPatientId = 1;
     final int validPriorityGroupId = 1;
+    final int validPriorityCategoryId = 1;
     final int validLocalityId = 1;
 
-    final expectedPriorityGroup = PriorityGroup(
+    final validPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
       groupCode: "Pessoas com mais de 60 anos",
-      name: "",
-      description: "",
+      name: "Idosos",
+      description: "Grupo de pessoas com mais de 60 anos",
     );
 
-    final expectedLocality = Locality(
+    final validPriorityCategory = PriorityCategory(
+      id: validPriorityCategoryId,
+      priorityGroup: validPriorityGroup,
+      categoryCode: "Pessoas idosas",
+      name: "Idosos",
+      description: "Categoria para pessoas idosas",
+    );
+
+    final validLocality = Locality(
       id: validLocalityId,
       name: "Local",
       city: "Brasília",
@@ -57,13 +71,13 @@ void testCreatePatient(
       id: validPatientId,
       cns: "138068523490004",
       maternalCondition: MaternalCondition.GESTANTE,
-      priorityGroup: expectedPriorityGroup,
+      priorityCategory: validPriorityCategory,
       person: Person(
         id: validPatientId,
         cpf: "44407857862",
         name: "Teste",
         birthDate: DateTime(2000),
-        locality: expectedLocality,
+        locality: validLocality,
         gender: Gender.MALE,
         motherName: "Mãe",
         fatherName: "Pai",
@@ -96,404 +110,481 @@ void testCreatePatient(
 
 void testDeletePatient(
   MockDatabase db,
-  MockDatabaseManager dbManager,
   DatabasePatientRepository repository,
 ) {
-//   group("deletePatient function:", () {
-//     final int validPatientId = 1;
-//     final int invalidPatientId = 2;
+  group("deletePatient function:", () {
+    final int validPatientId = 1;
+    final int invalidPatientId = 2;
 
-//     group('try to delete valid patient', () {
-//       setUp(() {
-//         when(db.delete(
-//           DatabasePatientRepository.TABLE,
-//           where: anyNamed("where"),
-//           whereArgs: [validPatientId],
-//         )).thenAnswer((_) => Future.value(1));
-//       });
+    group('try to delete valid patient', () {
+      setUp(() {
+        when(db.delete(
+          DatabasePatientRepository.TABLE,
+          where: anyNamed("where"),
+          whereArgs: [validPatientId],
+        )).thenAnswer((_) => Future.value(1));
+      });
 
-//       test("should delete an patient entry and returns 1", () async {
-//         final deletedCount =
-//             await repository.deletePatient(validPatientId);
+      test("should delete an patient entry and returns 1", () async {
+        final deletedCount = await repository.deletePatient(validPatientId);
 
-//         expect(deletedCount, 1);
-//       });
-//     });
+        expect(deletedCount, 1);
+      });
+    });
 
-//     group('try to delete invalid patient', () {
-//       setUp(() {
-//         when(db.delete(
-//           DatabasePatientRepository.TABLE,
-//           where: anyNamed("where"),
-//           whereArgs: [invalidPatientId],
-//         )).thenAnswer((_) => Future.value(0));
-//       });
+    group('try to delete invalid patient', () {
+      setUp(() {
+        when(db.delete(
+          DatabasePatientRepository.TABLE,
+          where: anyNamed("where"),
+          whereArgs: [invalidPatientId],
+        )).thenAnswer((_) => Future.value(0));
+      });
 
-//       test("should throw exception if id is 0", () async {
-//         expect(
-//           () async => await repository.deletePatient(0),
-//           throwsException,
-//         );
-//       });
+      test("should throw exception if id is 0", () async {
+        expect(
+          () async => await repository.deletePatient(0),
+          throwsException,
+        );
+      });
 
-//       test("should throw exception if id is negative", () async {
-//         expect(
-//           () async => await repository.deletePatient(-1),
-//           throwsException,
-//         );
-//       });
+      test("should throw exception if id is negative", () async {
+        expect(
+          () async => await repository.deletePatient(-1),
+          throwsException,
+        );
+      });
 
-//       test("should return 0 if id doesnt exist", () async {
-//         final deletedCount =
-//             await repository.deletePatient(invalidPatientId);
+      test("should return 0 if id doesnt exist", () async {
+        final deletedCount = await repository.deletePatient(invalidPatientId);
 
-//         expect(deletedCount, 0);
-//       });
-//     });
-//   });
+        expect(deletedCount, 0);
+      });
+    });
+  });
 }
 
-// void testGetPatient(
-//   MockDatabase db,
-//   MockDatabaseManager dbManager,
-//   DatabasePatientRepository repository,
-// ) {
-//   group("getPatient function:", () {
-//     final int validPatientId = 1;
-//     final int validLocalityId = 1;
-//     final expectedLocality = Locality(
-//       validLocalityId,
-//       "Local",
-//       "Brasília",
-//       "DF",
-//       "1234567",
-//     );
-//     final expectedPatient = Patient(
-//       validPatientId,
-//       "1234567",
-//       "Test",
-//       expectedLocality,
-//     );
+void testGetPatient(
+  MockDatabase db,
+  DatabasePatientRepository repository,
+) {
+  group("getPatient function:", () {
+    final int validPatientId = 1;
+    final int validPersonId = 1;
+    final int validLocalityId = 1;
+    final int validPriorityGroupId = 1;
+    final int validPriorityCategoryId = 1;
 
-//     group('try to get valid patient', () {
-//       setUp(() {
-//         when(db.query(
-//           DatabasePatientRepository.TABLE,
-//           where: anyNamed("where"),
-//           whereArgs: [validPatientId],
-//         )).thenAnswer((_) => Future.value([
-//               {
-//                 "id": validPatientId,
-//                 "cnes": "1234567",
-//                 "name": "Test",
-//                 "locality": validLocalityId,
-//               }
-//             ]));
-//         when(db.query(
-//           DatabaseLocalityRepository.TABLE,
-//           where: anyNamed("where"),
-//           whereArgs: [validLocalityId],
-//         )).thenAnswer((_) => Future.value([
-//               {
-//                 "id": validLocalityId,
-//                 "name": "Local",
-//                 "city": "Brasília",
-//                 "state": "DF",
-//                 "ibgeCode": "1234567",
-//               }
-//             ]));
-//       });
+    final validLocality = Locality(
+      id: validLocalityId,
+      name: "Locality Name",
+      city: "City Name",
+      state: "State Name",
+      ibgeCode: "1234567",
+    );
 
-//       test("should get an patient entry by its id", () async {
-//         final actualPatient =
-//             await repository.getEstaPatient(validPatientId);
+    final validPerson = Person(
+      id: validPersonId,
+      cpf: "73654421580",
+      name: "Name Middlename Lastname",
+      birthDate: DateTime(2000),
+      locality: validLocality,
+    );
 
-//         expect(actualPatient, isA<Patient>());
-//         expect(actualPatient, expectedPatient);
-//       });
-//     });
+    final validPriorityGroup = PriorityGroup(
+      id: validPriorityGroupId,
+      groupCode: "Pessoas com mais de 60 anos",
+      name: "Idosos",
+      description: "Grupo de pessoas com mais de 60 anos",
+    );
 
-//     group('try to get an invalid patient', () {
-//       setUp(() {
-//         when(db.query(
-//           DatabasePatientRepository.TABLE,
-//           where: anyNamed("where"),
-//           whereArgs: [anyOf(-1, 0, 2)],
-//         )).thenAnswer((_) => Future.value([]));
-//       });
+    final validPriorityCategory = PriorityCategory(
+      id: validPriorityCategoryId,
+      priorityGroup: validPriorityGroup,
+      categoryCode: "Pessoas idosas",
+      name: "Idosos",
+      description: "Categoria para pessoas idosas",
+    );
 
-//       test("should throw exception if id is 0", () async {
-//         expect(
-//           () async => await repository.getEstaPatient(0),
-//           throwsStateError,
-//         );
-//       });
+    final expectedPatient = Patient(
+      id: validPatientId,
+      cns: "734759395100004",
+      maternalCondition: MaternalCondition.GESTANTE,
+      person: validPerson,
+      priorityCategory: validPriorityCategory,
+    );
 
-//       test("should throw exception if id is negative", () async {
-//         expect(
-//           () async => await repository.getEstaPatient(-1),
-//           throwsStateError,
-//         );
-//       });
+    group('try to get valid patient', () {
+      setUp(() {
+        when(db.query(
+          DatabasePatientRepository.TABLE,
+          where: anyNamed("where"),
+          whereArgs: [validPatientId],
+        )).thenAnswer((_) => Future.value([
+              {
+                'id': expectedPatient.id,
+                'cns': expectedPatient.cns,
+                'maternalCondition': expectedPatient.maternalCondition.name,
+                'person': expectedPatient.person.id,
+                'priorityCategory': expectedPatient.priorityCategory,
+              }
+            ]));
 
-//       test("should throw exception if id doesn't exist", () async {
-//         expect(
-//           () async => await repository.getEstaPatient(2),
-//           throwsStateError,
-//         );
-//       });
-//     });
-//   });
-// }
+        when(db.query(
+          DatabasePersonRepository.TABLE,
+          where: anyNamed("where"),
+          whereArgs: [validPersonId],
+        )).thenAnswer(
+          (_) => Future.value([
+            {
+              'id': validPerson.id,
+              'cpf': validPerson.cpf,
+              'name': validPerson.name,
+              'birthDate': validPerson.birthDate.millisecondsSinceEpoch,
+              'locality': validPerson.locality.id,
+            }
+          ]),
+        );
+        when(db.query(
+          DatabasePriorityCategoryRepository.TABLE,
+          where: anyNamed("where"),
+          whereArgs: [validPriorityCategoryId],
+        )).thenAnswer(
+          (_) => Future.value([
+            {
+              'id': validPriorityCategory.id,
+              'priorityGroup': validPriorityCategory.priorityGroup.id,
+              'categoryCode': validPriorityCategory.categoryCode,
+              'name': validPriorityCategory.name,
+              'description': validPriorityCategory.description,
+            }
+          ]),
+        );
+        when(db.query(
+          DatabasePriorityGroupRepository.TABLE,
+          where: anyNamed("where"),
+          whereArgs: [validPersonId],
+        )).thenAnswer(
+          (_) => Future.value([
+            {
+              'id': validPriorityGroup.id,
+              'groupCode': validPriorityGroup.groupCode,
+              'name': validPriorityGroup.name,
+              'description': validPriorityGroup.description,
+            }
+          ]),
+        );
+        when(db.query(
+          DatabaseLocalityRepository.TABLE,
+          where: anyNamed("where"),
+          whereArgs: [validLocalityId],
+        )).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": validLocality.id,
+              "name": validLocality.name,
+              "city": validLocality.city,
+              "state": validLocality.state,
+              "ibgeCode": validLocality.ibgeCode,
+            }
+          ]),
+        );
+      });
 
-// void testGetPatients(
-//   MockDatabase db,
-//   MockDatabaseManager dbManager,
-//   DatabasePatientRepository repository,
-// ) {
-//   group("getPatients function:", () {
-//     final int validLocalityId = 1;
-//     final int validPatientId = 1;
-//     final expectedLocalities = [
-//       Locality(
-//         validLocalityId,
-//         "Local1",
-//         "Brasília",
-//         "DF",
-//         "1234567",
-//       ),
-//       Locality(
-//         validLocalityId + 1,
-//         "Local2",
-//         "Brasília",
-//         "DF",
-//         "1234567",
-//       ),
-//       Locality(
-//         validLocalityId + 2,
-//         "Local3",
-//         "Brasília",
-//         "DF",
-//         "1234567",
-//       ),
-//     ];
-//     final expectedPatients = [
-//       Patient(
-//         validPatientId,
-//         "1234567",
-//         "Test",
-//         expectedLocalities[0],
-//       ),
-//       Patient(
-//         validPatientId + 1,
-//         "1234568",
-//         "Test2",
-//         expectedLocalities[1],
-//       ),
-//     ];
+      test("should get a patient entry by its id", () async {
+        final actualPatient = await repository.getPatientById(validPatientId);
 
-//     group('try to get all patients', () {
-//       setUp(() {
-//         when(db.query(
-//           DatabasePatientRepository.TABLE,
-//         )).thenAnswer((_) => Future.value([
-//               {
-//                 "id": validPatientId,
-//                 "cnes": "1234567",
-//                 "name": "Test",
-//                 "locality": validLocalityId,
-//               },
-//               {
-//                 "id": validPatientId + 1,
-//                 "cnes": "1234568",
-//                 "name": "Test2",
-//                 "locality": validLocalityId + 1,
-//               },
-//             ]));
-//         when(db.query(
-//           DatabaseLocalityRepository.TABLE,
-//         )).thenAnswer((_) => Future.value([
-//               {
-//                 "id": validLocalityId,
-//                 "name": "Local1",
-//                 "city": "Brasília",
-//                 "state": "DF",
-//                 "ibgeCode": "1234567",
-//               },
-//               {
-//                 "id": validLocalityId + 1,
-//                 "name": "Local2",
-//                 "city": "Brasília",
-//                 "state": "DF",
-//                 "ibgeCode": "1234567",
-//               },
-//               {
-//                 "id": validLocalityId + 2,
-//                 "name": "Local3",
-//                 "city": "Brasília",
-//                 "state": "DF",
-//                 "ibgeCode": "1234567",
-//               },
-//             ]));
-//       });
+        expect(actualPatient, isA<Patient>());
+        expect(actualPatient, expectedPatient);
+      });
+    });
 
-//       test("should return all patients", () async {
-//         final actualPatients = await repository.getEPatient();
+    group('try to get an invalid patient', () {
+      setUp(() {
+        when(db.query(
+          DatabasePatientRepository.TABLE,
+          where: anyNamed("where"),
+          whereArgs: [2],
+        )).thenAnswer((_) => Future.value([]));
+      });
 
-//         expect(actualPatients, isA<List<Patient>>());
-//         for (int i = 0; i < actualPatients.length; i++) {
-//           expect(actualPatients[i], expectedPatients[i]);
-//         }
-//       });
-//     });
+      test("should throw exception if id doesn't exist", () async {
+        expect(
+          () async => await repository.getPatientById(2),
+          throwsStateError,
+        );
+      });
+    });
+  });
+}
 
-//     group('try to get all patients when there is none', () {
-//       setUp(() {
-//         when(db.query(
-//           DatabasePatientRepository.TABLE,
-//         )).thenAnswer((_) => Future.value([]));
-//       });
+void testGetPatients(
+  MockDatabase db,
+  DatabasePatientRepository repository,
+) {
+  group("getPatients function:", () {
+    final int validLocalityId = 1;
+    final int validPersonId = 1;
+    final int validPriorityGroupId = 1;
+    final int validPriorityCategoryId = 1;
+    final int validPatientId = 1;
 
-//       test("should return an empty list", () async {
-//         final actualPatients = await repository.getEPatient();
+    final validLocality = Locality(
+      id: validLocalityId,
+      name: "Locality Name",
+      city: "City Name",
+      state: "State Name",
+      ibgeCode: "1234567",
+    );
 
-//         expect(actualPatients, isA<List<Patient>>());
-//         expect(actualPatients, isEmpty);
-//       });
-//     });
-//   });
-// }
+    final validPriorityGroup = PriorityGroup(
+      id: validPriorityGroupId,
+      groupCode: "Pessoas com mais de 60 anos",
+      name: "Idosos",
+      description: "Grupo de pessoas com mais de 60 anos",
+    );
 
-// void testUpdatePatient(
-//   MockDatabase db,
-//   MockDatabaseManager dbManager,
-//   DatabasePatientRepository repository,
-// ) {
-//   group("updatePatient function:", () {
-//     final int validPatientId = 1;
-//     final int validLocalityId = 1;
-//     final expectedLocality = Locality(
-//       validLocalityId,
-//       "Local",
-//       "Brasília",
-//       "DF",
-//       "1234567",
-//     );
-//     final validPatient = Patient(
-//       validPatientId,
-//       "1234567",
-//       "Old Name",
-//       expectedLocality,
-//     );
+    final validPersons = [
+      Person(
+        id: validPersonId,
+        cpf: "73654421580",
+        name: "Name Middlename Lastname",
+        birthDate: DateTime(2000),
+        locality: validLocality,
+      ),
+      Person(
+        id: validPersonId + 1,
+        cpf: "81251763731",
+        name: "Middlename Lastname",
+        birthDate: DateTime(2000),
+        locality: validLocality,
+      ),
+      Person(
+        id: validPersonId + 2,
+        cpf: "28771177825",
+        name: "Name Lastname",
+        birthDate: DateTime(2000),
+        locality: validLocality,
+      ),
+    ];
 
-//     group('try to update a valid patient', () {
-//       setUp(() {
-//         when(db.update(
-//           DatabasePatientRepository.TABLE,
-//           validPatient.copyWith(name: "Updated").toMap(),
-//           where: anyNamed("where"),
-//           whereArgs: [validPatientId],
-//         )).thenAnswer((_) => Future.value(1));
-//       });
+    final validPriorityCategory = [
+      PriorityCategory(
+        id: validPriorityCategoryId,
+        priorityGroup: validPriorityGroup,
+        categoryCode: "Pessoas idosas",
+        name: "Idosos",
+        description: "Categoria para pessoas idosas",
+      ),
+      PriorityCategory(
+        id: validPriorityCategoryId + 1,
+        priorityGroup: validPriorityGroup,
+        categoryCode: "Pessoas menores de idade",
+        name: "Adolescentes",
+        description: "Categoria de adolescentes",
+      ),
+      PriorityCategory(
+        id: validPriorityCategoryId + 2,
+        priorityGroup: validPriorityGroup,
+        categoryCode: "Pessoas com menos de 12 anos",
+        name: "Crianças",
+        description: "Categoria de crianças",
+      ),
+    ];
+    final expectedPatients = [
+      Patient(
+        id: validPatientId,
+        cns: "734759395100004",
+        maternalCondition: MaternalCondition.GESTANTE,
+        person: validPersons[0],
+        priorityCategory: validPriorityCategory[0],
+      ),
+      Patient(
+        id: validPatientId + 1,
+        cns: "982223824070006",
+        maternalCondition: MaternalCondition.GESTANTE,
+        person: validPersons[1],
+        priorityCategory: validPriorityCategory[1],
+      ),
+      Patient(
+        id: validPatientId + 2,
+        cns: "293934886890002",
+        maternalCondition: MaternalCondition.GESTANTE,
+        person: validPersons[2],
+        priorityCategory: validPriorityCategory[2],
+      ),
+    ];
 
-//       test("should update a patient entry and returns 1", () async {
-//         final createdId = await repository.updatePatient(
-//           validPatient.copyWith(name: "Updated"),
-//         );
+    group('try to get all patients', () {
+      setUp(() {
+        when(db.query(
+          DatabasePatientRepository.TABLE,
+        )).thenAnswer((_) => Future.value([
+              {
+                "id": expectedPatients[0].id,
+                "cns": expectedPatients[0].cns,
+                "maternalCondition": expectedPatients[0].maternalCondition,
+                "person": expectedPatients[0].person,
+                "priorityCategory": expectedPatients[0].priorityCategory,
+              },
+              {
+                "id": expectedPatients[1].id,
+                "cns": expectedPatients[1].cns,
+                "maternalCondition": expectedPatients[1].maternalCondition,
+                "person": expectedPatients[1].person,
+                "priorityCategory": expectedPatients[1].priorityCategory,
+              },
+              {
+                "id": expectedPatients[2].id,
+                "cns": expectedPatients[2].cns,
+                "maternalCondition": expectedPatients[2].maternalCondition,
+                "person": expectedPatients[2].person,
+                "priorityCategory": expectedPatients[2].priorityCategory,
+              },
+            ]));
+        when(db.query(
+          DatabasePersonRepository.TABLE,
+        )).thenAnswer((_) => Future.value([
+              {
+                "id": validPersons[0].id,
+                "cpf": validPersons[0].cpf,
+                "name": validPersons[0].name,
+                "birthDate": validPersons[0].birthDate,
+                "locality": validPersons[0].locality,
+              },
+              {
+                "id": validPersons[1].id,
+                "cpf": validPersons[1].cpf,
+                "name": validPersons[1].name,
+                "birthDate": validPersons[1].birthDate,
+                "locality": validPersons[1].locality,
+              },
+              {
+                "id": validPersons[2].id,
+                "cpf": validPersons[2].cpf,
+                "name": validPersons[2].name,
+                "birthDate": validPersons[2].birthDate,
+                "locality": validPersons[2].locality,
+              },
+            ]));
+      });
 
-//         expect(createdId, 1);
-//       });
-//     });
-//     group('try to update with invalid patient', () {
-//       test("should throw exception if id is 0", () async {
-//         expect(
-//           () async => await repository.updatePatient(
-//             validPatient.copyWith(id: 0),
-//           ),
-//           throwsException,
-//           reason: "there is no patient with id 0",
-//         );
-//       });
+      test("should return all patients", () async {
+        final actualPatients = await repository.getPatients();
 
-//       test("should throw exception if id is negative", () async {
-//         expect(
-//           () async => await repository.updatePatient(
-//             validPatient.copyWith(id: -1),
-//           ),
-//           throwsException,
-//           reason: "there is no patient with negative id",
-//         );
-//       });
+        expect(actualPatients, isA<List<Patient>>());
+        for (int i = 0; i < actualPatients.length; i++) {
+          expect(actualPatients[i], expectedPatients[i]);
+        }
+      });
+    });
 
-//       test("should throw exception if cnes length != 7", () async {
-//         expect(
-//           () async => await repository.updatePatient(
-//             validPatient.copyWith(cnes: "123456"),
-//           ),
-//           throwsException,
-//         );
+    group('try to get all patients when there is none', () {
+      setUp(() {
+        when(db.query(
+          DatabasePatientRepository.TABLE,
+        )).thenAnswer((_) => Future.value([]));
+      });
 
-//         expect(
-//           () async => await repository.updatePatient(
-//             validPatient.copyWith(cnes: " 23456 "),
-//           ),
-//           throwsException,
-//         );
+      test("should return an empty list", () async {
+        final actualPatients = await repository.getPatients();
 
-//         expect(
-//           () async => await repository.updatePatient(
-//             validPatient.copyWith(cnes: "123456789"),
-//           ),
-//           throwsException,
-//         );
-//       });
+        expect(actualPatients, isA<List<Patient>>());
+        expect(actualPatients, isEmpty);
+      });
+    });
+  });
+}
 
-//       test("should throw exception if cnes has no numeric characters",
-//           () async {
-//         expect(
-//           () async => await repository.updatePatient(
-//             validPatient.copyWith(cnes: "123456A"),
-//           ),
-//           throwsException,
-//         );
+void testUpdatePatient(
+  MockDatabase db,
+  DatabasePatientRepository repository,
+) {
+  group("updatePatient function:", () {
+    final int validPatientId = 1;
+    final int invalidPatientId = 2;
+    final int validPersonId = 1;
+    final int validLocalityId = 1;
+    final int validPriorityGroupId = 1;
+    final int validPriorityCategoryId = 1;
 
-//         expect(
-//           () async => await repository.updatePatient(
-//             validPatient.copyWith(cnes: "12 45 7"),
-//           ),
-//           throwsException,
-//         );
-//       });
+    final validLocality = Locality(
+      id: validLocalityId,
+      name: "Locality Name",
+      city: "City Name",
+      state: "State Name",
+      ibgeCode: "1234567",
+    );
 
-//       test("should throw exception if name is empty", () async {
-//         expect(
-//           () async => await repository.updatePatient(
-//             validPatient.copyWith(name: ""),
-//           ),
-//           throwsException,
-//         );
-//       });
+    final validPerson = Person(
+      id: validPersonId,
+      cpf: "73654421580",
+      name: "Name Middlename Lastname",
+      birthDate: DateTime(2000),
+      locality: validLocality,
+    );
 
-//       test("should throw exception if name has only spaces", () async {
-//         expect(
-//           () async => await repository.updatePatient(
-//             validPatient.copyWith(name: "   "),
-//           ),
-//           throwsException,
-//         );
-//       });
+    final validPriorityGroup = PriorityGroup(
+      id: validPriorityGroupId,
+      groupCode: "Pessoas com mais de 60 anos",
+      name: "Idosos",
+      description: "Grupo de pessoas com mais de 60 anos",
+    );
 
-//       test("should throw exception if name has weird characters", () async {
-//         expect(
-//           () async => await repository.updatePatient(
-//             validPatient.copyWith(
-//               name:
-//                   "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
-//             ),
-//           ),
-//           throwsException,
-//         );
-//       }, skip: true);
-//     });
-//   });
-// }
+    final validPriorityCategory = PriorityCategory(
+      id: validPriorityCategoryId,
+      priorityGroup: validPriorityGroup,
+      categoryCode: "Pessoas idosas",
+      name: "Idosos",
+      description: "Categoria para pessoas idosas",
+    );
+
+    final validPatient = Patient(
+      id: validPatientId,
+      cns: "734759395100004",
+      maternalCondition: MaternalCondition.GESTANTE,
+      person: validPerson,
+      priorityCategory: validPriorityCategory,
+    );
+
+    group('try to update a valid patient', () {
+      setUp(() {
+        when(db.update(
+          DatabasePatientRepository.TABLE,
+          validPatient.copyWith(cns: "793499756240009").toMap(),
+          where: anyNamed("where"),
+          whereArgs: [validPatientId],
+        )).thenAnswer((_) => Future.value(1));
+      });
+
+      test("should update a patient entry and returns 1", () async {
+        final createdId = await repository.updatePatient(
+          validPatient.copyWith(cns: "793499756240009"),
+        );
+
+        expect(createdId, 1);
+      });
+    });
+
+    group('try to update with invalid patient', () {
+      setUp(() {
+        when(db.update(
+          DatabasePatientRepository.TABLE,
+          validPatient
+              .copyWith(id: invalidPatientId, cns: "793499756240009")
+              .toMap(),
+          where: anyNamed("where"),
+          whereArgs: [invalidPatientId],
+        )).thenAnswer((_) => Future.value(0));
+      });
+
+      test("should return 0 if id doesn't exist", () async {
+        final updatedCount = await repository.updatePatient(
+          validPatient.copyWith(id: invalidPatientId, cns: "793499756240009"),
+        );
+
+        expect(updatedCount, 0);
+      });
+    });
+  });
+}
