@@ -108,6 +108,11 @@ class Person implements GenericModel {
         motherName.hashCode ^
         fatherName.hashCode;
   }
+
+  @override
+  String toString() {
+    return 'Person(id: $id, cpf: $cpf, name: $name, birthDate: $birthDate, locality: $locality, gender: ${gender.name}, motherName: $motherName, fatherName: $fatherName)';
+  }
 }
 
 enum Gender { FEMALE, MALE, NONE }

@@ -87,4 +87,9 @@ class Locality implements GenericModel {
         state.hashCode ^
         ibgeCode.hashCode;
   }
+
+  @override
+  String toString() {
+    return 'Locality(id: $id, name: $name, city: $city, state: $state, ibgeCode: $ibgeCode)';
+  }
 }
