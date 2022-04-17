@@ -34,8 +34,9 @@ class DatabaseApplierRepository extends DatabaseInterface
       final applierMap = await get(id);
 
       final person = await _getPerson(applierMap["person"]);
-      final establishment =
-          await _getEstablishment(applierMap["establishment"]);
+      final establishment = await _getEstablishment(
+        applierMap["establishment"],
+      );
 
       applierMap["person"] = person.toMap();
       applierMap["establishment"] = establishment.toMap();

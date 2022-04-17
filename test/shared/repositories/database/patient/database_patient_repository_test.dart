@@ -226,7 +226,7 @@ void testGetPatient(
                 'cns': expectedPatient.cns,
                 'maternalCondition': expectedPatient.maternalCondition.name,
                 'person': expectedPatient.person.id,
-                'priorityCategory': expectedPatient.priorityCategory,
+                'priorityCategory': expectedPatient.priorityCategory.id,
               }
             ]));
 

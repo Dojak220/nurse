@@ -34,7 +34,9 @@ class DatabasePatientRepository extends DatabaseInterface
       final patientMap = await get(id);
 
       final person = await _getPerson(patientMap["person"]);
-      final priorityCategory = await _getPriorityCategory(patientMap["person"]);
+      final priorityCategory = await _getPriorityCategory(
+        patientMap["priorityCategory"],
+      );
 
       patientMap['person'] = person.toMap();
       patientMap['priorityCategory'] = priorityCategory.toMap();
