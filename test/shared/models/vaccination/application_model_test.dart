@@ -47,27 +47,28 @@ void main() {
   );
 
   final expectedApplier = Applier(
+    id: 1,
+    cns: "279197866950004",
+    person: Person(
       id: 1,
-      cns: "279197866950004",
-      person: Person(
+      cpf: "82675387630",
+      name: "Name Middlename Lastname",
+      birthDate: DateTime(2000),
+      locality: expectedLocality,
+    ),
+    establishment: Establishment(
+      id: 1,
+      cnes: "1234567",
+      name: "Old Name",
+      locality: Locality(
         id: 1,
-        cpf: "82675387630",
-        name: "Name Middlename Lastname",
-        birthDate: DateTime(2000),
-        locality: expectedLocality,
+        name: "Locality Name",
+        city: "City Name",
+        state: "State Name",
+        ibgeCode: "1234567",
       ),
-      establishment: Establishment(
-        id: 1,
-        cnes: "1234567",
-        name: "Old Name",
-        locality: Locality(
-          id: 1,
-          name: "Locality Name",
-          city: "City Name",
-          state: "State Name",
-          ibgeCode: "1234567",
-        ),
-      ));
+    ),
+  );
 
   setUp(() {
     validApplication = Application(
