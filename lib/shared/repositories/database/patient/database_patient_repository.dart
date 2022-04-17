@@ -5,7 +5,7 @@ import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/database/patient/database_person_repository.dart';
 import 'package:nurse/shared/repositories/database/patient/database_priority_category_repository.dart';
-import 'package:nurse/shared/repositories/patient_repository.dart';
+import 'package:nurse/shared/repositories/patient/patient_repository.dart';
 
 class DatabasePatientRepository extends DatabaseInterface
     implements PatientRepository {

@@ -3,7 +3,7 @@ import 'package:nurse/shared/models/patient/priority_group_model.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/database/patient/database_priority_group_repository.dart';
-import 'package:nurse/shared/repositories/priority_category_repository.dart';
+import 'package:nurse/shared/repositories/patient/priority_category_repository.dart';
 
 class DatabasePriorityCategoryRepository extends DatabaseInterface
     implements PriorityCategoryRepository {

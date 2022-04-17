@@ -3,7 +3,7 @@ import 'package:nurse/shared/models/patient/person_model.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
-import 'package:nurse/shared/repositories/person_repository.dart';
+import 'package:nurse/shared/repositories/patient/person_repository.dart';
 
 class DatabasePersonRepository extends DatabaseInterface
     implements PersonRepository {
