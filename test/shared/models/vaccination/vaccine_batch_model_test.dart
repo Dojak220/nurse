@@ -56,6 +56,15 @@ void main() {
       );
     });
 
+    test("should throw exception if batchNo is non numerical", () {
+      expect(
+        () => validVaccineBatch.copyWith(batchNo: "abcdef"),
+        throwsException,
+        reason:
+            "it's not possible to create a vaccineBatch with a non numerical batchNo",
+      );
+    });
+
     test("should throw exception if batchNo has weird characters", () {
       expect(
         () => validVaccineBatch.copyWith(
