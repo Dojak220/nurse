@@ -64,11 +64,9 @@ class DatabasePersonRepository extends DatabaseInterface
         p["locality"] = locality;
       });
 
-      final persons = personMaps
-          .map(
-            (person) => Person.fromMap(person),
-          )
-          .toList();
+      final persons = personMaps.map((person) {
+        return Person.fromMap(person);
+      }).toList();
 
       return persons;
     } catch (e) {
