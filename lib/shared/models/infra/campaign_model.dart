@@ -31,9 +31,9 @@ class Campaign implements GenericModel {
       [
         ValidationPair(ValidatorType.Id, this.id),
         ValidationPair(ValidatorType.Name, this.title),
-        ValidationPair(ValidatorType.Description, this.description),
         ValidationPair(ValidatorType.Date, this.startDate),
         ValidationPair(ValidatorType.Date, this.endDate),
+        ValidationPair(ValidatorType.Description, this.description),
       ],
     );
   }
@@ -57,6 +57,7 @@ class Campaign implements GenericModel {
   @override
   Map<String, Object> toMap() {
     return {
+      'id': id,
       'title': title,
       'description': description,
       'startDate': startDate.millisecondsSinceEpoch,
@@ -72,6 +73,27 @@ class Campaign implements GenericModel {
       startDate: DateTime.fromMillisecondsSinceEpoch(map['startDate']),
       endDate: DateTime.fromMillisecondsSinceEpoch(map['endDate']),
     );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Campaign &&
+        other.id == id &&
+        other.title == title &&
+        other.description == description &&
+        other.startDate == startDate &&
+        other.endDate == endDate;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        title.hashCode ^
+        description.hashCode ^
+        startDate.hashCode ^
+        endDate.hashCode;
   }
 
   @override

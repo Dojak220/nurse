@@ -11,7 +11,6 @@ void main() {
       title: "Campaign Title",
       description: "Campaign Description",
       startDate: startDate,
-      endDate: startDate.add(Duration(days: 365)),
     );
   });
 
