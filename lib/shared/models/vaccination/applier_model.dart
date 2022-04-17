@@ -55,11 +55,6 @@ class Applier implements GenericModel {
   }
 
   @override
-  String toString() {
-    return 'Applier(id: $id, cns: $cns, person: $person, establishment: $establishment)';
-  }
-
-  @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
@@ -76,5 +71,10 @@ class Applier implements GenericModel {
         cns.hashCode ^
         person.hashCode ^
         establishment.hashCode;
+  }
+
+  @override
+  String toString() {
+    return 'Applier(id: $id, cns: $cns, person: $person, establishment: $establishment)';
   }
 }
