@@ -26,6 +26,7 @@ flutter:
   assets:
     - assets/script_v2.sql
     - assets/images/
+    - .env
 
   fonts:
     - family: Righteous
