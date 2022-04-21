@@ -91,7 +91,6 @@ void _testValidatorOfTypeString(ValidatorType type) {
 
   test("should throw an [ValidatorException] if [value] isnt [String].", () {
     value = true;
-    print(type);
     expect(
       () => Validator.validate(type, value),
       throwsA(
