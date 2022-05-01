@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/theme/colors.dart';
+import 'package:nurse/app/theme/app_colors.dart';
 
 class VaccinationEntryDetails extends StatelessWidget {
   const VaccinationEntryDetails({
@@ -14,11 +14,11 @@ class VaccinationEntryDetails extends StatelessWidget {
         children: [
           Text("Cadastro sendo realizado"),
           Container(
-            color: CustomColors.cinza,
+            color: AppColors.cinzaClaro,
             child: Padding(
               padding: EdgeInsets.fromLTRB(15.0, 20, 15.0, 20),
               child: Container(
-                color: CustomColors.white,
+                color: AppColors.white,
                 child: Column(
                   children: [
                     Text("Um Dois Três de Oliveira Quatro"),
