@@ -8,10 +8,10 @@
 // Azul sodalina: #253668
 
 import 'package:flutter/material.dart';
-import 'package:nurse/app/theme/colors.dart';
+import 'package:nurse/app/theme/app_colors.dart';
 
 class AppTheme {
-  AppTheme._();
+  const AppTheme._();
 
   static ThemeData themeData = ThemeData(
     fontFamily: 'OpenSans',
@@ -20,7 +20,8 @@ class AppTheme {
   );
 
   static AppBarTheme _appBarTheme = AppBarTheme(
-    backgroundColor: CustomColors.cinzaGargula,
+    backgroundColor: AppColors.verdeClaro,
+    shadowColor: AppColors.transparent,
     titleTextStyle: _appBarTextStyle,
     toolbarTextStyle: _appBarTextStyle,
     centerTitle: true,
@@ -29,18 +30,18 @@ class AppTheme {
 
   static TextStyle _appBarTextStyle = const TextStyle(
     fontSize: 45.0,
-    fontFamily: 'Righteous',
-    fontWeight: FontWeight.normal,
-    fontStyle: FontStyle.normal,
-    color: CustomColors.verdeEsmeralda,
-  );
-
-  static TextStyle titleTextStyle = const TextStyle(
-    fontSize: 28.0,
     fontFamily: 'Roboto',
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
-    color: CustomColors.pretoSaude,
+    color: AppColors.verdeEscuro,
+  );
+
+  static TextStyle titleTextStyle = const TextStyle(
+    fontSize: 17.0,
+    fontFamily: 'Roboto',
+    fontWeight: FontWeight.bold,
+    fontStyle: FontStyle.normal,
+    color: AppColors.cinzaEscuro,
   );
 
   static TextStyle defaultTextStyle = const TextStyle(
@@ -48,37 +49,50 @@ class AppTheme {
     fontFamily: 'Roboto',
     fontWeight: FontWeight.normal,
     fontStyle: FontStyle.normal,
-    color: CustomColors.pretoSaude,
+    color: AppColors.black,
   );
 
   static TextStyle infoButtonNumberStyle = const TextStyle(
-    fontSize: 25.0,
+    fontSize: 41.0,
     fontFamily: 'Roboto',
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
-    color: CustomColors.verdeEsmeralda,
+    height: 0.0,
+    color: AppColors.verdeEscuro,
   );
 
-  static TextStyle tileHeaderStyle = const TextStyle(
-    fontSize: 13.0,
+  static TextStyle infoButtonTextStyle = const TextStyle(
+    fontSize: 14.0,
     fontFamily: 'Roboto',
     fontWeight: FontWeight.normal,
     fontStyle: FontStyle.normal,
-    color: CustomColors.cinzaGargula,
+    height: 1.0,
+    color: AppColors.cinzaEscuro,
+  );
+
+  static TextStyle tileHeaderStyle = const TextStyle(
+    fontSize: 10.0,
+    fontFamily: 'Roboto',
+    fontWeight: FontWeight.normal,
+    fontStyle: FontStyle.normal,
+    color: AppColors.cinzaEscuro,
   );
 
   static TextStyle tileTitleStyle = const TextStyle(
     fontSize: 18.0,
     fontFamily: 'Roboto',
+    height: 0,
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
-    color: CustomColors.verdeEsmeralda,
+    color: AppColors.verdeEscuro,
   );
 
   static ButtonStyle mainButtonStyle(BuildContext context) =>
       ElevatedButton.styleFrom(
-        primary: CustomColors.cinza, // background
-        onPrimary: CustomColors.pretoSaude,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        primary: AppColors.verdeEscuro,
         fixedSize: Size(
           MediaQuery.of(context).size.width,
           50,
