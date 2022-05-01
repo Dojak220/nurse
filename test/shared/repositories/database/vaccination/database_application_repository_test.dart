@@ -11,6 +11,7 @@ import 'package:nurse/shared/models/patient/priority_group_model.dart';
 import 'package:nurse/shared/models/vaccination/application_model.dart';
 import 'package:nurse/shared/models/vaccination/applier_model.dart';
 import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
+import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/infra/database_campaign_repository.dart';
 import 'package:nurse/shared/repositories/database/infra/database_establishment_repository.dart';
@@ -22,6 +23,7 @@ import 'package:nurse/shared/repositories/database/patient/database_priority_gro
 import 'package:nurse/shared/repositories/database/vaccination/database_application_repository.dart';
 import 'package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart';
 import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_batch_repository.dart';
+import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_repository.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
 import 'database_application_repository_test.mocks.dart';
@@ -51,6 +53,7 @@ void testCreateApplication(
   group("createApplication function:", () {
     final int validApplicationId = 1;
     final int validPatientId = 1;
+    final int validVaccineId = 1;
     final int validApplierId = 1;
 
     final validLocality = Locality(
@@ -109,6 +112,18 @@ void testCreateApplication(
       startDate: DateTime(2022),
     );
 
+    final validVaccine = Vaccine(
+      id: validVaccineId,
+      sipniCode: "123456",
+      name: "Vaccine Name",
+      laboratory: "Laboratory Name",
+      vaccineBatch: VaccineBatch(
+        id: 1,
+        batchNo: "01234",
+        quantity: 10,
+      ),
+    );
+
     final validVaccineBatch = VaccineBatch(
       id: 1,
       batchNo: "123456",
@@ -118,6 +133,7 @@ void testCreateApplication(
     final expectedApplication = Application(
       id: validApplicationId,
       patient: validPatient,
+      vaccine: validVaccine,
       applicationDate: DateTime(2022, 3, 4),
       applier: validApplier,
       vaccineBatch: validVaccineBatch,
@@ -195,6 +211,7 @@ void testGetApplication(
     final int validApplierId = 1;
     final int validPatientId = 1;
     final int validCampaignId = 1;
+    final int validVaccineId = 1;
     final int validVaccineBatchId = 1;
 
     final validLocalityId = 1;
@@ -277,9 +294,18 @@ void testGetApplication(
       quantity: 20,
     );
 
+    final validVaccine = Vaccine(
+      id: validVaccineId,
+      sipniCode: "123456",
+      name: "Vaccine Name",
+      laboratory: "Laboratory Name",
+      vaccineBatch: validVaccineBatch,
+    );
+
     final expectedApplication = Application(
       id: validApplicationId,
       patient: validPatient,
+      vaccine: validVaccine,
       applicationDate: DateTime(2022, 3, 4),
       applier: validApplier,
       vaccineBatch: validVaccineBatch,
@@ -299,6 +325,7 @@ void testGetApplication(
             {
               'id': expectedApplication.id,
               'patient': expectedApplication.patient.id,
+              'vaccine': expectedApplication.vaccine.id,
               'applicationDate':
                   expectedApplication.applicationDate.millisecondsSinceEpoch,
               'applier': expectedApplication.applier.id,
@@ -446,6 +473,22 @@ void testGetApplication(
             "description": validCampaign.description,
             "startDate": validCampaign.startDate.millisecondsSinceEpoch,
             "endDate": validCampaign.endDate.millisecondsSinceEpoch,
+          }
+        ]),
+      );
+
+      when(db.query(
+        DatabaseVaccineRepository.TABLE,
+        where: anyNamed("where"),
+        whereArgs: [validVaccineId],
+      )).thenAnswer(
+        (_) => Future.value([
+          {
+            "id": validVaccine.id,
+            "sipniCode": validVaccine.sipniCode,
+            "name": validVaccine.name,
+            "laboratory": validVaccine.laboratory,
+            "vaccineBatch": validVaccine.vaccineBatch.id,
           }
         ]),
       );
@@ -646,9 +689,37 @@ void testGetApplications(
       ),
     ];
 
+    final validVaccine = Vaccine(
+      id: 1,
+      sipniCode: "123456",
+      name: "Vaccine Name",
+      laboratory: "Laboratory Name",
+      vaccineBatch: VaccineBatch(
+        id: 1,
+        batchNo: "01234",
+        quantity: 10,
+      ),
+    );
+    final validVaccines = [
+      validVaccine,
+      validVaccine.copyWith(
+        id: 2,
+        sipniCode: "654321",
+        name: "Vaccine Name 2",
+        vaccineBatch: validVaccineBatches[1],
+      ),
+      validVaccine.copyWith(
+        id: 3,
+        sipniCode: "111222",
+        name: "Vaccine Name 3",
+        vaccineBatch: validVaccineBatches[2],
+      ),
+    ];
+
     final expectedApplication = Application(
       id: validApplicationId,
       patient: validPatients[0],
+      vaccine: validVaccines[0],
       applicationDate: DateTime(2022, 3, 4),
       applier: validAppliers[0],
       vaccineBatch: validVaccineBatches[0],
@@ -679,6 +750,7 @@ void testGetApplications(
             {
               'id': expectedApplications[0].id,
               'patient': expectedApplications[0].patient.id,
+              'vaccine': expectedApplications[0].vaccine.id,
               'applicationDate': expectedApplications[0]
                   .applicationDate
                   .millisecondsSinceEpoch,
@@ -691,6 +763,7 @@ void testGetApplications(
             {
               'id': expectedApplications[1].id,
               'patient': expectedApplications[1].patient.id,
+              'vaccine': expectedApplications[1].vaccine.id,
               'applicationDate': expectedApplications[1]
                   .applicationDate
                   .millisecondsSinceEpoch,
@@ -924,6 +997,34 @@ void testGetApplications(
       );
     });
 
+    when(db.query(
+      DatabaseVaccineRepository.TABLE,
+    )).thenAnswer(
+      (_) => Future.value([
+        {
+          "id": validVaccines[0].id,
+          "sipniCode": validVaccines[0].sipniCode,
+          "name": validVaccines[0].name,
+          "laboratory": validVaccines[0].laboratory,
+          "vaccineBatch": validVaccines[0].vaccineBatch.id,
+        },
+        {
+          "id": validVaccines[1].id,
+          "sipniCode": validVaccines[1].sipniCode,
+          "name": validVaccines[1].name,
+          "laboratory": validVaccines[1].laboratory,
+          "vaccineBatch": validVaccines[1].vaccineBatch.id,
+        },
+        {
+          "id": validVaccines[2].id,
+          "sipniCode": validVaccines[2].sipniCode,
+          "name": validVaccines[2].name,
+          "laboratory": validVaccines[2].laboratory,
+          "vaccineBatch": validVaccines[2].vaccineBatch.id,
+        },
+      ]),
+    );
+
     test("should return all applications", () async {
       final actualApplications = await repository.getApplications();
 
@@ -958,6 +1059,7 @@ void testUpdateApplication(
   group("updateApplication function:", () {
     final int validApplicationId = 1;
     final int validPatientId = 1;
+    final int validVaccineId = 1;
     final int validApplierId = 1;
 
     final validLocality = Locality(
@@ -1022,9 +1124,22 @@ void testUpdateApplication(
       quantity: 20,
     );
 
+    final validVaccine = Vaccine(
+      id: validVaccineId,
+      sipniCode: "123456",
+      name: "Vaccine Name",
+      laboratory: "Laboratory Name",
+      vaccineBatch: VaccineBatch(
+        id: 1,
+        batchNo: "01234",
+        quantity: 10,
+      ),
+    );
+
     final expectedApplication = Application(
       id: validApplicationId,
       patient: validPatient,
+      vaccine: validVaccine,
       applicationDate: DateTime(2022, 3, 4),
       applier: validApplier,
       vaccineBatch: validVaccineBatch,
