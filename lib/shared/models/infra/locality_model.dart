@@ -1,4 +1,5 @@
 import 'package:nurse/shared/models/generic_model.dart';
+import 'package:nurse/shared/utils/validator.dart';
 
 class Locality implements GenericModel {
   @override
@@ -8,35 +9,45 @@ class Locality implements GenericModel {
   final String state;
   final String ibgeCode;
 
-  Locality(
-    this.id,
-    this.name,
-    this.city,
-    this.state,
-    this.ibgeCode,
-  ) {
-    validateLocality();
+  Locality({
+    required this.id,
+    required this.name,
+    required this.city,
+    required this.state,
+    required this.ibgeCode,
+  }) {
+    _validateLocality();
   }
 
-  void validateLocality() {
-    if (id <= 0) {
-      throw Exception('Locality id must be greater than 0');
-    }
-
-    if (name.trim().isEmpty) {
-      throw Exception('Locality name must be filled');
-    }
-
-    if (city.trim().isEmpty) {
-      throw Exception('Locality city must be filled');
-    }
-
-    if (state.trim().isEmpty) {
-      throw Exception('Locality state must be filled');
-    }
+  void _validateLocality() {
+    Validator.validateAll(
+      [
+        ValidationPair(ValidatorType.Id, this.id),
+        ValidationPair(ValidatorType.Name, this.name),
+        ValidationPair(ValidatorType.Name, this.city),
+        ValidationPair(ValidatorType.Name, this.state),
+        ValidationPair(ValidatorType.IBGECode, this.ibgeCode),
+      ],
+    );
   }
 
-  Map<String, dynamic> toMap() {
+  Locality copyWith({
+    int? id,
+    String? name,
+    String? city,
+    String? state,
+    String? ibgeCode,
+  }) {
+    return Locality(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      city: city ?? this.city,
+      state: state ?? this.state,
+      ibgeCode: ibgeCode ?? this.ibgeCode,
+    );
+  }
+
+  Map<String, Object> toMap() {
     return {
       'id': id,
       'name': name,
@@ -48,17 +59,12 @@ class Locality implements GenericModel {
 
   factory Locality.fromMap(Map<String, dynamic> map) {
     return Locality(
-      map['id'] ?? 0,
-      map['name'] ?? '',
-      map['city'] ?? '',
-      map['state'] ?? '',
-      map['ibgeCode'] ?? '',
+      id: map['id'] ?? 0,
+      name: map['name'] ?? '',
+      city: map['city'] ?? '',
+      state: map['state'] ?? '',
+      ibgeCode: map['ibgeCode'] ?? '',
     );
-  }
-
-  @override
-  String toString() {
-    return 'Locality(id: $id, name: $name, city: $city, state: $state, ibgeCode: $ibgeCode)';
   }
 
   @override
@@ -82,19 +88,8 @@ class Locality implements GenericModel {
         ibgeCode.hashCode;
   }
 
-  Locality copyWith({
-    int? id,
-    String? name,
-    String? city,
-    String? state,
-    String? ibgeCode,
-  }) {
-    return Locality(
-      id ?? this.id,
-      name ?? this.name,
-      city ?? this.city,
-      state ?? this.state,
-      ibgeCode ?? this.ibgeCode,
-    );
+  @override
+  String toString() {
+    return 'Locality(id: $id, name: $name, city: $city, state: $state, ibgeCode: $ibgeCode)';
   }
 }

@@ -1,8 +1,5 @@
 abstract class GenericModel<T> {
-  final int id;
+  abstract final int id;
 
-  GenericModel({required this.id});
-
-  Map<String, dynamic> toMap();
-  String toString();
+  Map<String, Object> toMap();
 }

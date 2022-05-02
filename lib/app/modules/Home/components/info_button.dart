@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nurse/app/theme/app_theme.dart';
-import 'package:nurse/app/theme/colors.dart';
 
 class InfoButton extends StatelessWidget {
   const InfoButton({
@@ -15,38 +14,44 @@ class InfoButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
+      height: 80,
+      width: 94,
       decoration: new BoxDecoration(
-        borderRadius: new BorderRadius.only(
-          topLeft: const Radius.circular(4.0),
-          bottomLeft: const Radius.circular(4.0),
-        ),
-        color: CustomColors.white,
-      ),
-      margin: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Center(
-              child: Row(
-                children: [
-                  Text(
-                    '$info',
-                    style: AppTheme.infoButtonNumberStyle,
-                  ),
-                  Text(' '),
-                  Text('$text'),
-                ],
-              ),
+        borderRadius: new BorderRadius.circular(10),
+        color: Color(0xFFF5F5F5),
+        boxShadow: [
+          BoxShadow(
+            color: Color(0x29000000),
+            blurRadius: 6.0,
+            spreadRadius: 0,
+            blurStyle: BlurStyle.normal,
+            offset: Offset(
+              0.0,
+              3.0,
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.play_arrow),
-            color: CustomColors.azulSodalina,
-          )
+        ],
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 5.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        verticalDirection: VerticalDirection.down,
+        children: [
+          Flexible(
+            flex: 1,
+            child: Text(
+              '$info',
+              style: AppTheme.infoButtonNumberStyle,
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: Text(
+              '$text',
+              style: AppTheme.infoButtonTextStyle,
+            ),
+          ),
         ],
       ),
     );

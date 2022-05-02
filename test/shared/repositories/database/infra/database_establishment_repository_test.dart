@@ -21,38 +21,37 @@ void main() {
     when(dbManager.db).thenReturn(db);
   });
 
-  testCreateEstablishment(db, dbManager, repository);
-  testDeleteEstablishment(db, dbManager, repository);
-  testGetEstablishment(db, dbManager, repository);
-  testGetEstablishments(db, dbManager, repository);
-  testUpdateEstablishment(db, dbManager, repository);
+  testCreateEstablishment(db, repository);
+  testDeleteEstablishment(db, repository);
+  testGetEstablishment(db, repository);
+  testGetEstablishments(db, repository);
+  testUpdateEstablishment(db, repository);
 }
 
 void testCreateEstablishment(
   MockDatabase db,
-  MockDatabaseManager dbManager,
   DatabaseEstablishmentRepository repository,
 ) {
   group("createEstablishment function:", () {
     final int validEstablishmentId = 1;
     final int validLocalityId = 1;
     final expectedLocality = Locality(
-      validLocalityId,
-      "Local",
-      "Brasília",
-      "DF",
-      "IBGECode",
+      id: validLocalityId,
+      name: "Local",
+      city: "Brasília",
+      state: "DF",
+      ibgeCode: "1234567",
     );
     final validEstablishment = Establishment(
-      validEstablishmentId,
-      "1234567",
-      "Test",
-      expectedLocality,
+      id: validEstablishmentId,
+      cnes: "1234567",
+      name: "Test",
+      locality: expectedLocality,
     );
 
     group('try to create a valid establishment', () {
       setUp(() {
-        when(db.insert(any, any,
+        when(db.insert(DatabaseEstablishmentRepository.TABLE, any,
                 conflictAlgorithm: anyNamed("conflictAlgorithm")))
             .thenAnswer((_) => Future.value(1));
       });
@@ -65,102 +64,11 @@ void testCreateEstablishment(
         expect(createdId, 1);
       });
     });
-    group('try to create invalid establishment', () {
-      test("should throw exception if id is 0", () async {
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(id: 0),
-          ),
-          throwsException,
-          reason: "it's not possible to create an establishment with id 0",
-        );
-      });
-
-      test("should throw exception if id is negative", () async {
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(id: -1),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if cnes length != 7", () async {
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(cnes: "123456"),
-          ),
-          throwsException,
-        );
-
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(cnes: " 23456 "),
-          ),
-          throwsException,
-        );
-
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(cnes: "123456789"),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if cnes has no numeric characters",
-          () async {
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(cnes: "123456A"),
-          ),
-          throwsException,
-        );
-
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(cnes: "12 45 7"),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name is empty", () async {
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(name: ""),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name has only spaces", () async {
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(name: "   "),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name has weird characters", () async {
-        expect(
-          () async => await repository.createEstablishment(
-            validEstablishment.copyWith(
-              name:
-                  "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
-            ),
-          ),
-          throwsException,
-        );
-      }, skip: true);
-    });
   });
 }
 
 void testDeleteEstablishment(
   MockDatabase db,
-  MockDatabaseManager dbManager,
   DatabaseEstablishmentRepository repository,
 ) {
   group("deleteEstablishment function:", () {
@@ -193,20 +101,6 @@ void testDeleteEstablishment(
         )).thenAnswer((_) => Future.value(0));
       });
 
-      test("should throw exception if id is 0", () async {
-        expect(
-          () async => await repository.deleteEstablishment(0),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if id is negative", () async {
-        expect(
-          () async => await repository.deleteEstablishment(-1),
-          throwsException,
-        );
-      });
-
       test("should return 0 if id doesnt exist", () async {
         final deletedCount =
             await repository.deleteEstablishment(invalidEstablishmentId);
@@ -219,24 +113,23 @@ void testDeleteEstablishment(
 
 void testGetEstablishment(
   MockDatabase db,
-  MockDatabaseManager dbManager,
   DatabaseEstablishmentRepository repository,
 ) {
   group("getEstablishment function:", () {
     final int validEstablishmentId = 1;
     final int validLocalityId = 1;
     final expectedLocality = Locality(
-      validLocalityId,
-      "Local",
-      "Brasília",
-      "DF",
-      "IBGECode",
+      id: validLocalityId,
+      name: "Local",
+      city: "Brasília",
+      state: "DF",
+      ibgeCode: "1234567",
     );
     final expectedEstablishment = Establishment(
-      validEstablishmentId,
-      "1234567",
-      "Test",
-      expectedLocality,
+      id: validEstablishmentId,
+      cnes: "1234567",
+      name: "Test",
+      locality: expectedLocality,
     );
 
     group('try to get valid establishment', () {
@@ -247,25 +140,28 @@ void testGetEstablishment(
           whereArgs: [validEstablishmentId],
         )).thenAnswer((_) => Future.value([
               {
-                "id": validEstablishmentId,
-                "cnes": "1234567",
-                "name": "Test",
-                "locality": validLocalityId,
+                "id": expectedEstablishment.id,
+                "cnes": expectedEstablishment.cnes,
+                "name": expectedEstablishment.name,
+                "locality": expectedEstablishment.locality.id,
               }
             ]));
+
         when(db.query(
           DatabaseLocalityRepository.TABLE,
           where: anyNamed("where"),
           whereArgs: [validLocalityId],
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": validLocalityId,
-                "name": "Local",
-                "city": "Brasília",
-                "state": "DF",
-                "ibgeCode": "IBGECode",
-              }
-            ]));
+        )).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": expectedLocality.id,
+              "name": expectedLocality.name,
+              "city": expectedLocality.city,
+              "state": expectedLocality.state,
+              "ibgeCode": expectedLocality.ibgeCode,
+            }
+          ]),
+        );
       });
 
       test("should get an establishment entry by its id", () async {
@@ -282,22 +178,8 @@ void testGetEstablishment(
         when(db.query(
           DatabaseEstablishmentRepository.TABLE,
           where: anyNamed("where"),
-          whereArgs: [anyOf(-1, 0, 2)],
+          whereArgs: [2],
         )).thenAnswer((_) => Future.value([]));
-      });
-
-      test("should throw exception if id is 0", () async {
-        expect(
-          () async => await repository.getEstablishmentById(0),
-          throwsStateError,
-        );
-      });
-
-      test("should throw exception if id is negative", () async {
-        expect(
-          () async => await repository.getEstablishmentById(-1),
-          throwsStateError,
-        );
       });
 
       test("should throw exception if id doesn't exist", () async {
@@ -312,7 +194,6 @@ void testGetEstablishment(
 
 void testGetEstablishments(
   MockDatabase db,
-  MockDatabaseManager dbManager,
   DatabaseEstablishmentRepository repository,
 ) {
   group("getEstablishments function:", () {
@@ -320,39 +201,39 @@ void testGetEstablishments(
     final int validEstablishmentId = 1;
     final expectedLocalities = [
       Locality(
-        validLocalityId,
-        "Local1",
-        "Brasília",
-        "DF",
-        "IBGECode",
+        id: validLocalityId,
+        name: "Primeiro Local",
+        city: "Brasília",
+        state: "DF",
+        ibgeCode: "1234567",
       ),
       Locality(
-        validLocalityId + 1,
-        "Local2",
-        "Brasília",
-        "DF",
-        "IBGECode",
+        id: validLocalityId + 1,
+        name: "Segundo Local",
+        city: "Brasília",
+        state: "DF",
+        ibgeCode: "1234567",
       ),
       Locality(
-        validLocalityId + 2,
-        "Local3",
-        "Brasília",
-        "DF",
-        "IBGECode",
+        id: validLocalityId + 2,
+        name: "Terceiro Local",
+        city: "Brasília",
+        state: "DF",
+        ibgeCode: "1234567",
       ),
     ];
     final expectedEstablishments = [
       Establishment(
-        validEstablishmentId,
-        "1234567",
-        "Test",
-        expectedLocalities[0],
+        id: validEstablishmentId,
+        cnes: "1234567",
+        name: "Test",
+        locality: expectedLocalities[0],
       ),
       Establishment(
-        validEstablishmentId + 1,
-        "1234568",
-        "Test2",
-        expectedLocalities[1],
+        id: validEstablishmentId + 1,
+        cnes: "1234568",
+        name: "Segundo Estabelecimento",
+        locality: expectedLocalities[1],
       ),
     ];
 
@@ -362,41 +243,41 @@ void testGetEstablishments(
           DatabaseEstablishmentRepository.TABLE,
         )).thenAnswer((_) => Future.value([
               {
-                "id": validEstablishmentId,
-                "cnes": "1234567",
-                "name": "Test",
-                "locality": validLocalityId,
+                "id": expectedEstablishments[0].id,
+                "cnes": expectedEstablishments[0].cnes,
+                "name": expectedEstablishments[0].name,
+                "locality": expectedEstablishments[0].locality.id,
               },
               {
-                "id": validEstablishmentId + 1,
-                "cnes": "1234568",
-                "name": "Test2",
-                "locality": validLocalityId + 1,
+                "id": expectedEstablishments[1].id,
+                "cnes": expectedEstablishments[1].cnes,
+                "name": expectedEstablishments[1].name,
+                "locality": expectedEstablishments[1].locality.id,
               },
             ]));
         when(db.query(
           DatabaseLocalityRepository.TABLE,
         )).thenAnswer((_) => Future.value([
               {
-                "id": validLocalityId,
-                "name": "Local1",
-                "city": "Brasília",
-                "state": "DF",
-                "ibgeCode": "IBGECode",
+                "id": expectedLocalities[0].id,
+                "name": expectedLocalities[0].name,
+                "city": expectedLocalities[0].city,
+                "state": expectedLocalities[0].state,
+                "ibgeCode": expectedLocalities[0].ibgeCode,
               },
               {
-                "id": validLocalityId + 1,
-                "name": "Local2",
-                "city": "Brasília",
-                "state": "DF",
-                "ibgeCode": "IBGECode",
+                "id": expectedLocalities[1].id,
+                "name": expectedLocalities[1].name,
+                "city": expectedLocalities[1].city,
+                "state": expectedLocalities[1].state,
+                "ibgeCode": expectedLocalities[1].ibgeCode,
               },
               {
-                "id": validLocalityId + 2,
-                "name": "Local3",
-                "city": "Brasília",
-                "state": "DF",
-                "ibgeCode": "IBGECode",
+                "id": expectedLocalities[2].id,
+                "name": expectedLocalities[2].name,
+                "city": expectedLocalities[2].city,
+                "state": expectedLocalities[2].state,
+                "ibgeCode": expectedLocalities[2].ibgeCode,
               },
             ]));
       });
@@ -430,24 +311,24 @@ void testGetEstablishments(
 
 void testUpdateEstablishment(
   MockDatabase db,
-  MockDatabaseManager dbManager,
   DatabaseEstablishmentRepository repository,
 ) {
+  final int invalidEstablishmentId = 2;
   group("updateEstablishment function:", () {
     final int validEstablishmentId = 1;
     final int validLocalityId = 1;
     final expectedLocality = Locality(
-      validLocalityId,
-      "Local",
-      "Brasília",
-      "DF",
-      "IBGECode",
+      id: validLocalityId,
+      name: "Local",
+      city: "Brasília",
+      state: "DF",
+      ibgeCode: "1234567",
     );
     final validEstablishment = Establishment(
-      validEstablishmentId,
-      "1234567",
-      "Old Name",
-      expectedLocality,
+      id: validEstablishmentId,
+      cnes: "1234567",
+      name: "Old Name",
+      locality: expectedLocality,
     );
 
     group('try to update a valid establishment', () {
@@ -469,95 +350,25 @@ void testUpdateEstablishment(
       });
     });
     group('try to update with invalid establishment', () {
-      test("should throw exception if id is 0", () async {
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(id: 0),
-          ),
-          throwsException,
-          reason: "there is no establishment with id 0",
-        );
+      setUp(() {
+        when(db.update(
+          DatabaseEstablishmentRepository.TABLE,
+          validEstablishment
+              .copyWith(id: invalidEstablishmentId, name: "Updated")
+              .toMap(),
+          where: anyNamed("where"),
+          whereArgs: [invalidEstablishmentId],
+        )).thenAnswer((_) => Future.value(0));
       });
 
-      test("should throw exception if id is negative", () async {
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(id: -1),
-          ),
-          throwsException,
-          reason: "there is no establishment with negative id",
+      test("should return 0 if id doesn't exist", () async {
+        final updatedCount = await repository.updateEstablishment(
+          validEstablishment.copyWith(
+              id: invalidEstablishmentId, name: "Updated"),
         );
+
+        expect(updatedCount, 0);
       });
-
-      test("should throw exception if cnes length != 7", () async {
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(cnes: "123456"),
-          ),
-          throwsException,
-        );
-
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(cnes: " 23456 "),
-          ),
-          throwsException,
-        );
-
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(cnes: "123456789"),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if cnes has no numeric characters",
-          () async {
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(cnes: "123456A"),
-          ),
-          throwsException,
-        );
-
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(cnes: "12 45 7"),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name is empty", () async {
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(name: ""),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name has only spaces", () async {
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(name: "   "),
-          ),
-          throwsException,
-        );
-      });
-
-      test("should throw exception if name has weird characters", () async {
-        expect(
-          () async => await repository.updateEstablishment(
-            validEstablishment.copyWith(
-              name:
-                  "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
-            ),
-          ),
-          throwsException,
-        );
-      }, skip: true);
     });
   });
 }

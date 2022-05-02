@@ -3,11 +3,11 @@ import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
-import 'package:nurse/shared/repositories/establishment_repository.dart';
+import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
 
 class DatabaseEstablishmentRepository extends DatabaseInterface
     implements EstablishmentRepository {
-  static const String TABLE = "establishment";
+  static const String TABLE = "Establishment";
   final DatabaseManager dbManager;
 
   DatabaseEstablishmentRepository(this.dbManager) : super(dbManager, TABLE);
@@ -33,7 +33,7 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
 
       final locality = await _getLocality(establishmentMap["locality"]);
 
-      establishmentMap["locality"] = locality;
+      establishmentMap["locality"] = locality.toMap();
 
       final establishment = Establishment.fromMap(establishmentMap);
 
@@ -60,7 +60,7 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
         return l.id == e["locality"];
       });
 
-      e["locality"] = locality;
+      e["locality"] = locality.toMap();
     });
 
     final establishments = establishmentMaps

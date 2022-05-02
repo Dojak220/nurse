@@ -1,5 +1,6 @@
 import 'package:nurse/shared/models/generic_model.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
+import 'package:nurse/shared/utils/validator.dart';
 
 class Establishment implements GenericModel {
   @override
@@ -8,31 +9,29 @@ class Establishment implements GenericModel {
   final String name;
   final Locality locality;
 
-  Establishment(
-    this.id,
-    this.cnes,
-    this.name,
-    this.locality,
-  ) {
-    validateEstablishment();
+  Establishment({
+    required this.id,
+    required this.cnes,
+    required this.name,
+    required this.locality,
+  }) {
+    /// TODO: Add validation below to Validator class.
+    _validateEstablishment();
   }
 
-  void validateEstablishment() {
-    if (id <= 0) {
-      throw Exception('Establishment id must be greater than 0');
-    }
+  void _validateEstablishment() {
+    Validator.validate(ValidatorType.Id, this.id);
+    Validator.validate(ValidatorType.Name, this.name);
+
     if (cnes.trim().length != 7) {
       throw Exception('Establishment cnes must be 7 characters long');
     }
     if (int.tryParse(cnes) == null) {
       throw Exception('Establishment cnes must be numeric');
     }
-    if (name.trim().isEmpty) {
-      throw Exception('Establishment name must be filled');
-    }
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, Object> toMap() {
     return {
       'id': id,
       'cnes': cnes,
@@ -43,10 +42,10 @@ class Establishment implements GenericModel {
 
   factory Establishment.fromMap(Map<String, dynamic> map) {
     return Establishment(
-      map['id'] ?? 0,
-      map['cnes'] ?? '',
-      map['name'] ?? '',
-      map['locality'] ?? Locality.fromMap(map['locality']),
+      id: map['id'] ?? 0,
+      cnes: map['cnes'] ?? '',
+      name: map['name'] ?? '',
+      locality: Locality.fromMap(map['locality']),
     );
   }
 
@@ -62,10 +61,10 @@ class Establishment implements GenericModel {
     Locality? locality,
   }) {
     return Establishment(
-      id ?? this.id,
-      cnes ?? this.cnes,
-      name ?? this.name,
-      locality ?? this.locality,
+      id: id ?? this.id,
+      cnes: cnes ?? this.cnes,
+      name: name ?? this.name,
+      locality: locality ?? this.locality,
     );
   }
 
