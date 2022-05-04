@@ -9,6 +9,7 @@ import 'package:nurse/shared/models/patient/priority_group_model.dart';
 import 'package:nurse/shared/models/vaccination/application_model.dart';
 import 'package:nurse/shared/models/vaccination/applier_model.dart';
 import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
+import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
 
 void main() {
   late Application validApplication;
@@ -30,6 +31,18 @@ void main() {
     city: "City Name",
     state: "State Name",
     ibgeCode: "1234567",
+  );
+
+  final expectedVaccine = Vaccine(
+    id: 1,
+    sipniCode: "123456",
+    name: "Vaccine Name",
+    laboratory: "Laboratory Name",
+    vaccineBatch: VaccineBatch(
+      id: 1,
+      batchNo: "01234",
+      quantity: 10,
+    ),
   );
 
   final expectedPatient = Patient(
@@ -74,6 +87,7 @@ void main() {
     validApplication = Application(
       id: 1,
       patient: expectedPatient,
+      vaccine: expectedVaccine,
       applicationDate: DateTime(2022, 3, 4),
       applier: expectedApplier,
       vaccineBatch: VaccineBatch(
