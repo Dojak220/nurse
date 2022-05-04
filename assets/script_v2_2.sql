@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2022-04-21 00:03:51.155
+-- Last modification date: 2022-05-04 15:06:44.095
 
 -- tables
 -- Table: Aplicacao
@@ -61,7 +61,7 @@ CREATE TABLE Categoria_Prioritaria (
 -- Table: Estabelecimento
 CREATE TABLE Estabelecimento (
     id integer NOT NULL CONSTRAINT Estabelecimento_pk PRIMARY KEY,
-    cnes varchar(20) NOT NULL,
+    cnes varchar(7) NOT NULL,
     nome varchar(50) NOT NULL,
     localidade_id integer NOT NULL,
     CONSTRAINT cnes UNIQUE (cnes),
@@ -137,3 +137,37 @@ CREATE TABLE Vacina (
     CONSTRAINT Lote_Vacina FOREIGN KEY (lote_id)
     REFERENCES Lote (id)
 );
+
+
+INSERT INTO Aplicacao (aplicante_id, vacina_id, dose, paciente_id , data, campanha_id , data_aprazamento)
+VALUES (1, 1, "D1", 1, "2021-01-01", 1, "2021-04-01");
+
+INSERT INTO Aplicante (cns, nome, estabelecimento_id, pessoa_id)
+VALUES ('278794316530006', 'Maria Mercedes Motta', 1, 1);
+
+INSERT INTO Campanha (titulo, inicio, termino, descricao)
+VALUES ('Campanha de Vacinação', '2020-01-01', '2020-12-31', 'Campanha de Vacinação');
+
+INSERT INTO Categoria_Prioritaria (codigo, nome, grupo_id, descricao)
+VALUES ('Idosos', 'Idosos', 1, 'Categoria de pessoas com mais de 60 anos');
+
+INSERT INTO Estabelecimento (cnes, nome, localidade_id)
+VALUES ('1234567', 'Estabelecimento 1', 1);
+
+INSERT INTO Grupo_Prioritario (codigo, nome, descricao)
+VALUES ('Idosos', 'Idosos', 'Grupo de pessoas com mais de 60 anos');
+
+INSERT INTO Localidade (nome, municipio, estado, codigo_ibge)
+VALUES ('São Paulo', 'São Paulo', 'SP', '3550308');
+
+INSERT INTO Lote (numero_lote, quantidade)
+VALUES ('123456', 10);
+
+INSERT INTO Paciente (cns, condicao_maternal, pessoa_id, categoria_id)
+VALUES ('832070136190005', 'NENHUMA', 1, 1);
+
+INSERT INTO Pessoa (cpf, nome, nascimento, sexo, nome_mae, nome_pai, localidade_id)
+VALUES ('69309106271', 'Maria', '2000-01-01', 'F', 'Maria Madalena', 'João Pedro', 1);
+
+INSERT INTO Vacina (codigo_sipni, nome, laboratorio, lote_id)
+VALUES ('VAC-01', 'Vacina 1', 'Laboratorio 1', 1);
