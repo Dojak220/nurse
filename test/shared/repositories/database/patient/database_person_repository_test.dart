@@ -140,11 +140,11 @@ void testGetPerson(
           whereArgs: [validPersonId],
         )).thenAnswer((_) => Future.value([
               {
-                'id': expectedPerson.id,
-                'cpf': expectedPerson.cpf,
-                'name': expectedPerson.name,
-                'birth_date': expectedPerson.birthDate.millisecondsSinceEpoch,
-                'locality': expectedPerson.locality.id,
+                "id": expectedPerson.id,
+                "cpf": expectedPerson.cpf,
+                "name": expectedPerson.name,
+                "birth_date": expectedPerson.birthDate.millisecondsSinceEpoch,
+                "locality": expectedPerson.locality.id,
               }
             ]));
 
@@ -245,18 +245,18 @@ void testGetPersons(
           DatabasePersonRepository.TABLE,
         )).thenAnswer((_) => Future.value([
               {
-                'id': expectedPersons[0].id,
-                'cpf': expectedPersons[0].cpf,
-                'name': expectedPersons[0].name,
-                'birth_date': expectedPersons[0].birthDate,
-                'locality': expectedPersons[0].locality,
+                "id": expectedPersons[0].id,
+                "cpf": expectedPersons[0].cpf,
+                "name": expectedPersons[0].name,
+                "birth_date": expectedPersons[0].birthDate,
+                "locality": expectedPersons[0].locality,
               },
               {
-                'id': expectedPersons[1].id,
-                'cpf': expectedPersons[1].cpf,
-                'name': expectedPersons[1].name,
-                'birth_date': expectedPersons[1].birthDate,
-                'locality': expectedPersons[1].locality,
+                "id": expectedPersons[1].id,
+                "cpf": expectedPersons[1].cpf,
+                "name": expectedPersons[1].name,
+                "birth_date": expectedPersons[1].birthDate,
+                "locality": expectedPersons[1].locality,
               },
             ]));
         when(db.query(

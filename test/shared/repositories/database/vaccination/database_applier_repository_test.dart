@@ -172,10 +172,10 @@ void testGetApplier(
           whereArgs: [validApplierId],
         )).thenAnswer((_) => Future.value([
               {
-                'id': expectedApplier.id,
-                'cns': expectedApplier.cns,
-                'person': expectedApplier.person.id,
-                'establishment': expectedApplier.establishment.id,
+                "id": expectedApplier.id,
+                "cns": expectedApplier.cns,
+                "person": expectedApplier.person.id,
+                "establishment": expectedApplier.establishment.id,
               }
             ]));
 
@@ -348,16 +348,16 @@ void testGetAppliers(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': expectedAppliers[0].id,
-              'cns': expectedAppliers[0].cns,
-              'person': expectedAppliers[0].person.id,
-              'establishment': expectedAppliers[0].establishment.id,
+              "id": expectedAppliers[0].id,
+              "cns": expectedAppliers[0].cns,
+              "person": expectedAppliers[0].person.id,
+              "establishment": expectedAppliers[0].establishment.id,
             },
             {
-              'id': expectedAppliers[1].id,
-              'cns': expectedAppliers[1].cns,
-              'person': expectedAppliers[1].person.id,
-              'establishment': expectedAppliers[1].establishment.id,
+              "id": expectedAppliers[1].id,
+              "cns": expectedAppliers[1].cns,
+              "person": expectedAppliers[1].person.id,
+              "establishment": expectedAppliers[1].establishment.id,
             },
           ]),
         );

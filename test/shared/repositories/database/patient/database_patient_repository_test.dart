@@ -222,11 +222,11 @@ void testGetPatient(
           whereArgs: [validPatientId],
         )).thenAnswer((_) => Future.value([
               {
-                'id': expectedPatient.id,
-                'cns': expectedPatient.cns,
-                'maternal_condition': expectedPatient.maternalCondition.name,
-                'person': expectedPatient.person.id,
-                'priority_category': expectedPatient.priorityCategory.id,
+                "id": expectedPatient.id,
+                "cns": expectedPatient.cns,
+                "maternal_condition": expectedPatient.maternalCondition.name,
+                "person": expectedPatient.person.id,
+                "priority_category": expectedPatient.priorityCategory.id,
               }
             ]));
 
@@ -237,11 +237,11 @@ void testGetPatient(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPerson.id,
-              'cpf': validPerson.cpf,
-              'name': validPerson.name,
-              'birth_date': validPerson.birthDate.millisecondsSinceEpoch,
-              'locality': validPerson.locality.id,
+              "id": validPerson.id,
+              "cpf": validPerson.cpf,
+              "name": validPerson.name,
+              "birth_date": validPerson.birthDate.millisecondsSinceEpoch,
+              "locality": validPerson.locality.id,
             }
           ]),
         );
@@ -252,11 +252,11 @@ void testGetPatient(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPriorityCategory.id,
-              'priority_group': validPriorityCategory.priorityGroup.id,
-              'code': validPriorityCategory.code,
-              'name': validPriorityCategory.name,
-              'description': validPriorityCategory.description,
+              "id": validPriorityCategory.id,
+              "priority_group": validPriorityCategory.priorityGroup.id,
+              "code": validPriorityCategory.code,
+              "name": validPriorityCategory.name,
+              "description": validPriorityCategory.description,
             }
           ]),
         );
@@ -267,10 +267,10 @@ void testGetPatient(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPriorityGroup.id,
-              'code': validPriorityGroup.code,
-              'name': validPriorityGroup.name,
-              'description': validPriorityGroup.description,
+              "id": validPriorityGroup.id,
+              "code": validPriorityGroup.code,
+              "name": validPriorityGroup.name,
+              "description": validPriorityGroup.description,
             }
           ]),
         );

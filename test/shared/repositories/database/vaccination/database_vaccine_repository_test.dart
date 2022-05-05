@@ -136,11 +136,11 @@ void testGetVaccine(
           whereArgs: [validVaccineId],
         )).thenAnswer((_) => Future.value([
               {
-                'id': expectedVaccine.id,
-                'sipni_code': expectedVaccine.sipniCode,
-                'name': expectedVaccine.name,
-                'laboratory': expectedVaccine.laboratory,
-                'batch': expectedVaccine.batch.id,
+                "id": expectedVaccine.id,
+                "sipni_code": expectedVaccine.sipniCode,
+                "name": expectedVaccine.name,
+                "laboratory": expectedVaccine.laboratory,
+                "batch": expectedVaccine.batch.id,
               }
             ]));
 
@@ -233,18 +233,18 @@ void testGetVaccines(
           DatabaseVaccineRepository.TABLE,
         )).thenAnswer((_) => Future.value([
               {
-                'id': expectedVaccines[0].id,
-                'sipni_code': expectedVaccines[0].sipniCode,
-                'name': expectedVaccines[0].name,
-                'laboratory': expectedVaccines[0].laboratory,
-                'batch': expectedVaccines[0].batch,
+                "id": expectedVaccines[0].id,
+                "sipni_code": expectedVaccines[0].sipniCode,
+                "name": expectedVaccines[0].name,
+                "laboratory": expectedVaccines[0].laboratory,
+                "batch": expectedVaccines[0].batch,
               },
               {
-                'id': expectedVaccines[1].id,
-                'sipni_code': expectedVaccines[1].sipniCode,
-                'name': expectedVaccines[1].name,
-                'laboratory': expectedVaccines[1].laboratory,
-                'batch': expectedVaccines[1].batch,
+                "id": expectedVaccines[1].id,
+                "sipni_code": expectedVaccines[1].sipniCode,
+                "name": expectedVaccines[1].name,
+                "laboratory": expectedVaccines[1].laboratory,
+                "batch": expectedVaccines[1].batch,
               },
             ]));
         when(db.query(

@@ -315,15 +315,15 @@ void testGetApplication(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': expectedApplication.id,
-              'patient': expectedApplication.patient.id,
-              'vaccine': expectedApplication.vaccine.id,
-              'application_date':
+              "id": expectedApplication.id,
+              "patient": expectedApplication.patient.id,
+              "vaccine": expectedApplication.vaccine.id,
+              "application_date":
                   expectedApplication.applicationDate.millisecondsSinceEpoch,
-              'applier': expectedApplication.applier.id,
-              'dose': expectedApplication.dose.name,
-              'campaign': expectedApplication.campaign.id,
-              'due_date': expectedApplication.dueDate.millisecondsSinceEpoch,
+              "applier": expectedApplication.applier.id,
+              "dose": expectedApplication.dose.name,
+              "campaign": expectedApplication.campaign.id,
+              "due_date": expectedApplication.dueDate.millisecondsSinceEpoch,
             }
           ]),
         );
@@ -411,10 +411,10 @@ void testGetApplication(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPriorityGroup.id,
-              'code': validPriorityGroup.code,
-              'name': validPriorityGroup.name,
-              'description': validPriorityGroup.description,
+              "id": validPriorityGroup.id,
+              "code": validPriorityGroup.code,
+              "name": validPriorityGroup.name,
+              "description": validPriorityGroup.description,
             }
           ]),
         );
@@ -426,11 +426,11 @@ void testGetApplication(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPriorityCategory.id,
-              'priority_group': validPriorityCategory.priorityGroup.id,
-              'code': validPriorityCategory.code,
-              'name': validPriorityCategory.name,
-              'description': validPriorityCategory.description,
+              "id": validPriorityCategory.id,
+              "priority_group": validPriorityCategory.priorityGroup.id,
+              "code": validPriorityCategory.code,
+              "name": validPriorityCategory.name,
+              "description": validPriorityCategory.description,
             }
           ]),
         );
@@ -737,29 +737,29 @@ void testGetApplications(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': expectedApplications[0].id,
-              'patient': expectedApplications[0].patient.id,
-              'vaccine': expectedApplications[0].vaccine.id,
-              'application_date': expectedApplications[0]
+              "id": expectedApplications[0].id,
+              "patient": expectedApplications[0].patient.id,
+              "vaccine": expectedApplications[0].vaccine.id,
+              "application_date": expectedApplications[0]
                   .applicationDate
                   .millisecondsSinceEpoch,
-              'applier': expectedApplications[0].applier.id,
-              'dose': expectedApplications[0].dose.name,
-              'campaign': expectedApplications[0].campaign.id,
-              'due_date':
+              "applier": expectedApplications[0].applier.id,
+              "dose": expectedApplications[0].dose.name,
+              "campaign": expectedApplications[0].campaign.id,
+              "due_date":
                   expectedApplications[0].dueDate.millisecondsSinceEpoch,
             },
             {
-              'id': expectedApplications[1].id,
-              'patient': expectedApplications[1].patient.id,
-              'vaccine': expectedApplications[1].vaccine.id,
-              'application_date': expectedApplications[1]
+              "id": expectedApplications[1].id,
+              "patient": expectedApplications[1].patient.id,
+              "vaccine": expectedApplications[1].vaccine.id,
+              "application_date": expectedApplications[1]
                   .applicationDate
                   .millisecondsSinceEpoch,
-              'applier': expectedApplications[1].applier.id,
-              'dose': expectedApplications[1].dose.name,
-              'campaign': expectedApplications[1].campaign.id,
-              'due_date':
+              "applier": expectedApplications[1].applier.id,
+              "dose": expectedApplications[1].dose.name,
+              "campaign": expectedApplications[1].campaign.id,
+              "due_date":
                   expectedApplications[1].dueDate.millisecondsSinceEpoch,
             },
           ]),
@@ -884,10 +884,10 @@ void testGetApplications(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPriorityGroup.id,
-              'code': validPriorityGroup.code,
-              'name': validPriorityGroup.name,
-              'description': validPriorityGroup.description,
+              "id": validPriorityGroup.id,
+              "code": validPriorityGroup.code,
+              "name": validPriorityGroup.name,
+              "description": validPriorityGroup.description,
             }
           ]),
         );
@@ -897,11 +897,11 @@ void testGetApplications(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPriorityCategory.id,
-              'priority_group': validPriorityCategory.priorityGroup.id,
-              'code': validPriorityCategory.code,
-              'name': validPriorityCategory.name,
-              'description': validPriorityCategory.description,
+              "id": validPriorityCategory.id,
+              "priority_group": validPriorityCategory.priorityGroup.id,
+              "code": validPriorityCategory.code,
+              "name": validPriorityCategory.name,
+              "description": validPriorityCategory.description,
             }
           ]),
         );

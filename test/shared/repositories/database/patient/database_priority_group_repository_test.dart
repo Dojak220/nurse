@@ -124,10 +124,10 @@ void testGetPriorityGroup(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': expectedPriorityGroup.id,
-              'code': expectedPriorityGroup.code,
-              'name': expectedPriorityGroup.name,
-              'description': expectedPriorityGroup.description,
+              "id": expectedPriorityGroup.id,
+              "code": expectedPriorityGroup.code,
+              "name": expectedPriorityGroup.name,
+              "description": expectedPriorityGroup.description,
             }
           ]),
         );
@@ -194,22 +194,22 @@ void testGetPriorityGroups(
           DatabasePriorityGroupRepository.TABLE,
         )).thenAnswer((_) => Future.value([
               {
-                'id': validPriorityGroupId,
-                'code': "Pessoas com mais de 60 anos",
-                'name': "Idosos",
-                'description': "Grupo de pessoas com mais de 60 anos",
+                "id": validPriorityGroupId,
+                "code": "Pessoas com mais de 60 anos",
+                "name": "Idosos",
+                "description": "Grupo de pessoas com mais de 60 anos",
               },
               {
-                'id': validPriorityGroupId + 1,
-                'code': "Pessoas com idade entre 12 e 18 anos",
-                'name': "Adolescentes",
-                'description': "Grupo de adolescentes",
+                "id": validPriorityGroupId + 1,
+                "code": "Pessoas com idade entre 12 e 18 anos",
+                "name": "Adolescentes",
+                "description": "Grupo de adolescentes",
               },
               {
-                'id': validPriorityGroupId + 3,
-                'code': "Pessoas com menos de 12 anos",
-                'name': "Crianças",
-                'description': "Grupo de crianças",
+                "id": validPriorityGroupId + 3,
+                "code": "Pessoas com menos de 12 anos",
+                "name": "Crianças",
+                "description": "Grupo de crianças",
               },
             ]));
       });

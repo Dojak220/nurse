@@ -145,11 +145,11 @@ void testGetPriorityCategory(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': expectedPriorityCategory.id,
-              'priority_group': expectedPriorityCategory.priorityGroup.id,
-              'code': expectedPriorityCategory.code,
-              'name': expectedPriorityCategory.name,
-              'description': expectedPriorityCategory.description,
+              "id": expectedPriorityCategory.id,
+              "priority_group": expectedPriorityCategory.priorityGroup.id,
+              "code": expectedPriorityCategory.code,
+              "name": expectedPriorityCategory.name,
+              "description": expectedPriorityCategory.description,
             }
           ]),
         );
@@ -161,10 +161,10 @@ void testGetPriorityCategory(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPriorityGroup.id,
-              'code': validPriorityGroup.code,
-              'name': validPriorityGroup.name,
-              'description': validPriorityGroup.description,
+              "id": validPriorityGroup.id,
+              "code": validPriorityGroup.code,
+              "name": validPriorityGroup.name,
+              "description": validPriorityGroup.description,
             }
           ]),
         );
@@ -243,25 +243,25 @@ void testGetPriorityCategories(
           DatabasePriorityCategoryRepository.TABLE,
         )).thenAnswer((_) => Future.value([
               {
-                'id': expectedPriorityCategories[0].id,
-                'priority_group': expectedPriorityCategories[0].priorityGroup,
-                'code': expectedPriorityCategories[0].code,
-                'name': expectedPriorityCategories[0].name,
-                'description': expectedPriorityCategories[0].description,
+                "id": expectedPriorityCategories[0].id,
+                "priority_group": expectedPriorityCategories[0].priorityGroup,
+                "code": expectedPriorityCategories[0].code,
+                "name": expectedPriorityCategories[0].name,
+                "description": expectedPriorityCategories[0].description,
               },
               {
-                'id': expectedPriorityCategories[1].id,
-                'priority_group': expectedPriorityCategories[1].priorityGroup,
-                'code': expectedPriorityCategories[1].code,
-                'name': expectedPriorityCategories[1].name,
-                'description': expectedPriorityCategories[1].description,
+                "id": expectedPriorityCategories[1].id,
+                "priority_group": expectedPriorityCategories[1].priorityGroup,
+                "code": expectedPriorityCategories[1].code,
+                "name": expectedPriorityCategories[1].name,
+                "description": expectedPriorityCategories[1].description,
               },
               {
-                'id': expectedPriorityCategories[2].id,
-                'priority_group': expectedPriorityCategories[2].priorityGroup,
-                'code': expectedPriorityCategories[2].code,
-                'name': expectedPriorityCategories[2].name,
-                'description': expectedPriorityCategories[2].description,
+                "id": expectedPriorityCategories[2].id,
+                "priority_group": expectedPriorityCategories[2].priorityGroup,
+                "code": expectedPriorityCategories[2].code,
+                "name": expectedPriorityCategories[2].name,
+                "description": expectedPriorityCategories[2].description,
               },
             ]));
       });
