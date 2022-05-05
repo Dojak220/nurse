@@ -5,7 +5,7 @@ import 'package:nurse/shared/repositories/vaccination/vaccine_batch_repository.d
 
 class DatabaseVaccineBatchRepository extends DatabaseInterface
     implements VaccineBatchRepository {
-  static const String TABLE = "VaccineBatch";
+  static const String TABLE = "Vaccine_Batch";
   final DatabaseManager dbManager;
 
   DatabaseVaccineBatchRepository(this.dbManager) : super(dbManager, TABLE);

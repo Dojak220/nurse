@@ -32,10 +32,10 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
       final priorityCategoryMap = await get(id);
 
       final priorityGroup = await _getPriorityGroup(
-        priorityCategoryMap["priorityGroup"],
+        priorityCategoryMap["priority_group"],
       );
 
-      priorityCategoryMap["priorityGroup"] = priorityGroup.toMap();
+      priorityCategoryMap["priority_group"] = priorityGroup.toMap();
 
       final priorityCategory = PriorityCategory.fromMap(priorityCategoryMap);
 
@@ -60,10 +60,10 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
 
       priorityCategoryMaps.forEach((c) {
         final priorityGroup = priorityGroups.firstWhere((g) {
-          return g.id == c["priorityGroup"];
+          return g.id == c["priority_group"];
         });
 
-        c["priorityGroup"] = priorityGroup;
+        c["priority_group"] = priorityGroup;
       });
 
       final priorityCategories = priorityCategoryMaps
