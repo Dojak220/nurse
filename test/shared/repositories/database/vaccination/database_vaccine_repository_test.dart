@@ -38,7 +38,7 @@ void testCreateVaccine(
 
     final validVaccineBatch = VaccineBatch(
       id: validVaccineBatchId,
-      batchNo: "01234",
+      number: "01234",
       quantity: 10,
     );
 
@@ -47,7 +47,7 @@ void testCreateVaccine(
       sipniCode: "123456",
       name: "Vaccine Name",
       laboratory: "Laboratory Name",
-      vaccineBatch: validVaccineBatch,
+      batch: validVaccineBatch,
     );
 
     group('try to create a valid vaccine', () {
@@ -117,7 +117,7 @@ void testGetVaccine(
     final int validVaccineBatchId = 1;
     final validVaccineBatch = VaccineBatch(
       id: 1,
-      batchNo: "01234",
+      number: "01234",
       quantity: 10,
     );
     final expectedVaccine = Vaccine(
@@ -125,7 +125,7 @@ void testGetVaccine(
       sipniCode: "123456",
       name: "Vaccine Name",
       laboratory: "Laboratory Name",
-      vaccineBatch: validVaccineBatch,
+      batch: validVaccineBatch,
     );
 
     group('try to get valid vaccine', () {
@@ -136,11 +136,11 @@ void testGetVaccine(
           whereArgs: [validVaccineId],
         )).thenAnswer((_) => Future.value([
               {
-                'id': expectedVaccine.id,
-                'sipniCode': expectedVaccine.sipniCode,
-                'name': expectedVaccine.name,
-                'laboratory': expectedVaccine.laboratory,
-                'vaccineBatch': expectedVaccine.vaccineBatch.id,
+                "id": expectedVaccine.id,
+                "sipni_code": expectedVaccine.sipniCode,
+                "name": expectedVaccine.name,
+                "laboratory": expectedVaccine.laboratory,
+                "batch": expectedVaccine.batch.id,
               }
             ]));
 
@@ -152,7 +152,7 @@ void testGetVaccine(
           (_) => Future.value([
             {
               "id": validVaccineBatch.id,
-              "batchNo": validVaccineBatch.batchNo,
+              "number": validVaccineBatch.number,
               "quantity": validVaccineBatch.quantity,
             }
           ]),
@@ -196,17 +196,17 @@ void testGetVaccines(
     final validVaccineBatches = [
       VaccineBatch(
         id: validVaccineBatchId,
-        batchNo: "01234",
+        number: "01234",
         quantity: 10,
       ),
       VaccineBatch(
         id: validVaccineBatchId + 1,
-        batchNo: "01235",
+        number: "01235",
         quantity: 10,
       ),
       VaccineBatch(
         id: validVaccineBatchId + 2,
-        batchNo: "01236",
+        number: "01236",
         quantity: 10,
       ),
     ];
@@ -216,14 +216,14 @@ void testGetVaccines(
         sipniCode: "123456",
         name: "Vaccine Name",
         laboratory: "Laboratory Name",
-        vaccineBatch: validVaccineBatches[0],
+        batch: validVaccineBatches[0],
       ),
       Vaccine(
         id: validVaccineId + 1,
         sipniCode: "123457",
         name: "Vaccine Name 2",
         laboratory: "Laboratory Name",
-        vaccineBatch: validVaccineBatches[1],
+        batch: validVaccineBatches[1],
       ),
     ];
 
@@ -233,18 +233,18 @@ void testGetVaccines(
           DatabaseVaccineRepository.TABLE,
         )).thenAnswer((_) => Future.value([
               {
-                'id': expectedVaccines[0].id,
-                'sipniCode': expectedVaccines[0].sipniCode,
-                'name': expectedVaccines[0].name,
-                'laboratory': expectedVaccines[0].laboratory,
-                'vaccineBatch': expectedVaccines[0].vaccineBatch,
+                "id": expectedVaccines[0].id,
+                "sipni_code": expectedVaccines[0].sipniCode,
+                "name": expectedVaccines[0].name,
+                "laboratory": expectedVaccines[0].laboratory,
+                "batch": expectedVaccines[0].batch,
               },
               {
-                'id': expectedVaccines[1].id,
-                'sipniCode': expectedVaccines[1].sipniCode,
-                'name': expectedVaccines[1].name,
-                'laboratory': expectedVaccines[1].laboratory,
-                'vaccineBatch': expectedVaccines[1].vaccineBatch,
+                "id": expectedVaccines[1].id,
+                "sipni_code": expectedVaccines[1].sipniCode,
+                "name": expectedVaccines[1].name,
+                "laboratory": expectedVaccines[1].laboratory,
+                "batch": expectedVaccines[1].batch,
               },
             ]));
         when(db.query(
@@ -252,17 +252,17 @@ void testGetVaccines(
         )).thenAnswer((_) => Future.value([
               {
                 "id": validVaccineBatches[0].id,
-                "batchNo": validVaccineBatches[0].batchNo,
+                "number": validVaccineBatches[0].number,
                 "quantity": validVaccineBatches[0].quantity,
               },
               {
                 "id": validVaccineBatches[1].id,
-                "batchNo": validVaccineBatches[1].batchNo,
+                "number": validVaccineBatches[1].number,
                 "quantity": validVaccineBatches[1].quantity,
               },
               {
                 "id": validVaccineBatches[2].id,
-                "batchNo": validVaccineBatches[2].batchNo,
+                "number": validVaccineBatches[2].number,
                 "quantity": validVaccineBatches[2].quantity,
               },
             ]));
@@ -305,7 +305,7 @@ void testUpdateVaccine(
     final int validVaccineBatchId = 1;
     final validVaccineBatch = VaccineBatch(
       id: validVaccineBatchId,
-      batchNo: "01234",
+      number: "01234",
       quantity: 10,
     );
     final validVaccine = Vaccine(
@@ -313,7 +313,7 @@ void testUpdateVaccine(
       sipniCode: "123456",
       name: "Vaccine Name",
       laboratory: "Laboratory Name",
-      vaccineBatch: validVaccineBatch,
+      batch: validVaccineBatch,
     );
 
     group('try to update a valid vaccine', () {

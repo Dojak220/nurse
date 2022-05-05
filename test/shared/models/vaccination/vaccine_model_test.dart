@@ -8,7 +8,7 @@ void main() {
   setUp(() {
     final validVaccineBatch = VaccineBatch(
       id: 1,
-      batchNo: "01234",
+      number: "01234",
       quantity: 10,
     );
 
@@ -17,7 +17,7 @@ void main() {
       sipniCode: "123456",
       name: "Vaccine Name",
       laboratory: "Laboratory Name",
-      vaccineBatch: validVaccineBatch,
+      batch: validVaccineBatch,
     );
   });
 
@@ -28,7 +28,7 @@ void main() {
       expect(validVaccine.sipniCode, "123456");
       expect(validVaccine.name, "Vaccine Name");
       expect(validVaccine.laboratory, "Laboratory Name");
-      expect(validVaccine.vaccineBatch.id, 1);
+      expect(validVaccine.batch.id, 1);
     });
   });
 

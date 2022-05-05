@@ -46,7 +46,7 @@ void testCreatePatient(
 
     final validPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idosos",
       description: "Grupo de pessoas com mais de 60 anos",
     );
@@ -54,7 +54,7 @@ void testCreatePatient(
     final validPriorityCategory = PriorityCategory(
       id: validPriorityCategoryId,
       priorityGroup: validPriorityGroup,
-      categoryCode: "Pessoas idosas",
+      code: "Pessoas idosas",
       name: "Idosos",
       description: "Categoria para pessoas idosas",
     );
@@ -78,7 +78,7 @@ void testCreatePatient(
         name: "Teste",
         birthDate: DateTime(2000),
         locality: validLocality,
-        gender: Gender.MALE,
+        sex: Sex.MALE,
         motherName: "Mãe",
         fatherName: "Pai",
       ),
@@ -193,7 +193,7 @@ void testGetPatient(
 
     final validPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idosos",
       description: "Grupo de pessoas com mais de 60 anos",
     );
@@ -201,7 +201,7 @@ void testGetPatient(
     final validPriorityCategory = PriorityCategory(
       id: validPriorityCategoryId,
       priorityGroup: validPriorityGroup,
-      categoryCode: "Pessoas idosas",
+      code: "Pessoas idosas",
       name: "Idosos",
       description: "Categoria para pessoas idosas",
     );
@@ -222,11 +222,11 @@ void testGetPatient(
           whereArgs: [validPatientId],
         )).thenAnswer((_) => Future.value([
               {
-                'id': expectedPatient.id,
-                'cns': expectedPatient.cns,
-                'maternalCondition': expectedPatient.maternalCondition.name,
-                'person': expectedPatient.person.id,
-                'priorityCategory': expectedPatient.priorityCategory.id,
+                "id": expectedPatient.id,
+                "cns": expectedPatient.cns,
+                "maternal_condition": expectedPatient.maternalCondition.name,
+                "person": expectedPatient.person.id,
+                "priority_category": expectedPatient.priorityCategory.id,
               }
             ]));
 
@@ -237,11 +237,11 @@ void testGetPatient(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPerson.id,
-              'cpf': validPerson.cpf,
-              'name': validPerson.name,
-              'birthDate': validPerson.birthDate.millisecondsSinceEpoch,
-              'locality': validPerson.locality.id,
+              "id": validPerson.id,
+              "cpf": validPerson.cpf,
+              "name": validPerson.name,
+              "birth_date": validPerson.birthDate.millisecondsSinceEpoch,
+              "locality": validPerson.locality.id,
             }
           ]),
         );
@@ -252,11 +252,11 @@ void testGetPatient(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPriorityCategory.id,
-              'priorityGroup': validPriorityCategory.priorityGroup.id,
-              'categoryCode': validPriorityCategory.categoryCode,
-              'name': validPriorityCategory.name,
-              'description': validPriorityCategory.description,
+              "id": validPriorityCategory.id,
+              "priority_group": validPriorityCategory.priorityGroup.id,
+              "code": validPriorityCategory.code,
+              "name": validPriorityCategory.name,
+              "description": validPriorityCategory.description,
             }
           ]),
         );
@@ -267,10 +267,10 @@ void testGetPatient(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPriorityGroup.id,
-              'groupCode': validPriorityGroup.groupCode,
-              'name': validPriorityGroup.name,
-              'description': validPriorityGroup.description,
+              "id": validPriorityGroup.id,
+              "code": validPriorityGroup.code,
+              "name": validPriorityGroup.name,
+              "description": validPriorityGroup.description,
             }
           ]),
         );
@@ -285,7 +285,7 @@ void testGetPatient(
               "name": validLocality.name,
               "city": validLocality.city,
               "state": validLocality.state,
-              "ibgeCode": validLocality.ibgeCode,
+              "ibge_code": validLocality.ibgeCode,
             }
           ]),
         );
@@ -339,7 +339,7 @@ void testGetPatients(
 
     final validPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idosos",
       description: "Grupo de pessoas com mais de 60 anos",
     );
@@ -372,21 +372,21 @@ void testGetPatients(
       PriorityCategory(
         id: validPriorityCategoryId,
         priorityGroup: validPriorityGroup,
-        categoryCode: "Pessoas idosas",
+        code: "Pessoas idosas",
         name: "Idosos",
         description: "Categoria para pessoas idosas",
       ),
       PriorityCategory(
         id: validPriorityCategoryId + 1,
         priorityGroup: validPriorityGroup,
-        categoryCode: "Pessoas menores de idade",
+        code: "Pessoas menores de idade",
         name: "Adolescentes",
         description: "Categoria de adolescentes",
       ),
       PriorityCategory(
         id: validPriorityCategoryId + 2,
         priorityGroup: validPriorityGroup,
-        categoryCode: "Pessoas com menos de 12 anos",
+        code: "Pessoas com menos de 12 anos",
         name: "Crianças",
         description: "Categoria de crianças",
       ),
@@ -423,23 +423,23 @@ void testGetPatients(
               {
                 "id": expectedPatients[0].id,
                 "cns": expectedPatients[0].cns,
-                "maternalCondition": expectedPatients[0].maternalCondition,
+                "maternal_condition": expectedPatients[0].maternalCondition,
                 "person": expectedPatients[0].person,
-                "priorityCategory": expectedPatients[0].priorityCategory,
+                "priority_category": expectedPatients[0].priorityCategory,
               },
               {
                 "id": expectedPatients[1].id,
                 "cns": expectedPatients[1].cns,
-                "maternalCondition": expectedPatients[1].maternalCondition,
+                "maternal_condition": expectedPatients[1].maternalCondition,
                 "person": expectedPatients[1].person,
-                "priorityCategory": expectedPatients[1].priorityCategory,
+                "priority_category": expectedPatients[1].priorityCategory,
               },
               {
                 "id": expectedPatients[2].id,
                 "cns": expectedPatients[2].cns,
-                "maternalCondition": expectedPatients[2].maternalCondition,
+                "maternal_condition": expectedPatients[2].maternalCondition,
                 "person": expectedPatients[2].person,
-                "priorityCategory": expectedPatients[2].priorityCategory,
+                "priority_category": expectedPatients[2].priorityCategory,
               },
             ]));
         when(db.query(
@@ -449,21 +449,21 @@ void testGetPatients(
                 "id": validPersons[0].id,
                 "cpf": validPersons[0].cpf,
                 "name": validPersons[0].name,
-                "birthDate": validPersons[0].birthDate,
+                "birth_date": validPersons[0].birthDate,
                 "locality": validPersons[0].locality,
               },
               {
                 "id": validPersons[1].id,
                 "cpf": validPersons[1].cpf,
                 "name": validPersons[1].name,
-                "birthDate": validPersons[1].birthDate,
+                "birth_date": validPersons[1].birthDate,
                 "locality": validPersons[1].locality,
               },
               {
                 "id": validPersons[2].id,
                 "cpf": validPersons[2].cpf,
                 "name": validPersons[2].name,
-                "birthDate": validPersons[2].birthDate,
+                "birth_date": validPersons[2].birthDate,
                 "locality": validPersons[2].locality,
               },
             ]));
@@ -526,7 +526,7 @@ void testUpdatePatient(
 
     final validPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idosos",
       description: "Grupo de pessoas com mais de 60 anos",
     );
@@ -534,7 +534,7 @@ void testUpdatePatient(
     final validPriorityCategory = PriorityCategory(
       id: validPriorityCategoryId,
       priorityGroup: validPriorityGroup,
-      categoryCode: "Pessoas idosas",
+      code: "Pessoas idosas",
       name: "Idosos",
       description: "Categoria para pessoas idosas",
     );

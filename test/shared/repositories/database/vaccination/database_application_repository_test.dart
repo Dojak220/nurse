@@ -90,9 +90,9 @@ void testCreateApplication(
         id: 1,
         priorityGroup: PriorityGroup(
           id: 1,
-          groupCode: "Pessoas com mais de 60 anos",
+          code: "Pessoas com mais de 60 anos",
         ),
-        categoryCode: "Pessoas idosas",
+        code: "Pessoas idosas",
         name: "Idosos",
         description: "Categoria para pessoas idosas",
       ),
@@ -117,17 +117,11 @@ void testCreateApplication(
       sipniCode: "123456",
       name: "Vaccine Name",
       laboratory: "Laboratory Name",
-      vaccineBatch: VaccineBatch(
+      batch: VaccineBatch(
         id: 1,
-        batchNo: "01234",
+        number: "01234",
         quantity: 10,
       ),
-    );
-
-    final validVaccineBatch = VaccineBatch(
-      id: 1,
-      batchNo: "123456",
-      quantity: 20,
     );
 
     final expectedApplication = Application(
@@ -136,8 +130,7 @@ void testCreateApplication(
       vaccine: validVaccine,
       applicationDate: DateTime(2022, 3, 4),
       applier: validApplier,
-      vaccineBatch: validVaccineBatch,
-      vaccineDose: VaccineDose.D1,
+      dose: VaccineDose.D1,
       campaign: validCampaign,
       dueDate: DateTime(2022, 4),
     );
@@ -259,7 +252,7 @@ void testGetApplication(
     final validPriorityGroupId = 1;
     final validPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idosos",
       description: "Grupo de pessoas com mais de 60 anos",
     );
@@ -268,7 +261,7 @@ void testGetApplication(
     final validPriorityCategory = PriorityCategory(
       id: validPriorityCategoryId,
       priorityGroup: validPriorityGroup,
-      categoryCode: "Pessoas idosas",
+      code: "Pessoas idosas",
       name: "Idosos",
       description: "Categoria para pessoas idosas",
     );
@@ -290,7 +283,7 @@ void testGetApplication(
 
     final validVaccineBatch = VaccineBatch(
       id: validVaccineBatchId,
-      batchNo: "123456",
+      number: "123456",
       quantity: 20,
     );
 
@@ -299,7 +292,7 @@ void testGetApplication(
       sipniCode: "123456",
       name: "Vaccine Name",
       laboratory: "Laboratory Name",
-      vaccineBatch: validVaccineBatch,
+      batch: validVaccineBatch,
     );
 
     final expectedApplication = Application(
@@ -308,8 +301,7 @@ void testGetApplication(
       vaccine: validVaccine,
       applicationDate: DateTime(2022, 3, 4),
       applier: validApplier,
-      vaccineBatch: validVaccineBatch,
-      vaccineDose: VaccineDose.D1,
+      dose: VaccineDose.D1,
       campaign: validCampaign,
       dueDate: DateTime(2022, 4),
     );
@@ -323,16 +315,15 @@ void testGetApplication(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': expectedApplication.id,
-              'patient': expectedApplication.patient.id,
-              'vaccine': expectedApplication.vaccine.id,
-              'applicationDate':
+              "id": expectedApplication.id,
+              "patient": expectedApplication.patient.id,
+              "vaccine": expectedApplication.vaccine.id,
+              "application_date":
                   expectedApplication.applicationDate.millisecondsSinceEpoch,
-              'applier': expectedApplication.applier.id,
-              'vaccineBatch': expectedApplication.vaccineBatch.id,
-              'vaccineDose': expectedApplication.vaccineDose.name,
-              'campaign': expectedApplication.campaign.id,
-              'dueDate': expectedApplication.dueDate.millisecondsSinceEpoch,
+              "applier": expectedApplication.applier.id,
+              "dose": expectedApplication.dose.name,
+              "campaign": expectedApplication.campaign.id,
+              "due_date": expectedApplication.dueDate.millisecondsSinceEpoch,
             }
           ]),
         );
@@ -348,7 +339,7 @@ void testGetApplication(
               "name": validLocality.name,
               "city": validLocality.city,
               "state": validLocality.state,
-              "ibgeCode": validLocality.ibgeCode,
+              "ibge_code": validLocality.ibgeCode,
             }
           ]),
         );
@@ -363,7 +354,7 @@ void testGetApplication(
               "id": validPersonApplier.id,
               "cpf": validPersonApplier.cpf,
               "name": validPersonApplier.name,
-              "birthDate": validPersonApplier.birthDate.millisecondsSinceEpoch,
+              "birth_date": validPersonApplier.birthDate.millisecondsSinceEpoch,
               "locality": validPersonApplier.locality.id,
             }
           ]),
@@ -407,7 +398,7 @@ void testGetApplication(
               "id": validPersonPatient.id,
               "cpf": validPersonPatient.cpf,
               "name": validPersonPatient.name,
-              "birthDate": validPersonPatient.birthDate.millisecondsSinceEpoch,
+              "birth_date": validPersonPatient.birthDate.millisecondsSinceEpoch,
               "locality": validPersonPatient.locality.id,
             }
           ]),
@@ -420,10 +411,10 @@ void testGetApplication(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPriorityGroup.id,
-              'groupCode': validPriorityGroup.groupCode,
-              'name': validPriorityGroup.name,
-              'description': validPriorityGroup.description,
+              "id": validPriorityGroup.id,
+              "code": validPriorityGroup.code,
+              "name": validPriorityGroup.name,
+              "description": validPriorityGroup.description,
             }
           ]),
         );
@@ -435,11 +426,11 @@ void testGetApplication(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPriorityCategory.id,
-              'priorityGroup': validPriorityCategory.priorityGroup.id,
-              'categoryCode': validPriorityCategory.categoryCode,
-              'name': validPriorityCategory.name,
-              'description': validPriorityCategory.description,
+              "id": validPriorityCategory.id,
+              "priority_group": validPriorityCategory.priorityGroup.id,
+              "code": validPriorityCategory.code,
+              "name": validPriorityCategory.name,
+              "description": validPriorityCategory.description,
             }
           ]),
         );
@@ -453,8 +444,8 @@ void testGetApplication(
             {
               "id": validPatient.id,
               "cns": validPatient.cns,
-              "maternalCondition": validPatient.maternalCondition.name,
-              "priorityCategory": validPatient.priorityCategory.id,
+              "maternal_condition": validPatient.maternalCondition.name,
+              "priority_category": validPatient.priorityCategory.id,
               "person": validPatient.person.id,
             }
           ]),
@@ -471,8 +462,8 @@ void testGetApplication(
             "id": validCampaign.id,
             "title": validCampaign.title,
             "description": validCampaign.description,
-            "startDate": validCampaign.startDate.millisecondsSinceEpoch,
-            "endDate": validCampaign.endDate.millisecondsSinceEpoch,
+            "start_date": validCampaign.startDate.millisecondsSinceEpoch,
+            "end_date": validCampaign.endDate.millisecondsSinceEpoch,
           }
         ]),
       );
@@ -485,10 +476,10 @@ void testGetApplication(
         (_) => Future.value([
           {
             "id": validVaccine.id,
-            "sipniCode": validVaccine.sipniCode,
+            "sipni_code": validVaccine.sipniCode,
             "name": validVaccine.name,
             "laboratory": validVaccine.laboratory,
-            "vaccineBatch": validVaccine.vaccineBatch.id,
+            "batch": validVaccine.batch.id,
           }
         ]),
       );
@@ -501,7 +492,7 @@ void testGetApplication(
         (_) => Future.value([
           {
             "id": validVaccineBatch.id,
-            "batchNo": validVaccineBatch.batchNo,
+            "number": validVaccineBatch.number,
             "quantity": validVaccineBatch.quantity,
           }
         ]),
@@ -610,7 +601,7 @@ void testGetApplications(
     final validPriorityGroupId = 1;
     final validPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idosos",
       description: "Grupo de pessoas com mais de 60 anos",
     );
@@ -619,7 +610,7 @@ void testGetApplications(
     final validPriorityCategory = PriorityCategory(
       id: validPriorityCategoryId,
       priorityGroup: validPriorityGroup,
-      categoryCode: "Pessoas idosas",
+      code: "Pessoas idosas",
       name: "Idosos",
       description: "Categoria para pessoas idosas",
     );
@@ -674,18 +665,18 @@ void testGetApplications(
 
     final validVaccineBatch = VaccineBatch(
       id: validVaccineBatchId,
-      batchNo: "123456",
+      number: "123456",
       quantity: 20,
     );
     final validVaccineBatches = [
       validVaccineBatch,
       validVaccineBatch.copyWith(
         id: validVaccineBatchId + 1,
-        batchNo: "654321",
+        number: "654321",
       ),
       validVaccineBatch.copyWith(
         id: validVaccineBatchId + 2,
-        batchNo: "123457",
+        number: "123457",
       ),
     ];
 
@@ -694,9 +685,9 @@ void testGetApplications(
       sipniCode: "123456",
       name: "Vaccine Name",
       laboratory: "Laboratory Name",
-      vaccineBatch: VaccineBatch(
+      batch: VaccineBatch(
         id: 1,
-        batchNo: "01234",
+        number: "01234",
         quantity: 10,
       ),
     );
@@ -706,13 +697,13 @@ void testGetApplications(
         id: 2,
         sipniCode: "654321",
         name: "Vaccine Name 2",
-        vaccineBatch: validVaccineBatches[1],
+        batch: validVaccineBatches[1],
       ),
       validVaccine.copyWith(
         id: 3,
         sipniCode: "111222",
         name: "Vaccine Name 3",
-        vaccineBatch: validVaccineBatches[2],
+        batch: validVaccineBatches[2],
       ),
     ];
 
@@ -722,8 +713,7 @@ void testGetApplications(
       vaccine: validVaccines[0],
       applicationDate: DateTime(2022, 3, 4),
       applier: validAppliers[0],
-      vaccineBatch: validVaccineBatches[0],
-      vaccineDose: VaccineDose.D1,
+      dose: VaccineDose.D1,
       campaign: validCampaigns[0],
       dueDate: DateTime(2022, 4),
     );
@@ -734,8 +724,7 @@ void testGetApplications(
         patient: validPatients[1],
         applicationDate: DateTime(2022, 4, 4),
         applier: validAppliers[1],
-        vaccineBatch: validVaccineBatches[1],
-        vaccineDose: VaccineDose.D2,
+        dose: VaccineDose.D2,
         campaign: validCampaigns[1],
         dueDate: DateTime(2023),
       ),
@@ -748,30 +737,30 @@ void testGetApplications(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': expectedApplications[0].id,
-              'patient': expectedApplications[0].patient.id,
-              'vaccine': expectedApplications[0].vaccine.id,
-              'applicationDate': expectedApplications[0]
+              "id": expectedApplications[0].id,
+              "patient": expectedApplications[0].patient.id,
+              "vaccine": expectedApplications[0].vaccine.id,
+              "application_date": expectedApplications[0]
                   .applicationDate
                   .millisecondsSinceEpoch,
-              'applier': expectedApplications[0].applier.id,
-              'vaccineBatch': expectedApplications[0].vaccineBatch.id,
-              'vaccineDose': expectedApplications[0].vaccineDose.name,
-              'campaign': expectedApplications[0].campaign.id,
-              'dueDate': expectedApplications[0].dueDate.millisecondsSinceEpoch,
+              "applier": expectedApplications[0].applier.id,
+              "dose": expectedApplications[0].dose.name,
+              "campaign": expectedApplications[0].campaign.id,
+              "due_date":
+                  expectedApplications[0].dueDate.millisecondsSinceEpoch,
             },
             {
-              'id': expectedApplications[1].id,
-              'patient': expectedApplications[1].patient.id,
-              'vaccine': expectedApplications[1].vaccine.id,
-              'applicationDate': expectedApplications[1]
+              "id": expectedApplications[1].id,
+              "patient": expectedApplications[1].patient.id,
+              "vaccine": expectedApplications[1].vaccine.id,
+              "application_date": expectedApplications[1]
                   .applicationDate
                   .millisecondsSinceEpoch,
-              'applier': expectedApplications[1].applier.id,
-              'vaccineBatch': expectedApplications[1].vaccineBatch.id,
-              'vaccineDose': expectedApplications[1].vaccineDose.name,
-              'campaign': expectedApplications[1].campaign.id,
-              'dueDate': expectedApplications[1].dueDate.millisecondsSinceEpoch,
+              "applier": expectedApplications[1].applier.id,
+              "dose": expectedApplications[1].dose.name,
+              "campaign": expectedApplications[1].campaign.id,
+              "due_date":
+                  expectedApplications[1].dueDate.millisecondsSinceEpoch,
             },
           ]),
         );
@@ -785,7 +774,7 @@ void testGetApplications(
               "name": validLocality.name,
               "city": validLocality.city,
               "state": validLocality.state,
-              "ibgeCode": validLocality.ibgeCode,
+              "ibge_code": validLocality.ibgeCode,
             }
           ]),
         );
@@ -798,7 +787,7 @@ void testGetApplications(
               "id": validAppliers[0].person.id,
               "cpf": validAppliers[0].person.cpf,
               "name": validAppliers[0].person.name,
-              "birthDate":
+              "birth_date":
                   validAppliers[0].person.birthDate.millisecondsSinceEpoch,
               "locality": validAppliers[0].person.locality.id,
             },
@@ -806,7 +795,7 @@ void testGetApplications(
               "id": validAppliers[1].person.id,
               "cpf": validAppliers[1].person.cpf,
               "name": validAppliers[1].person.name,
-              "birthDate":
+              "birth_date":
                   validAppliers[1].person.birthDate.millisecondsSinceEpoch,
               "locality": validAppliers[1].person.locality.id,
             },
@@ -814,7 +803,7 @@ void testGetApplications(
               "id": validAppliers[2].person.id,
               "cpf": validAppliers[2].person.cpf,
               "name": validAppliers[2].person.name,
-              "birthDate":
+              "birth_date":
                   validAppliers[2].person.birthDate.millisecondsSinceEpoch,
               "locality": validAppliers[2].person.locality.id,
             },
@@ -867,7 +856,7 @@ void testGetApplications(
               "id": validPatients[0].person.id,
               "cpf": validPatients[0].person.cpf,
               "name": validPatients[0].person.name,
-              "birthDate":
+              "birth_date":
                   validPatients[0].person.birthDate.millisecondsSinceEpoch,
               "locality": validPatients[0].person.locality.id,
             },
@@ -875,7 +864,7 @@ void testGetApplications(
               "id": validPatients[1].person.id,
               "cpf": validPatients[1].person.cpf,
               "name": validPatients[1].person.name,
-              "birthDate":
+              "birth_date":
                   validPatients[1].person.birthDate.millisecondsSinceEpoch,
               "locality": validPatients[1].person.locality.id,
             },
@@ -883,7 +872,7 @@ void testGetApplications(
               "id": validPatients[2].person.id,
               "cpf": validPatients[2].person.cpf,
               "name": validPatients[2].person.name,
-              "birthDate":
+              "birth_date":
                   validPatients[2].person.birthDate.millisecondsSinceEpoch,
               "locality": validPatients[2].person.locality.id,
             },
@@ -895,10 +884,10 @@ void testGetApplications(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPriorityGroup.id,
-              'groupCode': validPriorityGroup.groupCode,
-              'name': validPriorityGroup.name,
-              'description': validPriorityGroup.description,
+              "id": validPriorityGroup.id,
+              "code": validPriorityGroup.code,
+              "name": validPriorityGroup.name,
+              "description": validPriorityGroup.description,
             }
           ]),
         );
@@ -908,11 +897,11 @@ void testGetApplications(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPriorityCategory.id,
-              'priorityGroup': validPriorityCategory.priorityGroup.id,
-              'categoryCode': validPriorityCategory.categoryCode,
-              'name': validPriorityCategory.name,
-              'description': validPriorityCategory.description,
+              "id": validPriorityCategory.id,
+              "priority_group": validPriorityCategory.priorityGroup.id,
+              "code": validPriorityCategory.code,
+              "name": validPriorityCategory.name,
+              "description": validPriorityCategory.description,
             }
           ]),
         );
@@ -924,22 +913,22 @@ void testGetApplications(
             {
               "id": validPatients[0].id,
               "cns": validPatients[0].cns,
-              "maternalCondition": validPatients[0].maternalCondition.name,
-              "priorityCategory": validPatients[0].priorityCategory.id,
+              "maternal_condition": validPatients[0].maternalCondition.name,
+              "priority_category": validPatients[0].priorityCategory.id,
               "person": validPatients[0].person.id,
             },
             {
               "id": validPatients[1].id,
               "cns": validPatients[1].cns,
-              "maternalCondition": validPatients[1].maternalCondition.name,
-              "priorityCategory": validPatients[1].priorityCategory.id,
+              "maternal_condition": validPatients[1].maternalCondition.name,
+              "priority_category": validPatients[1].priorityCategory.id,
               "person": validPatients[1].person.id,
             },
             {
               "id": validPatients[2].id,
               "cns": validPatients[2].cns,
-              "maternalCondition": validPatients[2].maternalCondition.name,
-              "priorityCategory": validPatients[2].priorityCategory.id,
+              "maternal_condition": validPatients[2].maternalCondition.name,
+              "priority_category": validPatients[2].priorityCategory.id,
               "person": validPatients[2].person.id,
             },
           ]),
@@ -954,22 +943,22 @@ void testGetApplications(
             "id": validCampaigns[0].id,
             "title": validCampaigns[0].title,
             "description": validCampaigns[0].description,
-            "startDate": validCampaigns[0].startDate.millisecondsSinceEpoch,
-            "endDate": validCampaigns[0].endDate.millisecondsSinceEpoch,
+            "start_date": validCampaigns[0].startDate.millisecondsSinceEpoch,
+            "end_date": validCampaigns[0].endDate.millisecondsSinceEpoch,
           },
           {
             "id": validCampaigns[1].id,
             "title": validCampaigns[1].title,
             "description": validCampaigns[1].description,
-            "startDate": validCampaigns[1].startDate.millisecondsSinceEpoch,
-            "endDate": validCampaigns[1].endDate.millisecondsSinceEpoch,
+            "start_date": validCampaigns[1].startDate.millisecondsSinceEpoch,
+            "end_date": validCampaigns[1].endDate.millisecondsSinceEpoch,
           },
           {
             "id": validCampaigns[2].id,
             "title": validCampaigns[2].title,
             "description": validCampaigns[2].description,
-            "startDate": validCampaigns[2].startDate.millisecondsSinceEpoch,
-            "endDate": validCampaigns[2].endDate.millisecondsSinceEpoch,
+            "start_date": validCampaigns[2].startDate.millisecondsSinceEpoch,
+            "end_date": validCampaigns[2].endDate.millisecondsSinceEpoch,
           },
         ]),
       );
@@ -980,17 +969,17 @@ void testGetApplications(
         (_) => Future.value([
           {
             "id": validVaccineBatches[0].id,
-            "batchNo": validVaccineBatches[0].batchNo,
+            "number": validVaccineBatches[0].number,
             "quantity": validVaccineBatches[0].quantity,
           },
           {
             "id": validVaccineBatches[1].id,
-            "batchNo": validVaccineBatches[1].batchNo,
+            "number": validVaccineBatches[1].number,
             "quantity": validVaccineBatches[1].quantity,
           },
           {
             "id": validVaccineBatches[2].id,
-            "batchNo": validVaccineBatches[2].batchNo,
+            "number": validVaccineBatches[2].number,
             "quantity": validVaccineBatches[2].quantity,
           },
         ]),
@@ -1003,24 +992,24 @@ void testGetApplications(
       (_) => Future.value([
         {
           "id": validVaccines[0].id,
-          "sipniCode": validVaccines[0].sipniCode,
+          "sipni_code": validVaccines[0].sipniCode,
           "name": validVaccines[0].name,
           "laboratory": validVaccines[0].laboratory,
-          "vaccineBatch": validVaccines[0].vaccineBatch.id,
+          "batch": validVaccines[0].batch.id,
         },
         {
           "id": validVaccines[1].id,
-          "sipniCode": validVaccines[1].sipniCode,
+          "sipni_code": validVaccines[1].sipniCode,
           "name": validVaccines[1].name,
           "laboratory": validVaccines[1].laboratory,
-          "vaccineBatch": validVaccines[1].vaccineBatch.id,
+          "batch": validVaccines[1].batch.id,
         },
         {
           "id": validVaccines[2].id,
-          "sipniCode": validVaccines[2].sipniCode,
+          "sipni_code": validVaccines[2].sipniCode,
           "name": validVaccines[2].name,
           "laboratory": validVaccines[2].laboratory,
-          "vaccineBatch": validVaccines[2].vaccineBatch.id,
+          "batch": validVaccines[2].batch.id,
         },
       ]),
     );
@@ -1096,9 +1085,9 @@ void testUpdateApplication(
         id: 1,
         priorityGroup: PriorityGroup(
           id: 1,
-          groupCode: "Pessoas com mais de 60 anos",
+          code: "Pessoas com mais de 60 anos",
         ),
-        categoryCode: "Pessoas idosas",
+        code: "Pessoas idosas",
         name: "Idosos",
         description: "Categoria para pessoas idosas",
       ),
@@ -1118,20 +1107,14 @@ void testUpdateApplication(
       startDate: DateTime(2022),
     );
 
-    final validVaccineBatch = VaccineBatch(
-      id: 1,
-      batchNo: "123456",
-      quantity: 20,
-    );
-
     final validVaccine = Vaccine(
       id: validVaccineId,
       sipniCode: "123456",
       name: "Vaccine Name",
       laboratory: "Laboratory Name",
-      vaccineBatch: VaccineBatch(
+      batch: VaccineBatch(
         id: 1,
-        batchNo: "01234",
+        number: "01234",
         quantity: 10,
       ),
     );
@@ -1142,8 +1125,7 @@ void testUpdateApplication(
       vaccine: validVaccine,
       applicationDate: DateTime(2022, 3, 4),
       applier: validApplier,
-      vaccineBatch: validVaccineBatch,
-      vaccineDose: VaccineDose.D1,
+      dose: VaccineDose.D1,
       campaign: validCampaign,
       dueDate: DateTime(2022, 4),
     );

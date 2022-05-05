@@ -9,7 +9,7 @@ void main() {
   setUp(() {
     expectedPriorityGroup = PriorityGroup(
       id: 1,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idosos",
       description: "Grupo de pessoas com mais de 60 anos",
     );
@@ -17,7 +17,7 @@ void main() {
     validPriorityCategory = PriorityCategory(
       id: 1,
       priorityGroup: expectedPriorityGroup,
-      categoryCode: "Pessoas idosas",
+      code: "Pessoas idosas",
       name: "Idosos",
       description: "Categoria para pessoas idosas",
     );
@@ -28,7 +28,7 @@ void main() {
       expect(validPriorityCategory, isA<PriorityCategory>());
       expect(validPriorityCategory.id, 1);
       expect(validPriorityCategory.priorityGroup, expectedPriorityGroup);
-      expect(validPriorityCategory.categoryCode, "Pessoas idosas");
+      expect(validPriorityCategory.code, "Pessoas idosas");
       expect(validPriorityCategory.name, "Idosos");
       expect(
         validPriorityCategory.description,
@@ -37,7 +37,7 @@ void main() {
 
       expect(expectedPriorityGroup, isA<PriorityGroup>());
       expect(expectedPriorityGroup.id, 1);
-      expect(expectedPriorityGroup.groupCode, "Pessoas com mais de 60 anos");
+      expect(expectedPriorityGroup.code, "Pessoas com mais de 60 anos");
       expect(expectedPriorityGroup.name, "Idosos");
       expect(
         expectedPriorityGroup.description,
@@ -57,8 +57,8 @@ void main() {
         () {
       final actualPriorityCategory = validPriorityCategory.copyWith(name: "");
 
-      expect(actualPriorityCategory.name, actualPriorityCategory.categoryCode);
-      expect(actualPriorityCategory.name, validPriorityCategory.categoryCode);
+      expect(actualPriorityCategory.name, actualPriorityCategory.code);
+      expect(actualPriorityCategory.name, validPriorityCategory.code);
     });
 
     test(
@@ -90,7 +90,7 @@ void main() {
 
     test("should throw exception if categoryCode is empty", () {
       expect(
-        () => validPriorityCategory.copyWith(categoryCode: ""),
+        () => validPriorityCategory.copyWith(code: ""),
         throwsException,
         reason:
             "it's not possible to create a priorityCategory with an empty categoryCode",
@@ -99,7 +99,7 @@ void main() {
 
     test("should throw exception if categoryCode has only spaces", () {
       expect(
-        () => validPriorityCategory.copyWith(categoryCode: "  "),
+        () => validPriorityCategory.copyWith(code: "  "),
         throwsException,
         reason:
             "it's not possible to create a priorityCategory with an invalid categoryCode",
@@ -109,8 +109,7 @@ void main() {
     test("should throw exception if categoryCode has weird characters", () {
       expect(
         () => validPriorityCategory.copyWith(
-            categoryCode:
-                "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+            code: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
         throwsException,
         reason:
             "it's not possible to create a priorityCategory with an invalid categoryCode",

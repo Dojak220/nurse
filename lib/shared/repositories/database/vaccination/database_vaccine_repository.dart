@@ -31,9 +31,9 @@ class DatabaseVaccineRepository extends DatabaseInterface
     try {
       final vaccineMap = await get(id);
 
-      final vaccineBatch = await _getVaccineBatch(vaccineMap["vaccineBatch"]);
+      final vaccineBatch = await _getVaccineBatch(vaccineMap["batch"]);
 
-      vaccineMap["vaccineBatch"] = vaccineBatch.toMap();
+      vaccineMap["batch"] = vaccineBatch.toMap();
 
       final vaccine = Vaccine.fromMap(vaccineMap);
 
@@ -58,10 +58,10 @@ class DatabaseVaccineRepository extends DatabaseInterface
 
       vaccineMaps.forEach((v) {
         final vaccineBatch = vaccineBatches.firstWhere((b) {
-          return b.id == v["vaccineBatch"];
+          return b.id == v["batch"];
         });
 
-        v["vaccineBatch"] = vaccineBatch;
+        v["batch"] = vaccineBatch;
       });
 
       final vaccines = vaccineMaps.map((vaccine) {

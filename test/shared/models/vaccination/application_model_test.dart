@@ -16,12 +16,12 @@ void main() {
 
   final expectedPriorityGroup = PriorityGroup(
     id: 1,
-    groupCode: "Pessoas com mais de 60 anos",
+    code: "Pessoas com mais de 60 anos",
   );
   final expectedPriorityCategory = PriorityCategory(
     id: 1,
     priorityGroup: expectedPriorityGroup,
-    categoryCode: "Pessoas idosas",
+    code: "Pessoas idosas",
     name: "Idosos",
     description: "Categoria para pessoas idosas",
   );
@@ -38,9 +38,9 @@ void main() {
     sipniCode: "123456",
     name: "Vaccine Name",
     laboratory: "Laboratory Name",
-    vaccineBatch: VaccineBatch(
+    batch: VaccineBatch(
       id: 1,
-      batchNo: "01234",
+      number: "01234",
       quantity: 10,
     ),
   );
@@ -90,12 +90,7 @@ void main() {
       vaccine: expectedVaccine,
       applicationDate: DateTime(2022, 3, 4),
       applier: expectedApplier,
-      vaccineBatch: VaccineBatch(
-        id: 1,
-        batchNo: "123456",
-        quantity: 20,
-      ),
-      vaccineDose: VaccineDose.D1,
+      dose: VaccineDose.D1,
       campaign: Campaign(
         id: 1,
         title: "Campaign Title",
@@ -111,7 +106,7 @@ void main() {
       expect(validApplication.id, 1);
 
       expect(validApplication.applicationDate, DateTime(2022, 3, 4));
-      expect(validApplication.vaccineDose, VaccineDose.D1);
+      expect(validApplication.dose, VaccineDose.D1);
       expect(validApplication.dueDate, DateTime(2022, 4));
     });
 

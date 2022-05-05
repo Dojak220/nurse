@@ -53,7 +53,7 @@ class Locality implements GenericModel {
       'name': name,
       'city': city,
       'state': state,
-      'ibgeCode': ibgeCode,
+      'ibge_code': ibgeCode,
     };
   }
 
@@ -63,7 +63,7 @@ class Locality implements GenericModel {
       name: map['name'] ?? '',
       city: map['city'] ?? '',
       state: map['state'] ?? '',
-      ibgeCode: map['ibgeCode'] ?? '',
+      ibgeCode: map['ibge_code'] ?? '',
     );
   }
 

@@ -6,18 +6,18 @@ class PriorityCategory implements GenericModel {
   @override
   final int id;
   final PriorityGroup priorityGroup;
-  final String categoryCode;
+  final String code;
   final String name;
   final String description;
 
   PriorityCategory({
     required this.id,
     required this.priorityGroup,
-    required String categoryCode,
+    required String code,
     String name = "",
     String description = "",
-  })  : this.name = name.isEmpty ? categoryCode : name,
-        this.categoryCode = categoryCode.trim(),
+  })  : this.name = name.isEmpty ? code : name,
+        this.code = code.trim(),
         this.description = description.trim() {
     _validatePriorityCategory();
   }
@@ -26,7 +26,7 @@ class PriorityCategory implements GenericModel {
     Validator.validateAll(
       [
         ValidationPair(ValidatorType.Id, id),
-        ValidationPair(ValidatorType.Name, categoryCode),
+        ValidationPair(ValidatorType.Name, code),
         ValidationPair(ValidatorType.Name, name),
         ValidationPair(ValidatorType.Description, this.description),
       ],
@@ -36,14 +36,14 @@ class PriorityCategory implements GenericModel {
   PriorityCategory copyWith({
     int? id,
     PriorityGroup? priorityGroup,
-    String? categoryCode,
+    String? code,
     String? name,
     String? description,
   }) {
     return PriorityCategory(
       id: id ?? this.id,
       priorityGroup: priorityGroup ?? this.priorityGroup,
-      categoryCode: categoryCode ?? this.categoryCode,
+      code: code ?? this.code,
       name: name ?? this.name,
       description: description ?? this.description,
     );
@@ -53,8 +53,8 @@ class PriorityCategory implements GenericModel {
   Map<String, Object> toMap() {
     return {
       'id': id,
-      'priorityGroup': priorityGroup.toMap(),
-      'categoryCode': categoryCode,
+      'priority_group': priorityGroup.toMap(),
+      'code': code,
       'name': name,
       'description': description,
     };
@@ -63,8 +63,8 @@ class PriorityCategory implements GenericModel {
   factory PriorityCategory.fromMap(Map<String, dynamic> map) {
     return PriorityCategory(
       id: map['id'] ?? 0,
-      priorityGroup: PriorityGroup.fromMap(map['priorityGroup']),
-      categoryCode: map['categoryCode'] ?? '',
+      priorityGroup: PriorityGroup.fromMap(map['priority_group']),
+      code: map['code'] ?? '',
       name: map['name'] ?? '',
       description: map['description'] ?? '',
     );
@@ -77,7 +77,7 @@ class PriorityCategory implements GenericModel {
     return other is PriorityCategory &&
         other.id == id &&
         other.priorityGroup == priorityGroup &&
-        other.categoryCode == categoryCode &&
+        other.code == code &&
         other.name == name &&
         other.description == description;
   }
@@ -86,13 +86,13 @@ class PriorityCategory implements GenericModel {
   int get hashCode {
     return id.hashCode ^
         priorityGroup.hashCode ^
-        categoryCode.hashCode ^
+        code.hashCode ^
         name.hashCode ^
         description.hashCode;
   }
 
   @override
   String toString() {
-    return 'PriorityCategory(id: $id, priorityGroup: $priorityGroup, categoryCode: $categoryCode, name: $name, description: $description)';
+    return 'PriorityCategory(id: $id, priorityGroup: $priorityGroup, code: $code, name: $name, description: $description)';
   }
 }

@@ -140,11 +140,11 @@ void testGetPerson(
           whereArgs: [validPersonId],
         )).thenAnswer((_) => Future.value([
               {
-                'id': expectedPerson.id,
-                'cpf': expectedPerson.cpf,
-                'name': expectedPerson.name,
-                'birthDate': expectedPerson.birthDate.millisecondsSinceEpoch,
-                'locality': expectedPerson.locality.id,
+                "id": expectedPerson.id,
+                "cpf": expectedPerson.cpf,
+                "name": expectedPerson.name,
+                "birth_date": expectedPerson.birthDate.millisecondsSinceEpoch,
+                "locality": expectedPerson.locality.id,
               }
             ]));
 
@@ -159,7 +159,7 @@ void testGetPerson(
               "name": expectedLocality.name,
               "city": expectedLocality.city,
               "state": expectedLocality.state,
-              "ibgeCode": expectedLocality.ibgeCode,
+              "ibge_code": expectedLocality.ibgeCode,
             }
           ]),
         );
@@ -245,18 +245,18 @@ void testGetPersons(
           DatabasePersonRepository.TABLE,
         )).thenAnswer((_) => Future.value([
               {
-                'id': expectedPersons[0].id,
-                'cpf': expectedPersons[0].cpf,
-                'name': expectedPersons[0].name,
-                'birthDate': expectedPersons[0].birthDate,
-                'locality': expectedPersons[0].locality,
+                "id": expectedPersons[0].id,
+                "cpf": expectedPersons[0].cpf,
+                "name": expectedPersons[0].name,
+                "birth_date": expectedPersons[0].birthDate,
+                "locality": expectedPersons[0].locality,
               },
               {
-                'id': expectedPersons[1].id,
-                'cpf': expectedPersons[1].cpf,
-                'name': expectedPersons[1].name,
-                'birthDate': expectedPersons[1].birthDate,
-                'locality': expectedPersons[1].locality,
+                "id": expectedPersons[1].id,
+                "cpf": expectedPersons[1].cpf,
+                "name": expectedPersons[1].name,
+                "birth_date": expectedPersons[1].birthDate,
+                "locality": expectedPersons[1].locality,
               },
             ]));
         when(db.query(
@@ -267,21 +267,21 @@ void testGetPersons(
                 "name": expectedLocalities[0].name,
                 "city": expectedLocalities[0].city,
                 "state": expectedLocalities[0].state,
-                "ibgeCode": expectedLocalities[0].ibgeCode,
+                "ibge_code": expectedLocalities[0].ibgeCode,
               },
               {
                 "id": expectedLocalities[1].id,
                 "name": expectedLocalities[1].name,
                 "city": expectedLocalities[1].city,
                 "state": expectedLocalities[1].state,
-                "ibgeCode": expectedLocalities[1].ibgeCode,
+                "ibge_code": expectedLocalities[1].ibgeCode,
               },
               {
                 "id": expectedLocalities[2].id,
                 "name": expectedLocalities[2].name,
                 "city": expectedLocalities[2].city,
                 "state": expectedLocalities[2].state,
-                "ibgeCode": expectedLocalities[2].ibgeCode,
+                "ibge_code": expectedLocalities[2].ibgeCode,
               },
             ]));
       });

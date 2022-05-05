@@ -124,7 +124,7 @@ void testGetLocality(
                 "name": expectedLocality.name,
                 "city": expectedLocality.city,
                 "state": expectedLocality.state,
-                "ibgeCode": expectedLocality.ibgeCode,
+                "ibge_code": expectedLocality.ibgeCode,
               }
             ]));
       });
@@ -197,21 +197,21 @@ void testGetLocalities(
                 "name": expectedLocalities[0].name,
                 "city": expectedLocalities[0].city,
                 "state": expectedLocalities[0].state,
-                "ibgeCode": expectedLocalities[0].ibgeCode,
+                "ibge_code": expectedLocalities[0].ibgeCode,
               },
               {
                 "id": expectedLocalities[1].id,
                 "name": expectedLocalities[1].name,
                 "city": expectedLocalities[1].city,
                 "state": expectedLocalities[1].state,
-                "ibgeCode": expectedLocalities[1].ibgeCode,
+                "ibge_code": expectedLocalities[1].ibgeCode,
               },
               {
                 "id": expectedLocalities[2].id,
                 "name": expectedLocalities[2].name,
                 "city": expectedLocalities[2].city,
                 "state": expectedLocalities[2].state,
-                "ibgeCode": expectedLocalities[2].ibgeCode,
+                "ibge_code": expectedLocalities[2].ibgeCode,
               },
             ]));
       });

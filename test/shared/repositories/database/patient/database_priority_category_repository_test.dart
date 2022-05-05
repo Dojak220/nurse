@@ -37,7 +37,7 @@ void testCreatePriorityCategory(
 
     final validPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idosos",
       description: "Grupo de pessoas com mais de 60 anos",
     );
@@ -45,7 +45,7 @@ void testCreatePriorityCategory(
     final expectedPriorityCategory = PriorityCategory(
       id: validPriorityCategoryId,
       priorityGroup: validPriorityGroup,
-      categoryCode: "Pessoas idosas",
+      code: "Pessoas idosas",
       name: "Idosos",
       description: "Categoria para pessoas idosas",
     );
@@ -123,7 +123,7 @@ void testGetPriorityCategory(
 
     final validPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idosos",
       description: "Grupo de pessoas com mais de 60 anos",
     );
@@ -131,7 +131,7 @@ void testGetPriorityCategory(
     final expectedPriorityCategory = PriorityCategory(
       id: validPriorityCategoryId,
       priorityGroup: validPriorityGroup,
-      categoryCode: "Pessoas idosas",
+      code: "Pessoas idosas",
       name: "Idosos",
       description: "Categoria para pessoas idosas",
     );
@@ -145,11 +145,11 @@ void testGetPriorityCategory(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': expectedPriorityCategory.id,
-              'priorityGroup': expectedPriorityCategory.priorityGroup.id,
-              'categoryCode': expectedPriorityCategory.categoryCode,
-              'name': expectedPriorityCategory.name,
-              'description': expectedPriorityCategory.description,
+              "id": expectedPriorityCategory.id,
+              "priority_group": expectedPriorityCategory.priorityGroup.id,
+              "code": expectedPriorityCategory.code,
+              "name": expectedPriorityCategory.name,
+              "description": expectedPriorityCategory.description,
             }
           ]),
         );
@@ -161,10 +161,10 @@ void testGetPriorityCategory(
         )).thenAnswer(
           (_) => Future.value([
             {
-              'id': validPriorityGroup.id,
-              'groupCode': validPriorityGroup.groupCode,
-              'name': validPriorityGroup.name,
-              'description': validPriorityGroup.description,
+              "id": validPriorityGroup.id,
+              "code": validPriorityGroup.code,
+              "name": validPriorityGroup.name,
+              "description": validPriorityGroup.description,
             }
           ]),
         );
@@ -208,7 +208,7 @@ void testGetPriorityCategories(
 
     final validPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idosos",
       description: "Grupo de pessoas com mais de 60 anos",
     );
@@ -217,21 +217,21 @@ void testGetPriorityCategories(
       PriorityCategory(
         id: validPriorityCategoryId,
         priorityGroup: validPriorityGroup,
-        categoryCode: "Pessoas idosas",
+        code: "Pessoas idosas",
         name: "Idosos",
         description: "Categoria para pessoas idosas",
       ),
       PriorityCategory(
         id: validPriorityCategoryId + 1,
         priorityGroup: validPriorityGroup,
-        categoryCode: "Pessoas menores de idade",
+        code: "Pessoas menores de idade",
         name: "Adolescentes",
         description: "Categoria de adolescentes",
       ),
       PriorityCategory(
         id: validPriorityCategoryId + 2,
         priorityGroup: validPriorityGroup,
-        categoryCode: "Pessoas com menos de 12 anos",
+        code: "Pessoas com menos de 12 anos",
         name: "Crianças",
         description: "Categoria de crianças",
       ),
@@ -243,25 +243,25 @@ void testGetPriorityCategories(
           DatabasePriorityCategoryRepository.TABLE,
         )).thenAnswer((_) => Future.value([
               {
-                'id': expectedPriorityCategories[0].id,
-                'priorityGroup': expectedPriorityCategories[0].priorityGroup,
-                'categoryCode': expectedPriorityCategories[0].categoryCode,
-                'name': expectedPriorityCategories[0].name,
-                'description': expectedPriorityCategories[0].description,
+                "id": expectedPriorityCategories[0].id,
+                "priority_group": expectedPriorityCategories[0].priorityGroup,
+                "code": expectedPriorityCategories[0].code,
+                "name": expectedPriorityCategories[0].name,
+                "description": expectedPriorityCategories[0].description,
               },
               {
-                'id': expectedPriorityCategories[1].id,
-                'priorityGroup': expectedPriorityCategories[1].priorityGroup,
-                'categoryCode': expectedPriorityCategories[1].categoryCode,
-                'name': expectedPriorityCategories[1].name,
-                'description': expectedPriorityCategories[1].description,
+                "id": expectedPriorityCategories[1].id,
+                "priority_group": expectedPriorityCategories[1].priorityGroup,
+                "code": expectedPriorityCategories[1].code,
+                "name": expectedPriorityCategories[1].name,
+                "description": expectedPriorityCategories[1].description,
               },
               {
-                'id': expectedPriorityCategories[2].id,
-                'priorityGroup': expectedPriorityCategories[2].priorityGroup,
-                'categoryCode': expectedPriorityCategories[2].categoryCode,
-                'name': expectedPriorityCategories[2].name,
-                'description': expectedPriorityCategories[2].description,
+                "id": expectedPriorityCategories[2].id,
+                "priority_group": expectedPriorityCategories[2].priorityGroup,
+                "code": expectedPriorityCategories[2].code,
+                "name": expectedPriorityCategories[2].name,
+                "description": expectedPriorityCategories[2].description,
               },
             ]));
       });
@@ -306,7 +306,7 @@ void testUpdatePriorityCategory(
 
     final validPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idosos",
       description: "Grupo de pessoas com mais de 60 anos",
     );
@@ -314,7 +314,7 @@ void testUpdatePriorityCategory(
     final expectedPriorityCategory = PriorityCategory(
       id: validPriorityCategoryId,
       priorityGroup: validPriorityGroup,
-      categoryCode: "Pessoas idosas",
+      code: "Pessoas idosas",
       name: "Idoso",
       description: "Categoria para pessoas idosas",
     );

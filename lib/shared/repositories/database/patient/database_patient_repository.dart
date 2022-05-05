@@ -35,11 +35,11 @@ class DatabasePatientRepository extends DatabaseInterface
 
       final person = await _getPerson(patientMap["person"]);
       final priorityCategory = await _getPriorityCategory(
-        patientMap["priorityCategory"],
+        patientMap["priority_category"],
       );
 
       patientMap['person'] = person.toMap();
-      patientMap['priorityCategory'] = priorityCategory.toMap();
+      patientMap['priority_category'] = priorityCategory.toMap();
 
       final patient = Patient.fromMap(patientMap);
 
@@ -75,11 +75,11 @@ class DatabasePatientRepository extends DatabaseInterface
           return per.id == pat["person"];
         });
         final priorityCategory = priorityCategories.firstWhere((c) {
-          return c.id == pat["priorityCategory"];
+          return c.id == pat["priority_category"];
         });
 
         pat["person"] = person;
-        pat["priorityCategory"] = priorityCategory;
+        pat["priority_category"] = priorityCategory;
       });
 
       final patients = patientMaps

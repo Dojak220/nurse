@@ -43,8 +43,8 @@ class Patient implements GenericModel {
     return {
       'id': id,
       'cns': cns,
-      'priorityCategory': priorityCategory.toMap(),
-      'maternalCondition': maternalCondition.name,
+      'priority_category': priorityCategory.toMap(),
+      'maternal_condition': maternalCondition.name,
       'person': person.toMap(),
     };
   }
@@ -53,9 +53,9 @@ class Patient implements GenericModel {
     return Patient(
       id: map['id'] ?? 0,
       cns: map['cns'] ?? "",
-      priorityCategory: PriorityCategory.fromMap(map['priorityCategory']),
+      priorityCategory: PriorityCategory.fromMap(map['priority_category']),
       maternalCondition: MaternalConditionExtension.fromString(
-          map['maternalCondition'] ?? MaternalCondition.NENHUM.name),
+          map['maternal_condition'] ?? MaternalCondition.NENHUM.name),
       person: Person.fromMap(map['person']),
     );
   }
