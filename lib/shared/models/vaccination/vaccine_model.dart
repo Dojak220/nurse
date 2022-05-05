@@ -8,14 +8,14 @@ class Vaccine implements GenericModel {
   final String sipniCode;
   final String name;
   final String laboratory;
-  final VaccineBatch vaccineBatch;
+  final VaccineBatch batch;
 
   Vaccine({
     required this.id,
     required String sipniCode,
     required String name,
     required String laboratory,
-    required this.vaccineBatch,
+    required this.batch,
   })  : this.sipniCode = sipniCode.trim(),
         this.name = name.trim(),
         this.laboratory = laboratory.trim() {
@@ -36,40 +36,40 @@ class Vaccine implements GenericModel {
     String? sipniCode,
     String? name,
     String? laboratory,
-    VaccineBatch? vaccineBatch,
+    VaccineBatch? batch,
   }) {
     return Vaccine(
       id: id ?? this.id,
       sipniCode: sipniCode ?? this.sipniCode,
       name: name ?? this.name,
       laboratory: laboratory ?? this.laboratory,
-      vaccineBatch: vaccineBatch ?? this.vaccineBatch,
+      batch: batch ?? this.batch,
     );
   }
 
   Map<String, Object> toMap() {
     return {
       'id': id,
-      'sipniCode': sipniCode,
+      'sipni_code': sipniCode,
       'name': name,
       'laboratory': laboratory,
-      'vaccineBatch': vaccineBatch.toMap(),
+      'batch': batch.toMap(),
     };
   }
 
   factory Vaccine.fromMap(Map<String, dynamic> map) {
     return Vaccine(
       id: map['id'] ?? 0,
-      sipniCode: map['sipniCode'] ?? '',
+      sipniCode: map['sipni_code'] ?? '',
       name: map['name'] ?? '',
       laboratory: map['laboratory'] ?? '',
-      vaccineBatch: VaccineBatch.fromMap(map['vaccineBatch']),
+      batch: VaccineBatch.fromMap(map['batch']),
     );
   }
 
   @override
   String toString() {
-    return 'Vaccine(id: $id, sipniCode: $sipniCode, name: $name, laboratory: $laboratory, vaccineBatch: $vaccineBatch)';
+    return 'Vaccine(id: $id, sipniCode: $sipniCode, name: $name, laboratory: $laboratory, batch: $batch)';
   }
 
   @override
@@ -81,7 +81,7 @@ class Vaccine implements GenericModel {
         other.sipniCode == sipniCode &&
         other.name == name &&
         other.laboratory == laboratory &&
-        other.vaccineBatch == vaccineBatch;
+        other.batch == batch;
   }
 
   @override
@@ -90,6 +90,6 @@ class Vaccine implements GenericModel {
         sipniCode.hashCode ^
         name.hashCode ^
         laboratory.hashCode ^
-        vaccineBatch.hashCode;
+        batch.hashCode;
   }
 }

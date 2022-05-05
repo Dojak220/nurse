@@ -4,17 +4,17 @@ import 'package:nurse/shared/utils/validator.dart';
 class PriorityGroup implements GenericModel {
   @override
   final int id;
-  final String groupCode;
+  final String code;
   final String name;
   final String description;
 
   PriorityGroup({
     required this.id,
-    required String groupCode,
+    required String code,
     String name = "",
     String description = "",
-  })  : this.groupCode = groupCode.trim(),
-        this.name = name.isEmpty ? groupCode : name.trim(),
+  })  : this.code = code.trim(),
+        this.name = name.isEmpty ? code : name.trim(),
         this.description = description.trim() {
     _validatePriorityGroup();
   }
@@ -23,7 +23,7 @@ class PriorityGroup implements GenericModel {
     Validator.validateAll(
       [
         ValidationPair(ValidatorType.Id, this.id),
-        ValidationPair(ValidatorType.Name, this.groupCode),
+        ValidationPair(ValidatorType.Name, this.code),
         ValidationPair(ValidatorType.Name, this.name),
         ValidationPair(ValidatorType.Description, this.description),
       ],
@@ -34,7 +34,7 @@ class PriorityGroup implements GenericModel {
   Map<String, Object> toMap() {
     return {
       'id': id,
-      'groupCode': groupCode,
+      'code': code,
       'name': name,
       'description': description,
     };
@@ -42,13 +42,13 @@ class PriorityGroup implements GenericModel {
 
   PriorityGroup copyWith({
     int? id,
-    String? groupCode,
+    String? code,
     String? name,
     String? description,
   }) {
     return PriorityGroup(
       id: id ?? this.id,
-      groupCode: groupCode ?? this.groupCode,
+      code: code ?? this.code,
       name: name ?? this.name,
       description: description ?? this.description,
     );
@@ -57,7 +57,7 @@ class PriorityGroup implements GenericModel {
   factory PriorityGroup.fromMap(Map<String, dynamic> map) {
     return PriorityGroup(
       id: map['id'] ?? 0,
-      groupCode: map['groupCode'] ?? '',
+      code: map['code'] ?? '',
       name: map['name'] ?? '',
       description: map['description'] ?? '',
     );
@@ -69,16 +69,13 @@ class PriorityGroup implements GenericModel {
 
     return other is PriorityGroup &&
         other.id == id &&
-        other.groupCode == groupCode &&
+        other.code == code &&
         other.name == name &&
         other.description == description;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
-        groupCode.hashCode ^
-        name.hashCode ^
-        description.hashCode;
+    return id.hashCode ^ code.hashCode ^ name.hashCode ^ description.hashCode;
   }
 }

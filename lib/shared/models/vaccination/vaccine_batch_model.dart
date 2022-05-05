@@ -4,14 +4,14 @@ import 'package:nurse/shared/utils/validator.dart';
 class VaccineBatch implements GenericModel {
   @override
   final int id;
-  final String batchNo;
+  final String number;
   final int quantity;
 
   VaccineBatch({
     required this.id,
-    required String batchNo,
+    required String number,
     required this.quantity,
-  }) : this.batchNo = batchNo.trim() {
+  }) : this.number = number.trim() {
     _validateVaccineBatch();
   }
 
@@ -22,18 +22,18 @@ class VaccineBatch implements GenericModel {
 
     Validator.validateAll([
       ValidationPair(ValidatorType.Id, this.id),
-      ValidationPair(ValidatorType.NumericalString, this.batchNo),
+      ValidationPair(ValidatorType.NumericalString, this.number),
     ]);
   }
 
   VaccineBatch copyWith({
     int? id,
-    String? batchNo,
+    String? number,
     int? quantity,
   }) {
     return VaccineBatch(
       id: id ?? this.id,
-      batchNo: batchNo ?? this.batchNo,
+      number: number ?? this.number,
       quantity: quantity ?? this.quantity,
     );
   }
@@ -41,7 +41,7 @@ class VaccineBatch implements GenericModel {
   Map<String, Object> toMap() {
     return {
       'id': id,
-      'batchNo': batchNo,
+      'number': number,
       'quantity': quantity,
     };
   }
@@ -49,14 +49,14 @@ class VaccineBatch implements GenericModel {
   factory VaccineBatch.fromMap(Map<String, dynamic> map) {
     return VaccineBatch(
       id: map['id'] ?? 0,
-      batchNo: map['batchNo'] ?? '',
+      number: map['number'] ?? '',
       quantity: map['quantity']?.toInt() ?? 0,
     );
   }
 
   @override
   String toString() =>
-      'VaccineBatch(id: $id, batchNo: $batchNo, quantity: $quantity)';
+      'VaccineBatch(id: $id, number: $number, quantity: $quantity)';
 
   @override
   bool operator ==(Object other) {
@@ -64,10 +64,10 @@ class VaccineBatch implements GenericModel {
 
     return other is VaccineBatch &&
         other.id == id &&
-        other.batchNo == batchNo &&
+        other.number == number &&
         other.quantity == quantity;
   }
 
   @override
-  int get hashCode => id.hashCode ^ batchNo.hashCode ^ quantity.hashCode;
+  int get hashCode => id.hashCode ^ number.hashCode ^ quantity.hashCode;
 }

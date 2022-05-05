@@ -9,7 +9,7 @@ class Person implements GenericModel {
   final String name;
   final DateTime birthDate;
   final Locality locality;
-  final Gender gender; //or sex?
+  final Sex sex;
   final String motherName;
   final String fatherName;
 
@@ -19,7 +19,7 @@ class Person implements GenericModel {
     required this.name,
     required this.birthDate,
     required this.locality,
-    this.gender = Gender.NONE,
+    this.sex = Sex.NONE,
     this.motherName = "",
     this.fatherName = "",
   }) {
@@ -39,7 +39,7 @@ class Person implements GenericModel {
     String? name,
     DateTime? birthDate,
     Locality? locality,
-    Gender? gender,
+    Sex? sex,
     String? motherName,
     String? fatherName,
   }) {
@@ -49,7 +49,7 @@ class Person implements GenericModel {
       name: name ?? this.name,
       birthDate: birthDate ?? this.birthDate,
       locality: locality ?? this.locality,
-      gender: gender ?? this.gender,
+      sex: sex ?? this.sex,
       motherName: motherName ?? this.motherName,
       fatherName: fatherName ?? this.fatherName,
     );
@@ -61,11 +61,11 @@ class Person implements GenericModel {
       'id': id,
       'cpf': cpf,
       'name': name,
-      'birthDate': birthDate.millisecondsSinceEpoch,
+      'birth_date': birthDate.millisecondsSinceEpoch,
       'locality': locality.toMap(),
-      'gender': gender.name,
-      'motherName': motherName,
-      'fatherName': fatherName,
+      'sex': sex.name,
+      'mother_name': motherName,
+      'father_name': fatherName,
     };
   }
 
@@ -74,11 +74,11 @@ class Person implements GenericModel {
       id: map['id'] ?? 0,
       cpf: map['cpf'] ?? "",
       name: map['name'] ?? '',
-      birthDate: DateTime.fromMillisecondsSinceEpoch(map['birthDate']),
+      birthDate: DateTime.fromMillisecondsSinceEpoch(map['birth_date']),
       locality: Locality.fromMap(map['locality']),
-      gender: GenderExtension.fromString(map['gender'] ?? Gender.NONE.name),
-      motherName: map['motherName'] ?? '',
-      fatherName: map['fatherName'] ?? '',
+      sex: SexExtension.fromString(map['sex'] ?? Sex.NONE.name),
+      motherName: map['mother_name'] ?? '',
+      fatherName: map['father_name'] ?? '',
     );
   }
 
@@ -92,7 +92,7 @@ class Person implements GenericModel {
         other.name == name &&
         other.birthDate == birthDate &&
         other.locality == locality &&
-        other.gender == gender &&
+        other.sex == sex &&
         other.motherName == motherName &&
         other.fatherName == fatherName;
   }
@@ -104,29 +104,29 @@ class Person implements GenericModel {
         name.hashCode ^
         birthDate.hashCode ^
         locality.hashCode ^
-        gender.hashCode ^
+        sex.hashCode ^
         motherName.hashCode ^
         fatherName.hashCode;
   }
 
   @override
   String toString() {
-    return 'Person(id: $id, cpf: $cpf, name: $name, birthDate: $birthDate, locality: $locality, gender: ${gender.name}, motherName: $motherName, fatherName: $fatherName)';
+    return 'Person(id: $id, cpf: $cpf, name: $name, birthDate: $birthDate, locality: $locality, sex: ${sex.name}, motherName: $motherName, fatherName: $fatherName)';
   }
 }
 
-enum Gender { FEMALE, MALE, NONE }
+enum Sex { FEMALE, MALE, NONE }
 
-extension GenderExtension on Gender {
-  static Gender fromString(String value) {
+extension SexExtension on Sex {
+  static Sex fromString(String value) {
     switch (value.toUpperCase()) {
       case "GESTANTE":
-        return Gender.FEMALE;
+        return Sex.FEMALE;
       case "PUERPERA":
-        return Gender.MALE;
+        return Sex.MALE;
       case "NENHUM":
       default:
-        return Gender.NONE;
+        return Sex.NONE;
     }
   }
 }

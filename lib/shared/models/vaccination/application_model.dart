@@ -2,7 +2,6 @@ import 'package:nurse/shared/models/generic_model.dart';
 import 'package:nurse/shared/models/infra/campaign_model.dart';
 import 'package:nurse/shared/models/patient/patient_model.dart';
 import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
 import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
@@ -13,8 +12,7 @@ class Application implements GenericModel {
   final Vaccine vaccine;
   final Patient patient;
   final Campaign campaign;
-  final VaccineBatch vaccineBatch;
-  final VaccineDose vaccineDose;
+  final VaccineDose dose;
   final DateTime applicationDate;
   final DateTime dueDate;
 
@@ -24,8 +22,7 @@ class Application implements GenericModel {
     required this.vaccine,
     required this.patient,
     required this.campaign,
-    required this.vaccineBatch,
-    required this.vaccineDose,
+    required this.dose,
     required this.applicationDate,
     DateTime? dueDate,
   }) : dueDate = dueDate ?? applicationDate.add(Duration(days: 3 * 30)) {
@@ -45,8 +42,7 @@ class Application implements GenericModel {
     Vaccine? vaccine,
     Patient? patient,
     Campaign? campaign,
-    VaccineBatch? vaccineBatch,
-    VaccineDose? vaccineDose,
+    VaccineDose? dose,
     DateTime? applicationDate,
     DateTime? dueDate,
   }) {
@@ -56,8 +52,7 @@ class Application implements GenericModel {
       vaccine: vaccine ?? this.vaccine,
       patient: patient ?? this.patient,
       campaign: campaign ?? this.campaign,
-      vaccineBatch: vaccineBatch ?? this.vaccineBatch,
-      vaccineDose: vaccineDose ?? this.vaccineDose,
+      dose: dose ?? this.dose,
       applicationDate: applicationDate ?? this.applicationDate,
       dueDate: dueDate ?? this.dueDate,
     );
@@ -70,10 +65,9 @@ class Application implements GenericModel {
       'vaccine': vaccine.toMap(),
       'patient': patient.toMap(),
       'campaign': campaign.toMap(),
-      'vaccineBatch': vaccineBatch.toMap(),
-      'vaccineDose': vaccineDose.name,
-      'applicationDate': applicationDate.millisecondsSinceEpoch,
-      'dueDate': dueDate.millisecondsSinceEpoch,
+      'dose': dose.name,
+      'application_date': applicationDate.millisecondsSinceEpoch,
+      'due_date': dueDate.millisecondsSinceEpoch,
     };
   }
 
@@ -84,18 +78,17 @@ class Application implements GenericModel {
       vaccine: Vaccine.fromMap(map['vaccine']),
       patient: Patient.fromMap(map['patient']),
       campaign: Campaign.fromMap(map['campaign']),
-      vaccineBatch: VaccineBatch.fromMap(map['vaccineBatch']),
-      vaccineDose: VaccineDoseExtension.fromString(map['vaccineDose']),
+      dose: VaccineDoseExtension.fromString(map['dose']),
       applicationDate: DateTime.fromMillisecondsSinceEpoch(
-        map['applicationDate'],
+        map['application_date'],
       ),
-      dueDate: DateTime.fromMillisecondsSinceEpoch(map['dueDate']),
+      dueDate: DateTime.fromMillisecondsSinceEpoch(map['due_date']),
     );
   }
 
   @override
   String toString() {
-    return 'Application(id: $id, applier: $applier, vaccine: $vaccine, patient: $patient, campaign: $campaign, vaccineBatch: $vaccineBatch, vaccineDose: $vaccineDose, applicationDate: $applicationDate, dueDate: $dueDate)';
+    return 'Application(id: $id, applier: $applier, vaccine: $vaccine, patient: $patient, campaign: $campaign, dose: $dose, applicationDate: $applicationDate, dueDate: $dueDate)';
   }
 
   @override
@@ -108,8 +101,7 @@ class Application implements GenericModel {
         other.vaccine == vaccine &&
         other.patient == patient &&
         other.campaign == campaign &&
-        other.vaccineBatch == vaccineBatch &&
-        other.vaccineDose == vaccineDose &&
+        other.dose == dose &&
         other.applicationDate == applicationDate &&
         other.dueDate == dueDate;
   }
@@ -121,8 +113,7 @@ class Application implements GenericModel {
         vaccine.hashCode ^
         patient.hashCode ^
         campaign.hashCode ^
-        vaccineBatch.hashCode ^
-        vaccineDose.hashCode ^
+        dose.hashCode ^
         applicationDate.hashCode ^
         dueDate.hashCode;
   }
