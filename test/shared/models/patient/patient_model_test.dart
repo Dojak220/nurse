@@ -13,12 +13,12 @@ void main() {
   setUp(() {
     expectedPriorityGroup = PriorityGroup(
       id: 1,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
     );
     expectedPriorityCategory = PriorityCategory(
       id: 1,
       priorityGroup: expectedPriorityGroup,
-      categoryCode: "Pessoas idosas",
+      code: "Pessoas idosas",
       name: "Idosos",
       description: "Categoria para pessoas idosas",
     );
@@ -50,7 +50,7 @@ void main() {
       expect(validPatient.cns, "748477761910001");
       expect(validPatient.maternalCondition, MaternalCondition.GESTANTE);
       expect(validPatient.priorityCategory.id, 1);
-      expect(validPatient.priorityCategory.categoryCode, "Pessoas idosas");
+      expect(validPatient.priorityCategory.code, "Pessoas idosas");
       expect(validPatient.person.id, 1);
       expect(validPatient.person.cpf, "67732120817");
       expect(validPatient.person.name, "Name Middlename Lastname");

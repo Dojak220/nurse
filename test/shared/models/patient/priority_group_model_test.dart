@@ -7,7 +7,7 @@ void main() {
   setUp(() {
     validPriorityGroup = PriorityGroup(
       id: 1,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idosos",
       description: "Grupo de pessoas com mais de 60 anos",
     );
@@ -17,7 +17,7 @@ void main() {
     test('should create a valid instance', () {
       expect(validPriorityGroup, isA<PriorityGroup>());
       expect(validPriorityGroup.id, 1);
-      expect(validPriorityGroup.groupCode, "Pessoas com mais de 60 anos");
+      expect(validPriorityGroup.code, "Pessoas com mais de 60 anos");
       expect(validPriorityGroup.name, "Idosos");
       expect(
         validPriorityGroup.description,
@@ -44,8 +44,8 @@ void main() {
         () {
       final actualPriorityGroup = validPriorityGroup.copyWith(name: "");
 
-      expect(actualPriorityGroup.name, actualPriorityGroup.groupCode);
-      expect(actualPriorityGroup.name, validPriorityGroup.groupCode);
+      expect(actualPriorityGroup.name, actualPriorityGroup.code);
+      expect(actualPriorityGroup.name, validPriorityGroup.code);
     });
   });
 
@@ -68,7 +68,7 @@ void main() {
 
     test("should throw exception if groupCode is empty", () {
       expect(
-        () => validPriorityGroup.copyWith(groupCode: ""),
+        () => validPriorityGroup.copyWith(code: ""),
         throwsException,
         reason:
             "it's not possible to create a priorityGroup with an empty groupCode",
@@ -77,7 +77,7 @@ void main() {
 
     test("should throw exception if groupCode has only spaces", () {
       expect(
-        () => validPriorityGroup.copyWith(groupCode: "  "),
+        () => validPriorityGroup.copyWith(code: "  "),
         throwsException,
         reason:
             "it's not possible to create a priorityGroup with an invalid groupCode",
@@ -87,8 +87,7 @@ void main() {
     test("should throw exception if groupCode has weird characters", () {
       expect(
         () => validPriorityGroup.copyWith(
-            groupCode:
-                "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+            code: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
         throwsException,
         reason:
             "it's not possible to create a priorityGroup with an invalid groupCode",

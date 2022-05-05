@@ -7,7 +7,7 @@ void main() {
   setUp(() {
     validVaccineBatch = VaccineBatch(
       id: 1,
-      batchNo: "01234",
+      number: "01234",
       quantity: 10,
     );
   });
@@ -16,7 +16,7 @@ void main() {
     test('should create a valid instance', () {
       expect(validVaccineBatch, isA<VaccineBatch>());
       expect(validVaccineBatch.id, 1);
-      expect(validVaccineBatch.batchNo, "01234");
+      expect(validVaccineBatch.number, "01234");
       expect(validVaccineBatch.quantity, 10);
     });
   });
@@ -40,7 +40,7 @@ void main() {
 
     test("should throw exception if batchNo is empty", () {
       expect(
-        () => validVaccineBatch.copyWith(batchNo: ""),
+        () => validVaccineBatch.copyWith(number: ""),
         throwsException,
         reason:
             "it's not possible to create a vaccineBatch with an empty batchNo",
@@ -49,7 +49,7 @@ void main() {
 
     test("should throw exception if batchNo has only spaces", () {
       expect(
-        () => validVaccineBatch.copyWith(batchNo: "  "),
+        () => validVaccineBatch.copyWith(number: "  "),
         throwsException,
         reason:
             "it's not possible to create a vaccineBatch with an invalid batchNo",
@@ -58,7 +58,7 @@ void main() {
 
     test("should throw exception if batchNo is non numerical", () {
       expect(
-        () => validVaccineBatch.copyWith(batchNo: "abcdef"),
+        () => validVaccineBatch.copyWith(number: "abcdef"),
         throwsException,
         reason:
             "it's not possible to create a vaccineBatch with a non numerical batchNo",
@@ -68,7 +68,7 @@ void main() {
     test("should throw exception if batchNo has weird characters", () {
       expect(
         () => validVaccineBatch.copyWith(
-            batchNo:
+            number:
                 "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
         throwsException,
         reason:
