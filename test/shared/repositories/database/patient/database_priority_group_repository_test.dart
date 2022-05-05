@@ -34,7 +34,7 @@ void testCreatePriorityGroup(
 
     final validPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idosos",
       description: "Grupo de pessoas com mais de 60 anos",
     );
@@ -110,7 +110,7 @@ void testGetPriorityGroup(
     final int invalidPriorityGroupId = 2;
     final expectedPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idosos",
       description: "Grupo de pessoas com mais de 60 anos",
     );
@@ -125,7 +125,7 @@ void testGetPriorityGroup(
           (_) => Future.value([
             {
               'id': expectedPriorityGroup.id,
-              'groupCode': expectedPriorityGroup.groupCode,
+              'code': expectedPriorityGroup.code,
               'name': expectedPriorityGroup.name,
               'description': expectedPriorityGroup.description,
             }
@@ -170,19 +170,19 @@ void testGetPriorityGroups(
     final expectedPriorityGroups = [
       PriorityGroup(
         id: validPriorityGroupId,
-        groupCode: "Pessoas com mais de 60 anos",
+        code: "Pessoas com mais de 60 anos",
         name: "Idosos",
         description: "Grupo de pessoas com mais de 60 anos",
       ),
       PriorityGroup(
         id: validPriorityGroupId + 1,
-        groupCode: "Pessoas com idade entre 12 e 18 anos",
+        code: "Pessoas com idade entre 12 e 18 anos",
         name: "Adolescentes",
         description: "Grupo de adolescentes",
       ),
       PriorityGroup(
         id: validPriorityGroupId + 3,
-        groupCode: "Pessoas com menos de 12 anos",
+        code: "Pessoas com menos de 12 anos",
         name: "Crianças",
         description: "Grupo de crianças",
       ),
@@ -195,19 +195,19 @@ void testGetPriorityGroups(
         )).thenAnswer((_) => Future.value([
               {
                 'id': validPriorityGroupId,
-                'groupCode': "Pessoas com mais de 60 anos",
+                'code': "Pessoas com mais de 60 anos",
                 'name': "Idosos",
                 'description': "Grupo de pessoas com mais de 60 anos",
               },
               {
                 'id': validPriorityGroupId + 1,
-                'groupCode': "Pessoas com idade entre 12 e 18 anos",
+                'code': "Pessoas com idade entre 12 e 18 anos",
                 'name': "Adolescentes",
                 'description': "Grupo de adolescentes",
               },
               {
                 'id': validPriorityGroupId + 3,
-                'groupCode': "Pessoas com menos de 12 anos",
+                'code': "Pessoas com menos de 12 anos",
                 'name': "Crianças",
                 'description': "Grupo de crianças",
               },
@@ -250,7 +250,7 @@ void testUpdatePriorityGroup(
     final int invalidPriorityGroupId = 2;
     final validPriorityGroup = PriorityGroup(
       id: validPriorityGroupId,
-      groupCode: "Pessoas com mais de 60 anos",
+      code: "Pessoas com mais de 60 anos",
       name: "Idoso",
       description: "Grupo de pessoas com mais de 60 anos",
     );

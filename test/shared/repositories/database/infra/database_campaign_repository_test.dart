@@ -119,8 +119,8 @@ void testGetCampaign(
                 "id": expectedCampaign.id,
                 "title": expectedCampaign.title,
                 "description": expectedCampaign.description,
-                "startDate": expectedCampaign.startDate.millisecondsSinceEpoch,
-                "endDate": expectedCampaign.endDate.millisecondsSinceEpoch,
+                "start_date": expectedCampaign.startDate.millisecondsSinceEpoch,
+                "end_date": expectedCampaign.endDate.millisecondsSinceEpoch,
               }
             ]));
       });
@@ -189,25 +189,25 @@ void testGetCampaigns(
               "id": expectedCampaigns[0].id,
               "title": expectedCampaigns[0].title,
               "description": expectedCampaigns[0].description,
-              "startDate":
+              "start_date":
                   expectedCampaigns[0].startDate.millisecondsSinceEpoch,
-              "endDate": expectedCampaigns[0].endDate.millisecondsSinceEpoch,
+              "end_date": expectedCampaigns[0].endDate.millisecondsSinceEpoch,
             },
             {
               "id": expectedCampaigns[1].id,
               "title": expectedCampaigns[1].title,
               "description": expectedCampaigns[1].description,
-              "startDate":
+              "start_date":
                   expectedCampaigns[1].startDate.millisecondsSinceEpoch,
-              "endDate": expectedCampaigns[1].endDate.millisecondsSinceEpoch,
+              "end_date": expectedCampaigns[1].endDate.millisecondsSinceEpoch,
             },
             {
               "id": expectedCampaigns[2].id,
               "title": expectedCampaigns[2].title,
               "description": expectedCampaigns[2].description,
-              "startDate":
+              "start_date":
                   expectedCampaigns[2].startDate.millisecondsSinceEpoch,
-              "endDate": expectedCampaigns[2].endDate.millisecondsSinceEpoch,
+              "end_date": expectedCampaigns[2].endDate.millisecondsSinceEpoch,
             },
           ]),
         );

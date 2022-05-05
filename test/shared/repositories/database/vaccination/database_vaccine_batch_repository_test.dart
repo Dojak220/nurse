@@ -34,7 +34,7 @@ void testCreateVaccineBatch(
     final int validVaccineBatchId = 1;
     final validVaccineBatch = VaccineBatch(
       id: validVaccineBatchId,
-      batchNo: "123456",
+      number: "123456",
       quantity: 20,
     );
 
@@ -108,7 +108,7 @@ void testGetVaccineBatch(
     final int validVaccineBatchId = 1;
     final expectedVaccineBatch = VaccineBatch(
       id: validVaccineBatchId,
-      batchNo: "123456",
+      number: "123456",
       quantity: 20,
     );
 
@@ -121,7 +121,7 @@ void testGetVaccineBatch(
         )).thenAnswer((_) => Future.value([
               {
                 "id": expectedVaccineBatch.id,
-                "batchNo": expectedVaccineBatch.batchNo,
+                "number": expectedVaccineBatch.number,
                 "quantity": expectedVaccineBatch.quantity,
               }
             ]));
@@ -163,19 +163,19 @@ void testGetVaccineBatches(
     final int validVaccineBatchId = 1;
     final validVaccineBatch = VaccineBatch(
       id: validVaccineBatchId,
-      batchNo: "123456",
+      number: "123456",
       quantity: 20,
     );
     final expectedVaccineBatches = [
       validVaccineBatch,
       validVaccineBatch.copyWith(
         id: validVaccineBatchId + 1,
-        batchNo: "123457",
+        number: "123457",
         quantity: 30,
       ),
       validVaccineBatch.copyWith(
         id: validVaccineBatchId + 2,
-        batchNo: "123458",
+        number: "123458",
         quantity: 40,
       ),
     ];
@@ -187,17 +187,17 @@ void testGetVaccineBatches(
         )).thenAnswer((_) => Future.value([
               {
                 "id": expectedVaccineBatches[0].id,
-                "batchNo": expectedVaccineBatches[0].batchNo,
+                "number": expectedVaccineBatches[0].number,
                 "quantity": expectedVaccineBatches[0].quantity,
               },
               {
                 "id": expectedVaccineBatches[1].id,
-                "batchNo": expectedVaccineBatches[1].batchNo,
+                "number": expectedVaccineBatches[1].number,
                 "quantity": expectedVaccineBatches[1].quantity,
               },
               {
                 "id": expectedVaccineBatches[2].id,
-                "batchNo": expectedVaccineBatches[2].batchNo,
+                "number": expectedVaccineBatches[2].number,
                 "quantity": expectedVaccineBatches[2].quantity,
               },
             ]));
@@ -239,7 +239,7 @@ void testUpdateVaccineBatch(
     final int invalidVaccineBatchId = 2;
     final validVaccineBatch = VaccineBatch(
       id: 1,
-      batchNo: "123456",
+      number: "123456",
       quantity: 20,
     );
 
