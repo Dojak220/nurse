@@ -50,10 +50,10 @@ CREATE TABLE Priority_Category (
     id integer NOT NULL CONSTRAINT Group_pk PRIMARY KEY,
     code varchar(10) NOT NULL,
     name varchar(10) NOT NULL,
-    "group" integer NOT NULL,
+    priority_group integer NOT NULL,
     description varchar(150) NOT NULL,
     CONSTRAINT code_category UNIQUE (code),
-    CONSTRAINT Category_Priority_Group FOREIGN KEY ("group")
+    CONSTRAINT Category_Priority_Group FOREIGN KEY (priority_group)
     REFERENCES Priority_Group (id)
 );
 
@@ -101,12 +101,12 @@ CREATE TABLE Patient (
     cns varchar(15) NOT NULL,
     maternal_condition varchar(10) NOT NULL,
     person integer NOT NULL,
-    category integer NOT NULL,
+    priority_category integer NOT NULL,
     CONSTRAINT cns_patient UNIQUE (cns),
     CONSTRAINT person_patient UNIQUE (person),
     CONSTRAINT Patient_Person FOREIGN KEY (person)
     REFERENCES Person (id),
-    CONSTRAINT Patient_Category FOREIGN KEY (category)
+    CONSTRAINT Patient_Category FOREIGN KEY (priority_category)
     REFERENCES Priority_Category (id)
 );
 
@@ -147,7 +147,7 @@ VALUES ('278794316530006', 1, 1);
 INSERT INTO Campaign (title, start_date, end_date, description)
 VALUES ('Campanha de Vacinação', '2020-01-01', '2020-12-31', 'Campanha de Vacinação');
 
-INSERT INTO Priority_Category (code, name, "group", description)
+INSERT INTO Priority_Category (code, name, priority_group, description)
 VALUES ('Idosos', 'Idosos', 1, 'Categoria de pessoas com mais de 60 anos');
 
 INSERT INTO Establishment (cnes, name, locality)
@@ -162,7 +162,7 @@ VALUES ('São Paulo', 'São Paulo', 'SP', '3550308');
 INSERT INTO Vaccine_Batch (number, quantity)
 VALUES ('123456', 10);
 
-INSERT INTO Patient (cns, maternal_condition, person, category)
+INSERT INTO Patient (cns, maternal_condition, person, priority_category)
 VALUES ('832070136190005', 'NENHUMA', 2, 1);
 
 INSERT INTO Person (cpf, name, birth_date, sex, mother_name, father_name, locality)
@@ -172,4 +172,4 @@ INSERT INTO Person (cpf, name, birth_date, sex, mother_name, father_name, locali
 VALUES ('63773671040', 'Marcia', '2000-03-01', 'F', 'Maria Madalena', 'João Pedro', 1);
 
 INSERT INTO Vaccine (sipni_code, name, laboratory, batch)
-VALUES ('VAC-01', 'Vacina 1', 'Laboratorio 1', 1);
+VALUES ('123456', 'Vacina 1', 'Laboratorio 1', 1);
