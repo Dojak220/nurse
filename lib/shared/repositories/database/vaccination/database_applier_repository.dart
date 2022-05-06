@@ -1,7 +1,6 @@
 import 'package:nurse/shared/models/infra/establishment_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
 import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/database/infra/database_establishment_repository.dart';
 import 'package:nurse/shared/repositories/database/patient/database_person_repository.dart';
@@ -10,9 +9,8 @@ import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
 class DatabaseApplierRepository extends DatabaseInterface
     implements ApplierRepository {
   static const String TABLE = "Applier";
-  final DatabaseManager dbManager;
 
-  DatabaseApplierRepository(this.dbManager) : super(dbManager, TABLE);
+  DatabaseApplierRepository() : super(TABLE);
 
   @override
   Future<int> createApplier(Applier applier) async {
@@ -50,14 +48,14 @@ class DatabaseApplierRepository extends DatabaseInterface
   }
 
   Future<Establishment> _getEstablishment(int id) async {
-    final dbRepo = DatabaseEstablishmentRepository(dbManager);
+    final dbRepo = DatabaseEstablishmentRepository();
     final establishment = await dbRepo.getEstablishmentById(id);
 
     return establishment;
   }
 
   Future<Person> _getPerson(int id) async {
-    final dbRepo = DatabasePersonRepository(dbManager);
+    final dbRepo = DatabasePersonRepository();
     final person = await dbRepo.getPersonById(id);
 
     return person;
@@ -94,14 +92,14 @@ class DatabaseApplierRepository extends DatabaseInterface
   }
 
   Future<List<Establishment>> _getEstablishments() async {
-    final dbRepo = DatabaseEstablishmentRepository(dbManager);
+    final dbRepo = DatabaseEstablishmentRepository();
     final establishments = await dbRepo.getEstablishments();
 
     return establishments;
   }
 
   Future<List<Person>> _getPersons() async {
-    final dbRepo = DatabasePersonRepository(dbManager);
+    final dbRepo = DatabasePersonRepository();
     final persons = await dbRepo.getPersons();
 
     return persons;

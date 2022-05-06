@@ -14,7 +14,7 @@ import 'database_priority_group_repository_test.mocks.dart';
 void main() {
   final db = MockDatabase();
   final dbManager = MockDatabaseManager();
-  final repository = DatabasePriorityCategoryRepository(dbManager);
+  final repository = DatabasePriorityCategoryRepository();
 
   setUp(() {
     when(dbManager.db).thenReturn(db);

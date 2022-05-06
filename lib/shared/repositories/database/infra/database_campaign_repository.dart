@@ -1,14 +1,12 @@
 import 'package:nurse/shared/models/infra/campaign_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
 
 class DatabaseCampaignRepository extends DatabaseInterface
     implements CampaignRepository {
   static const String TABLE = "Campaign";
-  final DatabaseManager dbManager;
 
-  DatabaseCampaignRepository(this.dbManager) : super(dbManager, TABLE);
+  DatabaseCampaignRepository() : super(TABLE);
 
   @override
   Future<int> createCampaign(Campaign campaign) async {

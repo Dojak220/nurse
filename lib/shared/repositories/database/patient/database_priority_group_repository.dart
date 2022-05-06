@@ -1,14 +1,12 @@
 import 'package:nurse/shared/models/patient/priority_group_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/patient/priority_group_repository.dart';
 
 class DatabasePriorityGroupRepository extends DatabaseInterface
     implements PriorityGroupRepository {
   static const String TABLE = "Priority_Group";
-  final DatabaseManager dbManager;
 
-  DatabasePriorityGroupRepository(this.dbManager) : super(dbManager, TABLE);
+  DatabasePriorityGroupRepository() : super(TABLE);
 
   @override
   Future<int> createPriorityGroup(PriorityGroup priorityGroup) async {

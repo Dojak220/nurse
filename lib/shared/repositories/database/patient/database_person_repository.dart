@@ -1,6 +1,5 @@
 import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
 import 'package:nurse/shared/repositories/patient/person_repository.dart';
@@ -8,9 +7,8 @@ import 'package:nurse/shared/repositories/patient/person_repository.dart';
 class DatabasePersonRepository extends DatabaseInterface
     implements PersonRepository {
   static const String TABLE = "Person";
-  final DatabaseManager dbManager;
 
-  DatabasePersonRepository(this.dbManager) : super(dbManager, TABLE);
+  DatabasePersonRepository() : super(TABLE);
 
   @override
   Future<int> createPerson(Person person) async {
@@ -44,7 +42,7 @@ class DatabasePersonRepository extends DatabaseInterface
   }
 
   Future<Locality> _getLocality(int id) async {
-    final dbRepo = DatabaseLocalityRepository(dbManager);
+    final dbRepo = DatabaseLocalityRepository();
     final locality = await dbRepo.getLocalityById(id);
 
     return locality;
@@ -75,7 +73,7 @@ class DatabasePersonRepository extends DatabaseInterface
   }
 
   Future<List<Locality>> _getLocalities() async {
-    final dbRepo = DatabaseLocalityRepository(dbManager);
+    final dbRepo = DatabaseLocalityRepository();
     final localities = await dbRepo.getLocalities();
 
     return localities;

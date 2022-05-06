@@ -13,7 +13,7 @@ void main() {
   final db = MockDatabase();
   final dbManager = MockDatabaseManager();
 
-  final repository = DatabaseLocalityRepository(dbManager);
+  final repository = DatabaseLocalityRepository();
 
   setUp(() {
     when(dbManager.db).thenReturn(db);

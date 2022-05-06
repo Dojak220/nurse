@@ -15,7 +15,7 @@ void main() {
   final db = MockDatabase();
   final dbManager = MockDatabaseManager();
 
-  final repository = DatabaseVaccineRepository(dbManager);
+  final repository = DatabaseVaccineRepository();
 
   setUp(() {
     when(dbManager.db).thenReturn(db);

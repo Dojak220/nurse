@@ -1,7 +1,6 @@
 import 'package:nurse/shared/models/patient/patient_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
 import 'package:nurse/shared/models/patient/priority_category_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/database/patient/database_person_repository.dart';
 import 'package:nurse/shared/repositories/database/patient/database_priority_category_repository.dart';
@@ -10,9 +9,8 @@ import 'package:nurse/shared/repositories/patient/patient_repository.dart';
 class DatabasePatientRepository extends DatabaseInterface
     implements PatientRepository {
   static const String TABLE = "Patient";
-  final DatabaseManager dbManager;
 
-  DatabasePatientRepository(this.dbManager) : super(dbManager, TABLE);
+  DatabasePatientRepository() : super(TABLE);
 
   @override
   Future<int> createPatient(Patient patient) async {
@@ -50,14 +48,14 @@ class DatabasePatientRepository extends DatabaseInterface
   }
 
   Future<Person> _getPerson(int id) async {
-    final dbRepo = DatabasePersonRepository(dbManager);
+    final dbRepo = DatabasePersonRepository();
     final person = await dbRepo.getPersonById(id);
 
     return person;
   }
 
   Future<PriorityCategory> _getPriorityCategory(int id) async {
-    final dbRepo = DatabasePriorityCategoryRepository(dbManager);
+    final dbRepo = DatabasePriorityCategoryRepository();
     final priorityCategory = await dbRepo.getPriorityCategoryById(id);
 
     return priorityCategory;
@@ -95,14 +93,14 @@ class DatabasePatientRepository extends DatabaseInterface
   }
 
   Future<List<Person>> _getPersons() async {
-    final dbRepo = DatabasePersonRepository(dbManager);
+    final dbRepo = DatabasePersonRepository();
     final persons = await dbRepo.getPersons();
 
     return persons;
   }
 
   Future<List<PriorityCategory>> _getPriorityCategories() async {
-    final dbRepo = DatabasePriorityCategoryRepository(dbManager);
+    final dbRepo = DatabasePriorityCategoryRepository();
     final priorityCategories = await dbRepo.getPriorityCategories();
 
     return priorityCategories;

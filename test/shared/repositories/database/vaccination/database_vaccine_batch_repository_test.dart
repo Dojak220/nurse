@@ -13,7 +13,7 @@ void main() {
   final db = MockDatabase();
   final dbManager = MockDatabaseManager();
 
-  final repository = DatabaseVaccineBatchRepository(dbManager);
+  final repository = DatabaseVaccineBatchRepository();
 
   setUp(() {
     when(dbManager.db).thenReturn(db);

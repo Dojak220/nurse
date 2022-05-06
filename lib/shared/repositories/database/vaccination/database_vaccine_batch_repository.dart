@@ -1,14 +1,12 @@
 import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/vaccination/vaccine_batch_repository.dart';
 
 class DatabaseVaccineBatchRepository extends DatabaseInterface
     implements VaccineBatchRepository {
   static const String TABLE = "Vaccine_Batch";
-  final DatabaseManager dbManager;
 
-  DatabaseVaccineBatchRepository(this.dbManager) : super(dbManager, TABLE);
+  DatabaseVaccineBatchRepository() : super(TABLE);
 
   @override
   Future<int> createVaccineBatch(VaccineBatch vaccineBatch) async {

@@ -1,6 +1,5 @@
 import 'package:nurse/shared/models/infra/establishment_model.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
 import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
@@ -8,9 +7,8 @@ import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
 class DatabaseEstablishmentRepository extends DatabaseInterface
     implements EstablishmentRepository {
   static const String TABLE = "Establishment";
-  final DatabaseManager dbManager;
 
-  DatabaseEstablishmentRepository(this.dbManager) : super(dbManager, TABLE);
+  DatabaseEstablishmentRepository() : super(TABLE);
 
   @override
   Future<int> createEstablishment(Establishment establishment) async {
@@ -44,7 +42,7 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
   }
 
   Future<Locality> _getLocality(int id) async {
-    final dbRepo = DatabaseLocalityRepository(dbManager);
+    final dbRepo = DatabaseLocalityRepository();
     final locality = await dbRepo.getLocalityById(id);
 
     return locality;
@@ -71,7 +69,7 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
   }
 
   Future<List<Locality>> _getLocalities() async {
-    final dbRepo = DatabaseLocalityRepository(dbManager);
+    final dbRepo = DatabaseLocalityRepository();
     final localities = await dbRepo.getLocalities();
 
     return localities;

@@ -15,7 +15,7 @@ void main() {
   final db = MockDatabase();
   final dbManager = MockDatabaseManager();
 
-  final repository = DatabaseEstablishmentRepository(dbManager);
+  final repository = DatabaseEstablishmentRepository();
 
   setUp(() {
     when(dbManager.db).thenReturn(db);
