@@ -59,7 +59,7 @@ class DatabaseVaccineRepository extends DatabaseInterface
           return b.id == v["batch"];
         });
 
-        v["batch"] = vaccineBatch;
+        v["batch"] = vaccineBatch.toMap();
       });
 
       final vaccines = vaccineMaps.map((vaccine) {
@@ -68,7 +68,7 @@ class DatabaseVaccineRepository extends DatabaseInterface
 
       return vaccines;
     } catch (e) {
-      return List<Vaccine>.empty();
+      rethrow;
     }
   }
 

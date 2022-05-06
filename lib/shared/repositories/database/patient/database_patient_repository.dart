@@ -76,8 +76,8 @@ class DatabasePatientRepository extends DatabaseInterface
           return c.id == pat["priority_category"];
         });
 
-        pat["person"] = person;
-        pat["priority_category"] = priorityCategory;
+        pat["person"] = person.toMap();
+        pat["priority_category"] = priorityCategory.toMap();
       });
 
       final patients = patientMaps
@@ -88,7 +88,7 @@ class DatabasePatientRepository extends DatabaseInterface
 
       return patients;
     } catch (e) {
-      return List<Patient>.empty();
+      rethrow;
     }
   }
 

@@ -77,8 +77,8 @@ class DatabaseApplierRepository extends DatabaseInterface
           return e.id == a["establishment"];
         });
 
-        a["person"] = person;
-        a["establishment"] = establishment;
+        a["person"] = person.toMap();
+        a["establishment"] = establishment.toMap();
       });
 
       final appliers = applierMaps.map((applier) {
@@ -87,7 +87,7 @@ class DatabaseApplierRepository extends DatabaseInterface
 
       return appliers;
     } catch (e) {
-      return List<Applier>.empty();
+      rethrow;
     }
   }
 

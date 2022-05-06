@@ -59,7 +59,7 @@ class DatabasePersonRepository extends DatabaseInterface
           return l.id == p["locality"];
         });
 
-        p["locality"] = locality;
+        p["locality"] = locality.toMap();
       });
 
       final persons = personMaps.map((person) {
@@ -68,7 +68,7 @@ class DatabasePersonRepository extends DatabaseInterface
 
       return persons;
     } catch (e) {
-      return List<Person>.empty();
+      rethrow;
     }
   }
 

@@ -107,10 +107,10 @@ class DatabaseApplicationRepository extends DatabaseInterface
           return e.id == a["campaign"];
         });
 
-        a["applier"] = applier;
-        a["vaccine"] = vaccine;
-        a["patient"] = patient;
-        a["campaign"] = campaign;
+        a["applier"] = applier.toMap();
+        a["vaccine"] = vaccine.toMap();
+        a["patient"] = patient.toMap();
+        a["campaign"] = campaign.toMap();
       });
 
       final applications = applicationMaps.map((application) {
@@ -119,7 +119,7 @@ class DatabaseApplicationRepository extends DatabaseInterface
 
       return applications;
     } catch (e) {
-      return List<Application>.empty();
+      rethrow;
     }
   }
 

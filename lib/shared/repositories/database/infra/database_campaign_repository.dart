@@ -48,7 +48,7 @@ class DatabaseCampaignRepository extends DatabaseInterface
 
       return campaigns;
     } catch (e) {
-      return List<Campaign>.empty();
+      rethrow;
     }
   }
 

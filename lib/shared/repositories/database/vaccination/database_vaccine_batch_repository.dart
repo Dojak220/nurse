@@ -48,7 +48,7 @@ class DatabaseVaccineBatchRepository extends DatabaseInterface
 
       return vaccineBatches;
     } catch (e) {
-      return List<VaccineBatch>.empty();
+      rethrow;
     }
   }
 

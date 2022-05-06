@@ -48,7 +48,7 @@ class DatabasePriorityGroupRepository extends DatabaseInterface
 
       return priorityGroups;
     } catch (e) {
-      return List<PriorityGroup>.empty();
+      rethrow;
     }
   }
 

@@ -48,7 +48,7 @@ class DatabaseLocalityRepository extends DatabaseInterface
 
       return localities;
     } catch (e) {
-      return List<Locality>.empty();
+      rethrow;
     }
   }
 

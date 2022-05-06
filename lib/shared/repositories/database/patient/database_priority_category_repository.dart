@@ -61,7 +61,7 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
           return g.id == c["priority_group"];
         });
 
-        c["priority_group"] = priorityGroup;
+        c["priority_group"] = priorityGroup.toMap();
       });
 
       final priorityCategories = priorityCategoryMaps
@@ -70,7 +70,7 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
 
       return priorityCategories;
     } catch (e) {
-      return List<PriorityCategory>.empty();
+      rethrow;
     }
   }
 

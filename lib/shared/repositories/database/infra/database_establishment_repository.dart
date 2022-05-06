@@ -50,22 +50,26 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
 
   @override
   Future<List<Establishment>> getEstablishments() async {
-    final establishmentMaps = await getAll();
-    final localities = await _getLocalities();
+    try {
+      final establishmentMaps = await getAll();
+      final localities = await _getLocalities();
 
-    establishmentMaps.forEach((e) {
-      final locality = localities.firstWhere((l) {
-        return l.id == e["locality"];
+      establishmentMaps.forEach((e) {
+        final locality = localities.firstWhere((l) {
+          return l.id == e["locality"];
+        });
+
+        e["locality"] = locality.toMap();
       });
 
-      e["locality"] = locality.toMap();
-    });
+      final establishments = establishmentMaps
+          .map((establishment) => Establishment.fromMap(establishment))
+          .toList();
 
-    final establishments = establishmentMaps
-        .map((establishment) => Establishment.fromMap(establishment))
-        .toList();
-
-    return establishments;
+      return establishments;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<List<Locality>> _getLocalities() async {
