@@ -12,10 +12,12 @@ class DatabaseInterface {
   /// nas classes que extendem essa. Antes de tentar implementar, é necessário
   /// verificar se o banco de dados já não se responsabiliza por isso.
   Future<int> create(Map<String, dynamic> entity) async {
-    final int result = await dbManager.db.insert(
-      tableName,
-      entity,
-      conflictAlgorithm: ConflictAlgorithm.rollback,
+    final int result = await dbManager.db.transaction(
+      (txn) async => await txn.insert(
+        tableName,
+        entity,
+        conflictAlgorithm: ConflictAlgorithm.rollback,
+      ),
     );
 
     return result;
@@ -26,10 +28,12 @@ class DatabaseInterface {
       throw Exception('Id must be greater than 0');
     }
 
-    final int count = await dbManager.db.delete(
-      tableName,
-      where: 'id = ?',
-      whereArgs: [id],
+    final int count = await dbManager.db.transaction(
+      (txn) async => await txn.delete(
+        tableName,
+        where: 'id = ?',
+        whereArgs: [id],
+      ),
     );
 
     return count;
@@ -38,10 +42,12 @@ class DatabaseInterface {
   Future<Map<String, dynamic>> get(int id) async {
     List<Map<String, dynamic>> entityMap;
 
-    entityMap = await dbManager.db.query(
-      tableName,
-      where: 'id = ?',
-      whereArgs: [id],
+    entityMap = await dbManager.db.transaction(
+      (txn) async => await txn.query(
+        tableName,
+        where: 'id = ?',
+        whereArgs: [id],
+      ),
     );
 
     try {
@@ -52,18 +58,30 @@ class DatabaseInterface {
   }
 
   Future<List<Map<String, dynamic>>> getAll() async {
-    final List<Map<String, dynamic>> entityMaps =
-        await dbManager.db.query(tableName);
+    try {
+      final db = dbManager.db;
+      final immutableMaps = await db.transaction(
+        (txn) async => await txn.query(tableName),
+      );
+      final entityMaps = List.of(
+        immutableMaps.map((map) => Map<String, dynamic>.from(map)),
+      );
 
-    return entityMaps;
+      return entityMaps;
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
   }
 
   Future<int> update(Map<String, dynamic> entity) async {
-    final int count = await dbManager.db.update(
-      tableName,
-      entity,
-      where: 'id = ?',
-      whereArgs: [entity['id']],
+    final int count = await dbManager.db.transaction(
+      (txn) async => await txn.update(
+        tableName,
+        entity,
+        where: 'id = ?',
+        whereArgs: [entity['id']],
+      ),
     );
 
     return count;
