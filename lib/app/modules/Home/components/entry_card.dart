@@ -37,7 +37,7 @@ class EntryCard extends StatelessWidget {
           ),
         ],
       ),
-      margin: const EdgeInsets.symmetric(vertical: 5.0),
+      margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

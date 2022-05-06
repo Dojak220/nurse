@@ -29,11 +29,7 @@ class TitledListView extends StatelessWidget {
             ),
           ),
           Container(
-            /// TODO: Substituir constraints for height
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * 0.50,
-              minHeight: MediaQuery.of(context).size.height * 0.50,
-            ),
+            height: MediaQuery.of(context).size.height * 0.50,
             child: Observer(builder: (_) {
               return ListView.separated(
                 itemCount: applications.length,

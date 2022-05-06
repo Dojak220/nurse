@@ -26,8 +26,10 @@ class Home extends StatelessWidget {
       drawer: AppDrawer(),
       appBar: AppBar(
         title: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.edit),
+            Image.asset("assets/images/nurse-logo-2.png", height: 44),
             Text(
               title,
             ),
@@ -44,7 +46,7 @@ class Home extends StatelessWidget {
             );
           }),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25),
+            padding: EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               children: [
                 LastVaccinationsList(
@@ -119,14 +121,14 @@ class VaccinationCountStatus extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(25.0, 0.0, 0.0, 8.0),
+            padding: const EdgeInsets.fromLTRB(24.0, 0.0, 0.0, 8.0),
             child: Text(
               "Doses aplicadas",
               style: AppTheme.titleTextStyle,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 28),
             child: Row(
               key: Key("applied_doses_row"),
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

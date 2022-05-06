@@ -57,7 +57,6 @@ class AppTheme {
     fontFamily: 'Roboto',
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
-    height: 0.0,
     color: AppColors.verdeEscuro,
   );
 
