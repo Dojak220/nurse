@@ -143,7 +143,7 @@ void testGetPerson(
                 "id": expectedPerson.id,
                 "cpf": expectedPerson.cpf,
                 "name": expectedPerson.name,
-                "birth_date": expectedPerson.birthDate.millisecondsSinceEpoch,
+                "birth_date": expectedPerson.birthDate.toString(),
                 "locality": expectedPerson.locality.id,
               }
             ]));

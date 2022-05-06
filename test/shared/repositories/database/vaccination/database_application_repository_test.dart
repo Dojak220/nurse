@@ -319,11 +319,11 @@ void testGetApplication(
               "patient": expectedApplication.patient.id,
               "vaccine": expectedApplication.vaccine.id,
               "application_date":
-                  expectedApplication.applicationDate.millisecondsSinceEpoch,
+                  expectedApplication.applicationDate.toString(),
               "applier": expectedApplication.applier.id,
               "dose": expectedApplication.dose.name,
               "campaign": expectedApplication.campaign.id,
-              "due_date": expectedApplication.dueDate.millisecondsSinceEpoch,
+              "due_date": expectedApplication.dueDate.toString(),
             }
           ]),
         );
@@ -354,7 +354,7 @@ void testGetApplication(
               "id": validPersonApplier.id,
               "cpf": validPersonApplier.cpf,
               "name": validPersonApplier.name,
-              "birth_date": validPersonApplier.birthDate.millisecondsSinceEpoch,
+              "birth_date": validPersonApplier.birthDate.toString(),
               "locality": validPersonApplier.locality.id,
             }
           ]),
@@ -398,7 +398,7 @@ void testGetApplication(
               "id": validPersonPatient.id,
               "cpf": validPersonPatient.cpf,
               "name": validPersonPatient.name,
-              "birth_date": validPersonPatient.birthDate.millisecondsSinceEpoch,
+              "birth_date": validPersonPatient.birthDate.toString(),
               "locality": validPersonPatient.locality.id,
             }
           ]),
@@ -462,8 +462,8 @@ void testGetApplication(
             "id": validCampaign.id,
             "title": validCampaign.title,
             "description": validCampaign.description,
-            "start_date": validCampaign.startDate.millisecondsSinceEpoch,
-            "end_date": validCampaign.endDate.millisecondsSinceEpoch,
+            "start_date": validCampaign.startDate.toString(),
+            "end_date": validCampaign.endDate.toString(),
           }
         ]),
       );
@@ -740,27 +740,23 @@ void testGetApplications(
               "id": expectedApplications[0].id,
               "patient": expectedApplications[0].patient.id,
               "vaccine": expectedApplications[0].vaccine.id,
-              "application_date": expectedApplications[0]
-                  .applicationDate
-                  .millisecondsSinceEpoch,
+              "application_date":
+                  expectedApplications[0].applicationDate.toString(),
               "applier": expectedApplications[0].applier.id,
               "dose": expectedApplications[0].dose.name,
               "campaign": expectedApplications[0].campaign.id,
-              "due_date":
-                  expectedApplications[0].dueDate.millisecondsSinceEpoch,
+              "due_date": expectedApplications[0].dueDate.toString(),
             },
             {
               "id": expectedApplications[1].id,
               "patient": expectedApplications[1].patient.id,
               "vaccine": expectedApplications[1].vaccine.id,
-              "application_date": expectedApplications[1]
-                  .applicationDate
-                  .millisecondsSinceEpoch,
+              "application_date":
+                  expectedApplications[1].applicationDate.toString(),
               "applier": expectedApplications[1].applier.id,
               "dose": expectedApplications[1].dose.name,
               "campaign": expectedApplications[1].campaign.id,
-              "due_date":
-                  expectedApplications[1].dueDate.millisecondsSinceEpoch,
+              "due_date": expectedApplications[1].dueDate.toString(),
             },
           ]),
         );
@@ -787,24 +783,21 @@ void testGetApplications(
               "id": validAppliers[0].person.id,
               "cpf": validAppliers[0].person.cpf,
               "name": validAppliers[0].person.name,
-              "birth_date":
-                  validAppliers[0].person.birthDate.millisecondsSinceEpoch,
+              "birth_date": validAppliers[0].person.birthDate.toString(),
               "locality": validAppliers[0].person.locality.id,
             },
             {
               "id": validAppliers[1].person.id,
               "cpf": validAppliers[1].person.cpf,
               "name": validAppliers[1].person.name,
-              "birth_date":
-                  validAppliers[1].person.birthDate.millisecondsSinceEpoch,
+              "birth_date": validAppliers[1].person.birthDate.toString(),
               "locality": validAppliers[1].person.locality.id,
             },
             {
               "id": validAppliers[2].person.id,
               "cpf": validAppliers[2].person.cpf,
               "name": validAppliers[2].person.name,
-              "birth_date":
-                  validAppliers[2].person.birthDate.millisecondsSinceEpoch,
+              "birth_date": validAppliers[2].person.birthDate.toString(),
               "locality": validAppliers[2].person.locality.id,
             },
           ]),
@@ -856,24 +849,21 @@ void testGetApplications(
               "id": validPatients[0].person.id,
               "cpf": validPatients[0].person.cpf,
               "name": validPatients[0].person.name,
-              "birth_date":
-                  validPatients[0].person.birthDate.millisecondsSinceEpoch,
+              "birth_date": validPatients[0].person.birthDate.toString(),
               "locality": validPatients[0].person.locality.id,
             },
             {
               "id": validPatients[1].person.id,
               "cpf": validPatients[1].person.cpf,
               "name": validPatients[1].person.name,
-              "birth_date":
-                  validPatients[1].person.birthDate.millisecondsSinceEpoch,
+              "birth_date": validPatients[1].person.birthDate.toString(),
               "locality": validPatients[1].person.locality.id,
             },
             {
               "id": validPatients[2].person.id,
               "cpf": validPatients[2].person.cpf,
               "name": validPatients[2].person.name,
-              "birth_date":
-                  validPatients[2].person.birthDate.millisecondsSinceEpoch,
+              "birth_date": validPatients[2].person.birthDate.toString(),
               "locality": validPatients[2].person.locality.id,
             },
           ]),
@@ -943,22 +933,22 @@ void testGetApplications(
             "id": validCampaigns[0].id,
             "title": validCampaigns[0].title,
             "description": validCampaigns[0].description,
-            "start_date": validCampaigns[0].startDate.millisecondsSinceEpoch,
-            "end_date": validCampaigns[0].endDate.millisecondsSinceEpoch,
+            "start_date": validCampaigns[0].startDate.toString(),
+            "end_date": validCampaigns[0].endDate.toString(),
           },
           {
             "id": validCampaigns[1].id,
             "title": validCampaigns[1].title,
             "description": validCampaigns[1].description,
-            "start_date": validCampaigns[1].startDate.millisecondsSinceEpoch,
-            "end_date": validCampaigns[1].endDate.millisecondsSinceEpoch,
+            "start_date": validCampaigns[1].startDate.toString(),
+            "end_date": validCampaigns[1].endDate.toString(),
           },
           {
             "id": validCampaigns[2].id,
             "title": validCampaigns[2].title,
             "description": validCampaigns[2].description,
-            "start_date": validCampaigns[2].startDate.millisecondsSinceEpoch,
-            "end_date": validCampaigns[2].endDate.millisecondsSinceEpoch,
+            "start_date": validCampaigns[2].startDate.toString(),
+            "end_date": validCampaigns[2].endDate.toString(),
           },
         ]),
       );

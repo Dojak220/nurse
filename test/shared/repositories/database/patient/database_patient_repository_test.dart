@@ -240,7 +240,7 @@ void testGetPatient(
               "id": validPerson.id,
               "cpf": validPerson.cpf,
               "name": validPerson.name,
-              "birth_date": validPerson.birthDate.millisecondsSinceEpoch,
+              "birth_date": validPerson.birthDate.toString(),
               "locality": validPerson.locality.id,
             }
           ]),

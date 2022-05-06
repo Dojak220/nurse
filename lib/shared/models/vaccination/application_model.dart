@@ -66,8 +66,8 @@ class Application implements GenericModel {
       'patient': patient.toMap(),
       'campaign': campaign.toMap(),
       'dose': dose.name,
-      'application_date': applicationDate.millisecondsSinceEpoch,
-      'due_date': dueDate.millisecondsSinceEpoch,
+      'application_date': applicationDate.toString(),
+      'due_date': dueDate.toString(),
     };
   }
 
@@ -79,10 +79,10 @@ class Application implements GenericModel {
       patient: Patient.fromMap(map['patient']),
       campaign: Campaign.fromMap(map['campaign']),
       dose: VaccineDoseExtension.fromString(map['dose']),
-      applicationDate: DateTime.fromMillisecondsSinceEpoch(
+      applicationDate: DateTime.parse(
         map['application_date'],
       ),
-      dueDate: DateTime.fromMillisecondsSinceEpoch(map['due_date']),
+      dueDate: DateTime.parse(map['due_date']),
     );
   }
 

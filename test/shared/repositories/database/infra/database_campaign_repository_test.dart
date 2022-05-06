@@ -119,8 +119,8 @@ void testGetCampaign(
                 "id": expectedCampaign.id,
                 "title": expectedCampaign.title,
                 "description": expectedCampaign.description,
-                "start_date": expectedCampaign.startDate.millisecondsSinceEpoch,
-                "end_date": expectedCampaign.endDate.millisecondsSinceEpoch,
+                "start_date": expectedCampaign.startDate.toString(),
+                "end_date": expectedCampaign.endDate.toString(),
               }
             ]));
       });
@@ -189,25 +189,22 @@ void testGetCampaigns(
               "id": expectedCampaigns[0].id,
               "title": expectedCampaigns[0].title,
               "description": expectedCampaigns[0].description,
-              "start_date":
-                  expectedCampaigns[0].startDate.millisecondsSinceEpoch,
-              "end_date": expectedCampaigns[0].endDate.millisecondsSinceEpoch,
+              "start_date": expectedCampaigns[0].startDate.toString(),
+              "end_date": expectedCampaigns[0].endDate.toString(),
             },
             {
               "id": expectedCampaigns[1].id,
               "title": expectedCampaigns[1].title,
               "description": expectedCampaigns[1].description,
-              "start_date":
-                  expectedCampaigns[1].startDate.millisecondsSinceEpoch,
-              "end_date": expectedCampaigns[1].endDate.millisecondsSinceEpoch,
+              "start_date": expectedCampaigns[1].startDate.toString(),
+              "end_date": expectedCampaigns[1].endDate.toString(),
             },
             {
               "id": expectedCampaigns[2].id,
               "title": expectedCampaigns[2].title,
               "description": expectedCampaigns[2].description,
-              "start_date":
-                  expectedCampaigns[2].startDate.millisecondsSinceEpoch,
-              "end_date": expectedCampaigns[2].endDate.millisecondsSinceEpoch,
+              "start_date": expectedCampaigns[2].startDate.toString(),
+              "end_date": expectedCampaigns[2].endDate.toString(),
             },
           ]),
         );

@@ -60,8 +60,8 @@ class Campaign implements GenericModel {
       'id': id,
       'title': title,
       'description': description,
-      'start_date': startDate.millisecondsSinceEpoch,
-      'end_date': endDate.millisecondsSinceEpoch,
+      'start_date': startDate.toString(),
+      'end_date': endDate.toString(),
     };
   }
 
@@ -70,8 +70,8 @@ class Campaign implements GenericModel {
       id: map['id'] ?? 0,
       title: map['title'] ?? '',
       description: map['description'] ?? '',
-      startDate: DateTime.fromMillisecondsSinceEpoch(map['start_date']),
-      endDate: DateTime.fromMillisecondsSinceEpoch(map['end_date']),
+      startDate: DateTime.parse(map['start_date']),
+      endDate: DateTime.parse(map['end_date']),
     );
   }
 
