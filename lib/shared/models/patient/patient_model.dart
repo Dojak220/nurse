@@ -80,6 +80,11 @@ class Patient implements GenericModel {
         maternalCondition.hashCode ^
         person.hashCode;
   }
+
+  @override
+  String toString() {
+    return 'Patient(id: $id, cns: $cns, priorityCategory: $priorityCategory, maternalCondition: $maternalCondition, person: $person)';
+  }
 }
 
 enum MaternalCondition { NENHUM, GESTANTE, PUERPERA }

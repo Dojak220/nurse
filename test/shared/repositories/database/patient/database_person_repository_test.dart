@@ -6,52 +6,43 @@ import 'package:nurse/shared/models/patient/person_model.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
 import 'package:nurse/shared/repositories/database/patient/database_person_repository.dart';
+import 'package:nurse/shared/repositories/patient/person_repository.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
 import 'database_person_repository_test.mocks.dart';
 
-@GenerateMocks([DatabaseManager, Database, DatabasePersonRepository])
+@GenerateMocks([
+  DatabaseManager,
+  Database,
+  DatabaseLocalityRepository,
+])
 void main() {
-  final db = MockDatabase();
-  final dbManager = MockDatabaseManager();
+  final dbMock = MockDatabase();
+  final dbManagerMock = MockDatabaseManager();
+  final localityRepoMock = MockDatabaseLocalityRepository();
 
-  final repository = DatabasePersonRepository();
+  final repository = DatabasePersonRepository(
+    dbManager: dbManagerMock,
+    localityRepo: localityRepoMock,
+  );
 
   setUp(() {
-    when(dbManager.db).thenReturn(db);
+    when(dbManagerMock.db).thenReturn(dbMock);
+    when(localityRepoMock.getLocalityById(1))
+        .thenAnswer((_) async => _validLocality);
+    when(localityRepoMock.getLocalities())
+        .thenAnswer((_) async => _validLocalities);
   });
 
-  testCreatePerson(db, repository);
-  testDeletePerson(db, repository);
-  testGetPerson(db, repository);
-  testGetPersons(db, repository);
-  testUpdatePerson(db, repository);
+  testCreatePerson(dbMock, repository);
+  testDeletePerson(dbMock, repository);
+  testGetPerson(dbMock, repository);
+  testGetPersons(dbMock, repository);
+  testUpdatePerson(dbMock, repository);
 }
 
-void testCreatePerson(
-  MockDatabase db,
-  DatabasePersonRepository repository,
-) {
+void testCreatePerson(MockDatabase db, PersonRepository repository) {
   group("createPerson function:", () {
-    final int validPersonId = 1;
-    final int validLocalityId = 1;
-
-    final expectedLocality = Locality(
-      id: validLocalityId,
-      name: "Local",
-      city: "Brasília",
-      state: "DF",
-      ibgeCode: "1234567",
-    );
-
-    final validPerson = Person(
-      id: validPersonId,
-      cpf: "82675387630",
-      name: "Name Middlename Lastname",
-      birthDate: DateTime(2000),
-      locality: expectedLocality,
-    );
-
     group('try to create a valid person', () {
       setUp(() {
         when(db.insert(DatabasePersonRepository.TABLE, any,
@@ -60,7 +51,7 @@ void testCreatePerson(
       });
 
       test("should create a new person entry and return its id", () async {
-        final createdId = await repository.createPerson(validPerson);
+        final createdId = await repository.createPerson(_validPerson);
 
         expect(createdId, 1);
       });
@@ -68,25 +59,19 @@ void testCreatePerson(
   });
 }
 
-void testDeletePerson(
-  MockDatabase db,
-  DatabasePersonRepository repository,
-) {
+void testDeletePerson(MockDatabase db, PersonRepository repository) {
   group("deletePerson function:", () {
-    final int validPersonId = 1;
-    final int invalidPersonId = 2;
-
     group('try to delete valid person', () {
       setUp(() {
         when(db.delete(
           DatabasePersonRepository.TABLE,
           where: anyNamed("where"),
-          whereArgs: [validPersonId],
+          whereArgs: [_validPersonId],
         )).thenAnswer((_) => Future.value(1));
       });
 
       test("should delete a person entry and returns 1", () async {
-        final deletedCount = await repository.deletePerson(validPersonId);
+        final deletedCount = await repository.deletePerson(_validPersonId);
 
         expect(deletedCount, 1);
       });
@@ -97,12 +82,12 @@ void testDeletePerson(
         when(db.delete(
           DatabasePersonRepository.TABLE,
           where: anyNamed("where"),
-          whereArgs: [invalidPersonId],
+          whereArgs: [_invalidPersonId],
         )).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesnt exist", () async {
-        final deletedCount = await repository.deletePerson(invalidPersonId);
+        final deletedCount = await repository.deletePerson(_invalidPersonId);
 
         expect(deletedCount, 0);
       });
@@ -110,34 +95,16 @@ void testDeletePerson(
   });
 }
 
-void testGetPerson(
-  MockDatabase db,
-  DatabasePersonRepository repository,
-) {
+void testGetPerson(MockDatabase db, PersonRepository repository) {
   group("getPerson function:", () {
-    final int validPersonId = 1;
-    final int validLocalityId = 1;
-    final expectedLocality = Locality(
-      id: validLocalityId,
-      name: "Local",
-      city: "Brasília",
-      state: "DF",
-      ibgeCode: "1234567",
-    );
-    final expectedPerson = Person(
-      id: validPersonId,
-      cpf: "82675387630",
-      name: "Name Middlename Lastname",
-      birthDate: DateTime(2000),
-      locality: expectedLocality,
-    );
+    final expectedPerson = _validPerson.copyWith(cpf: "82675387630");
 
     group('try to get valid person', () {
       setUp(() {
         when(db.query(
           DatabasePersonRepository.TABLE,
           where: anyNamed("where"),
-          whereArgs: [validPersonId],
+          whereArgs: [_validPersonId],
         )).thenAnswer((_) => Future.value([
               {
                 "id": expectedPerson.id,
@@ -145,28 +112,15 @@ void testGetPerson(
                 "name": expectedPerson.name,
                 "birth_date": expectedPerson.birthDate.toString(),
                 "locality": expectedPerson.locality.id,
+                "sex": expectedPerson.sex.name,
+                "mother_name": expectedPerson.motherName,
+                "father_name": expectedPerson.fatherName,
               }
             ]));
-
-        when(db.query(
-          DatabaseLocalityRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [validLocalityId],
-        )).thenAnswer(
-          (_) => Future.value([
-            {
-              "id": expectedLocality.id,
-              "name": expectedLocality.name,
-              "city": expectedLocality.city,
-              "state": expectedLocality.state,
-              "ibge_code": expectedLocality.ibgeCode,
-            }
-          ]),
-        );
       });
 
       test("should get a person entry by its id", () async {
-        final actualPerson = await repository.getPersonById(validPersonId);
+        final actualPerson = await repository.getPersonById(_validPersonId);
 
         expect(actualPerson, isA<Person>());
         expect(actualPerson, expectedPerson);
@@ -192,52 +146,9 @@ void testGetPerson(
   });
 }
 
-void testGetPersons(
-  MockDatabase db,
-  DatabasePersonRepository repository,
-) {
+void testGetPersons(MockDatabase db, PersonRepository repository) {
   group("getPersons function:", () {
-    final int validLocalityId = 1;
-    final int validPersonId = 1;
-    final expectedLocalities = [
-      Locality(
-        id: validLocalityId,
-        name: "Primeiro Local",
-        city: "Brasília",
-        state: "DF",
-        ibgeCode: "1234567",
-      ),
-      Locality(
-        id: validLocalityId + 1,
-        name: "Segundo Local",
-        city: "Brasília",
-        state: "DF",
-        ibgeCode: "1234567",
-      ),
-      Locality(
-        id: validLocalityId + 2,
-        name: "Terceiro Local",
-        city: "Brasília",
-        state: "DF",
-        ibgeCode: "1234567",
-      ),
-    ];
-    final expectedPersons = [
-      Person(
-        id: validPersonId,
-        cpf: "82675387630",
-        name: "Name Middlename Lastname",
-        birthDate: DateTime(2000),
-        locality: expectedLocalities[0],
-      ),
-      Person(
-        id: validPersonId + 1,
-        cpf: "00661741206",
-        name: "Name Middlename Lastname",
-        birthDate: DateTime(2000),
-        locality: expectedLocalities[1],
-      ),
-    ];
+    final expectedPersons = _validPersons;
 
     group('try to get all persons', () {
       setUp(() {
@@ -248,40 +159,21 @@ void testGetPersons(
                 "id": expectedPersons[0].id,
                 "cpf": expectedPersons[0].cpf,
                 "name": expectedPersons[0].name,
-                "birth_date": expectedPersons[0].birthDate,
-                "locality": expectedPersons[0].locality,
+                "birth_date": expectedPersons[0].birthDate.toString(),
+                "locality": expectedPersons[0].locality.id,
+                "sex": expectedPersons[0].sex.name,
+                "mother_name": expectedPersons[0].motherName,
+                "father_name": expectedPersons[0].fatherName,
               },
               {
                 "id": expectedPersons[1].id,
                 "cpf": expectedPersons[1].cpf,
                 "name": expectedPersons[1].name,
-                "birth_date": expectedPersons[1].birthDate,
-                "locality": expectedPersons[1].locality,
-              },
-            ]));
-        when(db.query(
-          DatabaseLocalityRepository.TABLE,
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": expectedLocalities[0].id,
-                "name": expectedLocalities[0].name,
-                "city": expectedLocalities[0].city,
-                "state": expectedLocalities[0].state,
-                "ibge_code": expectedLocalities[0].ibgeCode,
-              },
-              {
-                "id": expectedLocalities[1].id,
-                "name": expectedLocalities[1].name,
-                "city": expectedLocalities[1].city,
-                "state": expectedLocalities[1].state,
-                "ibge_code": expectedLocalities[1].ibgeCode,
-              },
-              {
-                "id": expectedLocalities[2].id,
-                "name": expectedLocalities[2].name,
-                "city": expectedLocalities[2].city,
-                "state": expectedLocalities[2].state,
-                "ibge_code": expectedLocalities[2].ibgeCode,
+                "birth_date": expectedPersons[1].birthDate.toString(),
+                "locality": expectedPersons[1].locality.id,
+                "sex": expectedPersons[1].sex.name,
+                "mother_name": expectedPersons[1].motherName,
+                "father_name": expectedPersons[1].fatherName,
               },
             ]));
       });
@@ -313,42 +205,21 @@ void testGetPersons(
   });
 }
 
-void testUpdatePerson(
-  MockDatabase db,
-  DatabasePersonRepository repository,
-) {
-  final int invalidPersonId = 2;
+void testUpdatePerson(MockDatabase db, PersonRepository repository) {
   group("updatePerson function:", () {
-    final int validPersonId = 1;
-    final int validLocalityId = 1;
-    final expectedLocality = Locality(
-      id: validLocalityId,
-      name: "Local",
-      city: "Brasília",
-      state: "DF",
-      ibgeCode: "1234567",
-    );
-    final validPerson = Person(
-      id: validPersonId,
-      cpf: "76614434306",
-      name: "Name Middlename Lastname",
-      birthDate: DateTime(2000),
-      locality: expectedLocality,
-    );
-
     group('try to update a valid person', () {
       setUp(() {
         when(db.update(
           DatabasePersonRepository.TABLE,
-          validPerson.copyWith(name: "Updated").toMap(),
+          _validPerson.copyWith(name: "Updated").toMap(),
           where: anyNamed("where"),
-          whereArgs: [validPersonId],
+          whereArgs: [_validPersonId],
         )).thenAnswer((_) => Future.value(1));
       });
 
       test("should update a person entry and returns 1", () async {
         final createdId = await repository.updatePerson(
-          validPerson.copyWith(name: "Updated"),
+          _validPerson.copyWith(name: "Updated"),
         );
 
         expect(createdId, 1);
@@ -358,15 +229,15 @@ void testUpdatePerson(
       setUp(() {
         when(db.update(
           DatabasePersonRepository.TABLE,
-          validPerson.copyWith(id: invalidPersonId, name: "Updated").toMap(),
+          _validPerson.copyWith(id: _invalidPersonId, name: "Updated").toMap(),
           where: anyNamed("where"),
-          whereArgs: [invalidPersonId],
+          whereArgs: [_invalidPersonId],
         )).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {
         final updatedCount = await repository.updatePerson(
-          validPerson.copyWith(id: invalidPersonId, name: "Updated"),
+          _validPerson.copyWith(id: _invalidPersonId, name: "Updated"),
         );
 
         expect(updatedCount, 0);
@@ -374,3 +245,53 @@ void testUpdatePerson(
     });
   });
 }
+
+final int _validPersonId = 1;
+final int _validLocalityId = 1;
+
+final int _invalidPersonId = 2;
+
+final _validLocality = Locality(
+  id: _validLocalityId,
+  name: "Local",
+  city: "Brasília",
+  state: "DF",
+  ibgeCode: "1234567",
+);
+
+final _validPerson = Person(
+  id: _validPersonId,
+  cpf: "44407857862",
+  name: "Name LastName",
+  birthDate: DateTime(2000),
+  locality: _validLocality,
+  sex: Sex.FEMALE,
+  motherName: "Mãe",
+  fatherName: "Pai",
+);
+
+final _validPersons = [
+  _validPerson,
+  _validPerson.copyWith(
+    id: _validPersonId + 1,
+    cpf: "73654421580",
+  ),
+  _validPerson.copyWith(
+    id: _validPersonId + 2,
+    cpf: "81251763731",
+  ),
+];
+
+final _validLocalities = [
+  _validLocality,
+  _validLocality.copyWith(
+    id: _validLocalityId + 1,
+    name: "Local 2",
+    ibgeCode: "1234568",
+  ),
+  _validLocality.copyWith(
+    id: _validLocalityId + 2,
+    name: "Local 3",
+    ibgeCode: "1234569",
+  ),
+];

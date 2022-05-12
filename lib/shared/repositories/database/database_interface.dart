@@ -5,19 +5,18 @@ class DatabaseInterface {
   final DatabaseManager dbManager;
   final String tableName;
 
-  DatabaseInterface(this.tableName) : dbManager = DatabaseManager();
+  DatabaseInterface(this.tableName, [DatabaseManager? dbManager])
+      : this.dbManager = dbManager ?? DatabaseManager();
 
   /// TODO: Garantir que não criem-se dois registros com o mesmo id.
   /// Coloquei esse todo aqui, mas possa ser que a implementação seja feita
   /// nas classes que extendem essa. Antes de tentar implementar, é necessário
   /// verificar se o banco de dados já não se responsabiliza por isso.
   Future<int> create(Map<String, dynamic> entity) async {
-    final int result = await dbManager.db.transaction(
-      (txn) async => await txn.insert(
-        tableName,
-        entity,
-        conflictAlgorithm: ConflictAlgorithm.rollback,
-      ),
+    final int result = await dbManager.db.insert(
+      tableName,
+      entity,
+      conflictAlgorithm: ConflictAlgorithm.rollback,
     );
 
     return result;
@@ -28,12 +27,10 @@ class DatabaseInterface {
       throw Exception('Id must be greater than 0');
     }
 
-    final int count = await dbManager.db.transaction(
-      (txn) async => await txn.delete(
-        tableName,
-        where: 'id = ?',
-        whereArgs: [id],
-      ),
+    final int count = await dbManager.db.delete(
+      tableName,
+      where: 'id = ?',
+      whereArgs: [id],
     );
 
     return count;
@@ -42,12 +39,10 @@ class DatabaseInterface {
   Future<Map<String, dynamic>> get(int id) async {
     List<Map<String, dynamic>> entityMap;
 
-    entityMap = await dbManager.db.transaction(
-      (txn) async => await txn.query(
-        tableName,
-        where: 'id = ?',
-        whereArgs: [id],
-      ),
+    entityMap = await dbManager.db.query(
+      tableName,
+      where: 'id = ?',
+      whereArgs: [id],
     );
 
     try {
@@ -59,10 +54,7 @@ class DatabaseInterface {
 
   Future<List<Map<String, dynamic>>> getAll() async {
     try {
-      final db = dbManager.db;
-      final immutableMaps = await db.transaction(
-        (txn) async => await txn.query(tableName),
-      );
+      final immutableMaps = await dbManager.db.query(tableName);
       final entityMaps = List.of(
         immutableMaps.map((map) => Map<String, dynamic>.from(map)),
       );
@@ -75,13 +67,11 @@ class DatabaseInterface {
   }
 
   Future<int> update(Map<String, dynamic> entity) async {
-    final int count = await dbManager.db.transaction(
-      (txn) async => await txn.update(
-        tableName,
-        entity,
-        where: 'id = ?',
-        whereArgs: [entity['id']],
-      ),
+    final int count = await dbManager.db.update(
+      tableName,
+      entity,
+      where: 'id = ?',
+      whereArgs: [entity['id']],
     );
 
     return count;

@@ -4,40 +4,31 @@ import 'package:mockito/mockito.dart';
 import 'package:nurse/shared/models/infra/campaign_model.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/infra/database_campaign_repository.dart';
+import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
 import 'database_campaign_repository_test.mocks.dart';
 
 @GenerateMocks([DatabaseManager, Database, DatabaseCampaignRepository])
 void main() {
-  final db = MockDatabase();
-  final dbManager = MockDatabaseManager();
+  final dbMock = MockDatabase();
+  final dbManagerMock = MockDatabaseManager();
 
-  final repository = DatabaseCampaignRepository();
+  final repository = DatabaseCampaignRepository(dbManagerMock);
 
   setUp(() {
-    when(dbManager.db).thenReturn(db);
+    when(dbManagerMock.db).thenReturn(dbMock);
   });
 
-  testCreateCampaign(db, repository);
-  testDeleteCampaign(db, repository);
-  testGetCampaign(db, repository);
-  testGetCampaigns(db, repository);
-  testUpdateCampaign(db, repository);
+  testCreateCampaign(dbMock, repository);
+  testDeleteCampaign(dbMock, repository);
+  testGetCampaign(dbMock, repository);
+  testGetCampaigns(dbMock, repository);
+  testUpdateCampaign(dbMock, repository);
 }
 
-void testCreateCampaign(
-  MockDatabase db,
-  DatabaseCampaignRepository repository,
-) {
+void testCreateCampaign(MockDatabase db, CampaignRepository repository) {
   group("createCampaign function:", () {
-    final int validCampaignId = 1;
-    final validCampaign = Campaign(
-      id: validCampaignId,
-      title: "Campaign Title",
-      startDate: DateTime(2022),
-    );
-
     group('try to create a valid campaign', () {
       setUp(() {
         when(db.insert(DatabaseCampaignRepository.TABLE, any,
@@ -46,7 +37,7 @@ void testCreateCampaign(
       });
 
       test("should create a new campaign entry and return its id", () async {
-        final createdId = await repository.createCampaign(validCampaign);
+        final createdId = await repository.createCampaign(_validCampaign);
 
         expect(createdId, 1);
       });
@@ -54,25 +45,19 @@ void testCreateCampaign(
   });
 }
 
-void testDeleteCampaign(
-  MockDatabase db,
-  DatabaseCampaignRepository repository,
-) {
+void testDeleteCampaign(MockDatabase db, CampaignRepository repository) {
   group("deleteCampaign function:", () {
-    final int validCampaignId = 1;
-    final int invalidCampaignId = 2;
-
     group('try to delete valid campaign', () {
       setUp(() {
         when(db.delete(
           DatabaseCampaignRepository.TABLE,
           where: anyNamed("where"),
-          whereArgs: [validCampaignId],
+          whereArgs: [_validCampaignId],
         )).thenAnswer((_) => Future.value(1));
       });
 
       test("should delete a campaign entry and returns 1", () async {
-        final deletedCount = await repository.deleteCampaign(validCampaignId);
+        final deletedCount = await repository.deleteCampaign(_validCampaignId);
 
         expect(deletedCount, 1);
       });
@@ -83,12 +68,13 @@ void testDeleteCampaign(
         when(db.delete(
           DatabaseCampaignRepository.TABLE,
           where: anyNamed("where"),
-          whereArgs: [invalidCampaignId],
+          whereArgs: [_invalidCampaignId],
         )).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {
-        final deletedCount = await repository.deleteCampaign(invalidCampaignId);
+        final deletedCount =
+            await repository.deleteCampaign(_invalidCampaignId);
 
         expect(deletedCount, 0);
       });
@@ -96,24 +82,15 @@ void testDeleteCampaign(
   });
 }
 
-void testGetCampaign(
-  MockDatabase db,
-  DatabaseCampaignRepository repository,
-) {
+void testGetCampaign(MockDatabase db, CampaignRepository repository) {
   group("getCampaign function:", () {
-    final int validCampaignId = 1;
-    final expectedCampaign = Campaign(
-      id: validCampaignId,
-      title: "Campaign Title",
-      startDate: DateTime(2022),
-    );
-
+    final expectedCampaign = _validCampaign;
     group('try to get valid campaign', () {
       setUp(() {
         when(db.query(
           DatabaseCampaignRepository.TABLE,
           where: anyNamed("where"),
-          whereArgs: [validCampaignId],
+          whereArgs: [_validCampaignId],
         )).thenAnswer((_) => Future.value([
               {
                 "id": expectedCampaign.id,
@@ -127,7 +104,7 @@ void testGetCampaign(
 
       test("should get a campaign entry by its id", () async {
         final actualCampaign =
-            await repository.getCampaignById(validCampaignId);
+            await repository.getCampaignById(_validCampaignId);
 
         expect(actualCampaign, isA<Campaign>());
         expect(actualCampaign, expectedCampaign);
@@ -153,31 +130,9 @@ void testGetCampaign(
   });
 }
 
-void testGetCampaigns(
-  MockDatabase db,
-  DatabaseCampaignRepository repository,
-) {
+void testGetCampaigns(MockDatabase db, CampaignRepository repository) {
   group("getCampaigns function:", () {
-    final int validCampaignId = 1;
-    final validCampaign = Campaign(
-      id: validCampaignId,
-      title: "Campaign Title",
-      startDate: DateTime(2022),
-    );
-
-    final expectedCampaigns = [
-      validCampaign,
-      validCampaign.copyWith(
-        id: validCampaignId + 1,
-        title: "Campaign Title 2",
-        startDate: DateTime(2022).add(Duration(days: 1)),
-      ),
-      validCampaign.copyWith(
-        id: validCampaignId + 1,
-        title: "Campaign Title 2",
-        startDate: DateTime(2022).add(Duration(days: 1)),
-      ),
-    ];
+    final expectedCampaigns = _validCampaigns;
 
     group('try to get all campaigns', () {
       setUp(() {
@@ -237,32 +192,21 @@ void testGetCampaigns(
   });
 }
 
-void testUpdateCampaign(
-  MockDatabase db,
-  DatabaseCampaignRepository repository,
-) {
+void testUpdateCampaign(MockDatabase db, CampaignRepository repository) {
   group("updateCampaign function:", () {
-    final int validCampaignId = 1;
-    final int invalidCampaignId = 2;
-    final validCampaign = Campaign(
-      id: validCampaignId,
-      title: "Campaign Title",
-      startDate: DateTime(2022),
-    );
-
     group('try to update a valid campaign', () {
       setUp(() {
         when(db.update(
           DatabaseCampaignRepository.TABLE,
-          validCampaign.copyWith(title: "Updated").toMap(),
+          _validCampaign.copyWith(title: "Updated").toMap(),
           where: anyNamed("where"),
-          whereArgs: [validCampaignId],
+          whereArgs: [_validCampaignId],
         )).thenAnswer((_) => Future.value(1));
       });
 
       test("should update a campaign entry and returns 1", () async {
         final updatedCount = await repository.updateCampaign(
-          validCampaign.copyWith(title: "Updated"),
+          _validCampaign.copyWith(title: "Updated"),
         );
 
         expect(updatedCount, 1);
@@ -273,17 +217,17 @@ void testUpdateCampaign(
       setUp(() {
         when(db.update(
           DatabaseCampaignRepository.TABLE,
-          validCampaign
-              .copyWith(id: invalidCampaignId, title: "Updated")
+          _validCampaign
+              .copyWith(id: _invalidCampaignId, title: "Updated")
               .toMap(),
           where: anyNamed("where"),
-          whereArgs: [invalidCampaignId],
+          whereArgs: [_invalidCampaignId],
         )).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {
         final updatedCount = await repository.updateCampaign(
-          validCampaign.copyWith(id: invalidCampaignId, title: "Updated"),
+          _validCampaign.copyWith(id: _invalidCampaignId, title: "Updated"),
         );
 
         expect(updatedCount, 0);
@@ -291,3 +235,28 @@ void testUpdateCampaign(
     });
   });
 }
+
+final int _validCampaignId = 1;
+final int _invalidCampaignId = 2;
+
+final _validCampaign = Campaign(
+  id: _validCampaignId,
+  title: "Campaign Title",
+  startDate: DateTime(2022),
+  endDate: DateTime(2023),
+  description: "Campaign Description",
+);
+
+final _validCampaigns = [
+  _validCampaign,
+  _validCampaign.copyWith(
+    id: _validCampaignId + 1,
+    title: "Campaign Title 2",
+    startDate: DateTime(2022).add(Duration(days: 1)),
+  ),
+  _validCampaign.copyWith(
+    id: _validCampaignId + 1,
+    title: "Campaign Title 3",
+    startDate: DateTime(2022).add(Duration(days: 100)),
+  ),
+];

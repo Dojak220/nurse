@@ -1,14 +1,19 @@
 import 'package:nurse/shared/models/patient/priority_category_model.dart';
 import 'package:nurse/shared/models/patient/priority_group_model.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/patient/database_priority_group_repository.dart';
+import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/patient/priority_category_repository.dart';
+import 'package:nurse/shared/repositories/patient/priority_group_repository.dart';
 
 class DatabasePriorityCategoryRepository extends DatabaseInterface
     implements PriorityCategoryRepository {
   static const String TABLE = "Priority_Category";
+  PriorityGroupRepository groupRepo;
 
-  DatabasePriorityCategoryRepository() : super(TABLE);
+  DatabasePriorityCategoryRepository({
+    DatabaseManager? dbManager,
+    required this.groupRepo,
+  }) : super(TABLE, dbManager);
 
   @override
   Future<int> createPriorityCategory(PriorityCategory priorityCategory) async {
@@ -44,8 +49,7 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
   }
 
   Future<PriorityGroup> _getPriorityGroup(int id) async {
-    final dbRepo = DatabasePriorityGroupRepository();
-    final priorityGroup = await dbRepo.getPriorityGroupById(id);
+    final priorityGroup = await groupRepo.getPriorityGroupById(id);
 
     return priorityGroup;
   }
@@ -75,8 +79,7 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
   }
 
   Future<List<PriorityGroup>> _getPriorityGroups() async {
-    final dbRepo = DatabasePriorityGroupRepository();
-    final priorityGroups = await dbRepo.getPriorityGroups();
+    final priorityGroups = await groupRepo.getPriorityGroups();
 
     return priorityGroups;
   }
