@@ -1,16 +1,19 @@
 import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
+import 'package:nurse/shared/repositories/database/database_manager.dart';
+import 'package:nurse/shared/repositories/infra/locality_repository.dart';
 import 'package:nurse/shared/repositories/patient/person_repository.dart';
 
 class DatabasePersonRepository extends DatabaseInterface
     implements PersonRepository {
   static const String TABLE = "Person";
-  final DatabaseManager dbManager;
+  final LocalityRepository localityRepo;
 
-  DatabasePersonRepository(this.dbManager) : super(dbManager, TABLE);
+  DatabasePersonRepository({
+    DatabaseManager? dbManager,
+    required this.localityRepo,
+  }) : super(TABLE, dbManager);
 
   @override
   Future<int> createPerson(Person person) async {
@@ -44,8 +47,7 @@ class DatabasePersonRepository extends DatabaseInterface
   }
 
   Future<Locality> _getLocality(int id) async {
-    final dbRepo = DatabaseLocalityRepository(dbManager);
-    final locality = await dbRepo.getLocalityById(id);
+    final locality = await localityRepo.getLocalityById(id);
 
     return locality;
   }
@@ -61,7 +63,7 @@ class DatabasePersonRepository extends DatabaseInterface
           return l.id == p["locality"];
         });
 
-        p["locality"] = locality;
+        p["locality"] = locality.toMap();
       });
 
       final persons = personMaps.map((person) {
@@ -70,13 +72,12 @@ class DatabasePersonRepository extends DatabaseInterface
 
       return persons;
     } catch (e) {
-      return List<Person>.empty();
+      rethrow;
     }
   }
 
   Future<List<Locality>> _getLocalities() async {
-    final dbRepo = DatabaseLocalityRepository(dbManager);
-    final localities = await dbRepo.getLocalities();
+    final localities = await localityRepo.getLocalities();
 
     return localities;
   }

@@ -13,6 +13,8 @@ dependencies:
   sqflite_sqlcipher: ^2.1.0
   path: ^1.8.0
   flutter_dotenv: ^5.0.2
+  flutter_mobx: ^2.0.5
+  mobx: ^2.0.7
 
 dev_dependencies:
   flutter_test:

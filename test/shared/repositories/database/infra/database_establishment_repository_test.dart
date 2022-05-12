@@ -6,49 +6,48 @@ import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/infra/database_establishment_repository.dart';
 import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
+import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
 import 'database_establishment_repository_test.mocks.dart';
 
-@GenerateMocks([DatabaseManager, Database, DatabaseEstablishmentRepository])
+@GenerateMocks([
+  DatabaseManager,
+  Database,
+  DatabaseLocalityRepository,
+])
 void main() {
-  final db = MockDatabase();
-  final dbManager = MockDatabaseManager();
+  final dbMock = MockDatabase();
+  final dbManagerMock = MockDatabaseManager();
+  final localityRepoMock = MockDatabaseLocalityRepository();
 
-  final repository = DatabaseEstablishmentRepository(dbManager);
+  final repository = DatabaseEstablishmentRepository(
+    dbManager: dbManagerMock,
+    localityRepo: localityRepoMock,
+  );
 
   setUp(() {
-    when(dbManager.db).thenReturn(db);
+    when(dbManagerMock.db).thenReturn(dbMock);
+    when(localityRepoMock.getLocalityById(1)).thenAnswer(
+      (_) async => _validLocality,
+    );
+    when(localityRepoMock.getLocalities()).thenAnswer(
+      (_) async => _validLocalities,
+    );
   });
 
-  testCreateEstablishment(db, repository);
-  testDeleteEstablishment(db, repository);
-  testGetEstablishment(db, repository);
-  testGetEstablishments(db, repository);
-  testUpdateEstablishment(db, repository);
+  testCreateEstablishment(dbMock, repository);
+  testDeleteEstablishment(dbMock, repository);
+  testGetEstablishment(dbMock, repository);
+  testGetEstablishments(dbMock, repository);
+  testUpdateEstablishment(dbMock, repository);
 }
 
 void testCreateEstablishment(
   MockDatabase db,
-  DatabaseEstablishmentRepository repository,
+  EstablishmentRepository repository,
 ) {
   group("createEstablishment function:", () {
-    final int validEstablishmentId = 1;
-    final int validLocalityId = 1;
-    final expectedLocality = Locality(
-      id: validLocalityId,
-      name: "Local",
-      city: "Brasília",
-      state: "DF",
-      ibgeCode: "1234567",
-    );
-    final validEstablishment = Establishment(
-      id: validEstablishmentId,
-      cnes: "1234567",
-      name: "Test",
-      locality: expectedLocality,
-    );
-
     group('try to create a valid establishment', () {
       setUp(() {
         when(db.insert(DatabaseEstablishmentRepository.TABLE, any,
@@ -59,7 +58,7 @@ void testCreateEstablishment(
       test("should create a new establishment entry and return its id",
           () async {
         final createdId =
-            await repository.createEstablishment(validEstablishment);
+            await repository.createEstablishment(_validEstablishment);
 
         expect(createdId, 1);
       });
@@ -68,25 +67,20 @@ void testCreateEstablishment(
 }
 
 void testDeleteEstablishment(
-  MockDatabase db,
-  DatabaseEstablishmentRepository repository,
-) {
+    MockDatabase db, EstablishmentRepository repository) {
   group("deleteEstablishment function:", () {
-    final int validEstablishmentId = 1;
-    final int invalidEstablishmentId = 2;
-
     group('try to delete valid establishment', () {
       setUp(() {
         when(db.delete(
           DatabaseEstablishmentRepository.TABLE,
           where: anyNamed("where"),
-          whereArgs: [validEstablishmentId],
+          whereArgs: [_validEstablishmentId],
         )).thenAnswer((_) => Future.value(1));
       });
 
       test("should delete an establishment entry and returns 1", () async {
         final deletedCount =
-            await repository.deleteEstablishment(validEstablishmentId);
+            await repository.deleteEstablishment(_validEstablishmentId);
 
         expect(deletedCount, 1);
       });
@@ -97,13 +91,13 @@ void testDeleteEstablishment(
         when(db.delete(
           DatabaseEstablishmentRepository.TABLE,
           where: anyNamed("where"),
-          whereArgs: [invalidEstablishmentId],
+          whereArgs: [_invalidEstablishmentId],
         )).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesnt exist", () async {
         final deletedCount =
-            await repository.deleteEstablishment(invalidEstablishmentId);
+            await repository.deleteEstablishment(_invalidEstablishmentId);
 
         expect(deletedCount, 0);
       });
@@ -111,12 +105,9 @@ void testDeleteEstablishment(
   });
 }
 
-void testGetEstablishment(
-  MockDatabase db,
-  DatabaseEstablishmentRepository repository,
-) {
+void testGetEstablishment(MockDatabase db, EstablishmentRepository repository) {
   group("getEstablishment function:", () {
-    final int validEstablishmentId = 1;
+    final int _validEstablishmentId = 1;
     final int validLocalityId = 1;
     final expectedLocality = Locality(
       id: validLocalityId,
@@ -126,7 +117,7 @@ void testGetEstablishment(
       ibgeCode: "1234567",
     );
     final expectedEstablishment = Establishment(
-      id: validEstablishmentId,
+      id: _validEstablishmentId,
       cnes: "1234567",
       name: "Test",
       locality: expectedLocality,
@@ -137,7 +128,7 @@ void testGetEstablishment(
         when(db.query(
           DatabaseEstablishmentRepository.TABLE,
           where: anyNamed("where"),
-          whereArgs: [validEstablishmentId],
+          whereArgs: [_validEstablishmentId],
         )).thenAnswer((_) => Future.value([
               {
                 "id": expectedEstablishment.id,
@@ -166,7 +157,7 @@ void testGetEstablishment(
 
       test("should get an establishment entry by its id", () async {
         final actualEstablishment =
-            await repository.getEstablishmentById(validEstablishmentId);
+            await repository.getEstablishmentById(_validEstablishmentId);
 
         expect(actualEstablishment, isA<Establishment>());
         expect(actualEstablishment, expectedEstablishment);
@@ -193,49 +184,9 @@ void testGetEstablishment(
 }
 
 void testGetEstablishments(
-  MockDatabase db,
-  DatabaseEstablishmentRepository repository,
-) {
+    MockDatabase db, EstablishmentRepository repository) {
   group("getEstablishments function:", () {
-    final int validLocalityId = 1;
-    final int validEstablishmentId = 1;
-    final expectedLocalities = [
-      Locality(
-        id: validLocalityId,
-        name: "Primeiro Local",
-        city: "Brasília",
-        state: "DF",
-        ibgeCode: "1234567",
-      ),
-      Locality(
-        id: validLocalityId + 1,
-        name: "Segundo Local",
-        city: "Brasília",
-        state: "DF",
-        ibgeCode: "1234567",
-      ),
-      Locality(
-        id: validLocalityId + 2,
-        name: "Terceiro Local",
-        city: "Brasília",
-        state: "DF",
-        ibgeCode: "1234567",
-      ),
-    ];
-    final expectedEstablishments = [
-      Establishment(
-        id: validEstablishmentId,
-        cnes: "1234567",
-        name: "Test",
-        locality: expectedLocalities[0],
-      ),
-      Establishment(
-        id: validEstablishmentId + 1,
-        cnes: "1234568",
-        name: "Segundo Estabelecimento",
-        locality: expectedLocalities[1],
-      ),
-    ];
+    final expectedEstablishments = _validEstablishments;
 
     group('try to get all establishments', () {
       setUp(() {
@@ -253,31 +204,6 @@ void testGetEstablishments(
                 "cnes": expectedEstablishments[1].cnes,
                 "name": expectedEstablishments[1].name,
                 "locality": expectedEstablishments[1].locality.id,
-              },
-            ]));
-        when(db.query(
-          DatabaseLocalityRepository.TABLE,
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": expectedLocalities[0].id,
-                "name": expectedLocalities[0].name,
-                "city": expectedLocalities[0].city,
-                "state": expectedLocalities[0].state,
-                "ibge_code": expectedLocalities[0].ibgeCode,
-              },
-              {
-                "id": expectedLocalities[1].id,
-                "name": expectedLocalities[1].name,
-                "city": expectedLocalities[1].city,
-                "state": expectedLocalities[1].state,
-                "ibge_code": expectedLocalities[1].ibgeCode,
-              },
-              {
-                "id": expectedLocalities[2].id,
-                "name": expectedLocalities[2].name,
-                "city": expectedLocalities[2].city,
-                "state": expectedLocalities[2].state,
-                "ibge_code": expectedLocalities[2].ibgeCode,
               },
             ]));
       });
@@ -310,40 +236,21 @@ void testGetEstablishments(
 }
 
 void testUpdateEstablishment(
-  MockDatabase db,
-  DatabaseEstablishmentRepository repository,
-) {
-  final int invalidEstablishmentId = 2;
+    MockDatabase db, EstablishmentRepository repository) {
   group("updateEstablishment function:", () {
-    final int validEstablishmentId = 1;
-    final int validLocalityId = 1;
-    final expectedLocality = Locality(
-      id: validLocalityId,
-      name: "Local",
-      city: "Brasília",
-      state: "DF",
-      ibgeCode: "1234567",
-    );
-    final validEstablishment = Establishment(
-      id: validEstablishmentId,
-      cnes: "1234567",
-      name: "Old Name",
-      locality: expectedLocality,
-    );
-
     group('try to update a valid establishment', () {
       setUp(() {
         when(db.update(
           DatabaseEstablishmentRepository.TABLE,
-          validEstablishment.copyWith(name: "Updated").toMap(),
+          _validEstablishment.copyWith(name: "Updated").toMap(),
           where: anyNamed("where"),
-          whereArgs: [validEstablishmentId],
+          whereArgs: [_validEstablishmentId],
         )).thenAnswer((_) => Future.value(1));
       });
 
       test("should update a establishment entry and returns 1", () async {
         final createdId = await repository.updateEstablishment(
-          validEstablishment.copyWith(name: "Updated"),
+          _validEstablishment.copyWith(name: "Updated"),
         );
 
         expect(createdId, 1);
@@ -353,18 +260,18 @@ void testUpdateEstablishment(
       setUp(() {
         when(db.update(
           DatabaseEstablishmentRepository.TABLE,
-          validEstablishment
-              .copyWith(id: invalidEstablishmentId, name: "Updated")
+          _validEstablishment
+              .copyWith(id: _invalidEstablishmentId, name: "Updated")
               .toMap(),
           where: anyNamed("where"),
-          whereArgs: [invalidEstablishmentId],
+          whereArgs: [_invalidEstablishmentId],
         )).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {
         final updatedCount = await repository.updateEstablishment(
-          validEstablishment.copyWith(
-              id: invalidEstablishmentId, name: "Updated"),
+          _validEstablishment.copyWith(
+              id: _invalidEstablishmentId, name: "Updated"),
         );
 
         expect(updatedCount, 0);
@@ -372,3 +279,44 @@ void testUpdateEstablishment(
     });
   });
 }
+
+final int _validLocalityId = 1;
+final int _validEstablishmentId = 1;
+final int _invalidEstablishmentId = 2;
+
+final _validLocality = Locality(
+  id: _validLocalityId,
+  name: "Local",
+  city: "Brasília",
+  state: "DF",
+  ibgeCode: "1234567",
+);
+final _validEstablishment = Establishment(
+  id: _validEstablishmentId,
+  cnes: "1234567",
+  name: "Test",
+  locality: _validLocality,
+);
+
+final _validLocalities = [
+  _validLocality,
+  _validLocality.copyWith(
+    id: _validLocalityId + 1,
+    name: "Segundo Local",
+    ibgeCode: "1234568",
+  ),
+  _validLocality.copyWith(
+    id: _validLocalityId + 2,
+    name: "Terceiro Local",
+    ibgeCode: "1234567",
+  ),
+];
+final _validEstablishments = [
+  _validEstablishment,
+  _validEstablishment.copyWith(
+    id: _validEstablishmentId + 1,
+    cnes: "1234568",
+    name: "Segundo Estabelecimento",
+    locality: _validLocalities[1],
+  ),
+];

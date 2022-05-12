@@ -3,20 +3,29 @@ import 'package:nurse/shared/models/patient/patient_model.dart';
 import 'package:nurse/shared/models/vaccination/application_model.dart';
 import 'package:nurse/shared/models/vaccination/applier_model.dart';
 import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/infra/database_campaign_repository.dart';
-import 'package:nurse/shared/repositories/database/patient/database_patient_repository.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_repository.dart';
+import 'package:nurse/shared/repositories/database/database_manager.dart';
+import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
+import 'package:nurse/shared/repositories/patient/patient_repository.dart';
 import 'package:nurse/shared/repositories/vaccination/application_repository.dart';
+import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
+import 'package:nurse/shared/repositories/vaccination/vaccine_repository.dart';
 
 class DatabaseApplicationRepository extends DatabaseInterface
     implements ApplicationRepository {
   static const String TABLE = "Application";
-  final DatabaseManager dbManager;
+  final VaccineRepository vaccineRepo;
+  final PatientRepository patientRepo;
+  final CampaignRepository campaignRepo;
+  final ApplierRepository applierRepo;
 
-  DatabaseApplicationRepository(this.dbManager) : super(dbManager, TABLE);
+  DatabaseApplicationRepository({
+    DatabaseManager? dbManager,
+    required this.vaccineRepo,
+    required this.patientRepo,
+    required this.campaignRepo,
+    required this.applierRepo,
+  }) : super(TABLE, dbManager);
 
   @override
   Future<int> createApplication(Application applier) async {
@@ -56,29 +65,25 @@ class DatabaseApplicationRepository extends DatabaseInterface
   }
 
   Future<Applier> _getApplier(int id) async {
-    final dbRepo = DatabaseApplierRepository(dbManager);
-    final applier = await dbRepo.getApplierById(id);
+    final applier = await applierRepo.getApplierById(id);
 
     return applier;
   }
 
   Future<Vaccine> _getVaccine(int id) async {
-    final dbRepo = DatabaseVaccineRepository(dbManager);
-    final vaccine = await dbRepo.getVaccineById(id);
+    final vaccine = await vaccineRepo.getVaccineById(id);
 
     return vaccine;
   }
 
   Future<Patient> _getPatient(int id) async {
-    final dbRepo = DatabasePatientRepository(dbManager);
-    final patient = await dbRepo.getPatientById(id);
+    final patient = await patientRepo.getPatientById(id);
 
     return patient;
   }
 
   Future<Campaign> _getCampaign(int id) async {
-    final dbRepo = DatabaseCampaignRepository(dbManager);
-    final campaign = await dbRepo.getCampaignById(id);
+    final campaign = await campaignRepo.getCampaignById(id);
 
     return campaign;
   }
@@ -109,10 +114,10 @@ class DatabaseApplicationRepository extends DatabaseInterface
           return e.id == a["campaign"];
         });
 
-        a["applier"] = applier;
-        a["vaccine"] = vaccine;
-        a["patient"] = patient;
-        a["campaign"] = campaign;
+        a["applier"] = applier.toMap();
+        a["vaccine"] = vaccine.toMap();
+        a["patient"] = patient.toMap();
+        a["campaign"] = campaign.toMap();
       });
 
       final applications = applicationMaps.map((application) {
@@ -121,34 +126,30 @@ class DatabaseApplicationRepository extends DatabaseInterface
 
       return applications;
     } catch (e) {
-      return List<Application>.empty();
+      rethrow;
     }
   }
 
   Future<List<Applier>> _getAppliers() async {
-    final dbRepo = DatabaseApplierRepository(dbManager);
-    final appliers = await dbRepo.getAppliers();
+    final appliers = await applierRepo.getAppliers();
 
     return appliers;
   }
 
   Future<List<Vaccine>> _getVaccines() async {
-    final dbRepo = DatabaseVaccineRepository(dbManager);
-    final vaccines = await dbRepo.getVaccines();
+    final vaccines = await vaccineRepo.getVaccines();
 
     return vaccines;
   }
 
   Future<List<Patient>> _getPatients() async {
-    final dbRepo = DatabasePatientRepository(dbManager);
-    final patients = await dbRepo.getPatients();
+    final patients = await patientRepo.getPatients();
 
     return patients;
   }
 
   Future<List<Campaign>> _getCampaigns() async {
-    final dbRepo = DatabaseCampaignRepository(dbManager);
-    final campaigns = await dbRepo.getCampaigns();
+    final campaigns = await campaignRepo.getCampaigns();
 
     return campaigns;
   }

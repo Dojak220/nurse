@@ -1,16 +1,19 @@
 import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
 import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_batch_repository.dart';
+import 'package:nurse/shared/repositories/database/database_manager.dart';
+import 'package:nurse/shared/repositories/vaccination/vaccine_batch_repository.dart';
 import 'package:nurse/shared/repositories/vaccination/vaccine_repository.dart';
 
 class DatabaseVaccineRepository extends DatabaseInterface
     implements VaccineRepository {
   static const String TABLE = "Vaccine";
-  final DatabaseManager dbManager;
+  final VaccineBatchRepository vaccineBatchRepo;
 
-  DatabaseVaccineRepository(this.dbManager) : super(dbManager, TABLE);
+  DatabaseVaccineRepository({
+    DatabaseManager? dbManager,
+    required this.vaccineBatchRepo,
+  }) : super(TABLE, dbManager);
 
   @override
   Future<int> createVaccine(Vaccine vaccine) async {
@@ -44,8 +47,7 @@ class DatabaseVaccineRepository extends DatabaseInterface
   }
 
   Future<VaccineBatch> _getVaccineBatch(int id) async {
-    final dbRepo = DatabaseVaccineBatchRepository(dbManager);
-    final vaccineBatch = await dbRepo.getVaccineBatchById(id);
+    final vaccineBatch = await vaccineBatchRepo.getVaccineBatchById(id);
 
     return vaccineBatch;
   }
@@ -61,7 +63,7 @@ class DatabaseVaccineRepository extends DatabaseInterface
           return b.id == v["batch"];
         });
 
-        v["batch"] = vaccineBatch;
+        v["batch"] = vaccineBatch.toMap();
       });
 
       final vaccines = vaccineMaps.map((vaccine) {
@@ -70,13 +72,12 @@ class DatabaseVaccineRepository extends DatabaseInterface
 
       return vaccines;
     } catch (e) {
-      return List<Vaccine>.empty();
+      rethrow;
     }
   }
 
   Future<List<VaccineBatch>> _getVaccineBatches() async {
-    final dbRepo = DatabaseVaccineBatchRepository(dbManager);
-    final vaccineBatches = await dbRepo.getVaccineBatches();
+    final vaccineBatches = await vaccineBatchRepo.getVaccineBatches();
 
     return vaccineBatches;
   }

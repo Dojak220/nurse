@@ -322,4 +322,9 @@ but it was of type '${value.runtimeType}'.
 
   ValidatorException.invalid(ValidatorType type, Object value)
       : message = "Invalid ${type.name}: '$value'.";
+
+  @override
+  String toString() {
+    return super.toString();
+  }
 }

@@ -1,18 +1,23 @@
 import 'package:nurse/shared/models/infra/establishment_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
 import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/infra/database_establishment_repository.dart';
-import 'package:nurse/shared/repositories/database/patient/database_person_repository.dart';
+import 'package:nurse/shared/repositories/database/database_manager.dart';
+import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
+import 'package:nurse/shared/repositories/patient/person_repository.dart';
 import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
 
 class DatabaseApplierRepository extends DatabaseInterface
     implements ApplierRepository {
   static const String TABLE = "Applier";
-  final DatabaseManager dbManager;
+  final EstablishmentRepository establishmentRepo;
+  final PersonRepository personRepo;
 
-  DatabaseApplierRepository(this.dbManager) : super(dbManager, TABLE);
+  DatabaseApplierRepository({
+    DatabaseManager? dbManager,
+    required this.establishmentRepo,
+    required this.personRepo,
+  }) : super(TABLE, dbManager);
 
   @override
   Future<int> createApplier(Applier applier) async {
@@ -50,15 +55,13 @@ class DatabaseApplierRepository extends DatabaseInterface
   }
 
   Future<Establishment> _getEstablishment(int id) async {
-    final dbRepo = DatabaseEstablishmentRepository(dbManager);
-    final establishment = await dbRepo.getEstablishmentById(id);
+    final establishment = await establishmentRepo.getEstablishmentById(id);
 
     return establishment;
   }
 
   Future<Person> _getPerson(int id) async {
-    final dbRepo = DatabasePersonRepository(dbManager);
-    final person = await dbRepo.getPersonById(id);
+    final person = await personRepo.getPersonById(id);
 
     return person;
   }
@@ -79,8 +82,8 @@ class DatabaseApplierRepository extends DatabaseInterface
           return e.id == a["establishment"];
         });
 
-        a["person"] = person;
-        a["establishment"] = establishment;
+        a["person"] = person.toMap();
+        a["establishment"] = establishment.toMap();
       });
 
       final appliers = applierMaps.map((applier) {
@@ -89,20 +92,18 @@ class DatabaseApplierRepository extends DatabaseInterface
 
       return appliers;
     } catch (e) {
-      return List<Applier>.empty();
+      rethrow;
     }
   }
 
   Future<List<Establishment>> _getEstablishments() async {
-    final dbRepo = DatabaseEstablishmentRepository(dbManager);
-    final establishments = await dbRepo.getEstablishments();
+    final establishments = await establishmentRepo.getEstablishments();
 
     return establishments;
   }
 
   Future<List<Person>> _getPersons() async {
-    final dbRepo = DatabasePersonRepository(dbManager);
-    final persons = await dbRepo.getPersons();
+    final persons = await personRepo.getPersons();
 
     return persons;
   }

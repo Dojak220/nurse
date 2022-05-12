@@ -1,14 +1,14 @@
 import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
+import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/infra/locality_repository.dart';
 
 class DatabaseLocalityRepository extends DatabaseInterface
     implements LocalityRepository {
   static const String TABLE = "Locality";
-  final DatabaseManager dbManager;
 
-  DatabaseLocalityRepository(this.dbManager) : super(dbManager, TABLE);
+  DatabaseLocalityRepository([DatabaseManager? dbManager])
+      : super(TABLE, dbManager);
 
   @override
   Future<int> createLocality(Locality locality) async {
@@ -50,7 +50,7 @@ class DatabaseLocalityRepository extends DatabaseInterface
 
       return localities;
     } catch (e) {
-      return List<Locality>.empty();
+      rethrow;
     }
   }
 
