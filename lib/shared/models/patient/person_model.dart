@@ -120,10 +120,16 @@ enum Sex { FEMALE, MALE, NONE }
 extension SexExtension on Sex {
   static Sex fromString(String value) {
     switch (value.toUpperCase()) {
-      case "GESTANTE":
+      case "F":
+      case "FEMALE":
+      case "FEMININO":
         return Sex.FEMALE;
-      case "PUERPERA":
+      case "M":
+      case "MALE":
+      case "MASCULINO":
         return Sex.MALE;
+      case "N":
+      case "NONE":
       case "NENHUM":
       default:
         return Sex.NONE;
