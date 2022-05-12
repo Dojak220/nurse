@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nurse/app/theme/app_theme.dart';
 import 'package:nurse/app/theme/app_colors.dart';
+import 'package:nurse/shared/models/patient/patient_model.dart';
 
 class EntryCard extends StatelessWidget {
   const EntryCard({
@@ -72,7 +73,7 @@ class EntryCard extends StatelessWidget {
                 ),
                 Expanded(
                   child: Visibility(
-                    visible: pregnant != "Nenhum",
+                    visible: pregnant != MaternalCondition.NENHUM.name,
                     child: Text(
                       pregnant,
                       textAlign: TextAlign.end,
