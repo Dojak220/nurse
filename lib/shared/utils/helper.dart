@@ -17,7 +17,6 @@ class Helper {
       case Period.week:
         return applications
             .where((element) {
-              print(DateTime.now().difference(element.applicationDate).inDays);
               return DateTime.now()
                           .difference(element.applicationDate)
                           .inDays <=

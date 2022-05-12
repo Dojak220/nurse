@@ -78,4 +78,9 @@ class PriorityGroup implements GenericModel {
   int get hashCode {
     return id.hashCode ^ code.hashCode ^ name.hashCode ^ description.hashCode;
   }
+
+  @override
+  String toString() {
+    return 'PriorityGroup(id: $id, code: $code, name: $name, description: $description)';
+  }
 }
