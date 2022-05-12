@@ -1,14 +1,19 @@
 import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
 import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_batch_repository.dart';
+import 'package:nurse/shared/repositories/database/database_manager.dart';
+import 'package:nurse/shared/repositories/vaccination/vaccine_batch_repository.dart';
 import 'package:nurse/shared/repositories/vaccination/vaccine_repository.dart';
 
 class DatabaseVaccineRepository extends DatabaseInterface
     implements VaccineRepository {
   static const String TABLE = "Vaccine";
+  final VaccineBatchRepository vaccineBatchRepo;
 
-  DatabaseVaccineRepository() : super(TABLE);
+  DatabaseVaccineRepository({
+    DatabaseManager? dbManager,
+    required this.vaccineBatchRepo,
+  }) : super(TABLE, dbManager);
 
   @override
   Future<int> createVaccine(Vaccine vaccine) async {
@@ -42,8 +47,7 @@ class DatabaseVaccineRepository extends DatabaseInterface
   }
 
   Future<VaccineBatch> _getVaccineBatch(int id) async {
-    final dbRepo = DatabaseVaccineBatchRepository();
-    final vaccineBatch = await dbRepo.getVaccineBatchById(id);
+    final vaccineBatch = await vaccineBatchRepo.getVaccineBatchById(id);
 
     return vaccineBatch;
   }
@@ -73,8 +77,7 @@ class DatabaseVaccineRepository extends DatabaseInterface
   }
 
   Future<List<VaccineBatch>> _getVaccineBatches() async {
-    final dbRepo = DatabaseVaccineBatchRepository();
-    final vaccineBatches = await dbRepo.getVaccineBatches();
+    final vaccineBatches = await vaccineBatchRepo.getVaccineBatches();
 
     return vaccineBatches;
   }

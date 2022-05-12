@@ -2,15 +2,22 @@ import 'package:nurse/shared/models/patient/patient_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
 import 'package:nurse/shared/models/patient/priority_category_model.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/patient/database_person_repository.dart';
-import 'package:nurse/shared/repositories/database/patient/database_priority_category_repository.dart';
+import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/patient/patient_repository.dart';
+import 'package:nurse/shared/repositories/patient/person_repository.dart';
+import 'package:nurse/shared/repositories/patient/priority_category_repository.dart';
 
 class DatabasePatientRepository extends DatabaseInterface
     implements PatientRepository {
   static const String TABLE = "Patient";
+  PersonRepository personRepo;
+  PriorityCategoryRepository categoryRepo;
 
-  DatabasePatientRepository() : super(TABLE);
+  DatabasePatientRepository({
+    DatabaseManager? dbManager,
+    required this.personRepo,
+    required this.categoryRepo,
+  }) : super(TABLE, dbManager);
 
   @override
   Future<int> createPatient(Patient patient) async {
@@ -48,15 +55,13 @@ class DatabasePatientRepository extends DatabaseInterface
   }
 
   Future<Person> _getPerson(int id) async {
-    final dbRepo = DatabasePersonRepository();
-    final person = await dbRepo.getPersonById(id);
+    final person = await personRepo.getPersonById(id);
 
     return person;
   }
 
   Future<PriorityCategory> _getPriorityCategory(int id) async {
-    final dbRepo = DatabasePriorityCategoryRepository();
-    final priorityCategory = await dbRepo.getPriorityCategoryById(id);
+    final priorityCategory = await categoryRepo.getPriorityCategoryById(id);
 
     return priorityCategory;
   }
@@ -93,15 +98,13 @@ class DatabasePatientRepository extends DatabaseInterface
   }
 
   Future<List<Person>> _getPersons() async {
-    final dbRepo = DatabasePersonRepository();
-    final persons = await dbRepo.getPersons();
+    final persons = await personRepo.getPersons();
 
     return persons;
   }
 
   Future<List<PriorityCategory>> _getPriorityCategories() async {
-    final dbRepo = DatabasePriorityCategoryRepository();
-    final priorityCategories = await dbRepo.getPriorityCategories();
+    final priorityCategories = await categoryRepo.getPriorityCategories();
 
     return priorityCategories;
   }

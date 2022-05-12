@@ -5,7 +5,8 @@ class DatabaseInterface {
   final DatabaseManager dbManager;
   final String tableName;
 
-  DatabaseInterface(this.tableName) : dbManager = DatabaseManager();
+  DatabaseInterface(this.tableName, [DatabaseManager? dbManager])
+      : this.dbManager = dbManager ?? DatabaseManager();
 
   /// TODO: Garantir que não criem-se dois registros com o mesmo id.
   /// Coloquei esse todo aqui, mas possa ser que a implementação seja feita
