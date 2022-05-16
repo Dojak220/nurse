@@ -18,10 +18,9 @@ class Helper {
         return applications
             .where((element) {
               return DateTime.now()
-                          .difference(element.applicationDate)
-                          .inDays <=
-                      7 &&
-                  element.applicationDate.weekday == DateTime.now().weekday;
+                      .difference(element.applicationDate)
+                      .inDays <=
+                  DateTime.now().weekday;
             })
             .toList()
             .length;
@@ -29,8 +28,7 @@ class Helper {
       default:
         return applications
             .where((element) =>
-                DateTime.now().difference(element.applicationDate).inDays <=
-                    365 &&
+                element.applicationDate.year == DateTime.now().year &&
                 element.applicationDate.month == DateTime.now().month)
             .toList()
             .length;
