@@ -29,11 +29,7 @@ class TitledListView extends StatelessWidget {
             ),
           ),
           Container(
-            /// TODO: Substituir constraints for height
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * 0.50,
-              minHeight: MediaQuery.of(context).size.height * 0.50,
-            ),
+            height: MediaQuery.of(context).size.height * 0.50,
             child: Observer(builder: (_) {
               return ListView.separated(
                 itemCount: applications.length,
@@ -41,7 +37,7 @@ class TitledListView extends StatelessWidget {
                   return EntryCard(
                     cns: applications[i].patient.cns,
                     name: applications[i].patient.person.name,
-                    vaccine: applications[i].patient.person.name,
+                    vaccine: applications[i].vaccine.name,
                     group: applications[i]
                         .patient
                         .priorityCategory

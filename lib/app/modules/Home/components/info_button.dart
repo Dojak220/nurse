@@ -14,7 +14,7 @@ class InfoButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      height: 73,
       width: 94,
       decoration: new BoxDecoration(
         borderRadius: new BorderRadius.circular(10),
@@ -33,22 +33,20 @@ class InfoButton extends StatelessWidget {
         ],
       ),
       margin: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        verticalDirection: VerticalDirection.down,
+      child: Stack(
+        alignment: AlignmentDirectional.center,
         children: [
-          Flexible(
-            flex: 1,
+          Positioned(
+            top: 10,
             child: Text(
-              '$info',
+              "$info",
               style: AppTheme.infoButtonNumberStyle,
             ),
           ),
-          Flexible(
-            flex: 1,
+          Positioned(
+            bottom: 6,
             child: Text(
-              '$text',
+              "$text",
               style: AppTheme.infoButtonTextStyle,
             ),
           ),
