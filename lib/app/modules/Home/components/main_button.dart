@@ -13,12 +13,10 @@ class MainButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+      padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 0),
       child: ElevatedButton(
         onPressed: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => newPage,
-          ),
+          MaterialPageRoute(builder: (context) => newPage),
         ),
         style: AppTheme.mainButtonStyle(context),
         child: Text(
