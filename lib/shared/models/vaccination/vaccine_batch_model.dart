@@ -3,12 +3,12 @@ import 'package:nurse/shared/utils/validator.dart';
 
 class VaccineBatch implements GenericModel {
   @override
-  final int id;
+  final int? id;
   final String number;
   final int quantity;
 
   VaccineBatch({
-    required this.id,
+    this.id,
     required String number,
     required this.quantity,
   }) : this.number = number.trim() {
@@ -16,14 +16,12 @@ class VaccineBatch implements GenericModel {
   }
 
   void _validateVaccineBatch() {
+    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
     if (quantity <= 0) {
       throw Exception('Quantity must be greater than 0');
     }
 
-    Validator.validateAll([
-      ValidationPair(ValidatorType.Id, this.id),
-      ValidationPair(ValidatorType.NumericalString, this.number),
-    ]);
+    Validator.validate(ValidatorType.NumericalString, this.number);
   }
 
   VaccineBatch copyWith({
@@ -40,7 +38,7 @@ class VaccineBatch implements GenericModel {
 
   Map<String, Object> toMap() {
     return {
-      'id': id,
+      'id': id ?? 0,
       'number': number,
       'quantity': quantity,
     };
@@ -48,7 +46,7 @@ class VaccineBatch implements GenericModel {
 
   factory VaccineBatch.fromMap(Map<String, dynamic> map) {
     return VaccineBatch(
-      id: map['id'] ?? 0,
+      id: map['id'],
       number: map['number'] ?? '',
       quantity: map['quantity']?.toInt() ?? 0,
     );

@@ -3,6 +3,8 @@ import 'package:nurse/shared/models/patient/person_model.dart';
 import 'package:nurse/shared/models/patient/priority_category_model.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
+import 'package:nurse/shared/repositories/database/patient/database_person_repository.dart';
+import 'package:nurse/shared/repositories/database/patient/database_priority_category_repository.dart';
 import 'package:nurse/shared/repositories/patient/patient_repository.dart';
 import 'package:nurse/shared/repositories/patient/person_repository.dart';
 import 'package:nurse/shared/repositories/patient/priority_category_repository.dart';
@@ -10,14 +12,16 @@ import 'package:nurse/shared/repositories/patient/priority_category_repository.d
 class DatabasePatientRepository extends DatabaseInterface
     implements PatientRepository {
   static const String TABLE = "Patient";
-  PersonRepository personRepo;
-  PriorityCategoryRepository categoryRepo;
+  final PersonRepository? _personRepo;
+  final PriorityCategoryRepository? _categoryRepo;
 
   DatabasePatientRepository({
     DatabaseManager? dbManager,
-    required this.personRepo,
-    required this.categoryRepo,
-  }) : super(TABLE, dbManager);
+    PersonRepository? personRepo,
+    PriorityCategoryRepository? categoryRepo,
+  })  : _personRepo = personRepo ?? DatabasePersonRepository(),
+        _categoryRepo = categoryRepo ?? DatabasePriorityCategoryRepository(),
+        super(TABLE, dbManager);
 
   @override
   Future<int> createPatient(Patient patient) async {
@@ -55,13 +59,13 @@ class DatabasePatientRepository extends DatabaseInterface
   }
 
   Future<Person> _getPerson(int id) async {
-    final person = await personRepo.getPersonById(id);
+    final person = await _personRepo!.getPersonById(id);
 
     return person;
   }
 
   Future<PriorityCategory> _getPriorityCategory(int id) async {
-    final priorityCategory = await categoryRepo.getPriorityCategoryById(id);
+    final priorityCategory = await _categoryRepo!.getPriorityCategoryById(id);
 
     return priorityCategory;
   }
@@ -98,13 +102,13 @@ class DatabasePatientRepository extends DatabaseInterface
   }
 
   Future<List<Person>> _getPersons() async {
-    final persons = await personRepo.getPersons();
+    final persons = await _personRepo!.getPersons();
 
     return persons;
   }
 
   Future<List<PriorityCategory>> _getPriorityCategories() async {
-    final priorityCategories = await categoryRepo.getPriorityCategories();
+    final priorityCategories = await _categoryRepo!.getPriorityCategories();
 
     return priorityCategories;
   }

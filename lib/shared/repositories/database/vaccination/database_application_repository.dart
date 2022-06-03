@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:nurse/shared/models/infra/campaign_model.dart';
 import 'package:nurse/shared/models/patient/patient_model.dart';
 import 'package:nurse/shared/models/vaccination/application_model.dart';
@@ -5,6 +6,10 @@ import 'package:nurse/shared/models/vaccination/applier_model.dart';
 import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
+import 'package:nurse/shared/repositories/database/infra/database_campaign_repository.dart';
+import 'package:nurse/shared/repositories/database/patient/database_patient_repository.dart';
+import 'package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart';
+import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_repository.dart';
 import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
 import 'package:nurse/shared/repositories/patient/patient_repository.dart';
 import 'package:nurse/shared/repositories/vaccination/application_repository.dart';
@@ -12,20 +17,26 @@ import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
 import 'package:nurse/shared/repositories/vaccination/vaccine_repository.dart';
 
 class DatabaseApplicationRepository extends DatabaseInterface
+    with ChangeNotifier
     implements ApplicationRepository {
   static const String TABLE = "Application";
-  final VaccineRepository vaccineRepo;
-  final PatientRepository patientRepo;
-  final CampaignRepository campaignRepo;
-  final ApplierRepository applierRepo;
+
+  final VaccineRepository? _vaccineRepo;
+  final PatientRepository? _patientRepo;
+  final CampaignRepository? _campaignRepo;
+  final ApplierRepository? _applierRepo;
 
   DatabaseApplicationRepository({
     DatabaseManager? dbManager,
-    required this.vaccineRepo,
-    required this.patientRepo,
-    required this.campaignRepo,
-    required this.applierRepo,
-  }) : super(TABLE, dbManager);
+    VaccineRepository? vaccineRepo,
+    PatientRepository? patientRepo,
+    CampaignRepository? campaignRepo,
+    ApplierRepository? applierRepo,
+  })  : _vaccineRepo = vaccineRepo ?? DatabaseVaccineRepository(),
+        _patientRepo = patientRepo ?? DatabasePatientRepository(),
+        _campaignRepo = campaignRepo ?? DatabaseCampaignRepository(),
+        _applierRepo = applierRepo ?? DatabaseApplierRepository(),
+        super(TABLE, dbManager);
 
   @override
   Future<int> createApplication(Application applier) async {
@@ -65,25 +76,25 @@ class DatabaseApplicationRepository extends DatabaseInterface
   }
 
   Future<Applier> _getApplier(int id) async {
-    final applier = await applierRepo.getApplierById(id);
+    final applier = await _applierRepo!.getApplierById(id);
 
     return applier;
   }
 
   Future<Vaccine> _getVaccine(int id) async {
-    final vaccine = await vaccineRepo.getVaccineById(id);
+    final vaccine = await _vaccineRepo!.getVaccineById(id);
 
     return vaccine;
   }
 
   Future<Patient> _getPatient(int id) async {
-    final patient = await patientRepo.getPatientById(id);
+    final patient = await _patientRepo!.getPatientById(id);
 
     return patient;
   }
 
   Future<Campaign> _getCampaign(int id) async {
-    final campaign = await campaignRepo.getCampaignById(id);
+    final campaign = await _campaignRepo!.getCampaignById(id);
 
     return campaign;
   }
@@ -131,25 +142,25 @@ class DatabaseApplicationRepository extends DatabaseInterface
   }
 
   Future<List<Applier>> _getAppliers() async {
-    final appliers = await applierRepo.getAppliers();
+    final appliers = await _applierRepo!.getAppliers();
 
     return appliers;
   }
 
   Future<List<Vaccine>> _getVaccines() async {
-    final vaccines = await vaccineRepo.getVaccines();
+    final vaccines = await _vaccineRepo!.getVaccines();
 
     return vaccines;
   }
 
   Future<List<Patient>> _getPatients() async {
-    final patients = await patientRepo.getPatients();
+    final patients = await _patientRepo!.getPatients();
 
     return patients;
   }
 
   Future<List<Campaign>> _getCampaigns() async {
-    final campaigns = await campaignRepo.getCampaigns();
+    final campaigns = await _campaignRepo!.getCampaigns();
 
     return campaigns;
   }

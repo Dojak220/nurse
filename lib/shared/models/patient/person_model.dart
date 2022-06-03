@@ -4,7 +4,7 @@ import 'package:nurse/shared/utils/validator.dart';
 
 class Person implements GenericModel {
   @override
-  final int id;
+  final int? id;
   final String cpf;
   final String name;
   final DateTime birthDate;
@@ -14,7 +14,7 @@ class Person implements GenericModel {
   final String fatherName;
 
   Person({
-    required this.id,
+    this.id,
     required this.cpf,
     required this.name,
     required this.birthDate,
@@ -23,8 +23,8 @@ class Person implements GenericModel {
     this.motherName = "",
     this.fatherName = "",
   }) {
+    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
     Validator.validateAll([
-      ValidationPair(ValidatorType.Id, this.id),
       ValidationPair(ValidatorType.CPF, this.cpf),
       ValidationPair(ValidatorType.Name, this.name),
       ValidationPair(ValidatorType.OptionalName, this.motherName),
@@ -58,7 +58,7 @@ class Person implements GenericModel {
   @override
   Map<String, Object> toMap() {
     return {
-      'id': id,
+      'id': id ?? 0,
       'cpf': cpf,
       'name': name,
       'birth_date': birthDate.toString(),
@@ -71,7 +71,7 @@ class Person implements GenericModel {
 
   factory Person.fromMap(Map<String, dynamic> map) {
     return Person(
-      id: map['id'] ?? 0,
+      id: map['id'],
       cpf: map['cpf'] ?? "",
       name: map['name'] ?? '',
       birthDate: DateTime.parse(map['birth_date']),
