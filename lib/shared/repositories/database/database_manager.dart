@@ -11,14 +11,14 @@ class DatabaseManager {
 
   Database? _db;
   Database get db => _db!;
-  bool isDatabaseInitialized = false;
+  bool _isDatabaseInitialized = false;
 
   factory DatabaseManager() {
     return _instance;
   }
 
   Future<void> tryToInit() async {
-    if (!isDatabaseInitialized || _db == null) {
+    if (!_isDatabaseInitialized || _db == null) {
       await _init();
     }
   }
@@ -34,12 +34,12 @@ class DatabaseManager {
       onCreate: (db, version) => _onCreate(db, version),
     );
 
-    isDatabaseInitialized = true;
+    _isDatabaseInitialized = true;
   }
 
   FutureOr<void> _onCreate(Database db, int version) async {
     final Batch batch = db.batch();
-    final String script = await rootBundle.loadString("assets/script_v1.sql");
+    final String script = await rootBundle.loadString("assets/script_v2_2.sql");
     final List<String> scripts = script.split(";");
 
     scripts.forEach((script) {

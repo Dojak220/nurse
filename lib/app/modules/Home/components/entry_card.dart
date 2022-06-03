@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nurse/app/theme/app_theme.dart';
-import 'package:nurse/app/theme/colors.dart';
+import 'package:nurse/app/theme/app_colors.dart';
+import 'package:nurse/shared/models/patient/patient_model.dart';
 
 class EntryCard extends StatelessWidget {
   const EntryCard({
@@ -22,15 +23,27 @@ class EntryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: new BoxDecoration(
-        borderRadius: new BorderRadius.circular(4.0),
-        color: CustomColors.white,
+        borderRadius: new BorderRadius.circular(10.0),
+        color: AppColors.cinzaClaro,
+        boxShadow: [
+          BoxShadow(
+            color: Color(0x29000000),
+            blurRadius: 6.0,
+            spreadRadius: 0,
+            blurStyle: BlurStyle.normal,
+            offset: Offset(
+              0.0,
+              3.0,
+            ),
+          ),
+        ],
       ),
-      margin: const EdgeInsets.symmetric(vertical: 5.0),
+      margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 5.0, 16.0, 0),
+            padding: const EdgeInsets.fromLTRB(16.0, 10.0, 0, 0),
             child: Text(
               cns,
               style: AppTheme.tileHeaderStyle,
@@ -42,9 +55,33 @@ class EntryCard extends StatelessWidget {
             subtitle: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(vaccine),
-                Text(group),
-                Text(pregnant),
+                Expanded(
+                  child: Text(
+                    vaccine,
+                    textAlign: TextAlign.start,
+                    style: AppTheme.tileHeaderStyle
+                        .copyWith(fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    group,
+                    textAlign: TextAlign.center,
+                    style: AppTheme.tileHeaderStyle
+                        .copyWith(fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Expanded(
+                  child: Visibility(
+                    visible: pregnant != MaternalCondition.NENHUM.name,
+                    child: Text(
+                      pregnant,
+                      textAlign: TextAlign.end,
+                      style: AppTheme.tileHeaderStyle
+                          .copyWith(fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

@@ -9,7 +9,7 @@ class Nurse extends StatelessWidget {
     return MaterialApp(
       title: 'NURSE',
       theme: AppTheme.themeData,
-      home: Home(title: 'NURSE'),
+      home: Home(title: 'Nurse'),
     );
   }
 }

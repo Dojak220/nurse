@@ -5,8 +5,13 @@ class DatabaseInterface {
   final DatabaseManager dbManager;
   final String tableName;
 
-  DatabaseInterface(this.dbManager, this.tableName);
+  DatabaseInterface(this.tableName, [DatabaseManager? dbManager])
+      : this.dbManager = dbManager ?? DatabaseManager();
 
+  /// TODO: Garantir que não criem-se dois registros com o mesmo id.
+  /// Coloquei esse todo aqui, mas possa ser que a implementação seja feita
+  /// nas classes que extendem essa. Antes de tentar implementar, é necessário
+  /// verificar se o banco de dados já não se responsabiliza por isso.
   Future<int> create(Map<String, dynamic> entity) async {
     final int result = await dbManager.db.insert(
       tableName,
@@ -48,10 +53,17 @@ class DatabaseInterface {
   }
 
   Future<List<Map<String, dynamic>>> getAll() async {
-    final List<Map<String, dynamic>> entityMaps =
-        await dbManager.db.query(tableName);
+    try {
+      final immutableMaps = await dbManager.db.query(tableName);
+      final entityMaps = List.of(
+        immutableMaps.map((map) => Map<String, dynamic>.from(map)),
+      );
 
-    return entityMaps;
+      return entityMaps;
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
   }
 
   Future<int> update(Map<String, dynamic> entity) async {
