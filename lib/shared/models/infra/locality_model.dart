@@ -3,14 +3,14 @@ import 'package:nurse/shared/utils/validator.dart';
 
 class Locality implements GenericModel {
   @override
-  final int id;
+  final int? id;
   final String name;
   final String city;
   final String state;
   final String ibgeCode;
 
   Locality({
-    required this.id,
+    this.id,
     required this.name,
     required this.city,
     required this.state,
@@ -22,7 +22,6 @@ class Locality implements GenericModel {
   void _validateLocality() {
     Validator.validateAll(
       [
-        ValidationPair(ValidatorType.Id, this.id),
         ValidationPair(ValidatorType.Name, this.name),
         ValidationPair(ValidatorType.Name, this.city),
         ValidationPair(ValidatorType.Name, this.state),
@@ -49,7 +48,7 @@ class Locality implements GenericModel {
 
   Map<String, Object> toMap() {
     return {
-      'id': id,
+      'id': id ?? 0,
       'name': name,
       'city': city,
       'state': state,
@@ -59,7 +58,7 @@ class Locality implements GenericModel {
 
   factory Locality.fromMap(Map<String, dynamic> map) {
     return Locality(
-      id: map['id'] ?? 0,
+      id: map['id'],
       name: map['name'] ?? '',
       city: map['city'] ?? '',
       state: map['state'] ?? '',

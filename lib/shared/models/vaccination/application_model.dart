@@ -7,7 +7,7 @@ import 'package:nurse/shared/utils/validator.dart';
 
 class Application implements GenericModel {
   @override
-  final int id;
+  final int? id;
   final Applier applier;
   final Vaccine vaccine;
   final Patient patient;
@@ -17,7 +17,7 @@ class Application implements GenericModel {
   final DateTime dueDate;
 
   Application({
-    required this.id,
+    this.id,
     required this.applier,
     required this.vaccine,
     required this.patient,
@@ -30,7 +30,6 @@ class Application implements GenericModel {
   }
   void _validateApplication() {
     Validator.validateAll([
-      ValidationPair(ValidatorType.Id, this.id),
       ValidationPair(ValidatorType.PastDate, this.applicationDate),
       ValidationPair(ValidatorType.Date, this.dueDate),
     ]);
@@ -60,7 +59,7 @@ class Application implements GenericModel {
 
   Map<String, Object> toMap() {
     return {
-      'id': id,
+      'id': id ?? 0,
       'applier': applier.toMap(),
       'vaccine': vaccine.toMap(),
       'patient': patient.toMap(),
@@ -73,7 +72,7 @@ class Application implements GenericModel {
 
   factory Application.fromMap(Map<String, dynamic> map) {
     return Application(
-      id: map['id'] ?? 0,
+      id: map['id'],
       applier: Applier.fromMap(map['applier']),
       vaccine: Vaccine.fromMap(map['vaccine']),
       patient: Patient.fromMap(map['patient']),

@@ -4,13 +4,13 @@ import 'package:nurse/shared/utils/validator.dart';
 
 class Establishment implements GenericModel {
   @override
-  final int id;
+  final int? id;
   final String cnes;
   final String name;
   final Locality locality;
 
   Establishment({
-    required this.id,
+    this.id,
     required this.cnes,
     required this.name,
     required this.locality,
@@ -20,7 +20,6 @@ class Establishment implements GenericModel {
   }
 
   void _validateEstablishment() {
-    Validator.validate(ValidatorType.Id, this.id);
     Validator.validate(ValidatorType.Name, this.name);
 
     if (cnes.trim().length != 7) {
@@ -33,7 +32,7 @@ class Establishment implements GenericModel {
 
   Map<String, Object> toMap() {
     return {
-      'id': id,
+      'id': id ?? 0,
       'cnes': cnes,
       'name': name,
       'locality': locality.toMap(),
@@ -42,7 +41,7 @@ class Establishment implements GenericModel {
 
   factory Establishment.fromMap(Map<String, dynamic> map) {
     return Establishment(
-      id: map['id'] ?? 0,
+      id: map['id'],
       cnes: map['cnes'] ?? '',
       name: map['name'] ?? '',
       locality: Locality.fromMap(map['locality']),

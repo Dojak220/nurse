@@ -4,14 +4,14 @@ import 'package:nurse/shared/utils/validator.dart';
 
 class Vaccine implements GenericModel {
   @override
-  final int id;
+  final int? id;
   final String sipniCode;
   final String name;
   final String laboratory;
   final VaccineBatch batch;
 
   Vaccine({
-    required this.id,
+    this.id,
     required String sipniCode,
     required String name,
     required String laboratory,
@@ -24,7 +24,6 @@ class Vaccine implements GenericModel {
 
   void _validateVaccine() {
     Validator.validateAll([
-      ValidationPair(ValidatorType.Id, this.id),
       ValidationPair(ValidatorType.NumericalString, this.sipniCode),
       ValidationPair(ValidatorType.Name, this.name),
       ValidationPair(ValidatorType.Name, this.laboratory),
@@ -49,7 +48,7 @@ class Vaccine implements GenericModel {
 
   Map<String, Object> toMap() {
     return {
-      'id': id,
+      'id': id ?? 0,
       'sipni_code': sipniCode,
       'name': name,
       'laboratory': laboratory,
@@ -59,7 +58,7 @@ class Vaccine implements GenericModel {
 
   factory Vaccine.fromMap(Map<String, dynamic> map) {
     return Vaccine(
-      id: map['id'] ?? 0,
+      id: map['id'],
       sipniCode: map['sipni_code'] ?? '',
       name: map['name'] ?? '',
       laboratory: map['laboratory'] ?? '',

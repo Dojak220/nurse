@@ -5,20 +5,19 @@ import 'package:nurse/shared/utils/validator.dart';
 
 class Patient implements GenericModel {
   @override
-  final int id;
+  final int? id;
   final String cns;
   final PriorityCategory priorityCategory;
   final MaternalCondition maternalCondition;
   final Person person;
 
   Patient({
-    required this.id,
+    this.id,
     required this.cns,
     required this.priorityCategory,
     required this.maternalCondition,
     required this.person,
   }) {
-    Validator.validate(ValidatorType.Id, this.id);
     Validator.validate(ValidatorType.CNS, this.cns);
   }
 
@@ -41,7 +40,7 @@ class Patient implements GenericModel {
   @override
   Map<String, Object> toMap() {
     return {
-      'id': id,
+      'id': id ?? 0,
       'cns': cns,
       'priority_category': priorityCategory.toMap(),
       'maternal_condition': maternalCondition.name,
@@ -51,7 +50,7 @@ class Patient implements GenericModel {
 
   factory Patient.fromMap(Map<String, dynamic> map) {
     return Patient(
-      id: map['id'] ?? 0,
+      id: map['id'],
       cns: map['cns'] ?? "",
       priorityCategory: PriorityCategory.fromMap(map['priority_category']),
       maternalCondition: MaternalConditionExtension.fromString(

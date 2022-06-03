@@ -4,14 +4,14 @@ import 'package:nurse/shared/utils/validator.dart';
 
 class PriorityCategory implements GenericModel {
   @override
-  final int id;
+  final int? id;
   final PriorityGroup priorityGroup;
   final String code;
   final String name;
   final String description;
 
   PriorityCategory({
-    required this.id,
+    this.id,
     required this.priorityGroup,
     required String code,
     String name = "",
@@ -25,7 +25,6 @@ class PriorityCategory implements GenericModel {
   void _validatePriorityCategory() {
     Validator.validateAll(
       [
-        ValidationPair(ValidatorType.Id, id),
         ValidationPair(ValidatorType.Name, code),
         ValidationPair(ValidatorType.Name, name),
         ValidationPair(ValidatorType.Description, this.description),
@@ -52,7 +51,7 @@ class PriorityCategory implements GenericModel {
   @override
   Map<String, Object> toMap() {
     return {
-      'id': id,
+      'id': id ?? 0,
       'priority_group': priorityGroup.toMap(),
       'code': code,
       'name': name,
@@ -62,7 +61,7 @@ class PriorityCategory implements GenericModel {
 
   factory PriorityCategory.fromMap(Map<String, dynamic> map) {
     return PriorityCategory(
-      id: map['id'] ?? 0,
+      id: map['id'],
       priorityGroup: PriorityGroup.fromMap(map['priority_group']),
       code: map['code'] ?? '',
       name: map['name'] ?? '',

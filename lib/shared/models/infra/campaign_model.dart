@@ -3,14 +3,14 @@ import 'package:nurse/shared/utils/validator.dart';
 
 class Campaign implements GenericModel {
   @override
-  final int id;
+  final int? id;
   final String title;
   final String description;
   final DateTime startDate;
   final DateTime endDate;
 
   Campaign({
-    required this.id,
+    this.id,
     required String title,
     required this.startDate,
     DateTime? endDate,
@@ -29,7 +29,6 @@ class Campaign implements GenericModel {
 
     Validator.validateAll(
       [
-        ValidationPair(ValidatorType.Id, this.id),
         ValidationPair(ValidatorType.Name, this.title),
         ValidationPair(ValidatorType.Date, this.startDate),
         ValidationPair(ValidatorType.Date, this.endDate),
@@ -57,7 +56,7 @@ class Campaign implements GenericModel {
   @override
   Map<String, Object> toMap() {
     return {
-      'id': id,
+      'id': id ?? 0,
       'title': title,
       'description': description,
       'start_date': startDate.toString(),
@@ -67,7 +66,7 @@ class Campaign implements GenericModel {
 
   factory Campaign.fromMap(Map<String, dynamic> map) {
     return Campaign(
-      id: map['id'] ?? 0,
+      id: map['id'],
       title: map['title'] ?? '',
       description: map['description'] ?? '',
       startDate: DateTime.parse(map['start_date']),
