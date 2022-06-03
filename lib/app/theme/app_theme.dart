@@ -96,6 +96,23 @@ class AppTheme {
     side: BorderSide(color: AppColors.verdeEscuro, width: 2),
   );
 
+  static ButtonStyle stepButtonStyle = ElevatedButton.styleFrom(
+    textStyle: infoButtonTextStyle,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    primary: AppColors.verdeEscuro,
+    fixedSize: Size.fromHeight(50),
+    side: BorderSide(color: AppColors.verdeEscuro, width: 2),
+  );
+
+  // static ButtonStyle nextButtonStyle = backButtonStyle.copyWith(
+  //   backgroundColor: MaterialStateProperty.all(AppColors.verdeEscuro),
+  //   side: MaterialStateProperty.all(
+  //     BorderSide(color: AppColors.verdeEscuro, width: 2),
+  //   ),
+  // );
+
   static ButtonStyle mainButtonStyle([BuildContext? context]) =>
       ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(

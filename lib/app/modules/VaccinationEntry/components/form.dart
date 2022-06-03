@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nurse/app/modules/VaccinationEntry/components/dialog_cancel_button.dart';
+import 'package:nurse/app/modules/VaccinationEntry/components/dialog_confirm_button.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
 import 'package:nurse/app/theme/app_colors.dart';
 import 'package:nurse/app/theme/app_theme.dart';
@@ -35,7 +37,7 @@ class _VaccinationFormState extends State<VaccinationForm> {
             padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 0),
             child: ElevatedButton(
               onPressed: () {
-                showConfirmationQuestionDialog(context).then((value) {
+                showConfirmationRequestDialog(context).then((value) {
                   if (value != null && value) {
                     showConfirmationDialog(context);
                   }
@@ -53,7 +55,7 @@ class _VaccinationFormState extends State<VaccinationForm> {
     );
   }
 
-  Future<bool?> showConfirmationQuestionDialog(BuildContext ctx) {
+  Future<bool?> showConfirmationRequestDialog(BuildContext ctx) {
     return showDialog(
       context: ctx,
       builder: (_) {
@@ -114,43 +116,6 @@ class _VaccinationFormState extends State<VaccinationForm> {
           actionsAlignment: MainAxisAlignment.spaceAround,
         );
       },
-    );
-  }
-}
-
-class DialogCancelButton extends StatelessWidget {
-  const DialogCancelButton({
-    Key? key,
-    this.onPressed,
-  }) : super(key: key);
-
-  final void Function()? onPressed;
-  @override
-  Widget build(BuildContext ctx) {
-    return TextButton(
-      onPressed: onPressed ?? () => Navigator.pop(ctx),
-      style: AppTheme.dialogButtonStyle.copyWith(
-        backgroundColor: MaterialStateProperty.all(null),
-      ),
-      child: const Text('Não'),
-    );
-  }
-}
-
-class DialogConfirmButton extends StatelessWidget {
-  const DialogConfirmButton({
-    Key? key,
-    this.onPressed,
-  }) : super(key: key);
-
-  final void Function()? onPressed;
-
-  @override
-  Widget build(BuildContext ctx) {
-    return ElevatedButton(
-      onPressed: onPressed ?? () => Navigator.pop(ctx),
-      style: AppTheme.dialogButtonStyle,
-      child: const Text('Sim'),
     );
   }
 }
