@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:faker/faker.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:path/path.dart';
@@ -35,8 +34,6 @@ class DatabaseManager {
       onCreate: (db, version) => _onCreate(db, version),
     );
 
-    FakerDatabase.fillDatabase();
-
     _isDatabaseInitialized = true;
   }
 
@@ -55,13 +52,4 @@ class DatabaseManager {
   }
 
   bool isValidScript(String script) => script.isNotEmpty && script != ' ';
-}
-
-class FakerDatabase {
-  final faker = Faker();
-
-  static bool fillDatabase() {
-    /// TODO: Fill database with fake data
-    return true;
-  }
 }
