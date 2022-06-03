@@ -1,5 +1,7 @@
 abstract class GenericModel<T> {
-  abstract final int id;
+  final int? id;
+
+  GenericModel(this.id);
 
   Map<String, Object> toMap();
 }

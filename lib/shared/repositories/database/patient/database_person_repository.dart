@@ -2,18 +2,19 @@ import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
+import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
 import 'package:nurse/shared/repositories/infra/locality_repository.dart';
 import 'package:nurse/shared/repositories/patient/person_repository.dart';
 
 class DatabasePersonRepository extends DatabaseInterface
     implements PersonRepository {
   static const String TABLE = "Person";
-  final LocalityRepository localityRepo;
+  final LocalityRepository? _localityRepo;
 
-  DatabasePersonRepository({
-    DatabaseManager? dbManager,
-    required this.localityRepo,
-  }) : super(TABLE, dbManager);
+  DatabasePersonRepository(
+      {DatabaseManager? dbManager, LocalityRepository? localityRepo})
+      : _localityRepo = localityRepo ?? DatabaseLocalityRepository(),
+        super(TABLE, dbManager);
 
   @override
   Future<int> createPerson(Person person) async {
@@ -47,7 +48,7 @@ class DatabasePersonRepository extends DatabaseInterface
   }
 
   Future<Locality> _getLocality(int id) async {
-    final locality = await localityRepo.getLocalityById(id);
+    final locality = await _localityRepo!.getLocalityById(id);
 
     return locality;
   }
@@ -77,7 +78,7 @@ class DatabasePersonRepository extends DatabaseInterface
   }
 
   Future<List<Locality>> _getLocalities() async {
-    final localities = await localityRepo.getLocalities();
+    final localities = await _localityRepo!.getLocalities();
 
     return localities;
   }

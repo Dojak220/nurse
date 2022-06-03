@@ -3,6 +3,8 @@ import 'package:nurse/shared/models/patient/person_model.dart';
 import 'package:nurse/shared/models/vaccination/applier_model.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
+import 'package:nurse/shared/repositories/database/infra/database_establishment_repository.dart';
+import 'package:nurse/shared/repositories/database/patient/database_person_repository.dart';
 import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
 import 'package:nurse/shared/repositories/patient/person_repository.dart';
 import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
@@ -10,14 +12,17 @@ import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
 class DatabaseApplierRepository extends DatabaseInterface
     implements ApplierRepository {
   static const String TABLE = "Applier";
-  final EstablishmentRepository establishmentRepo;
-  final PersonRepository personRepo;
+  final EstablishmentRepository? _establishmentRepo;
+  final PersonRepository? _personRepo;
 
   DatabaseApplierRepository({
     DatabaseManager? dbManager,
-    required this.establishmentRepo,
-    required this.personRepo,
-  }) : super(TABLE, dbManager);
+    EstablishmentRepository? establishmentRepo,
+    PersonRepository? personRepo,
+  })  : _establishmentRepo =
+            establishmentRepo ?? DatabaseEstablishmentRepository(),
+        _personRepo = personRepo ?? DatabasePersonRepository(),
+        super(TABLE, dbManager);
 
   @override
   Future<int> createApplier(Applier applier) async {
@@ -55,13 +60,13 @@ class DatabaseApplierRepository extends DatabaseInterface
   }
 
   Future<Establishment> _getEstablishment(int id) async {
-    final establishment = await establishmentRepo.getEstablishmentById(id);
+    final establishment = await _establishmentRepo!.getEstablishmentById(id);
 
     return establishment;
   }
 
   Future<Person> _getPerson(int id) async {
-    final person = await personRepo.getPersonById(id);
+    final person = await _personRepo!.getPersonById(id);
 
     return person;
   }
@@ -97,13 +102,13 @@ class DatabaseApplierRepository extends DatabaseInterface
   }
 
   Future<List<Establishment>> _getEstablishments() async {
-    final establishments = await establishmentRepo.getEstablishments();
+    final establishments = await _establishmentRepo!.getEstablishments();
 
     return establishments;
   }
 
   Future<List<Person>> _getPersons() async {
-    final persons = await personRepo.getPersons();
+    final persons = await _personRepo!.getPersons();
 
     return persons;
   }

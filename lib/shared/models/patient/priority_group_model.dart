@@ -3,13 +3,13 @@ import 'package:nurse/shared/utils/validator.dart';
 
 class PriorityGroup implements GenericModel {
   @override
-  final int id;
+  final int? id;
   final String code;
   final String name;
   final String description;
 
   PriorityGroup({
-    required this.id,
+    this.id,
     required String code,
     String name = "",
     String description = "",
@@ -20,9 +20,9 @@ class PriorityGroup implements GenericModel {
   }
 
   void _validatePriorityGroup() {
+    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
     Validator.validateAll(
       [
-        ValidationPair(ValidatorType.Id, this.id),
         ValidationPair(ValidatorType.Name, this.code),
         ValidationPair(ValidatorType.Name, this.name),
         ValidationPair(ValidatorType.Description, this.description),
@@ -33,7 +33,7 @@ class PriorityGroup implements GenericModel {
   @override
   Map<String, Object> toMap() {
     return {
-      'id': id,
+      'id': id ?? 0,
       'code': code,
       'name': name,
       'description': description,
@@ -56,7 +56,7 @@ class PriorityGroup implements GenericModel {
 
   factory PriorityGroup.fromMap(Map<String, dynamic> map) {
     return PriorityGroup(
-      id: map['id'] ?? 0,
+      id: map['id'],
       code: map['code'] ?? '',
       name: map['name'] ?? '',
       description: map['description'] ?? '',

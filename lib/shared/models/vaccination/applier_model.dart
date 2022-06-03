@@ -5,21 +5,19 @@ import 'package:nurse/shared/utils/validator.dart';
 
 class Applier implements GenericModel {
   @override
-  final int id;
+  final int? id;
   final String cns;
   final Person person;
   final Establishment establishment;
 
   Applier({
-    required this.id,
+    this.id,
     required this.cns,
     required this.person,
     required this.establishment,
   }) {
-    Validator.validateAll([
-      ValidationPair(ValidatorType.Id, this.id),
-      ValidationPair(ValidatorType.CNS, this.cns),
-    ]);
+    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
+    Validator.validate(ValidatorType.CNS, this.cns);
   }
 
   Applier copyWith({
@@ -38,7 +36,7 @@ class Applier implements GenericModel {
 
   Map<String, Object> toMap() {
     return {
-      'id': id,
+      'id': id ?? 0,
       'cns': cns,
       'person': person.toMap(),
       'establishment': establishment.toMap(),
@@ -47,7 +45,7 @@ class Applier implements GenericModel {
 
   factory Applier.fromMap(Map<String, dynamic> map) {
     return Applier(
-      id: map['id'] ?? 0,
+      id: map['id'],
       cns: map['cns'] ?? '',
       person: Person.fromMap(map['person']),
       establishment: Establishment.fromMap(map['establishment']),
