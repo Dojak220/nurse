@@ -86,16 +86,25 @@ class AppTheme {
     color: AppColors.verdeEscuro,
   );
 
-  static ButtonStyle mainButtonStyle(BuildContext context) =>
+  static ButtonStyle dialogButtonStyle = ElevatedButton.styleFrom(
+    textStyle: infoButtonTextStyle,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    primary: AppColors.verdeEscuro,
+    fixedSize: Size(120, 25),
+    side: BorderSide(color: AppColors.verdeEscuro, width: 2),
+  );
+
+  static ButtonStyle mainButtonStyle([BuildContext? context]) =>
       ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
         primary: AppColors.verdeEscuro,
-        fixedSize: Size(
-          MediaQuery.of(context).size.width,
-          50,
-        ),
+        fixedSize: context != null
+            ? Size(MediaQuery.of(context).size.width, 50)
+            : null,
       );
 
   static TextTheme _textTheme = TextTheme(
