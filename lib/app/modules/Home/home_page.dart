@@ -7,17 +7,13 @@ import 'package:nurse/app/modules/Home/home_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry.dart';
 import 'package:nurse/app/theme/app_colors.dart';
 import 'package:nurse/app/theme/app_theme.dart';
-import 'package:nurse/shared/models/vaccination/application_model.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
   final String title;
   static const List<int> appliedDoses = [30, 150, 600];
 
-  late final HomeController controller;
-
-  Home({Key? key, required this.title}) : super(key: key) {
-    controller = HomeController();
-  }
+  Home({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +36,12 @@ class Home extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Observer(builder: (_) {
-            return VaccinationCountStatus(
-              appliedDoses: controller.applicationCount().values.toList(),
-            );
-          }),
+          VaccinationCountStatus(),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               children: [
-                LastVaccinationsList(
-                  applications: controller.applications,
-                ),
+                LastVaccinationsList(),
                 MainButton(
                   newPage: VaccinationEntry(title: title),
                 ),
@@ -98,16 +88,20 @@ class AppDrawer extends StatelessWidget {
   }
 }
 
-class VaccinationCountStatus extends StatelessWidget {
+class VaccinationCountStatus extends StatefulWidget {
   const VaccinationCountStatus({
     Key? key,
-    required this.appliedDoses,
   }) : super(key: key);
 
-  final List<int> appliedDoses;
+  @override
+  State<VaccinationCountStatus> createState() => _VaccinationCountStatusState();
+}
 
+class _VaccinationCountStatusState extends State<VaccinationCountStatus> {
   @override
   Widget build(BuildContext context) {
+    final controller = Provider.of<HomeController>(context);
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -133,18 +127,24 @@ class VaccinationCountStatus extends StatelessWidget {
               key: Key("applied_doses_row"),
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                InfoButton(
-                  info: appliedDoses[0],
-                  text: "Dia",
-                ),
-                InfoButton(
-                  info: appliedDoses[1],
-                  text: "Semana",
-                ),
-                InfoButton(
-                  info: appliedDoses[2],
-                  text: "Mês",
-                ),
+                Observer(builder: (_) {
+                  return InfoButton(
+                    info: controller.applicationCount().values.toList()[0],
+                    text: "Hoje",
+                  );
+                }),
+                Observer(builder: (_) {
+                  return InfoButton(
+                    info: controller.applicationCount().values.toList()[1],
+                    text: "Semana",
+                  );
+                }),
+                Observer(builder: (_) {
+                  return InfoButton(
+                    info: controller.applicationCount().values.toList()[2],
+                    text: "Mês",
+                  );
+                }),
               ],
             ),
           ),
@@ -157,18 +157,15 @@ class VaccinationCountStatus extends StatelessWidget {
 class LastVaccinationsList extends StatelessWidget {
   const LastVaccinationsList({
     Key? key,
-    // required this.entryList,
-    required this.applications,
   }) : super(key: key);
-
-  // final List<EntryCard> entryList;
-  final List<Application> applications;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Provider.of<HomeController>(context);
+    final applications = controller.applications;
+
     return TitledListView(
       "Últimos cadastros",
-      // entryList: entryList,
       applications: applications,
     );
   }
