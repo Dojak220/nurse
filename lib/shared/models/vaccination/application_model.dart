@@ -29,6 +29,7 @@ class Application implements GenericModel {
     _validateApplication();
   }
   void _validateApplication() {
+    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
     Validator.validateAll([
       ValidationPair(ValidatorType.PastDate, this.applicationDate),
       ValidationPair(ValidatorType.Date, this.dueDate),

@@ -20,6 +20,7 @@ class Establishment implements GenericModel {
   }
 
   void _validateEstablishment() {
+    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
     Validator.validate(ValidatorType.Name, this.name);
 
     if (cnes.trim().length != 7) {

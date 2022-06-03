@@ -20,6 +20,7 @@ class PriorityGroup implements GenericModel {
   }
 
   void _validatePriorityGroup() {
+    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
     Validator.validateAll(
       [
         ValidationPair(ValidatorType.Name, this.code),

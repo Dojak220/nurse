@@ -18,6 +18,7 @@ class Patient implements GenericModel {
     required this.maternalCondition,
     required this.person,
   }) {
+    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
     Validator.validate(ValidatorType.CNS, this.cns);
   }
 

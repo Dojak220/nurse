@@ -23,6 +23,8 @@ class Campaign implements GenericModel {
   }
 
   void _validateCampaign() {
+    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
+
     if (endDate.isBefore(startDate)) {
       throw Exception('End date must be after start date');
     }

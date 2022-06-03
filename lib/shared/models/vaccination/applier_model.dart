@@ -16,9 +16,8 @@ class Applier implements GenericModel {
     required this.person,
     required this.establishment,
   }) {
-    Validator.validateAll([
-      ValidationPair(ValidatorType.CNS, this.cns),
-    ]);
+    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
+    Validator.validate(ValidatorType.CNS, this.cns);
   }
 
   Applier copyWith({

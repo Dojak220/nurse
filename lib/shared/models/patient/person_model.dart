@@ -23,6 +23,7 @@ class Person implements GenericModel {
     this.motherName = "",
     this.fatherName = "",
   }) {
+    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
     Validator.validateAll([
       ValidationPair(ValidatorType.CPF, this.cpf),
       ValidationPair(ValidatorType.Name, this.name),

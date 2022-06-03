@@ -23,6 +23,7 @@ class PriorityCategory implements GenericModel {
   }
 
   void _validatePriorityCategory() {
+    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
     Validator.validateAll(
       [
         ValidationPair(ValidatorType.Name, code),

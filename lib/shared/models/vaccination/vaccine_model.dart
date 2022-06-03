@@ -23,6 +23,7 @@ class Vaccine implements GenericModel {
   }
 
   void _validateVaccine() {
+    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
     Validator.validateAll([
       ValidationPair(ValidatorType.NumericalString, this.sipniCode),
       ValidationPair(ValidatorType.Name, this.name),

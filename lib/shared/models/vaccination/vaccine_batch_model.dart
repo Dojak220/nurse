@@ -16,13 +16,12 @@ class VaccineBatch implements GenericModel {
   }
 
   void _validateVaccineBatch() {
+    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
     if (quantity <= 0) {
       throw Exception('Quantity must be greater than 0');
     }
 
-    Validator.validateAll([
-      ValidationPair(ValidatorType.NumericalString, this.number),
-    ]);
+    Validator.validate(ValidatorType.NumericalString, this.number);
   }
 
   VaccineBatch copyWith({
