@@ -55,11 +55,11 @@ void main() {
       expect(validPatient.person.cpf, "67732120817");
       expect(validPatient.person.name, "Name Middlename Lastname");
       expect(validPatient.person.birthDate, DateTime(2000));
-      expect(validPatient.person.locality.id, 1);
-      expect(validPatient.person.locality.name, "Locality Name");
-      expect(validPatient.person.locality.city, "City Name");
-      expect(validPatient.person.locality.state, "State Name");
-      expect(validPatient.person.locality.ibgeCode, "1234567");
+      expect(validPatient.person.locality!.id, 1);
+      expect(validPatient.person.locality!.name, "Locality Name");
+      expect(validPatient.person.locality!.city, "City Name");
+      expect(validPatient.person.locality!.state, "State Name");
+      expect(validPatient.person.locality!.ibgeCode, "1234567");
     });
   });
 

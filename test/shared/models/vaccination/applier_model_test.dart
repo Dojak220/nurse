@@ -50,11 +50,11 @@ void main() {
       expect(validApplier.person.cpf, "82675387630");
       expect(validApplier.person.name, "Name Middlename Lastname");
       expect(validApplier.person.birthDate, DateTime(2000));
-      expect(validApplier.person.locality.id, 1);
-      expect(validApplier.person.locality.name, "Locality Name");
-      expect(validApplier.person.locality.city, "City Name");
-      expect(validApplier.person.locality.state, "State Name");
-      expect(validApplier.person.locality.ibgeCode, "1234567");
+      expect(validApplier.person.locality!.id, 1);
+      expect(validApplier.person.locality!.name, "Locality Name");
+      expect(validApplier.person.locality!.city, "City Name");
+      expect(validApplier.person.locality!.state, "State Name");
+      expect(validApplier.person.locality!.ibgeCode, "1234567");
     });
   });
 

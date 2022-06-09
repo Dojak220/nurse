@@ -16,17 +16,19 @@ class Person implements GenericModel {
   Person({
     this.id,
     required this.cpf,
-    this.name = "",
+    required String name,
     this.birthDate,
     this.locality,
     this.sex = Sex.NONE,
-    this.motherName = "",
-    this.fatherName = "",
-  }) {
+    String motherName = "",
+    String fatherName = "",
+  })  : this.name = name.trim(),
+        this.motherName = motherName.trim(),
+        this.fatherName = fatherName.trim() {
     if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
     Validator.validateAll([
       ValidationPair(ValidatorType.CPF, this.cpf),
-      ValidationPair(ValidatorType.OptionalName, this.name),
+      ValidationPair(ValidatorType.Name, this.name),
       ValidationPair(ValidatorType.OptionalName, this.motherName),
       ValidationPair(ValidatorType.OptionalName, this.fatherName),
       if (this.birthDate != null)
@@ -73,8 +75,8 @@ class Person implements GenericModel {
   factory Person.fromMap(Map<String, dynamic> map) {
     return Person(
       id: map['id'],
-      cpf: map['cpf'] ?? "",
-      name: map['name'] ?? "",
+      cpf: map['cpf'],
+      name: map['name'],
       birthDate:
           map['birth_date'] != null ? DateTime.parse(map['birth_date']) : null,
       locality:

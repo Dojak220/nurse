@@ -28,11 +28,11 @@ void main() {
       expect(validPerson.cpf, "67732120817");
       expect(validPerson.name, "Name Middlename Lastname");
       expect(validPerson.birthDate, DateTime(2000));
-      expect(validPerson.locality.id, 1);
-      expect(validPerson.locality.name, "Locality Name");
-      expect(validPerson.locality.city, "City Name");
-      expect(validPerson.locality.state, "State Name");
-      expect(validPerson.locality.ibgeCode, "1234567");
+      expect(validPerson.locality!.id, 1);
+      expect(validPerson.locality!.name, "Locality Name");
+      expect(validPerson.locality!.city, "City Name");
+      expect(validPerson.locality!.state, "State Name");
+      expect(validPerson.locality!.ibgeCode, "1234567");
     });
   });
 
