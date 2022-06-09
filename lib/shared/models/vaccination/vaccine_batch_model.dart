@@ -36,9 +36,9 @@ class VaccineBatch implements GenericModel {
     );
   }
 
-  Map<String, Object> toMap() {
+  Map<String, dynamic> toMap() {
     return {
-      'id': id ?? 0,
+      'id': id,
       'number': number,
       'quantity': quantity,
     };

@@ -58,9 +58,9 @@ class Application implements GenericModel {
     );
   }
 
-  Map<String, Object> toMap() {
+  Map<String, dynamic> toMap() {
     return {
-      'id': id ?? 0,
+      'id': id,
       'applier': applier.toMap(),
       'vaccine': vaccine.toMap(),
       'patient': patient.toMap(),

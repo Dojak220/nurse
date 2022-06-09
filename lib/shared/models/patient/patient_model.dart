@@ -39,9 +39,9 @@ class Patient implements GenericModel {
   }
 
   @override
-  Map<String, Object> toMap() {
+  Map<String, dynamic> toMap() {
     return {
-      'id': id ?? 0,
+      'id': id,
       'cns': cns,
       'priority_category': priorityCategory.toMap(),
       'maternal_condition': maternalCondition.name,

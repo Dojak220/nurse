@@ -12,8 +12,8 @@ class PriorityCategory implements GenericModel {
 
   PriorityCategory({
     this.id,
-    required this.priorityGroup,
     required String code,
+    required this.priorityGroup,
     String name = "",
     String description = "",
   })  : this.name = name.isEmpty ? code : name,
@@ -50,9 +50,9 @@ class PriorityCategory implements GenericModel {
   }
 
   @override
-  Map<String, Object> toMap() {
+  Map<String, dynamic> toMap() {
     return {
-      'id': id ?? 0,
+      'id': id,
       'priority_group': priorityGroup.toMap(),
       'code': code,
       'name': name,
@@ -93,6 +93,6 @@ class PriorityCategory implements GenericModel {
 
   @override
   String toString() {
-    return 'PriorityCategory(id: $id, priorityGroup: $priorityGroup, code: $code, name: $name, description: $description)';
+    return name.toUpperCase();
   }
 }

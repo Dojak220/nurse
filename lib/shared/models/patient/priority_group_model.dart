@@ -31,9 +31,9 @@ class PriorityGroup implements GenericModel {
   }
 
   @override
-  Map<String, Object> toMap() {
+  Map<String, dynamic> toMap() {
     return {
-      'id': id ?? 0,
+      'id': id,
       'code': code,
       'name': name,
       'description': description,

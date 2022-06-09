@@ -16,8 +16,7 @@ class Campaign implements GenericModel {
     DateTime? endDate,
     String description = "",
   })  : this.title = title.trim(),
-        this.description =
-            description.trim().isEmpty ? "Campanha $title" : description,
+        this.description = description.trim().isEmpty ? "$title" : description,
         this.endDate = endDate ?? startDate.add(Duration(days: 365)) {
     _validateCampaign();
   }
@@ -56,9 +55,9 @@ class Campaign implements GenericModel {
   }
 
   @override
-  Map<String, Object> toMap() {
+  Map<String, dynamic> toMap() {
     return {
-      'id': id ?? 0,
+      'id': id,
       'title': title,
       'description': description,
       'start_date': startDate.toString(),
@@ -99,6 +98,6 @@ class Campaign implements GenericModel {
 
   @override
   String toString() {
-    return 'CampaignModel(id: $id, title: $title, description: $description, startDate: $startDate, endDate: $endDate)';
+    return title;
   }
 }

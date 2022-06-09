@@ -34,9 +34,9 @@ class Applier implements GenericModel {
     );
   }
 
-  Map<String, Object> toMap() {
+  Map<String, dynamic> toMap() {
     return {
-      'id': id ?? 0,
+      'id': id,
       'cns': cns,
       'person': person.toMap(),
       'establishment': establishment.toMap(),
