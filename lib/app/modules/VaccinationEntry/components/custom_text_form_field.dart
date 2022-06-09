@@ -4,13 +4,15 @@ import 'package:nurse/shared/utils/validator.dart';
 
 class CustomTextFormField extends CustomFormField {
   final ValidatorType validatorType;
+  final ValueChanged<String?>? onChanged;
   final void Function(String?) onSaved;
 
   CustomTextFormField({
     Key? key,
     required Icon icon,
-    required ApplicationLabels label,
+    required FormLabels label,
     required this.validatorType,
+    this.onChanged,
     required this.onSaved,
   }) : super(icon: icon, hint: label.hint, description: label.description);
 
@@ -25,6 +27,7 @@ class CustomTextFormField extends CustomFormField {
       ),
       validator: (String? value) => validate(value, validatorType),
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: onChanged,
       onSaved: onSaved,
     );
   }
