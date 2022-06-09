@@ -9,7 +9,7 @@ import 'package:nurse/shared/repositories/patient/priority_group_repository.dart
 class DatabasePriorityCategoryRepository extends DatabaseInterface
     implements PriorityCategoryRepository {
   static const String TABLE = "Priority_Category";
-  final PriorityGroupRepository? _groupRepo;
+  final PriorityGroupRepository _groupRepo;
 
   DatabasePriorityCategoryRepository({
     DatabaseManager? dbManager,
@@ -19,7 +19,13 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
 
   @override
   Future<int> createPriorityCategory(PriorityCategory priorityCategory) async {
-    final int result = await create(priorityCategory.toMap());
+    final map = priorityCategory.toMap();
+
+    map['priority_group'] = await _groupRepo
+        .getPriorityGroupByCode(priorityCategory.priorityGroup.code)
+        .then((priorityGroup) => priorityGroup.id!);
+
+    final int result = await create(map);
 
     return result;
   }
@@ -34,24 +40,36 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
   @override
   Future<PriorityCategory> getPriorityCategoryById(int id) async {
     try {
-      final priorityCategoryMap = await get(id);
-
-      final priorityGroup = await _getPriorityGroup(
-        priorityCategoryMap["priority_group"],
-      );
-
-      priorityCategoryMap["priority_group"] = priorityGroup.toMap();
-
-      final priorityCategory = PriorityCategory.fromMap(priorityCategoryMap);
-
-      return priorityCategory;
+      return _getPriorityCategoryFromMap(await getById(id));
     } catch (e) {
       rethrow;
     }
   }
 
+  @override
+  Future<PriorityCategory> getPriorityCategoryByCode(String code) async {
+    try {
+      return _getPriorityCategoryFromMap(await get(code, where: "code = ?"));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<PriorityCategory> _getPriorityCategoryFromMap(
+    Map<String, dynamic> categoryMap,
+  ) async {
+    final priorityGroup = await _getPriorityGroup(
+      categoryMap["priority_group"],
+    );
+
+    final updatedPriorityCategoryMap = Map.of(categoryMap);
+    updatedPriorityCategoryMap["priority_group"] = priorityGroup.toMap();
+
+    return PriorityCategory.fromMap(updatedPriorityCategoryMap);
+  }
+
   Future<PriorityGroup> _getPriorityGroup(int id) async {
-    final priorityGroup = await _groupRepo!.getPriorityGroupById(id);
+    final priorityGroup = await _groupRepo.getPriorityGroupById(id);
 
     return priorityGroup;
   }
@@ -81,7 +99,7 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
   }
 
   Future<List<PriorityGroup>> _getPriorityGroups() async {
-    final priorityGroups = await _groupRepo!.getPriorityGroups();
+    final priorityGroups = await _groupRepo.getPriorityGroups();
 
     return priorityGroups;
   }

@@ -9,7 +9,7 @@ import 'package:nurse/shared/repositories/patient/person_repository.dart';
 class DatabasePersonRepository extends DatabaseInterface
     implements PersonRepository {
   static const String TABLE = "Person";
-  final LocalityRepository? _localityRepo;
+  final LocalityRepository _localityRepo;
 
   DatabasePersonRepository(
       {DatabaseManager? dbManager, LocalityRepository? localityRepo})
@@ -18,7 +18,15 @@ class DatabasePersonRepository extends DatabaseInterface
 
   @override
   Future<int> createPerson(Person person) async {
-    final int result = await create(person.toMap());
+    final map = person.toMap();
+
+    map['locality'] = person.locality != null
+        ? await _localityRepo
+            .getLocalityByIbgeCode(person.locality!.ibgeCode)
+            .then((locality) => locality.id)
+        : null;
+
+    final int result = await create(map);
 
     return result;
   }
@@ -33,22 +41,32 @@ class DatabasePersonRepository extends DatabaseInterface
   @override
   Future<Person> getPersonById(int id) async {
     try {
-      final personMap = await get(id);
-
-      final locality = await _getLocality(personMap["locality"]);
-
-      personMap["locality"] = locality.toMap();
-
-      final person = Person.fromMap(personMap);
-
-      return person;
+      return _getPersonFromMap(await getById(id));
     } catch (e) {
       rethrow;
     }
   }
 
+  @override
+  Future<Person> getPersonByCpf(String cpf) async {
+    try {
+      return _getPersonFromMap(await get(cpf, where: "cpf = ?"));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Person> _getPersonFromMap(Map<String, dynamic> personMap) async {
+    final locality = await _getLocality(personMap["locality"]);
+
+    final updatedPersonMap = Map.of(personMap);
+    updatedPersonMap["locality"] = locality.toMap();
+
+    return Person.fromMap(updatedPersonMap);
+  }
+
   Future<Locality> _getLocality(int id) async {
-    final locality = await _localityRepo!.getLocalityById(id);
+    final locality = await _localityRepo.getLocalityById(id);
 
     return locality;
   }
@@ -57,14 +75,13 @@ class DatabasePersonRepository extends DatabaseInterface
   Future<List<Person>> getPersons() async {
     try {
       final personMaps = await getAll();
-      final localities = await _getLocalities();
 
-      personMaps.forEach((p) {
-        final locality = localities.firstWhere((l) {
-          return l.id == p["locality"];
-        });
+      await Future.forEach(personMaps, (Map<String, dynamic> p) async {
+        final result = p["locality"] != null
+            ? await _localityRepo.getLocalityById(p["locality"])
+            : null;
 
-        p["locality"] = locality.toMap();
+        p["locality"] = result?.toMap();
       });
 
       final persons = personMaps.map((person) {
@@ -75,12 +92,6 @@ class DatabasePersonRepository extends DatabaseInterface
     } catch (e) {
       rethrow;
     }
-  }
-
-  Future<List<Locality>> _getLocalities() async {
-    final localities = await _localityRepo!.getLocalities();
-
-    return localities;
   }
 
   @override

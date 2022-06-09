@@ -27,7 +27,19 @@ class DatabaseVaccineBatchRepository extends DatabaseInterface
   @override
   Future<VaccineBatch> getVaccineBatchById(int id) async {
     try {
-      final vaccineBatchMap = await get(id);
+      final vaccineBatchMap = await getById(id);
+      final vaccineBatch = VaccineBatch.fromMap(vaccineBatchMap);
+
+      return vaccineBatch;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<VaccineBatch> getVaccineBatchByNumber(String number) async {
+    try {
+      final vaccineBatchMap = await get(number, where: "number = ?");
       final vaccineBatch = VaccineBatch.fromMap(vaccineBatchMap);
 
       return vaccineBatch;

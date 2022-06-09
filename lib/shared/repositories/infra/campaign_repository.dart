@@ -4,6 +4,7 @@ abstract class CampaignRepository {
   Future<int> createCampaign(Campaign campaign);
   Future<int> deleteCampaign(int id);
   Future<Campaign> getCampaignById(int id);
+  Future<Campaign> getCampaignByTitle(String title);
   Future<List<Campaign>> getCampaigns();
   Future<int> updateCampaign(Campaign campaign);
 }

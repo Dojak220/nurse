@@ -4,6 +4,7 @@ abstract class PriorityGroupRepository {
   Future<int> createPriorityGroup(PriorityGroup priorityGroup);
   Future<int> deletePriorityGroup(int id);
   Future<PriorityGroup> getPriorityGroupById(int id);
+  Future<PriorityGroup> getPriorityGroupByCode(String code);
   Future<List<PriorityGroup>> getPriorityGroups();
   Future<int> updatePriorityGroup(PriorityGroup priorityGroup);
 }

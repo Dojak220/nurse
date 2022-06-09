@@ -9,7 +9,7 @@ import 'package:nurse/shared/repositories/infra/locality_repository.dart';
 class DatabaseEstablishmentRepository extends DatabaseInterface
     implements EstablishmentRepository {
   static const String TABLE = "Establishment";
-  final LocalityRepository? _localityRepo;
+  final LocalityRepository _localityRepo;
 
   DatabaseEstablishmentRepository({
     DatabaseManager? dbManager,
@@ -19,7 +19,13 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
 
   @override
   Future<int> createEstablishment(Establishment establishment) async {
-    final int result = await create(establishment.toMap());
+    final map = establishment.toMap();
+
+    map['locality'] = await _localityRepo
+        .getLocalityByIbgeCode(establishment.locality.ibgeCode)
+        .then((locality) => locality.id!);
+
+    final int result = await create(map);
 
     return result;
   }
@@ -34,22 +40,33 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
   @override
   Future<Establishment> getEstablishmentById(int id) async {
     try {
-      final establishmentMap = await get(id);
-
-      final locality = await _getLocality(establishmentMap["locality"]);
-
-      establishmentMap["locality"] = locality.toMap();
-
-      final establishment = Establishment.fromMap(establishmentMap);
-
-      return establishment;
+      return _getEstablishmentFromMap(await getById(id));
     } catch (e) {
       rethrow;
     }
   }
 
+  @override
+  Future<Establishment> getEstablishmentByCnes(String cnes) async {
+    try {
+      return _getEstablishmentFromMap(await get(cnes, where: "cnes = ?"));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Establishment> _getEstablishmentFromMap(
+      Map<String, dynamic> establishmentMap) async {
+    final locality = await _getLocality(establishmentMap["locality"]);
+
+    final updatedEstablishmentMap = Map.of(establishmentMap);
+    updatedEstablishmentMap["locality"] = locality.toMap();
+
+    return Establishment.fromMap(updatedEstablishmentMap);
+  }
+
   Future<Locality> _getLocality(int id) async {
-    final locality = await _localityRepo!.getLocalityById(id);
+    final locality = await _localityRepo.getLocalityById(id);
 
     return locality;
   }
@@ -79,7 +96,7 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
   }
 
   Future<List<Locality>> _getLocalities() async {
-    final localities = await _localityRepo!.getLocalities();
+    final localities = await _localityRepo.getLocalities();
 
     return localities;
   }
