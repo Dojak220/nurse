@@ -35,13 +35,14 @@ void main() {
   setUp(() {
     when(dbManagerMock.db).thenReturn(dbMock);
     when(personRepoMock.getPersonById(1)).thenAnswer((_) async => _validPerson);
+    when(personRepoMock.createPerson(_validPerson)).thenAnswer((_) async => 1);
     when(personRepoMock.getPersons()).thenAnswer((_) async => _validPersons);
-    when(establishmentRepoMock.getEstablishmentById(1)).thenAnswer(
-      (_) async => _validEstablishment,
-    );
-    when(establishmentRepoMock.getEstablishments()).thenAnswer(
-      (_) async => _validEstablishments,
-    );
+    when(establishmentRepoMock.getEstablishmentById(1))
+        .thenAnswer((_) async => _validEstablishment);
+    when(establishmentRepoMock.getEstablishmentByCnes("1234567"))
+        .thenAnswer((_) async => _validEstablishment);
+    when(establishmentRepoMock.getEstablishments())
+        .thenAnswer((_) async => _validEstablishments);
   });
 
   testCreateApplier(dbMock, repository);

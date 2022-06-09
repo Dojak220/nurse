@@ -27,7 +27,19 @@ class DatabasePriorityGroupRepository extends DatabaseInterface
   @override
   Future<PriorityGroup> getPriorityGroupById(int id) async {
     try {
-      final priorityGroupMap = await get(id);
+      final priorityGroupMap = await getById(id);
+      final priorityGroup = PriorityGroup.fromMap(priorityGroupMap);
+
+      return priorityGroup;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<PriorityGroup> getPriorityGroupByCode(String code) async {
+    try {
+      final priorityGroupMap = await get(code, where: "code = ?");
       final priorityGroup = PriorityGroup.fromMap(priorityGroupMap);
 
       return priorityGroup;

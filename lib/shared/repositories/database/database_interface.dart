@@ -36,16 +36,24 @@ class DatabaseInterface {
     return count;
   }
 
-  Future<Map<String, dynamic>> get(int id) async {
+  Future<Map<String, dynamic>> getById(int id) async {
+    final result = await get(id, where: "id = ?");
+    return result;
+  }
+
+  Future<Map<String, dynamic>> get(
+    Object obj, {
+    required String where,
+  }) async {
     List<Map<String, dynamic>> entityMap;
 
-    entityMap = await dbManager.db.query(
-      tableName,
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-
     try {
+      entityMap = await dbManager.db.query(
+        tableName,
+        where: where,
+        whereArgs: [obj],
+      );
+
       return entityMap.single;
     } catch (e) {
       rethrow;
@@ -67,13 +75,17 @@ class DatabaseInterface {
   }
 
   Future<int> update(Map<String, dynamic> entity) async {
-    final int count = await dbManager.db.update(
-      tableName,
-      entity,
-      where: 'id = ?',
-      whereArgs: [entity['id']],
-    );
+    try {
+      final int count = await dbManager.db.update(
+        tableName,
+        entity,
+        where: 'id = ?',
+        whereArgs: [entity['id']],
+      );
 
-    return count;
+      return count;
+    } catch (e) {
+      rethrow;
+    }
   }
 }

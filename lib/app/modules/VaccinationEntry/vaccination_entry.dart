@@ -1,37 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:nurse/app/modules/PatientEntry/patient_form_controller.dart';
+import 'package:nurse/app/modules/PatientEntry/patient_form.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/form_save_step_button.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/form.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/form_step_button.dart';
+import 'package:nurse/app/modules/VaccinationEntry/components/vaccination_form.dart';
+import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
 import 'package:nurse/app/nurse_widget.dart';
+import 'package:nurse/app/utils/form_controller.dart';
+import 'package:nurse/shared/models/patient/patient_model.dart';
+import 'package:provider/provider.dart';
 
 class VaccinationEntry extends StatefulWidget {
-  const VaccinationEntry({Key? key, required this.title}) : super(key: key);
-
   final String title;
+
+  const VaccinationEntry({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
 
   @override
   State<VaccinationEntry> createState() => _VaccinationEntryState();
 }
 
 class _VaccinationEntryState extends State<VaccinationEntry> {
-  static const int _formsCount = 5;
+  static const _formsCount = 5;
   int _formIndex = 0;
-
-  final _patientForm = FocusNode();
-  final _applierForm = FocusNode();
-  final _vaccineForm = FocusNode();
-  final _campaignForm = FocusNode();
-  final _applicationForm = FocusNode();
-
-  @override
-  void dispose() {
-    _patientForm.dispose();
-    _applierForm.dispose();
-    _vaccineForm.dispose();
-    _campaignForm.dispose();
-    _applicationForm.dispose();
-    super.dispose();
-  }
 
   void _onFormIndexChanged(int index) {
     setState(() {
@@ -39,28 +32,49 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
     });
   }
 
+  void _onNextButtonPressed(
+    VaccinationEntryController controller,
+    FormController formController,
+  ) {
+    final allFieldsValid = formController.formKey.currentState!.validate();
+    if (allFieldsValid) {
+      formController.submitForm();
+      _onFormIndexChanged(_formIndex + 1);
+    }
+  }
+
+  FormController getFormController(BuildContext context, int formIndex) {
+    switch (formIndex) {
+      case 0:
+      default:
+        return Provider.of<PatientFormController>(context, listen: false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final bottom = MediaQuery.of(context).viewInsets.bottom * 0.1;
+    final controller = Provider.of<VaccinationEntryController>(context);
+    final patientFormController = Provider.of<PatientFormController>(context);
 
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, bottom),
+          padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, 25.0),
           child: Column(
             children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.75,
+              Expanded(
                 child: IndexedStack(
                   index: _formIndex,
                   children: [
-                    EmptyPage("Patient"),
+                    PatientForm(
+                      controller: patientFormController,
+                    ),
                     EmptyPage("Applier"),
                     EmptyPage("Vaccine"),
                     EmptyPage("Campaign"),
                     VaccinationForm(),
-                    EmptyPage("Dados para revisão")
+                    EmptyPage("Dados para revisão"),
                   ],
                 ),
               ),
@@ -77,7 +91,10 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
                       ? SaveFormButton()
                       : StepFormButton(
                           active: _formIndex < _formsCount,
-                          onPressed: () => _onFormIndexChanged(_formIndex + 1),
+                          onPressed: () => _onNextButtonPressed(
+                            controller,
+                            getFormController(context, _formIndex),
+                          ),
                           text: "Avançar",
                         ),
                 ],

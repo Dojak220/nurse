@@ -52,18 +52,30 @@ void main() {
     when(applierRepoMock.getApplierById(1)).thenAnswer(
       (_) async => _validApplier,
     );
+    when(applierRepoMock.getApplierByCns("279197866950004")).thenAnswer(
+      (_) async => _validApplier,
+    );
     when(applierRepoMock.getAppliers()).thenAnswer((_) async => _validAppliers);
     when(vaccineRepoMock.getVaccineById(1)).thenAnswer(
+      (_) async => _validVaccine,
+    );
+    when(vaccineRepoMock.getVaccineBySipniCode("123456")).thenAnswer(
       (_) async => _validVaccine,
     );
     when(vaccineRepoMock.getVaccines()).thenAnswer((_) async => _validVaccines);
     when(campaignRepoMock.getCampaignById(1)).thenAnswer(
       (_) async => _validCampaign,
     );
+    when(campaignRepoMock.getCampaignByTitle("Campaign Title")).thenAnswer(
+      (_) async => _validCampaign,
+    );
     when(campaignRepoMock.getCampaigns()).thenAnswer(
       (_) async => _validCampaigns,
     );
     when(patientRepoMock.getPatientById(1)).thenAnswer(
+      (_) async => _validPatient,
+    );
+    when(patientRepoMock.getPatientByCns("748477761910001")).thenAnswer(
       (_) async => _validPatient,
     );
     when(patientRepoMock.getPatients()).thenAnswer((_) async => _validPatients);

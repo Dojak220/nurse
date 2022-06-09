@@ -7,8 +7,8 @@ class Person implements GenericModel {
   final int? id;
   final String cpf;
   final String name;
-  final DateTime birthDate;
-  final Locality locality;
+  final DateTime? birthDate;
+  final Locality? locality;
   final Sex sex;
   final String motherName;
   final String fatherName;
@@ -16,20 +16,23 @@ class Person implements GenericModel {
   Person({
     this.id,
     required this.cpf,
-    required this.name,
-    required this.birthDate,
-    required this.locality,
+    required String name,
+    this.birthDate,
+    this.locality,
     this.sex = Sex.NONE,
-    this.motherName = "",
-    this.fatherName = "",
-  }) {
+    String motherName = "",
+    String fatherName = "",
+  })  : this.name = name.trim(),
+        this.motherName = motherName.trim(),
+        this.fatherName = fatherName.trim() {
     if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
     Validator.validateAll([
       ValidationPair(ValidatorType.CPF, this.cpf),
       ValidationPair(ValidatorType.Name, this.name),
       ValidationPair(ValidatorType.OptionalName, this.motherName),
       ValidationPair(ValidatorType.OptionalName, this.fatherName),
-      ValidationPair(ValidatorType.BirthDate, this.birthDate),
+      if (this.birthDate != null)
+        ValidationPair(ValidatorType.BirthDate, this.birthDate!),
     ]);
   }
 
@@ -56,13 +59,13 @@ class Person implements GenericModel {
   }
 
   @override
-  Map<String, Object> toMap() {
+  Map<String, dynamic> toMap() {
     return {
-      'id': id ?? 0,
+      'id': id,
       'cpf': cpf,
       'name': name,
-      'birth_date': birthDate.toString(),
-      'locality': locality.toMap(),
+      'birth_date': birthDate?.toString(),
+      'locality': locality?.toMap(),
       'sex': sex.name,
       'mother_name': motherName,
       'father_name': fatherName,
@@ -72,13 +75,15 @@ class Person implements GenericModel {
   factory Person.fromMap(Map<String, dynamic> map) {
     return Person(
       id: map['id'],
-      cpf: map['cpf'] ?? "",
-      name: map['name'] ?? '',
-      birthDate: DateTime.parse(map['birth_date']),
-      locality: Locality.fromMap(map['locality']),
+      cpf: map['cpf'],
+      name: map['name'],
+      birthDate:
+          map['birth_date'] != null ? DateTime.parse(map['birth_date']) : null,
+      locality:
+          map['locality'] != null ? Locality.fromMap(map['locality']) : null,
       sex: SexExtension.fromString(map['sex'] ?? Sex.NONE.name),
-      motherName: map['mother_name'] ?? '',
-      fatherName: map['father_name'] ?? '',
+      motherName: map['mother_name'] ?? "",
+      fatherName: map['father_name'] ?? "",
     );
   }
 
@@ -111,7 +116,7 @@ class Person implements GenericModel {
 
   @override
   String toString() {
-    return 'Person(id: $id, cpf: $cpf, name: $name, birthDate: $birthDate, locality: $locality, sex: ${sex.name}, motherName: $motherName, fatherName: $fatherName)';
+    return 'cpf: $cpf, name: $name';
   }
 }
 

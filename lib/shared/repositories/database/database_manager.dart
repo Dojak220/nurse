@@ -39,7 +39,7 @@ class DatabaseManager {
 
   FutureOr<void> _onCreate(Database db, int version) async {
     final Batch batch = db.batch();
-    final String script = await rootBundle.loadString("assets/script_v2_2.sql");
+    final String script = await rootBundle.loadString("assets/script_v3_0.sql");
     final List<String> scripts = script.split(";");
 
     scripts.forEach((script) {

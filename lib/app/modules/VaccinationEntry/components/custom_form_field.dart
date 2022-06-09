@@ -41,32 +41,46 @@ class ApplicationFormModel {
   );
 }
 
-enum ApplicationLabels {
+enum FormLabels {
+  namePatient,
   cnsPatient,
+  cnsApplier,
+  cpfPatient,
+  cpfApplier,
   batchNumber,
   dose,
-  cnsApplier,
   date,
+  category,
   group,
   maternalCondition,
 }
 
-extension LabelNamesAndHints on ApplicationLabels {
+extension LabelNamesAndHints on FormLabels {
   String get description {
     switch (this) {
-      case ApplicationLabels.cnsPatient:
+      case FormLabels.namePatient:
+        return "Nome completo do(a) Paciente *";
+      case FormLabels.cnsPatient:
         return "CNS do(a) Paciente *";
-      case ApplicationLabels.batchNumber:
+      case FormLabels.cnsApplier:
+        return "CNS do(a) Aplicante *";
+      case FormLabels.cpfPatient:
+        return "CPF do(a) Paciente *";
+      case FormLabels.cpfApplier:
+        return "CPF do(a) Aplicante *";
+      case FormLabels.batchNumber:
         return "Lote *";
-      case ApplicationLabels.dose:
+      case FormLabels.dose:
         return "Dose *";
-      case ApplicationLabels.cnsApplier:
+      case FormLabels.cnsApplier:
         return "CNS do(a) Aplicador(a) *";
-      case ApplicationLabels.date:
+      case FormLabels.date:
         return "Data de Aplicação *";
-      case ApplicationLabels.group:
+      case FormLabels.group:
         return "Grupo Prioritário *";
-      case ApplicationLabels.maternalCondition:
+      case FormLabels.category:
+        return "Categoria Prioritária *";
+      case FormLabels.maternalCondition:
         return "Condição Maternal *";
       default:
         return "";
@@ -75,20 +89,22 @@ extension LabelNamesAndHints on ApplicationLabels {
 
   String get hint {
     switch (this) {
-      case ApplicationLabels.cnsPatient:
-        return "Número do Cartão Nacional de Saúde do(a) Paciente";
-      case ApplicationLabels.batchNumber:
-        return "Número do Lote da Vacina";
-      case ApplicationLabels.dose:
-        return "Dose da Vacina";
-      case ApplicationLabels.cnsApplier:
-        return "Número do Cartão Nacional de Saúde do(a) Aplicador";
-      case ApplicationLabels.date:
-        return "Data da aplicação";
-      case ApplicationLabels.group:
-        return "Grupo Prioritário";
-      case ApplicationLabels.maternalCondition:
-        return "Condição Maternal";
+      case FormLabels.cnsPatient:
+        return "Número do Cartão Nacional de Saúde do(a) paciente";
+      case FormLabels.batchNumber:
+        return "Número do lote da vacina";
+      case FormLabels.dose:
+        return "Dose da vacina";
+      case FormLabels.cnsApplier:
+        return "Número do Cartão Nacional de Saúde do(a) aplicador(a)";
+      case FormLabels.date:
+        return "Data da aplicação da vacina";
+      case FormLabels.group:
+        return "Grupo do(a) paciente";
+      case FormLabels.category:
+        return "Categoria do(a) paciente";
+      case FormLabels.maternalCondition:
+        return "Condição Maternal do(a) paciente";
       default:
         return "";
     }

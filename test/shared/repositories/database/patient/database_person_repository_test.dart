@@ -30,6 +30,8 @@ void main() {
     when(dbManagerMock.db).thenReturn(dbMock);
     when(localityRepoMock.getLocalityById(1))
         .thenAnswer((_) async => _validLocality);
+    when(localityRepoMock.getLocalityByIbgeCode("1234567"))
+        .thenAnswer((_) async => _validLocality);
     when(localityRepoMock.getLocalities())
         .thenAnswer((_) async => _validLocalities);
   });
@@ -111,7 +113,7 @@ void testGetPerson(MockDatabase db, PersonRepository repository) {
                 "cpf": expectedPerson.cpf,
                 "name": expectedPerson.name,
                 "birth_date": expectedPerson.birthDate.toString(),
-                "locality": expectedPerson.locality.id,
+                "locality": expectedPerson.locality!.id,
                 "sex": expectedPerson.sex.name,
                 "mother_name": expectedPerson.motherName,
                 "father_name": expectedPerson.fatherName,
@@ -160,7 +162,7 @@ void testGetPersons(MockDatabase db, PersonRepository repository) {
                 "cpf": expectedPersons[0].cpf,
                 "name": expectedPersons[0].name,
                 "birth_date": expectedPersons[0].birthDate.toString(),
-                "locality": expectedPersons[0].locality.id,
+                "locality": expectedPersons[0].locality!.id,
                 "sex": expectedPersons[0].sex.name,
                 "mother_name": expectedPersons[0].motherName,
                 "father_name": expectedPersons[0].fatherName,
@@ -170,7 +172,7 @@ void testGetPersons(MockDatabase db, PersonRepository repository) {
                 "cpf": expectedPersons[1].cpf,
                 "name": expectedPersons[1].name,
                 "birth_date": expectedPersons[1].birthDate.toString(),
-                "locality": expectedPersons[1].locality.id,
+                "locality": expectedPersons[1].locality!.id,
                 "sex": expectedPersons[1].sex.name,
                 "mother_name": expectedPersons[1].motherName,
                 "father_name": expectedPersons[1].fatherName,

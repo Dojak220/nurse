@@ -9,7 +9,7 @@ import 'package:nurse/shared/repositories/vaccination/vaccine_repository.dart';
 class DatabaseVaccineRepository extends DatabaseInterface
     implements VaccineRepository {
   static const String TABLE = "Vaccine";
-  final VaccineBatchRepository? _vaccineBatchRepo;
+  final VaccineBatchRepository _vaccineBatchRepo;
 
   DatabaseVaccineRepository({
     DatabaseManager? dbManager,
@@ -20,7 +20,13 @@ class DatabaseVaccineRepository extends DatabaseInterface
 
   @override
   Future<int> createVaccine(Vaccine vaccine) async {
-    final int result = await create(vaccine.toMap());
+    final map = vaccine.toMap();
+
+    map['batch'] = await _vaccineBatchRepo
+        .getVaccineBatchByNumber(vaccine.batch.number)
+        .then((batch) => batch.id!);
+
+    final int result = await create(map);
 
     return result;
   }
@@ -35,22 +41,32 @@ class DatabaseVaccineRepository extends DatabaseInterface
   @override
   Future<Vaccine> getVaccineById(int id) async {
     try {
-      final vaccineMap = await get(id);
-
-      final vaccineBatch = await _getVaccineBatch(vaccineMap["batch"]);
-
-      vaccineMap["batch"] = vaccineBatch.toMap();
-
-      final vaccine = Vaccine.fromMap(vaccineMap);
-
-      return vaccine;
+      return _getVaccineFromMap(await getById(id));
     } catch (e) {
       rethrow;
     }
   }
 
+  @override
+  Future<Vaccine> getVaccineBySipniCode(String code) async {
+    try {
+      return _getVaccineFromMap(await get(code, where: "sipni_code = ?"));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Vaccine> _getVaccineFromMap(Map<String, dynamic> vaccineMap) async {
+    final vaccineBatch = await _getVaccineBatch(vaccineMap["batch"]);
+
+    final updatedVaccineMap = Map.of(vaccineMap);
+    updatedVaccineMap["batch"] = vaccineBatch.toMap();
+
+    return Vaccine.fromMap(updatedVaccineMap);
+  }
+
   Future<VaccineBatch> _getVaccineBatch(int id) async {
-    final vaccineBatch = await _vaccineBatchRepo!.getVaccineBatchById(id);
+    final vaccineBatch = await _vaccineBatchRepo.getVaccineBatchById(id);
 
     return vaccineBatch;
   }
@@ -80,7 +96,7 @@ class DatabaseVaccineRepository extends DatabaseInterface
   }
 
   Future<List<VaccineBatch>> _getVaccineBatches() async {
-    final vaccineBatches = await _vaccineBatchRepo!.getVaccineBatches();
+    final vaccineBatches = await _vaccineBatchRepo.getVaccineBatches();
 
     return vaccineBatches;
   }

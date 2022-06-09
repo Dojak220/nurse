@@ -12,8 +12,8 @@ import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
 class DatabaseApplierRepository extends DatabaseInterface
     implements ApplierRepository {
   static const String TABLE = "Applier";
-  final EstablishmentRepository? _establishmentRepo;
-  final PersonRepository? _personRepo;
+  final EstablishmentRepository _establishmentRepo;
+  final PersonRepository _personRepo;
 
   DatabaseApplierRepository({
     DatabaseManager? dbManager,
@@ -26,7 +26,14 @@ class DatabaseApplierRepository extends DatabaseInterface
 
   @override
   Future<int> createApplier(Applier applier) async {
-    final int result = await create(applier.toMap());
+    final map = applier.toMap();
+
+    map['person'] = await _personRepo.createPerson(applier.person);
+    map['establishment'] = await _establishmentRepo
+        .getEstablishmentByCnes(applier.establishment.cnes)
+        .then((establishment) => establishment.id!);
+
+    final int result = await create(map);
 
     return result;
   }
@@ -41,32 +48,40 @@ class DatabaseApplierRepository extends DatabaseInterface
   @override
   Future<Applier> getApplierById(int id) async {
     try {
-      final applierMap = await get(id);
-
-      final person = await _getPerson(applierMap["person"]);
-      final establishment = await _getEstablishment(
-        applierMap["establishment"],
-      );
-
-      applierMap["person"] = person.toMap();
-      applierMap["establishment"] = establishment.toMap();
-
-      final applier = Applier.fromMap(applierMap);
-
-      return applier;
+      return _getApplierFromMap(await getById(id));
     } catch (e) {
       rethrow;
     }
   }
 
+  @override
+  Future<Applier> getApplierByCns(String cns) async {
+    try {
+      return _getApplierFromMap(await get(cns, where: "cns = ?"));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Applier> _getApplierFromMap(Map<String, dynamic> applierMap) async {
+    final person = await _getPerson(applierMap["person"]);
+    final establishment = await _getEstablishment(applierMap["establishment"]);
+
+    final updatedApplierMap = Map.of(applierMap);
+    updatedApplierMap["person"] = person.toMap();
+    updatedApplierMap["establishment"] = establishment.toMap();
+
+    return Applier.fromMap(updatedApplierMap);
+  }
+
   Future<Establishment> _getEstablishment(int id) async {
-    final establishment = await _establishmentRepo!.getEstablishmentById(id);
+    final establishment = await _establishmentRepo.getEstablishmentById(id);
 
     return establishment;
   }
 
   Future<Person> _getPerson(int id) async {
-    final person = await _personRepo!.getPersonById(id);
+    final person = await _personRepo.getPersonById(id);
 
     return person;
   }
@@ -102,13 +117,13 @@ class DatabaseApplierRepository extends DatabaseInterface
   }
 
   Future<List<Establishment>> _getEstablishments() async {
-    final establishments = await _establishmentRepo!.getEstablishments();
+    final establishments = await _establishmentRepo.getEstablishments();
 
     return establishments;
   }
 
   Future<List<Person>> _getPersons() async {
-    final persons = await _personRepo!.getPersons();
+    final persons = await _personRepo.getPersons();
 
     return persons;
   }

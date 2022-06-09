@@ -29,8 +29,8 @@ void main() {
         () {
       final actualCampaign = validCampaign.copyWith(description: "");
 
-      expect(actualCampaign.description, "Campanha " + actualCampaign.title);
-      expect(actualCampaign.description, "Campanha " + validCampaign.title);
+      expect(actualCampaign.description, actualCampaign.title);
+      expect(actualCampaign.description, validCampaign.title);
     });
 
     test("should create a valid instance of a future campaign", () {
@@ -69,8 +69,8 @@ void main() {
         () {
       final actualCampaign = validCampaign.copyWith(description: " ");
 
-      expect(actualCampaign.description, "Campanha " + actualCampaign.title);
-      expect(actualCampaign.description, "Campanha " + validCampaign.title);
+      expect(actualCampaign.description, actualCampaign.title);
+      expect(actualCampaign.description, validCampaign.title);
     });
   });
 

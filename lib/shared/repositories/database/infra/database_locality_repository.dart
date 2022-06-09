@@ -27,7 +27,19 @@ class DatabaseLocalityRepository extends DatabaseInterface
   @override
   Future<Locality> getLocalityById(int id) async {
     try {
-      final localityMap = await get(id);
+      final localityMap = await getById(id);
+      final locality = Locality.fromMap(localityMap);
+
+      return locality;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Locality> getLocalityByIbgeCode(String ibgeCode) async {
+    try {
+      final localityMap = await get(ibgeCode, where: "ibge_code = ?");
       final locality = Locality.fromMap(localityMap);
 
       return locality;

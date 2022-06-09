@@ -31,9 +31,9 @@ class Establishment implements GenericModel {
     }
   }
 
-  Map<String, Object> toMap() {
+  Map<String, dynamic> toMap() {
     return {
-      'id': id ?? 0,
+      'id': id,
       'cnes': cnes,
       'name': name,
       'locality': locality.toMap(),

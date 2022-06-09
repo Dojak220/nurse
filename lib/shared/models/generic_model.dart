@@ -3,5 +3,5 @@ abstract class GenericModel<T> {
 
   GenericModel(this.id);
 
-  Map<String, Object> toMap();
+  Map<String, dynamic> toMap();
 }

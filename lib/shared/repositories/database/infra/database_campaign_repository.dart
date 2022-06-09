@@ -27,7 +27,19 @@ class DatabaseCampaignRepository extends DatabaseInterface
   @override
   Future<Campaign> getCampaignById(int id) async {
     try {
-      final campaignMap = await get(id);
+      final campaignMap = await getById(id);
+      final campaign = Campaign.fromMap(campaignMap);
+
+      return campaign;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Campaign> getCampaignByTitle(String title) async {
+    try {
+      final campaignMap = await get(title, where: "title = ?");
       final campaign = Campaign.fromMap(campaignMap);
 
       return campaign;

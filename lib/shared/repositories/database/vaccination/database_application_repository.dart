@@ -21,10 +21,10 @@ class DatabaseApplicationRepository extends DatabaseInterface
     implements ApplicationRepository {
   static const String TABLE = "Application";
 
-  final VaccineRepository? _vaccineRepo;
-  final PatientRepository? _patientRepo;
-  final CampaignRepository? _campaignRepo;
-  final ApplierRepository? _applierRepo;
+  final VaccineRepository _vaccineRepo;
+  final PatientRepository _patientRepo;
+  final CampaignRepository _campaignRepo;
+  final ApplierRepository _applierRepo;
 
   DatabaseApplicationRepository({
     DatabaseManager? dbManager,
@@ -39,8 +39,23 @@ class DatabaseApplicationRepository extends DatabaseInterface
         super(TABLE, dbManager);
 
   @override
-  Future<int> createApplication(Application applier) async {
-    final int result = await create(applier.toMap());
+  Future<int> createApplication(Application application) async {
+    final map = application.toMap();
+
+    map['vaccine'] = await _vaccineRepo
+        .getVaccineBySipniCode(application.vaccine.sipniCode)
+        .then((vaccine) => vaccine.id!);
+    map['patient'] = await _patientRepo
+        .getPatientByCns(application.patient.cns)
+        .then((patient) => patient.id!);
+    map['campaign'] = await _campaignRepo
+        .getCampaignByTitle(application.campaign.title)
+        .then((campaign) => campaign.id!);
+    map['applier'] = await _applierRepo
+        .getApplierByCns(application.applier.cns)
+        .then((applier) => applier.id!);
+
+    final int result = await create(map);
 
     return result;
   }
@@ -55,7 +70,7 @@ class DatabaseApplicationRepository extends DatabaseInterface
   @override
   Future<Application> getApplicationById(int id) async {
     try {
-      final applicationMap = await get(id);
+      final applicationMap = await getById(id);
 
       final applier = await _getApplier(applicationMap["applier"]);
       final vaccine = await _getVaccine(applicationMap["vaccine"]);
@@ -76,25 +91,25 @@ class DatabaseApplicationRepository extends DatabaseInterface
   }
 
   Future<Applier> _getApplier(int id) async {
-    final applier = await _applierRepo!.getApplierById(id);
+    final applier = await _applierRepo.getApplierById(id);
 
     return applier;
   }
 
   Future<Vaccine> _getVaccine(int id) async {
-    final vaccine = await _vaccineRepo!.getVaccineById(id);
+    final vaccine = await _vaccineRepo.getVaccineById(id);
 
     return vaccine;
   }
 
   Future<Patient> _getPatient(int id) async {
-    final patient = await _patientRepo!.getPatientById(id);
+    final patient = await _patientRepo.getPatientById(id);
 
     return patient;
   }
 
   Future<Campaign> _getCampaign(int id) async {
-    final campaign = await _campaignRepo!.getCampaignById(id);
+    final campaign = await _campaignRepo.getCampaignById(id);
 
     return campaign;
   }
@@ -142,25 +157,25 @@ class DatabaseApplicationRepository extends DatabaseInterface
   }
 
   Future<List<Applier>> _getAppliers() async {
-    final appliers = await _applierRepo!.getAppliers();
+    final appliers = await _applierRepo.getAppliers();
 
     return appliers;
   }
 
   Future<List<Vaccine>> _getVaccines() async {
-    final vaccines = await _vaccineRepo!.getVaccines();
+    final vaccines = await _vaccineRepo.getVaccines();
 
     return vaccines;
   }
 
   Future<List<Patient>> _getPatients() async {
-    final patients = await _patientRepo!.getPatients();
+    final patients = await _patientRepo.getPatients();
 
     return patients;
   }
 
   Future<List<Campaign>> _getCampaigns() async {
-    final campaigns = await _campaignRepo!.getCampaigns();
+    final campaigns = await _campaignRepo.getCampaigns();
 
     return campaigns;
   }

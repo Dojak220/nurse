@@ -12,8 +12,8 @@ import 'package:nurse/shared/repositories/patient/priority_category_repository.d
 class DatabasePatientRepository extends DatabaseInterface
     implements PatientRepository {
   static const String TABLE = "Patient";
-  final PersonRepository? _personRepo;
-  final PriorityCategoryRepository? _categoryRepo;
+  final PersonRepository _personRepo;
+  final PriorityCategoryRepository _categoryRepo;
 
   DatabasePatientRepository({
     DatabaseManager? dbManager,
@@ -25,7 +25,14 @@ class DatabasePatientRepository extends DatabaseInterface
 
   @override
   Future<int> createPatient(Patient patient) async {
-    final int result = await create(patient.toMap());
+    final map = patient.toMap();
+
+    map['person'] = await _personRepo.createPerson(patient.person);
+    map['priority_category'] = await _categoryRepo
+        .getPriorityCategoryByCode(patient.priorityCategory.code)
+        .then((priorityCategory) => priorityCategory.id!);
+
+    final int result = await create(map);
 
     return result;
   }
@@ -40,32 +47,42 @@ class DatabasePatientRepository extends DatabaseInterface
   @override
   Future<Patient> getPatientById(int id) async {
     try {
-      final patientMap = await get(id);
-
-      final person = await _getPerson(patientMap["person"]);
-      final priorityCategory = await _getPriorityCategory(
-        patientMap["priority_category"],
-      );
-
-      patientMap['person'] = person.toMap();
-      patientMap['priority_category'] = priorityCategory.toMap();
-
-      final patient = Patient.fromMap(patientMap);
-
-      return patient;
+      return _getPatientFromMap(await getById(id));
     } catch (e) {
       rethrow;
     }
   }
 
+  @override
+  Future<Patient> getPatientByCns(String cns) async {
+    try {
+      return _getPatientFromMap(await get(cns, where: "cns = ?"));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Patient> _getPatientFromMap(Map<String, dynamic> patientMap) async {
+    final person = await _getPerson(patientMap["person"]);
+    final priorityCategory = await _getPriorityCategory(
+      patientMap["priority_category"],
+    );
+
+    final updatedPatientMap = Map.of(patientMap);
+    updatedPatientMap["person"] = person.toMap();
+    updatedPatientMap["priority_category"] = priorityCategory.toMap();
+
+    return Patient.fromMap(updatedPatientMap);
+  }
+
   Future<Person> _getPerson(int id) async {
-    final person = await _personRepo!.getPersonById(id);
+    final person = await _personRepo.getPersonById(id);
 
     return person;
   }
 
   Future<PriorityCategory> _getPriorityCategory(int id) async {
-    final priorityCategory = await _categoryRepo!.getPriorityCategoryById(id);
+    final priorityCategory = await _categoryRepo.getPriorityCategoryById(id);
 
     return priorityCategory;
   }
@@ -102,13 +119,13 @@ class DatabasePatientRepository extends DatabaseInterface
   }
 
   Future<List<Person>> _getPersons() async {
-    final persons = await _personRepo!.getPersons();
+    final persons = await _personRepo.getPersons();
 
     return persons;
   }
 
   Future<List<PriorityCategory>> _getPriorityCategories() async {
-    final priorityCategories = await _categoryRepo!.getPriorityCategories();
+    final priorityCategories = await _categoryRepo.getPriorityCategories();
 
     return priorityCategories;
   }

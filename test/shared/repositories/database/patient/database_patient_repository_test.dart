@@ -36,13 +36,14 @@ void main() {
   setUp(() {
     when(dbManagerMock.db).thenReturn(dbMock);
     when(personRepoMock.getPersonById(1)).thenAnswer((_) async => _validPerson);
+    when(personRepoMock.createPerson(_validPerson)).thenAnswer((_) async => 1);
     when(personRepoMock.getPersons()).thenAnswer((_) async => _validPersons);
-    when(categoryRepoMock.getPriorityCategoryById(1)).thenAnswer(
-      (_) async => _validPriorityCategory,
-    );
-    when(categoryRepoMock.getPriorityCategories()).thenAnswer(
-      (_) async => _validPriorityCategories,
-    );
+    when(categoryRepoMock.getPriorityCategoryById(1))
+        .thenAnswer((_) async => _validPriorityCategory);
+    when(categoryRepoMock.getPriorityCategoryByCode("Pessoas idosas"))
+        .thenAnswer((_) async => _validPriorityCategory);
+    when(categoryRepoMock.getPriorityCategories())
+        .thenAnswer((_) async => _validPriorityCategories);
   });
 
   testCreatePatient(dbMock, repository);
