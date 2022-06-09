@@ -27,7 +27,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/script_v2_2.sql
+    - assets/script_v3_0.sql
     - assets/images/
     - .env
 
