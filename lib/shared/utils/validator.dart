@@ -2,11 +2,11 @@ class Validator {
   static const _CPF_LENGTH = 11;
   static const _CNS_LENGTH = 15;
   static const _IBGE_CODE_LENGTH = 7;
-  static const _NAME_MAX_LENGTH = 50;
-  static const _DESCRIPTION_MAX_LENGTH = 50;
+  static const _NAME_MAX_LENGTH = 100;
+  static const _DESCRIPTION_MAX_LENGTH = 100;
 
   static RegExp get _validCharactersRegex => RegExp(
-        r"^[a-zA-Z0-9-\sáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]*$",
+        r"^[a-zA-Z0-9-/\sáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ()≥]*$",
       );
 
   static bool validateAll(
