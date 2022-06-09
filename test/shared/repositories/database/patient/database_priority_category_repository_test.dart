@@ -24,12 +24,12 @@ void main() {
 
   setUp(() {
     when(dbManagerMock.db).thenReturn(dbMock);
-    when(groupRepoMock.getPriorityGroupById(1)).thenAnswer(
-      (_) async => _validPriorityGroup,
-    );
-    when(groupRepoMock.getPriorityGroups()).thenAnswer(
-      (_) async => _validPriorityGroups,
-    );
+    when(groupRepoMock.getPriorityGroupById(1))
+        .thenAnswer((_) async => _validPriorityGroup);
+    when(groupRepoMock.getPriorityGroupByCode("Pessoas com mais de 60 anos"))
+        .thenAnswer((_) async => _validPriorityGroup);
+    when(groupRepoMock.getPriorityGroups())
+        .thenAnswer((_) async => _validPriorityGroups);
   });
 
   testCreatePriorityCategory(dbMock, repository);

@@ -31,6 +31,9 @@ void main() {
     when(vaccineBatchRepo.getVaccineBatchById(1)).thenAnswer(
       (_) async => _validVaccineBatch,
     );
+    when(vaccineBatchRepo.getVaccineBatchByNumber("01234")).thenAnswer(
+      (_) async => _validVaccineBatch,
+    );
     when(vaccineBatchRepo.getVaccineBatches()).thenAnswer(
       (_) async => _validVaccineBatches,
     );

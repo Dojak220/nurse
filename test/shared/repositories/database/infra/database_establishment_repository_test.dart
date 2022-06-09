@@ -31,6 +31,9 @@ void main() {
     when(localityRepoMock.getLocalityById(1)).thenAnswer(
       (_) async => _validLocality,
     );
+    when(localityRepoMock.getLocalityByIbgeCode("1234567")).thenAnswer(
+      (_) async => _validLocality,
+    );
     when(localityRepoMock.getLocalities()).thenAnswer(
       (_) async => _validLocalities,
     );
