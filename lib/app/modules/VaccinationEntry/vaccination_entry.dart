@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nurse/app/modules/ApplierEntry/applier_form.dart';
+import 'package:nurse/app/modules/ApplierEntry/applier_form_controller.dart';
 import 'package:nurse/app/modules/PatientEntry/patient_form_controller.dart';
 import 'package:nurse/app/modules/PatientEntry/patient_form.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/form_save_step_button.dart';
@@ -54,6 +56,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
   Widget build(BuildContext context) {
     final controller = Provider.of<VaccinationEntryController>(context);
     final patientFormController = Provider.of<PatientFormController>(context);
+    final applierFormController = Provider.of<ApplierFormController>(context);
 
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
@@ -67,7 +70,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
                   index: _formIndex,
                   children: [
                     PatientForm(controller: patientFormController),
-                    EmptyPage("Applier"),
+                    ApplierForm(controller: applierFormController),
                     EmptyPage("Vaccine"),
                     EmptyPage("Campaign"),
                     VaccinationForm(),

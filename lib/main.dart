@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:nurse/app/modules/ApplierEntry/applier_form_controller.dart';
 import 'package:nurse/app/modules/Home/home_controller.dart';
 import 'package:nurse/app/modules/PatientEntry/patient_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
@@ -20,6 +21,9 @@ void main() async {
           ),
           Provider<PatientFormController>(
             create: (_) => PatientFormController(),
+          ),
+          Provider<ApplierFormController>(
+            create: (_) => ApplierFormController(),
           ),
         ],
         child: Nurse(),
