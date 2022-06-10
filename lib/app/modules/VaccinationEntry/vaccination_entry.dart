@@ -7,7 +7,6 @@ import 'package:nurse/app/modules/VaccinationEntry/components/vaccination_form.d
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
 import 'package:nurse/app/nurse_widget.dart';
 import 'package:nurse/app/utils/form_controller.dart';
-import 'package:nurse/shared/models/patient/patient_model.dart';
 import 'package:provider/provider.dart';
 
 class VaccinationEntry extends StatefulWidget {
@@ -67,9 +66,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
                 child: IndexedStack(
                   index: _formIndex,
                   children: [
-                    PatientForm(
-                      controller: patientFormController,
-                    ),
+                    PatientForm(controller: patientFormController),
                     EmptyPage("Applier"),
                     EmptyPage("Vaccine"),
                     EmptyPage("Campaign"),
