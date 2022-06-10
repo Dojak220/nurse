@@ -50,7 +50,7 @@ class _ApplierFormState extends State<ApplierForm> {
             ),
             Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: Icon(Icons.local_pharmacy),
+              icon: Icon(Icons.local_hospital),
               label: FormLabels.establishment,
               items: widget.controller.establishments,
               onChanged: (Establishment? value) => setState(
