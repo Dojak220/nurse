@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nurse/app/modules/ApplierEntry/applier_form.dart';
+import 'package:nurse/app/modules/ApplierEntry/applier_form_controller.dart';
 import 'package:nurse/app/modules/PatientEntry/patient_form_controller.dart';
 import 'package:nurse/app/modules/PatientEntry/patient_form.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/form_save_step_button.dart';
@@ -7,7 +9,6 @@ import 'package:nurse/app/modules/VaccinationEntry/components/vaccination_form.d
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
 import 'package:nurse/app/nurse_widget.dart';
 import 'package:nurse/app/utils/form_controller.dart';
-import 'package:nurse/shared/models/patient/patient_model.dart';
 import 'package:provider/provider.dart';
 
 class VaccinationEntry extends StatefulWidget {
@@ -55,6 +56,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
   Widget build(BuildContext context) {
     final controller = Provider.of<VaccinationEntryController>(context);
     final patientFormController = Provider.of<PatientFormController>(context);
+    final applierFormController = Provider.of<ApplierFormController>(context);
 
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
@@ -67,10 +69,8 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
                 child: IndexedStack(
                   index: _formIndex,
                   children: [
-                    PatientForm(
-                      controller: patientFormController,
-                    ),
-                    EmptyPage("Applier"),
+                    PatientForm(controller: patientFormController),
+                    ApplierForm(controller: applierFormController),
                     EmptyPage("Vaccine"),
                     EmptyPage("Campaign"),
                     VaccinationForm(),

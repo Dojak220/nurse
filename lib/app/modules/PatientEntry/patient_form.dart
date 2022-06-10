@@ -30,7 +30,7 @@ class _PatientFormState extends State<PatientForm> {
           children: [
             CustomTextFormField(
               icon: Icon(Icons.badge),
-              label: FormLabels.cnsPatient,
+              label: FormLabels.patientCns,
               validatorType: ValidatorType.CNS,
               // onChanged: (String? value) => setState(() => _cns = value!),
               onSaved: (value) => setState(() => widget.controller.cns = value),
@@ -38,7 +38,7 @@ class _PatientFormState extends State<PatientForm> {
             Divider(color: Colors.black),
             CustomTextFormField(
               icon: Icon(Icons.badge),
-              label: FormLabels.cpfPatient,
+              label: FormLabels.patientCpf,
               validatorType: ValidatorType.CPF,
               // onChanged: (String? value) => setState(() => _cpf = value!),
               onSaved: (value) => setState(() => widget.controller.cpf = value),
@@ -46,7 +46,7 @@ class _PatientFormState extends State<PatientForm> {
             Divider(color: Colors.black),
             CustomTextFormField(
               icon: Icon(Icons.abc),
-              label: FormLabels.namePatient,
+              label: FormLabels.patientName,
               validatorType: ValidatorType.Name,
               onSaved: (value) =>
                   setState(() => widget.controller.name = value),
