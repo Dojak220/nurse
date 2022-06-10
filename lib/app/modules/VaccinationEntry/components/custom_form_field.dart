@@ -42,46 +42,50 @@ class ApplicationFormModel {
 }
 
 enum FormLabels {
-  namePatient,
-  cnsPatient,
-  cnsApplier,
-  cpfPatient,
-  cpfApplier,
+  applierCns,
+  applierCpf,
+  applierName,
   batchNumber,
-  dose,
-  date,
   category,
+  date,
+  dose,
+  establishment,
   group,
   maternalCondition,
+  patientCns,
+  patientCpf,
+  patientName,
 }
 
 extension LabelNamesAndHints on FormLabels {
   String get description {
     switch (this) {
-      case FormLabels.namePatient:
-        return "Nome completo do(a) Paciente *";
-      case FormLabels.cnsPatient:
-        return "CNS do(a) Paciente *";
-      case FormLabels.cnsApplier:
+      case FormLabels.applierCns:
         return "CNS do(a) Aplicante *";
-      case FormLabels.cpfPatient:
-        return "CPF do(a) Paciente *";
-      case FormLabels.cpfApplier:
+      case FormLabels.applierCpf:
         return "CPF do(a) Aplicante *";
+      case FormLabels.applierName:
+        return "Nome Completo do(a) Aplicante *";
       case FormLabels.batchNumber:
         return "Lote *";
-      case FormLabels.dose:
-        return "Dose *";
-      case FormLabels.cnsApplier:
-        return "CNS do(a) Aplicador(a) *";
-      case FormLabels.date:
-        return "Data de Aplicação *";
-      case FormLabels.group:
-        return "Grupo Prioritário *";
       case FormLabels.category:
         return "Categoria Prioritária *";
+      case FormLabels.date:
+        return "Data de Aplicação *";
+      case FormLabels.dose:
+        return "Dose *";
+      case FormLabels.establishment:
+        return "CNES do Estabelecimento *";
+      case FormLabels.group:
+        return "Grupo Prioritário *";
       case FormLabels.maternalCondition:
         return "Condição Maternal *";
+      case FormLabels.patientCns:
+        return "CNS do(a) Paciente *";
+      case FormLabels.patientCpf:
+        return "CPF do(a) Paciente *";
+      case FormLabels.patientName:
+        return "Nome Completo do(a) Paciente *";
       default:
         return "";
     }
@@ -89,22 +93,32 @@ extension LabelNamesAndHints on FormLabels {
 
   String get hint {
     switch (this) {
-      case FormLabels.cnsPatient:
-        return "Número do Cartão Nacional de Saúde do(a) paciente";
+      case FormLabels.applierCns:
+        return "Número do Cartão Nacional de Saúde do(a) aplicador(a)";
+      case FormLabels.applierCpf:
+        return "Número do Cadastro de Pessoas Físicas do(a) aplicador(a)";
+      case FormLabels.applierName:
+        return "Nome completo do(a) aplicante *";
       case FormLabels.batchNumber:
         return "Número do lote da vacina";
-      case FormLabels.dose:
-        return "Dose da vacina";
-      case FormLabels.cnsApplier:
-        return "Número do Cartão Nacional de Saúde do(a) aplicador(a)";
-      case FormLabels.date:
-        return "Data da aplicação da vacina";
-      case FormLabels.group:
-        return "Grupo do(a) paciente";
       case FormLabels.category:
         return "Categoria do(a) paciente";
+      case FormLabels.date:
+        return "Data da aplicação da vacina";
+      case FormLabels.dose:
+        return "Dose da vacina";
+      case FormLabels.establishment:
+        return "CNES do estabelecimento de trabalho do aplicante";
+      case FormLabels.group:
+        return "Grupo do(a) paciente";
       case FormLabels.maternalCondition:
         return "Condição Maternal do(a) paciente";
+      case FormLabels.patientCns:
+        return "Número do Cartão Nacional de Saúde do(a) paciente";
+      case FormLabels.patientCpf:
+        return "Número do Cadastro de Pessoas Físicas do(a) paciente";
+      case FormLabels.patientName:
+        return "Nome completo do(a) paciente *";
       default:
         return "";
     }

@@ -28,7 +28,7 @@ class _VaccinationFormState extends State<VaccinationForm> {
           children: [
             CustomTextFormField(
               icon: Icon(Icons.badge),
-              label: FormLabels.cnsPatient,
+              label: FormLabels.patientCns,
               validatorType: ValidatorType.CNS,
               onSaved: (value) => {controller.patientCNSValue = value!},
             ),
@@ -50,7 +50,7 @@ class _VaccinationFormState extends State<VaccinationForm> {
             Divider(color: Colors.black),
             CustomTextFormField(
               icon: Icon(Icons.badge),
-              label: FormLabels.cnsApplier,
+              label: FormLabels.applierCns,
               validatorType: ValidatorType.CNS,
               onSaved: (value) => {controller.applierCNSValue = value!},
             ),
