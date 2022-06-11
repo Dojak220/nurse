@@ -135,7 +135,7 @@ CREATE TABLE Vaccine (
     sipni_code varchar(10) NOT NULL,
     name varchar(15) NOT NULL,
     laboratory varchar(30) NOT NULL,
-    CONSTRAINT sipni_code UNIQUE (sipni_code),
+    CONSTRAINT sipni_code UNIQUE (sipni_code)
 );
 
 -- Aplication
@@ -155,19 +155,19 @@ INSERT INTO Application (applier, vaccine_batch, dose, patient , application_dat
 VALUES (1, 1, "D1", 5, "2021-01-01", 1, "2021-04-01");
 
 INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
-VALUES (1, 1, "D2", 1, "2022-05-01", 1, "2022-07-01");
+VALUES (1, 1, "D2", 1, "2022-06-01", 1, "2022-07-01");
 
 INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
-VALUES (1, 1, "D2", 2, "2022-05-01", 1, "2022-07-01");
+VALUES (1, 1, "D2", 2, "2022-06-01", 1, "2022-07-01");
 
 INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
-VALUES (1, 1, "D2", 3, "2022-05-10", 1, "2022-07-01");
+VALUES (1, 1, "D2", 3, "2022-06-09", 1, "2022-07-01");
 
 INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
-VALUES (1, 1, "D2", 4, "2022-05-11", 1, "2022-07-01");
+VALUES (1, 1, "D2", 4, "2022-06-10", 1, "2022-07-01");
 
 INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
-VALUES (1, 1, "D2", 5, "2022-05-12", 1, "2022-07-01");
+VALUES (1, 1, "D2", 5, "2022-06-11", 1, "2022-07-01");
 -- End of Application
 
 INSERT INTO Applier (cns, establishment, person)
