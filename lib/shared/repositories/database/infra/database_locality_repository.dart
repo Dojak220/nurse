@@ -28,9 +28,8 @@ class DatabaseLocalityRepository extends DatabaseInterface
   Future<Locality> getLocalityById(int id) async {
     try {
       final localityMap = await getById(id);
-      final locality = Locality.fromMap(localityMap);
 
-      return locality;
+      return Locality.fromMap(localityMap);
     } catch (e) {
       rethrow;
     }
@@ -40,9 +39,8 @@ class DatabaseLocalityRepository extends DatabaseInterface
   Future<Locality> getLocalityByIbgeCode(String ibgeCode) async {
     try {
       final localityMap = await get(ibgeCode, where: "ibge_code = ?");
-      final locality = Locality.fromMap(localityMap);
 
-      return locality;
+      return Locality.fromMap(localityMap);
     } catch (e) {
       rethrow;
     }
@@ -53,12 +51,9 @@ class DatabaseLocalityRepository extends DatabaseInterface
     try {
       final localityMaps = await getAll();
 
-      final List<Locality> localities = List<Locality>.generate(
-        localityMaps.length,
-        (index) {
-          return Locality.fromMap(localityMaps[index]);
-        },
-      );
+      final localities = List<Locality>.generate(localityMaps.length, (index) {
+        return Locality.fromMap(localityMaps[index]);
+      });
 
       return localities;
     } catch (e) {
