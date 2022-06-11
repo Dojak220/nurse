@@ -37,7 +37,7 @@ class TitledListView extends StatelessWidget {
                   return EntryCard(
                     cns: applications[i].patient.cns,
                     name: applications[i].patient.person.name,
-                    vaccine: applications[i].vaccine.name,
+                    vaccine: applications[i].vaccineBatch.vaccine.name,
                     group: applications[i]
                         .patient
                         .priorityCategory

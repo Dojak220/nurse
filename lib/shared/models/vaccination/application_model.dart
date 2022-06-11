@@ -2,14 +2,14 @@ import 'package:nurse/shared/models/generic_model.dart';
 import 'package:nurse/shared/models/infra/campaign_model.dart';
 import 'package:nurse/shared/models/patient/patient_model.dart';
 import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
+import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
 class Application implements GenericModel {
   @override
   final int? id;
   final Applier applier;
-  final Vaccine vaccine;
+  final VaccineBatch vaccineBatch;
   final Patient patient;
   final Campaign campaign;
   final VaccineDose dose;
@@ -19,7 +19,7 @@ class Application implements GenericModel {
   Application({
     this.id,
     required this.applier,
-    required this.vaccine,
+    required this.vaccineBatch,
     required this.patient,
     required this.campaign,
     required this.dose,
@@ -39,7 +39,7 @@ class Application implements GenericModel {
   Application copyWith({
     int? id,
     Applier? applier,
-    Vaccine? vaccine,
+    VaccineBatch? vaccineBatch,
     Patient? patient,
     Campaign? campaign,
     VaccineDose? dose,
@@ -49,7 +49,7 @@ class Application implements GenericModel {
     return Application(
       id: id ?? this.id,
       applier: applier ?? this.applier,
-      vaccine: vaccine ?? this.vaccine,
+      vaccineBatch: vaccineBatch ?? this.vaccineBatch,
       patient: patient ?? this.patient,
       campaign: campaign ?? this.campaign,
       dose: dose ?? this.dose,
@@ -62,7 +62,7 @@ class Application implements GenericModel {
     return {
       'id': id,
       'applier': applier.toMap(),
-      'vaccine': vaccine.toMap(),
+      'vaccine_batch': vaccineBatch.toMap(),
       'patient': patient.toMap(),
       'campaign': campaign.toMap(),
       'dose': dose.name,
@@ -75,7 +75,7 @@ class Application implements GenericModel {
     return Application(
       id: map['id'],
       applier: Applier.fromMap(map['applier']),
-      vaccine: Vaccine.fromMap(map['vaccine']),
+      vaccineBatch: VaccineBatch.fromMap(map['vaccine_batch']),
       patient: Patient.fromMap(map['patient']),
       campaign: Campaign.fromMap(map['campaign']),
       dose: VaccineDoseExtension.fromString(map['dose']),
@@ -88,7 +88,7 @@ class Application implements GenericModel {
 
   @override
   String toString() {
-    return 'Application(id: $id, applier: $applier, vaccine: $vaccine, patient: $patient, campaign: $campaign, dose: $dose, applicationDate: $applicationDate, dueDate: $dueDate)';
+    return 'Application(id: $id, applier: $applier, vaccineBatch: $vaccineBatch, patient: $patient, campaign: $campaign, dose: $dose, applicationDate: $applicationDate, dueDate: $dueDate)';
   }
 
   @override
@@ -98,7 +98,7 @@ class Application implements GenericModel {
     return other is Application &&
         other.id == id &&
         other.applier == applier &&
-        other.vaccine == vaccine &&
+        other.vaccineBatch == vaccineBatch &&
         other.patient == patient &&
         other.campaign == campaign &&
         other.dose == dose &&
@@ -110,7 +110,7 @@ class Application implements GenericModel {
   int get hashCode {
     return id.hashCode ^
         applier.hashCode ^
-        vaccine.hashCode ^
+        vaccineBatch.hashCode ^
         patient.hashCode ^
         campaign.hashCode ^
         dose.hashCode ^
