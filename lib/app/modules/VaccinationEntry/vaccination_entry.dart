@@ -7,6 +7,8 @@ import 'package:nurse/app/modules/VaccinationEntry/components/form_save_step_but
 import 'package:nurse/app/modules/VaccinationEntry/components/form_step_button.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/vaccination_form.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
+import 'package:nurse/app/modules/VaccineEntry/vaccine_form.dart';
+import 'package:nurse/app/modules/VaccineEntry/vaccine_form_controller.dart';
 import 'package:nurse/app/nurse_widget.dart';
 import 'package:nurse/app/utils/form_controller.dart';
 import 'package:provider/provider.dart';
@@ -47,8 +49,13 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
   FormController getFormController(BuildContext context, int formIndex) {
     switch (formIndex) {
       case 0:
-      default:
         return Provider.of<PatientFormController>(context, listen: false);
+      case 1:
+        return Provider.of<ApplierFormController>(context, listen: false);
+      case 2:
+        return Provider.of<VaccineFormController>(context, listen: false);
+      default:
+        throw Exception('Invalid form index');
     }
   }
 
@@ -57,6 +64,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
     final controller = Provider.of<VaccinationEntryController>(context);
     final patientFormController = Provider.of<PatientFormController>(context);
     final applierFormController = Provider.of<ApplierFormController>(context);
+    final vaccineFormController = Provider.of<VaccineFormController>(context);
 
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
@@ -71,7 +79,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
                   children: [
                     PatientForm(controller: patientFormController),
                     ApplierForm(controller: applierFormController),
-                    EmptyPage("Vaccine"),
+                    VaccineForm(controller: vaccineFormController),
                     EmptyPage("Campaign"),
                     VaccinationForm(),
                     EmptyPage("Dados para revisão"),

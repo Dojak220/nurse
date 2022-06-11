@@ -4,6 +4,7 @@ import 'package:nurse/app/modules/ApplierEntry/applier_form_controller.dart';
 import 'package:nurse/app/modules/Home/home_controller.dart';
 import 'package:nurse/app/modules/PatientEntry/patient_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
+import 'package:nurse/app/modules/VaccineEntry/vaccine_form_controller.dart';
 import 'package:nurse/app/nurse_widget.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,9 @@ void main() async {
           ),
           Provider<ApplierFormController>(
             create: (_) => ApplierFormController(),
+          ),
+          Provider<VaccineFormController>(
+            create: (_) => VaccineFormController(),
           ),
         ],
         child: Nurse(),
