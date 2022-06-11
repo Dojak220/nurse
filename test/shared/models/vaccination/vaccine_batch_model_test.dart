@@ -1,14 +1,23 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
+import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
 
 void main() {
   late VaccineBatch validVaccineBatch;
 
   setUp(() {
+    final validVaccine = Vaccine(
+      id: 1,
+      sipniCode: "123456",
+      name: "Vaccine Name",
+      laboratory: "Laboratory Name",
+    );
+
     validVaccineBatch = VaccineBatch(
       id: 1,
       number: "01234",
       quantity: 10,
+      vaccine: validVaccine,
     );
   });
 
@@ -18,6 +27,7 @@ void main() {
       expect(validVaccineBatch.id, 1);
       expect(validVaccineBatch.number, "01234");
       expect(validVaccineBatch.quantity, 10);
+      expect(validVaccineBatch.vaccine.id, 1);
     });
   });
 
