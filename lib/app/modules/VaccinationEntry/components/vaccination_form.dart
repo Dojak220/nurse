@@ -35,7 +35,7 @@ class _VaccinationFormState extends State<VaccinationForm> {
             Divider(color: Colors.black),
             CustomTextFormField(
               icon: Icon(Icons.local_shipping),
-              label: FormLabels.batchNumber,
+              label: FormLabels.vaccineBatch,
               validatorType: ValidatorType.NumericalString,
               onSaved: (value) => {controller.batchValue = value!},
             ),

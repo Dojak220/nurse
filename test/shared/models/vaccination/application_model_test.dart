@@ -33,15 +33,15 @@ void main() {
     ibgeCode: "1234567",
   );
 
-  final expectedVaccine = Vaccine(
+  final expectedVaccineBatch = VaccineBatch(
     id: 1,
-    sipniCode: "123456",
-    name: "Vaccine Name",
-    laboratory: "Laboratory Name",
-    batch: VaccineBatch(
+    number: "01234",
+    quantity: 10,
+    vaccine: Vaccine(
       id: 1,
-      number: "01234",
-      quantity: 10,
+      sipniCode: "123456",
+      name: "Vaccine Name",
+      laboratory: "Laboratory Name",
     ),
   );
 
@@ -87,7 +87,7 @@ void main() {
     validApplication = Application(
       id: 1,
       patient: expectedPatient,
-      vaccine: expectedVaccine,
+      vaccineBatch: expectedVaccineBatch,
       applicationDate: DateTime(2022, 3, 4),
       applier: expectedApplier,
       dose: VaccineDose.D1,

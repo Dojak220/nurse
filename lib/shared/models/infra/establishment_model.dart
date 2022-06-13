@@ -51,7 +51,7 @@ class Establishment implements GenericModel {
 
   @override
   String toString() {
-    return 'Establishment(id: $id, cnes: $cnes, name: $name, locality: $locality)';
+    return '$cnes - $name';
   }
 
   Establishment copyWith({

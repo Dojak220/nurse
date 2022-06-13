@@ -2,22 +2,37 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
+import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_batch_repository.dart';
+import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_repository.dart';
 import 'package:nurse/shared/repositories/vaccination/vaccine_batch_repository.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
 import 'database_vaccine_batch_repository_test.mocks.dart';
 
-@GenerateMocks([DatabaseManager, Database, DatabaseVaccineBatchRepository])
+@GenerateMocks([DatabaseManager, Database, DatabaseVaccineRepository])
 void main() {
   final dbMock = MockDatabase();
   final dbManagerMock = MockDatabaseManager();
+  final vaccineRepo = MockDatabaseVaccineRepository();
 
-  final repository = DatabaseVaccineBatchRepository(dbManagerMock);
+  final repository = DatabaseVaccineBatchRepository(
+    dbManagerMock,
+    vaccineRepo,
+  );
 
   setUp(() {
     when(dbManagerMock.db).thenReturn(dbMock);
+    when(vaccineRepo.getVaccineById(1)).thenAnswer(
+      (_) async => _validVaccine,
+    );
+    when(vaccineRepo.getVaccineBySipniCode("123456")).thenAnswer(
+      (_) async => _validVaccine,
+    );
+    when(vaccineRepo.getVaccines()).thenAnswer(
+      (_) async => _validVaccines,
+    );
   });
 
   testCreateVaccineBatch(dbMock, repository);
@@ -109,8 +124,24 @@ void testGetVaccineBatch(
                 "id": expectedVaccineBatch.id,
                 "number": expectedVaccineBatch.number,
                 "quantity": expectedVaccineBatch.quantity,
+                "vaccine": expectedVaccineBatch.vaccine.id,
               }
             ]));
+
+        when(db.query(
+          DatabaseVaccineRepository.TABLE,
+          where: anyNamed("where"),
+          whereArgs: [_validVaccineId],
+        )).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": _validVaccine.id,
+              "sipni_code": _validVaccine.sipniCode,
+              "name": _validVaccine.name,
+              "laboratory": _validVaccine.laboratory,
+            }
+          ]),
+        );
       });
 
       test("should get a vaccineBatch entry by its id", () async {
@@ -156,16 +187,19 @@ void testGetVaccineBatches(
                 "id": expectedVaccineBatches[0].id,
                 "number": expectedVaccineBatches[0].number,
                 "quantity": expectedVaccineBatches[0].quantity,
+                "vaccine": expectedVaccineBatches[0].vaccine.id,
               },
               {
                 "id": expectedVaccineBatches[1].id,
                 "number": expectedVaccineBatches[1].number,
                 "quantity": expectedVaccineBatches[1].quantity,
+                "vaccine": expectedVaccineBatches[1].vaccine.id,
               },
               {
                 "id": expectedVaccineBatches[2].id,
                 "number": expectedVaccineBatches[2].number,
                 "quantity": expectedVaccineBatches[2].quantity,
+                "vaccine": expectedVaccineBatches[2].vaccine.id,
               },
             ]));
       });
@@ -245,13 +279,33 @@ void testUpdateVaccineBatch(
 }
 
 final int _validVaccineBatchId = 1;
+final int _validVaccineId = 1;
+
 final int _invalidVaccineBatchId = 2;
+
+final _validVaccine = Vaccine(
+  id: _validVaccineId,
+  sipniCode: "123456",
+  name: "Vaccine Name",
+  laboratory: "Laboratory Name",
+);
 
 final _validVaccineBatch = VaccineBatch(
   id: _validVaccineBatchId,
   number: "123456",
   quantity: 20,
+  vaccine: _validVaccine,
 );
+
+final _validVaccines = [
+  _validVaccine,
+  _validVaccine.copyWith(
+    id: _validVaccineId + 1,
+    sipniCode: "123457",
+    name: "Vaccine Name 2",
+    laboratory: "Laboratory Name 2",
+  ),
+];
 
 final _validVaccineBatches = [
   _validVaccineBatch,
@@ -259,10 +313,12 @@ final _validVaccineBatches = [
     id: _validVaccineBatchId + 1,
     number: "123457",
     quantity: 30,
+    vaccine: _validVaccines[1],
   ),
   _validVaccineBatch.copyWith(
     id: _validVaccineBatchId + 2,
     number: "123458",
     quantity: 40,
+    vaccine: _validVaccines[1],
   ),
 ];

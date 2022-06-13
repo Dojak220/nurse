@@ -37,6 +37,7 @@ class CustomDropdownButtonFormField<T> extends CustomFormField {
         labelText: description,
       ),
       isExpanded: true,
+      value: sortedItems.length == 1 ? sortedItems.first : null,
       items: sortedItems
           .map((item) => DropdownMenuItem(
               value: item,

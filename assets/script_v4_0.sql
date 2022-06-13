@@ -6,7 +6,7 @@
 CREATE TABLE Application (
     id integer NOT NULL CONSTRAINT Application_pk PRIMARY KEY,
     applier integer NOT NULL,
-    vaccine integer NOT NULL,
+    vaccine_batch integer NOT NULL,
     dose varchar(4) NOT NULL,
     patient integer NOT NULL,
     application_date date NOT NULL,
@@ -18,8 +18,8 @@ CREATE TABLE Application (
     REFERENCES Applier (id),
     CONSTRAINT Application_Campaign FOREIGN KEY (campaign)
     REFERENCES Campaign (id),
-    CONSTRAINT Application_Vaccine FOREIGN KEY (vaccine)
-    REFERENCES Vaccine (id)
+    CONSTRAINT Application_Vaccine_Batch FOREIGN KEY (vaccine_batch)
+    REFERENCES Vaccine_Batch (id)
 );
 
 -- Table: Aplicante
@@ -93,7 +93,10 @@ CREATE TABLE Vaccine_Batch (
     id integer NOT NULL CONSTRAINT Vaccine_pk PRIMARY KEY,
     number varchar(10) NOT NULL,
     quantity integer NOT NULL,
+    vaccine integer NOT NULL,
     CONSTRAINT number UNIQUE (number)
+    CONSTRAINT Vaccine FOREIGN KEY (vaccine)
+    REFERENCES Vaccine (id)
 );
 
 -- Table: Paciente
@@ -132,42 +135,39 @@ CREATE TABLE Vaccine (
     sipni_code varchar(10) NOT NULL,
     name varchar(15) NOT NULL,
     laboratory varchar(30) NOT NULL,
-    batch integer NOT NULL,
-    CONSTRAINT sipni_code UNIQUE (sipni_code),
-    CONSTRAINT Vaccine_Batch FOREIGN KEY (batch)
-    REFERENCES Vaccine_Batch (id)
+    CONSTRAINT sipni_code UNIQUE (sipni_code)
 );
 
 -- Aplication
-INSERT INTO Application (applier, vaccine, dose, patient , application_date, campaign , due_date)
+INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
 VALUES (1, 1, "D1", 1, "2021-01-01", 1, "2021-04-01");
 
-INSERT INTO Application (applier, vaccine, dose, patient , application_date, campaign , due_date)
+INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
 VALUES (1, 1, "D1", 2, "2021-01-01", 1, "2021-04-01");
 
-INSERT INTO Application (applier, vaccine, dose, patient , application_date, campaign , due_date)
+INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
 VALUES (1, 1, "D1", 3, "2021-01-01", 1, "2021-04-01");
 
-INSERT INTO Application (applier, vaccine, dose, patient , application_date, campaign , due_date)
+INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
 VALUES (1, 1, "D1", 4, "2021-01-01", 1, "2021-04-01");
 
-INSERT INTO Application (applier, vaccine, dose, patient , application_date, campaign , due_date)
+INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
 VALUES (1, 1, "D1", 5, "2021-01-01", 1, "2021-04-01");
 
-INSERT INTO Application (applier, vaccine, dose, patient , application_date, campaign , due_date)
-VALUES (1, 1, "D2", 1, "2022-05-01", 1, "2022-07-01");
+INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
+VALUES (1, 1, "D2", 1, "2022-06-01", 1, "2022-07-01");
 
-INSERT INTO Application (applier, vaccine, dose, patient , application_date, campaign , due_date)
-VALUES (1, 1, "D2", 2, "2022-05-01", 1, "2022-07-01");
+INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
+VALUES (1, 1, "D2", 2, "2022-06-01", 1, "2022-07-01");
 
-INSERT INTO Application (applier, vaccine, dose, patient , application_date, campaign , due_date)
-VALUES (1, 1, "D2", 3, "2022-05-10", 1, "2022-07-01");
+INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
+VALUES (1, 1, "D2", 3, "2022-06-09", 1, "2022-07-01");
 
-INSERT INTO Application (applier, vaccine, dose, patient , application_date, campaign , due_date)
-VALUES (1, 1, "D2", 4, "2022-05-11", 1, "2022-07-01");
+INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
+VALUES (1, 1, "D2", 4, "2022-06-10", 1, "2022-07-01");
 
-INSERT INTO Application (applier, vaccine, dose, patient , application_date, campaign , due_date)
-VALUES (1, 1, "D2", 5, "2022-05-12", 1, "2022-07-01");
+INSERT INTO Application (applier, vaccine_batch, dose, patient , application_date, campaign , due_date)
+VALUES (1, 1, "D2", 5, "2022-06-11", 1, "2022-07-01");
 -- End of Application
 
 INSERT INTO Applier (cns, establishment, person)
@@ -182,8 +182,8 @@ VALUES ("1234567", "Estabelecimento 1", 1);
 INSERT INTO Locality (name, city, state, ibge_code)
 VALUES ("São Paulo", "São Paulo", "SP", "3550308");
 
-INSERT INTO Vaccine_Batch (number, quantity)
-VALUES ("123456", 10);
+INSERT INTO Vaccine_Batch (number, quantity, vaccine)
+VALUES ("123456", 10, 1);
 
 -- Patient
 INSERT INTO Patient (cns, maternal_condition, person, priority_category)
@@ -219,8 +219,8 @@ INSERT INTO Person (cpf, name, birth_date, sex, mother_name, father_name, locali
 VALUES ("51893955966", "Valentina Castro Silva", "2021-03-01", "F", "Maria Madalena", "João Pedro", 1);
 -- End of Person
 
-INSERT INTO Vaccine (sipni_code, name, laboratory, batch)
-VALUES ("123456", "Vacina 1", "Laboratorio 1", 1);
+INSERT INTO Vaccine (sipni_code, name, laboratory)
+VALUES ("123456", "Vacina 1", "Laboratorio 1");
 
 -- Priority_Group
 INSERT INTO Priority_Group (code, name, description)

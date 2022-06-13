@@ -45,7 +45,6 @@ enum FormLabels {
   applierCns,
   applierCpf,
   applierName,
-  batchNumber,
   category,
   date,
   dose,
@@ -55,6 +54,10 @@ enum FormLabels {
   patientCns,
   patientCpf,
   patientName,
+  vaccineBatch,
+  vaccineLaboratory,
+  vaccineName,
+  vaccineSipniCode,
 }
 
 extension LabelNamesAndHints on FormLabels {
@@ -66,8 +69,7 @@ extension LabelNamesAndHints on FormLabels {
         return "CPF do(a) Aplicante *";
       case FormLabels.applierName:
         return "Nome Completo do(a) Aplicante *";
-      case FormLabels.batchNumber:
-        return "Lote *";
+
       case FormLabels.category:
         return "Categoria Prioritária *";
       case FormLabels.date:
@@ -86,6 +88,14 @@ extension LabelNamesAndHints on FormLabels {
         return "CPF do(a) Paciente *";
       case FormLabels.patientName:
         return "Nome Completo do(a) Paciente *";
+      case FormLabels.vaccineBatch:
+        return "Lote *";
+      case FormLabels.vaccineLaboratory:
+        return "Laboratório *";
+      case FormLabels.vaccineName:
+        return "Nome da Vacina *";
+      case FormLabels.vaccineSipniCode:
+        return "Código SIPNI *";
       default:
         return "";
     }
@@ -99,8 +109,6 @@ extension LabelNamesAndHints on FormLabels {
         return "Número do Cadastro de Pessoas Físicas do(a) aplicador(a)";
       case FormLabels.applierName:
         return "Nome completo do(a) aplicante *";
-      case FormLabels.batchNumber:
-        return "Número do lote da vacina";
       case FormLabels.category:
         return "Categoria do(a) paciente";
       case FormLabels.date:
@@ -119,6 +127,14 @@ extension LabelNamesAndHints on FormLabels {
         return "Número do Cadastro de Pessoas Físicas do(a) paciente";
       case FormLabels.patientName:
         return "Nome completo do(a) paciente *";
+      case FormLabels.vaccineBatch:
+        return "Número do lote da vacina";
+      case FormLabels.vaccineLaboratory:
+        return "Laboratório da vacina";
+      case FormLabels.vaccineName:
+        return "Nome da vacina";
+      case FormLabels.vaccineSipniCode:
+        return "Código SIPNI da vacina";
       default:
         return "";
     }

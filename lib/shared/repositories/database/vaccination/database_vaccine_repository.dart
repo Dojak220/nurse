@@ -1,32 +1,18 @@
-import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
 import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_batch_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/vaccine_batch_repository.dart';
 import 'package:nurse/shared/repositories/vaccination/vaccine_repository.dart';
 
 class DatabaseVaccineRepository extends DatabaseInterface
     implements VaccineRepository {
   static const String TABLE = "Vaccine";
-  final VaccineBatchRepository _vaccineBatchRepo;
 
-  DatabaseVaccineRepository({
-    DatabaseManager? dbManager,
-    VaccineBatchRepository? vaccineBatchRepo,
-  })  : _vaccineBatchRepo =
-            vaccineBatchRepo ?? DatabaseVaccineBatchRepository(),
-        super(TABLE, dbManager);
+  DatabaseVaccineRepository({DatabaseManager? dbManager})
+      : super(TABLE, dbManager);
 
   @override
   Future<int> createVaccine(Vaccine vaccine) async {
-    final map = vaccine.toMap();
-
-    map['batch'] = await _vaccineBatchRepo
-        .getVaccineBatchByNumber(vaccine.batch.number)
-        .then((batch) => batch.id!);
-
-    final int result = await create(map);
+    final int result = await create(vaccine.toMap());
 
     return result;
   }
@@ -41,7 +27,9 @@ class DatabaseVaccineRepository extends DatabaseInterface
   @override
   Future<Vaccine> getVaccineById(int id) async {
     try {
-      return _getVaccineFromMap(await getById(id));
+      final vaccineMap = await getById(id);
+
+      return Vaccine.fromMap(vaccineMap);
     } catch (e) {
       rethrow;
     }
@@ -50,55 +38,27 @@ class DatabaseVaccineRepository extends DatabaseInterface
   @override
   Future<Vaccine> getVaccineBySipniCode(String code) async {
     try {
-      return _getVaccineFromMap(await get(code, where: "sipni_code = ?"));
+      final vaccineMap = await get(code, where: "sipni_code = ?");
+
+      return Vaccine.fromMap(vaccineMap);
     } catch (e) {
       rethrow;
     }
-  }
-
-  Future<Vaccine> _getVaccineFromMap(Map<String, dynamic> vaccineMap) async {
-    final vaccineBatch = await _getVaccineBatch(vaccineMap["batch"]);
-
-    final updatedVaccineMap = Map.of(vaccineMap);
-    updatedVaccineMap["batch"] = vaccineBatch.toMap();
-
-    return Vaccine.fromMap(updatedVaccineMap);
-  }
-
-  Future<VaccineBatch> _getVaccineBatch(int id) async {
-    final vaccineBatch = await _vaccineBatchRepo.getVaccineBatchById(id);
-
-    return vaccineBatch;
   }
 
   @override
   Future<List<Vaccine>> getVaccines() async {
     try {
       final vaccineMaps = await getAll();
-      final vaccineBatches = await _getVaccineBatches();
 
-      vaccineMaps.forEach((v) {
-        final vaccineBatch = vaccineBatches.firstWhere((b) {
-          return b.id == v["batch"];
-        });
-
-        v["batch"] = vaccineBatch.toMap();
+      final vaccines = List<Vaccine>.generate(vaccineMaps.length, (index) {
+        return Vaccine.fromMap(vaccineMaps[index]);
       });
-
-      final vaccines = vaccineMaps.map((vaccine) {
-        return Vaccine.fromMap(vaccine);
-      }).toList();
 
       return vaccines;
     } catch (e) {
       rethrow;
     }
-  }
-
-  Future<List<VaccineBatch>> _getVaccineBatches() async {
-    final vaccineBatches = await _vaccineBatchRepo.getVaccineBatches();
-
-    return vaccineBatches;
   }
 
   @override

@@ -28,9 +28,8 @@ class DatabaseCampaignRepository extends DatabaseInterface
   Future<Campaign> getCampaignById(int id) async {
     try {
       final campaignMap = await getById(id);
-      final campaign = Campaign.fromMap(campaignMap);
 
-      return campaign;
+      return Campaign.fromMap(campaignMap);
     } catch (e) {
       rethrow;
     }
@@ -40,9 +39,8 @@ class DatabaseCampaignRepository extends DatabaseInterface
   Future<Campaign> getCampaignByTitle(String title) async {
     try {
       final campaignMap = await get(title, where: "title = ?");
-      final campaign = Campaign.fromMap(campaignMap);
 
-      return campaign;
+      return Campaign.fromMap(campaignMap);
     } catch (e) {
       rethrow;
     }
@@ -53,12 +51,9 @@ class DatabaseCampaignRepository extends DatabaseInterface
     try {
       final campaignMaps = await getAll();
 
-      final List<Campaign> campaigns = List<Campaign>.generate(
-        campaignMaps.length,
-        (index) {
-          return Campaign.fromMap(campaignMaps[index]);
-        },
-      );
+      final campaigns = List<Campaign>.generate(campaignMaps.length, (index) {
+        return Campaign.fromMap(campaignMaps[index]);
+      });
 
       return campaigns;
     } catch (e) {

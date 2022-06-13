@@ -28,9 +28,8 @@ class DatabasePriorityGroupRepository extends DatabaseInterface
   Future<PriorityGroup> getPriorityGroupById(int id) async {
     try {
       final priorityGroupMap = await getById(id);
-      final priorityGroup = PriorityGroup.fromMap(priorityGroupMap);
 
-      return priorityGroup;
+      return PriorityGroup.fromMap(priorityGroupMap);
     } catch (e) {
       rethrow;
     }
@@ -40,9 +39,8 @@ class DatabasePriorityGroupRepository extends DatabaseInterface
   Future<PriorityGroup> getPriorityGroupByCode(String code) async {
     try {
       final priorityGroupMap = await get(code, where: "code = ?");
-      final priorityGroup = PriorityGroup.fromMap(priorityGroupMap);
 
-      return priorityGroup;
+      return PriorityGroup.fromMap(priorityGroupMap);
     } catch (e) {
       rethrow;
     }
@@ -53,12 +51,10 @@ class DatabasePriorityGroupRepository extends DatabaseInterface
     try {
       final priorityGroupMaps = await getAll();
 
-      final List<PriorityGroup> priorityGroups = List<PriorityGroup>.generate(
-        priorityGroupMaps.length,
-        (index) {
-          return PriorityGroup.fromMap(priorityGroupMaps[index]);
-        },
-      );
+      final priorityGroups =
+          List<PriorityGroup>.generate(priorityGroupMaps.length, (index) {
+        return PriorityGroup.fromMap(priorityGroupMaps[index]);
+      });
 
       return priorityGroups;
     } catch (e) {

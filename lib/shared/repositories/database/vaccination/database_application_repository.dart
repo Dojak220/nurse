@@ -3,36 +3,37 @@ import 'package:nurse/shared/models/infra/campaign_model.dart';
 import 'package:nurse/shared/models/patient/patient_model.dart';
 import 'package:nurse/shared/models/vaccination/application_model.dart';
 import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
+import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
 import 'package:nurse/shared/repositories/database/database_interface.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
 import 'package:nurse/shared/repositories/database/infra/database_campaign_repository.dart';
 import 'package:nurse/shared/repositories/database/patient/database_patient_repository.dart';
 import 'package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_repository.dart';
+import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_batch_repository.dart';
 import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
 import 'package:nurse/shared/repositories/patient/patient_repository.dart';
 import 'package:nurse/shared/repositories/vaccination/application_repository.dart';
 import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/vaccine_repository.dart';
+import 'package:nurse/shared/repositories/vaccination/vaccine_batch_repository.dart';
 
 class DatabaseApplicationRepository extends DatabaseInterface
     with ChangeNotifier
     implements ApplicationRepository {
   static const String TABLE = "Application";
 
-  final VaccineRepository _vaccineRepo;
+  final VaccineBatchRepository _vaccineBatchRepo;
   final PatientRepository _patientRepo;
   final CampaignRepository _campaignRepo;
   final ApplierRepository _applierRepo;
 
   DatabaseApplicationRepository({
     DatabaseManager? dbManager,
-    VaccineRepository? vaccineRepo,
+    VaccineBatchRepository? vaccineBatchRepo,
     PatientRepository? patientRepo,
     CampaignRepository? campaignRepo,
     ApplierRepository? applierRepo,
-  })  : _vaccineRepo = vaccineRepo ?? DatabaseVaccineRepository(),
+  })  : _vaccineBatchRepo =
+            vaccineBatchRepo ?? DatabaseVaccineBatchRepository(),
         _patientRepo = patientRepo ?? DatabasePatientRepository(),
         _campaignRepo = campaignRepo ?? DatabaseCampaignRepository(),
         _applierRepo = applierRepo ?? DatabaseApplierRepository(),
@@ -42,8 +43,8 @@ class DatabaseApplicationRepository extends DatabaseInterface
   Future<int> createApplication(Application application) async {
     final map = application.toMap();
 
-    map['vaccine'] = await _vaccineRepo
-        .getVaccineBySipniCode(application.vaccine.sipniCode)
+    map['vaccine_batch'] = await _vaccineBatchRepo
+        .getVaccineBatchByNumber(application.vaccineBatch.number)
         .then((vaccine) => vaccine.id!);
     map['patient'] = await _patientRepo
         .getPatientByCns(application.patient.cns)
@@ -73,12 +74,13 @@ class DatabaseApplicationRepository extends DatabaseInterface
       final applicationMap = await getById(id);
 
       final applier = await _getApplier(applicationMap["applier"]);
-      final vaccine = await _getVaccine(applicationMap["vaccine"]);
+      final vaccineBatch =
+          await _getVaccineBatch(applicationMap["vaccine_batch"]);
       final patient = await _getPatient(applicationMap["patient"]);
       final campaign = await _getCampaign(applicationMap["campaign"]);
 
       applicationMap["applier"] = applier.toMap();
-      applicationMap["vaccine"] = vaccine.toMap();
+      applicationMap["vaccine_batch"] = vaccineBatch.toMap();
       applicationMap["patient"] = patient.toMap();
       applicationMap["campaign"] = campaign.toMap();
 
@@ -96,10 +98,10 @@ class DatabaseApplicationRepository extends DatabaseInterface
     return applier;
   }
 
-  Future<Vaccine> _getVaccine(int id) async {
-    final vaccine = await _vaccineRepo.getVaccineById(id);
+  Future<VaccineBatch> _getVaccineBatch(int id) async {
+    final vaccineBatch = await _vaccineBatchRepo.getVaccineBatchById(id);
 
-    return vaccine;
+    return vaccineBatch;
   }
 
   Future<Patient> _getPatient(int id) async {
@@ -119,7 +121,7 @@ class DatabaseApplicationRepository extends DatabaseInterface
     try {
       final applicationMaps = await getAll();
       final appliers = await _getAppliers();
-      final vaccines = await _getVaccines();
+      final vaccineBatches = await _getVaccineBatches();
       final patients = await _getPatients();
       final campaigns = await _getCampaigns();
 
@@ -128,8 +130,8 @@ class DatabaseApplicationRepository extends DatabaseInterface
           return applier.id == a["applier"];
         });
 
-        final vaccine = vaccines.firstWhere((vaccine) {
-          return vaccine.id == a["vaccine"];
+        final vaccineBatch = vaccineBatches.firstWhere((vaccineBatch) {
+          return vaccineBatch.id == a["vaccine_batch"];
         });
 
         final patient = patients.firstWhere((p) {
@@ -141,7 +143,7 @@ class DatabaseApplicationRepository extends DatabaseInterface
         });
 
         a["applier"] = applier.toMap();
-        a["vaccine"] = vaccine.toMap();
+        a["vaccine_batch"] = vaccineBatch.toMap();
         a["patient"] = patient.toMap();
         a["campaign"] = campaign.toMap();
       });
@@ -162,10 +164,10 @@ class DatabaseApplicationRepository extends DatabaseInterface
     return appliers;
   }
 
-  Future<List<Vaccine>> _getVaccines() async {
-    final vaccines = await _vaccineRepo.getVaccines();
+  Future<List<VaccineBatch>> _getVaccineBatches() async {
+    final vaccineBatches = await _vaccineBatchRepo.getVaccineBatches();
 
-    return vaccines;
+    return vaccineBatches;
   }
 
   Future<List<Patient>> _getPatients() async {

@@ -1,4 +1,5 @@
 import 'package:nurse/shared/models/generic_model.dart';
+import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
 class VaccineBatch implements GenericModel {
@@ -6,11 +7,13 @@ class VaccineBatch implements GenericModel {
   final int? id;
   final String number;
   final int quantity;
+  final Vaccine vaccine;
 
   VaccineBatch({
     this.id,
     required String number,
     required this.quantity,
+    required this.vaccine,
   }) : this.number = number.trim() {
     _validateVaccineBatch();
   }
@@ -28,11 +31,13 @@ class VaccineBatch implements GenericModel {
     int? id,
     String? number,
     int? quantity,
+    Vaccine? vaccine,
   }) {
     return VaccineBatch(
       id: id ?? this.id,
       number: number ?? this.number,
       quantity: quantity ?? this.quantity,
+      vaccine: vaccine ?? this.vaccine,
     );
   }
 
@@ -41,6 +46,7 @@ class VaccineBatch implements GenericModel {
       'id': id,
       'number': number,
       'quantity': quantity,
+      'vaccine': vaccine.toMap(),
     };
   }
 
@@ -49,12 +55,13 @@ class VaccineBatch implements GenericModel {
       id: map['id'],
       number: map['number'] ?? '',
       quantity: map['quantity']?.toInt() ?? 0,
+      vaccine: Vaccine.fromMap(map['vaccine']),
     );
   }
 
   @override
   String toString() =>
-      'VaccineBatch(id: $id, number: $number, quantity: $quantity)';
+      'VaccineBatch(id: $id, number: $number, quantity: $quantity, vaccine: $vaccine)';
 
   @override
   bool operator ==(Object other) {
@@ -63,9 +70,11 @@ class VaccineBatch implements GenericModel {
     return other is VaccineBatch &&
         other.id == id &&
         other.number == number &&
-        other.quantity == quantity;
+        other.quantity == quantity &&
+        other.vaccine == vaccine;
   }
 
   @override
-  int get hashCode => id.hashCode ^ number.hashCode ^ quantity.hashCode;
+  int get hashCode =>
+      id.hashCode ^ number.hashCode ^ quantity.hashCode ^ vaccine.hashCode;
 }

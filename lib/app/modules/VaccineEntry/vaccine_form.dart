@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/modules/ApplierEntry/applier_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field%20.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_form_field.dart';
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/vaccination/applier_model.dart';
+import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
+import 'package:nurse/app/modules/VaccineEntry/vaccine_form_controller.dart';
+import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
+import 'package:nurse/shared/utils/validator.dart';
 
-class ApplierForm extends StatefulWidget {
-  final ApplierFormController controller;
+class VaccineForm extends StatefulWidget {
+  final VaccineFormController controller;
 
-  ApplierForm({
+  VaccineForm({
     Key? key,
     required this.controller,
   }) : super(key: key);
 
   @override
-  State<ApplierForm> createState() => _ApplierFormState();
+  State<VaccineForm> createState() => _VaccineFormState();
 }
 
-class _ApplierFormState extends State<ApplierForm> {
+class _VaccineFormState extends State<VaccineForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -26,20 +27,36 @@ class _ApplierFormState extends State<ApplierForm> {
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: ListView(
           children: [
-            CustomDropdownButtonFormField(
-              icon: Icon(Icons.local_hospital),
-              label: FormLabels.establishment,
-              items: widget.controller.establishments,
-              onChanged: (Establishment? value) => setState(
-                  () => widget.controller.selectedEstablishment = value),
+            CustomTextFormField(
+              icon: Icon(Icons.code),
+              label: FormLabels.vaccineSipniCode,
+              validatorType: ValidatorType.NumericalString,
+              onSaved: (value) =>
+                  setState(() => widget.controller.sipniCode = value),
+            ),
+            Divider(color: Colors.black),
+            CustomTextFormField(
+              icon: Icon(Icons.abc),
+              label: FormLabels.vaccineName,
+              validatorType: ValidatorType.Name,
+              onSaved: (value) =>
+                  setState(() => widget.controller.name = value),
+            ),
+            Divider(color: Colors.black),
+            CustomTextFormField(
+              icon: Icon(Icons.local_pharmacy),
+              label: FormLabels.vaccineLaboratory,
+              validatorType: ValidatorType.Name,
+              onSaved: (value) =>
+                  setState(() => widget.controller.laboratory = value),
             ),
             Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: Icon(Icons.person),
-              label: FormLabels.applierName,
-              items: widget.controller.appliers,
-              onChanged: (Applier? value) =>
-                  setState(() => widget.controller.selectedApplier = value),
+              icon: Icon(Icons.batch_prediction),
+              label: FormLabels.vaccineBatch,
+              items: widget.controller.vaccineBatches,
+              onChanged: (VaccineBatch? value) =>
+                  setState(() => widget.controller.selectedBatch = value),
             ),
           ],
         ),

@@ -1,5 +1,4 @@
 import 'package:nurse/shared/models/generic_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
 class Vaccine implements GenericModel {
@@ -8,14 +7,12 @@ class Vaccine implements GenericModel {
   final String sipniCode;
   final String name;
   final String laboratory;
-  final VaccineBatch batch;
 
   Vaccine({
     this.id,
     required String sipniCode,
     required String name,
     required String laboratory,
-    required this.batch,
   })  : this.sipniCode = sipniCode.trim(),
         this.name = name.trim(),
         this.laboratory = laboratory.trim() {
@@ -36,14 +33,12 @@ class Vaccine implements GenericModel {
     String? sipniCode,
     String? name,
     String? laboratory,
-    VaccineBatch? batch,
   }) {
     return Vaccine(
       id: id ?? this.id,
       sipniCode: sipniCode ?? this.sipniCode,
       name: name ?? this.name,
       laboratory: laboratory ?? this.laboratory,
-      batch: batch ?? this.batch,
     );
   }
 
@@ -53,7 +48,6 @@ class Vaccine implements GenericModel {
       'sipni_code': sipniCode,
       'name': name,
       'laboratory': laboratory,
-      'batch': batch.toMap(),
     };
   }
 
@@ -63,13 +57,12 @@ class Vaccine implements GenericModel {
       sipniCode: map['sipni_code'] ?? '',
       name: map['name'] ?? '',
       laboratory: map['laboratory'] ?? '',
-      batch: VaccineBatch.fromMap(map['batch']),
     );
   }
 
   @override
   String toString() {
-    return 'Vaccine(id: $id, sipniCode: $sipniCode, name: $name, laboratory: $laboratory, batch: $batch)';
+    return 'Vaccine(id: $id, sipniCode: $sipniCode, name: $name, laboratory: $laboratory)';
   }
 
   @override
@@ -80,8 +73,7 @@ class Vaccine implements GenericModel {
         other.id == id &&
         other.sipniCode == sipniCode &&
         other.name == name &&
-        other.laboratory == laboratory &&
-        other.batch == batch;
+        other.laboratory == laboratory;
   }
 
   @override
@@ -89,7 +81,6 @@ class Vaccine implements GenericModel {
     return id.hashCode ^
         sipniCode.hashCode ^
         name.hashCode ^
-        laboratory.hashCode ^
-        batch.hashCode;
+        laboratory.hashCode;
   }
 }

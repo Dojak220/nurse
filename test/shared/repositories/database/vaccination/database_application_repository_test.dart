@@ -17,7 +17,7 @@ import 'package:nurse/shared/repositories/database/infra/database_campaign_repos
 import 'package:nurse/shared/repositories/database/patient/database_patient_repository.dart';
 import 'package:nurse/shared/repositories/database/vaccination/database_application_repository.dart';
 import 'package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_repository.dart';
+import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_batch_repository.dart';
 import 'package:nurse/shared/repositories/vaccination/application_repository.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
@@ -27,7 +27,7 @@ import 'database_application_repository_test.mocks.dart';
   DatabaseManager,
   Database,
   DatabasePatientRepository,
-  DatabaseVaccineRepository,
+  DatabaseVaccineBatchRepository,
   DatabaseApplierRepository,
   DatabaseCampaignRepository,
 ])
@@ -35,14 +35,14 @@ void main() {
   final dbMock = MockDatabase();
   final dbManagerMock = MockDatabaseManager();
   final applierRepoMock = MockDatabaseApplierRepository();
-  final vaccineRepoMock = MockDatabaseVaccineRepository();
+  final vaccineBatchRepoMock = MockDatabaseVaccineBatchRepository();
   final campaignRepoMock = MockDatabaseCampaignRepository();
   final patientRepoMock = MockDatabasePatientRepository();
 
   final repository = DatabaseApplicationRepository(
     dbManager: dbManagerMock,
     applierRepo: applierRepoMock,
-    vaccineRepo: vaccineRepoMock,
+    vaccineBatchRepo: vaccineBatchRepoMock,
     campaignRepo: campaignRepoMock,
     patientRepo: patientRepoMock,
   );
@@ -56,13 +56,15 @@ void main() {
       (_) async => _validApplier,
     );
     when(applierRepoMock.getAppliers()).thenAnswer((_) async => _validAppliers);
-    when(vaccineRepoMock.getVaccineById(1)).thenAnswer(
-      (_) async => _validVaccine,
+    when(vaccineBatchRepoMock.getVaccineBatchById(1)).thenAnswer(
+      (_) async => _validVaccineBatch,
     );
-    when(vaccineRepoMock.getVaccineBySipniCode("123456")).thenAnswer(
-      (_) async => _validVaccine,
+    when(vaccineBatchRepoMock.getVaccineBatchByNumber("123456")).thenAnswer(
+      (_) async => _validVaccineBatch,
     );
-    when(vaccineRepoMock.getVaccines()).thenAnswer((_) async => _validVaccines);
+    when(vaccineBatchRepoMock.getVaccineBatches()).thenAnswer(
+      (_) async => _validVaccineBatches,
+    );
     when(campaignRepoMock.getCampaignById(1)).thenAnswer(
       (_) async => _validCampaign,
     );
@@ -159,7 +161,7 @@ void testGetApplication(MockDatabase db, ApplicationRepository repository) {
             {
               "id": expectedApplication.id,
               "patient": expectedApplication.patient.id,
-              "vaccine": expectedApplication.vaccine.id,
+              "vaccine_batch": expectedApplication.vaccineBatch.id,
               "application_date":
                   expectedApplication.applicationDate.toString(),
               "applier": expectedApplication.applier.id,
@@ -212,7 +214,7 @@ void testGetApplications(MockDatabase db, ApplicationRepository repository) {
             {
               "id": expectedApplications[0].id,
               "patient": expectedApplications[0].patient.id,
-              "vaccine": expectedApplications[0].vaccine.id,
+              "vaccine_batch": expectedApplications[0].vaccineBatch.id,
               "application_date":
                   expectedApplications[0].applicationDate.toString(),
               "applier": expectedApplications[0].applier.id,
@@ -223,7 +225,7 @@ void testGetApplications(MockDatabase db, ApplicationRepository repository) {
             {
               "id": expectedApplications[1].id,
               "patient": expectedApplications[1].patient.id,
-              "vaccine": expectedApplications[1].vaccine.id,
+              "vaccine_batch": expectedApplications[1].vaccineBatch.id,
               "application_date":
                   expectedApplications[1].applicationDate.toString(),
               "applier": expectedApplications[1].applier.id,
@@ -385,17 +387,12 @@ final _validVaccine = Vaccine(
   sipniCode: "123456",
   name: "Vaccine Name",
   laboratory: "Laboratory Name",
-  batch: VaccineBatch(
-    id: 1,
-    number: "01234",
-    quantity: 10,
-  ),
 );
 
 final _validApplication = Application(
   id: _validApplicationId,
   patient: _validPatient,
-  vaccine: _validVaccine,
+  vaccineBatch: _validVaccineBatch,
   applicationDate: DateTime(2022, 3, 4),
   applier: _validApplier,
   dose: VaccineDose.D1,
@@ -442,18 +439,8 @@ final _validVaccineBatch = VaccineBatch(
   id: _validVaccineBatchId,
   number: "123456",
   quantity: 20,
+  vaccine: _validVaccine,
 );
-final _validVaccineBatches = [
-  _validVaccineBatch,
-  _validVaccineBatch.copyWith(
-    id: _validVaccineBatchId + 1,
-    number: "654321",
-  ),
-  _validVaccineBatch.copyWith(
-    id: _validVaccineBatchId + 2,
-    number: "123457",
-  ),
-];
 
 final _validVaccines = [
   _validVaccine,
@@ -461,13 +448,25 @@ final _validVaccines = [
     id: 2,
     sipniCode: "654321",
     name: "Vaccine Name 2",
-    batch: _validVaccineBatches[1],
   ),
   _validVaccine.copyWith(
     id: 3,
     sipniCode: "111222",
     name: "Vaccine Name 3",
-    batch: _validVaccineBatches[2],
+  ),
+];
+
+final _validVaccineBatches = [
+  _validVaccineBatch,
+  _validVaccineBatch.copyWith(
+    id: _validVaccineBatchId + 1,
+    number: "654321",
+    vaccine: _validVaccines[1],
+  ),
+  _validVaccineBatch.copyWith(
+    id: _validVaccineBatchId + 2,
+    number: "123457",
+    vaccine: _validVaccines[2],
   ),
 ];
 
