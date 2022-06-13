@@ -20,13 +20,13 @@ void main() async {
           Provider<VaccinationEntryController>(
             create: (_) => VaccinationEntryController(),
           ),
-          Provider<PatientFormController>(
+          ChangeNotifierProvider(
             create: (_) => PatientFormController(),
           ),
-          Provider<ApplierFormController>(
+          ChangeNotifierProvider(
             create: (_) => ApplierFormController(),
           ),
-          Provider<VaccineFormController>(
+          ChangeNotifierProvider(
             create: (_) => VaccineFormController(),
           ),
         ],
