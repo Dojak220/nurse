@@ -73,6 +73,6 @@ class Applier implements GenericModel {
 
   @override
   String toString() {
-    return 'Applier(id: $id, cns: $cns, person: $person, establishment: $establishment)';
+    return '${cns.replaceRange(3, 12, "...")} - ${person.name}';
   }
 }

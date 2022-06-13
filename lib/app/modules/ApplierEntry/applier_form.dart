@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nurse/app/modules/ApplierEntry/applier_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field%20.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_form_field.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
 import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import 'package:nurse/shared/models/vaccination/applier_model.dart';
 
 class ApplierForm extends StatefulWidget {
   final ApplierFormController controller;
@@ -27,34 +26,20 @@ class _ApplierFormState extends State<ApplierForm> {
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: ListView(
           children: [
-            CustomTextFormField(
-              icon: Icon(Icons.badge),
-              label: FormLabels.applierCns,
-              validatorType: ValidatorType.CNS,
-              onSaved: (value) => setState(() => widget.controller.cns = value),
-            ),
-            Divider(color: Colors.black),
-            CustomTextFormField(
-              icon: Icon(Icons.badge),
-              label: FormLabels.applierCpf,
-              validatorType: ValidatorType.CPF,
-              onSaved: (value) => setState(() => widget.controller.cpf = value),
-            ),
-            Divider(color: Colors.black),
-            CustomTextFormField(
-              icon: Icon(Icons.abc),
-              label: FormLabels.applierName,
-              validatorType: ValidatorType.Name,
-              onSaved: (value) =>
-                  setState(() => widget.controller.name = value),
-            ),
-            Divider(color: Colors.black),
             CustomDropdownButtonFormField(
               icon: Icon(Icons.local_hospital),
               label: FormLabels.establishment,
               items: widget.controller.establishments,
               onChanged: (Establishment? value) => setState(
                   () => widget.controller.selectedEstablishment = value),
+            ),
+            Divider(color: Colors.black),
+            CustomDropdownButtonFormField(
+              icon: Icon(Icons.person),
+              label: FormLabels.applierName,
+              items: widget.controller.appliers,
+              onChanged: (Applier? value) =>
+                  setState(() => widget.controller.selectedApplier = value),
             ),
           ],
         ),

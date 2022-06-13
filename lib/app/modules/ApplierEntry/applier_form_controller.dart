@@ -1,41 +1,45 @@
 import 'package:nurse/app/utils/form_controller.dart';
 import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
 import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/repositories/database/infra/database_establishment_repository.dart';
-import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
+import 'package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart';
+import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
 
 class ApplierFormController extends FormController {
-  final EstablishmentRepository _establishmentRepository;
-  final _establishments = List<Establishment>.empty(growable: true);
-  List<Establishment> get establishments => _establishments;
+  Applier? selectedApplier;
+  Establishment? selectedEstablishment;
 
-  Applier? applier;
+  final ApplierRepository _applierRepository;
 
-  late String? cns;
-  late String? cpf;
-  late String? name;
-  late Establishment? selectedEstablishment;
+  final _appliers = List<Applier>.empty(growable: true);
+  List<Applier> get appliers => getAppliersFromSelectedEstablishment();
+  List<Establishment> get establishments => getEstablishmentsFromAllAppliers();
 
   ApplierFormController([
-    EstablishmentRepository? establishmentRepository,
-  ]) : _establishmentRepository =
-            establishmentRepository ?? DatabaseEstablishmentRepository() {
-    _getEstablishments();
+    ApplierRepository? applierRepository,
+  ]) : _applierRepository = applierRepository ?? DatabaseApplierRepository() {
+    _getAppliers();
   }
 
-  void _getEstablishments() async {
-    _establishments.addAll(await _establishmentRepository.getEstablishments());
+  void _getAppliers() async {
+    _appliers.addAll(await _applierRepository.getAppliers());
+    notifyListeners();
+  }
+
+  List<Applier> getAppliersFromSelectedEstablishment() {
+    if (selectedEstablishment == null) return _appliers;
+    return _appliers.where((applier) {
+      return applier.establishment.id == selectedEstablishment!.id;
+    }).toList();
+  }
+
+  List<Establishment> getEstablishmentsFromAllAppliers() {
+    return List.of(
+      _appliers.map((applier) => applier.establishment),
+    );
   }
 
   @override
   void submitForm() async {
     formKey.currentState!.save();
-
-    applier = Applier(
-      cns: cns!,
-      establishment: selectedEstablishment!,
-      person: Person(cpf: cpf!, name: name!),
-    );
   }
 }
