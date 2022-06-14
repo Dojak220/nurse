@@ -6,14 +6,14 @@ import 'package:nurse/shared/repositories/vaccination/vaccine_batch_repository.d
 
 class VaccineFormController extends FormController {
   final VaccineBatchRepository _batchRepository;
+
   final _vaccineBatches = List<VaccineBatch>.empty(growable: true);
   List<VaccineBatch> get vaccineBatches => _vaccineBatches;
+  List<Vaccine> get vaccines => List.of(
+        vaccineBatches.map((batch) => batch.vaccine),
+      );
 
-  Vaccine? vaccine;
-
-  late String? sipniCode;
-  late String? name;
-  late String? laboratory;
+  late Vaccine? selectedVaccine;
   late VaccineBatch? selectedBatch;
 
   VaccineFormController([
@@ -22,18 +22,13 @@ class VaccineFormController extends FormController {
     _getVaccineBatches();
   }
 
-  void _getVaccineBatches() async {
+  Future<void> _getVaccineBatches() async {
     _vaccineBatches.addAll(await _batchRepository.getVaccineBatches());
+    notifyListeners();
   }
 
   @override
   void submitForm() async {
     formKey.currentState!.save();
-
-    vaccine = Vaccine(
-      sipniCode: sipniCode!,
-      name: name!,
-      laboratory: laboratory!,
-    );
   }
 }

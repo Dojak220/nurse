@@ -60,8 +60,7 @@ class VaccineBatch implements GenericModel {
   }
 
   @override
-  String toString() =>
-      'VaccineBatch(id: $id, number: $number, quantity: $quantity, vaccine: $vaccine)';
+  String toString() => 'Batch $number';
 
   @override
   bool operator ==(Object other) {

@@ -62,7 +62,7 @@ class Vaccine implements GenericModel {
 
   @override
   String toString() {
-    return 'Vaccine(id: $id, sipniCode: $sipniCode, name: $name, laboratory: $laboratory)';
+    return '$sipniCode | $name';
   }
 
   @override
