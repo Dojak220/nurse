@@ -69,7 +69,6 @@ class DatabaseInterface {
 
       return entityMaps;
     } catch (e) {
-      print(e);
       rethrow;
     }
   }
