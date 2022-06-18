@@ -42,9 +42,14 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
     FormController formController,
   ) {
     final allFieldsValid = formController.formKey.currentState!.validate();
+
     if (allFieldsValid) {
       formController.submitForm();
-      _onFormIndexChanged(_formIndex + 1);
+      if (_formIndex < _formsCount - 1) {
+        _onFormIndexChanged(_formIndex + 1);
+      } else {
+        controller.saveVaccination();
+      }
     }
   }
 
@@ -80,7 +85,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
         campaignFormController.cleanAllInfo();
         patientFormController.cleanAllInfo();
         applierFormController.cleanAllInfo();
-        // vaccineFormController.cleanAllInfo();
+        vaccineFormController.cleanAllInfo();
         return true;
       },
       child: Scaffold(

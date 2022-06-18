@@ -28,6 +28,13 @@ class VaccineFormController extends FormController {
   }
 
   @override
+  void cleanAllInfo() {
+    selectedVaccine = null;
+    selectedBatch = null;
+    notifyListeners();
+  }
+
+  @override
   void submitForm() async {
     formKey.currentState!.save();
   }

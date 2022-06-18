@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:nurse/app/modules/Home/home_page.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry.dart';
 import 'package:nurse/app/theme/app_theme.dart';
@@ -10,6 +11,12 @@ class Nurse extends StatelessWidget {
     return MaterialApp(
       title: 'NURSE',
       theme: AppTheme.themeData,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [const Locale('pt', 'BR')],
       initialRoute: "/",
       routes: {
         "/": (context) => Home(title: "Nurse"),

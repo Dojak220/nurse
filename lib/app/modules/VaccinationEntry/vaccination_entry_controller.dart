@@ -14,6 +14,10 @@ class VaccinationEntryController {
 
   VaccinationEntryController();
 
+  void saveVaccination() {
+    print('Saving vaccination');
+  }
+
   void submitForm() {
     formKey.currentState!.save();
   }
