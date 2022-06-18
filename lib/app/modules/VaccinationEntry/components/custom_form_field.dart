@@ -45,6 +45,7 @@ enum FormLabels {
   applierCns,
   applierCpf,
   applierName,
+  campaign,
   category,
   date,
   dose,
@@ -70,6 +71,8 @@ extension LabelNamesAndHints on FormLabels {
         return "CPF do(a) Aplicante *";
       case FormLabels.applierName:
         return "Nome Completo do(a) Aplicante *";
+      case FormLabels.campaign:
+        return "Campanha *";
       case FormLabels.category:
         return "Categoria Prioritária *";
       case FormLabels.date:
@@ -110,7 +113,9 @@ extension LabelNamesAndHints on FormLabels {
       case FormLabels.applierCpf:
         return "Número do Cadastro de Pessoas Físicas do(a) aplicador(a)";
       case FormLabels.applierName:
-        return "Nome completo do(a) aplicante *";
+        return "Nome completo do(a) aplicante";
+      case FormLabels.campaign:
+        return "Campanha de vacinação";
       case FormLabels.category:
         return "Categoria do(a) paciente";
       case FormLabels.date:
@@ -128,7 +133,7 @@ extension LabelNamesAndHints on FormLabels {
       case FormLabels.patientCpf:
         return "Número do Cadastro de Pessoas Físicas do(a) paciente";
       case FormLabels.patientName:
-        return "Nome completo do(a) paciente *";
+        return "Nome completo do(a) paciente";
       case FormLabels.sex:
         return "Sexo do(a) paciente";
       case FormLabels.vaccineBatch:

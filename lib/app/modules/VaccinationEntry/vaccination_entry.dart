@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nurse/app/modules/ApplierEntry/applier_form.dart';
 import 'package:nurse/app/modules/ApplierEntry/applier_form_controller.dart';
+import 'package:nurse/app/modules/CampaignEntry/campaign_form.dart';
+import 'package:nurse/app/modules/CampaignEntry/campaign_form_controller.dart';
 import 'package:nurse/app/modules/PatientEntry/patient_form_controller.dart';
 import 'package:nurse/app/modules/PatientEntry/patient_form.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/form_save_step_button.dart';
@@ -49,24 +51,29 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
   FormController getFormController(BuildContext context, int formIndex) {
     switch (formIndex) {
       case 0:
-        return Provider.of<PatientFormController>(context, listen: false);
+        return Provider.of<CampaignFormController>(context, listen: false);
       case 1:
-        return Provider.of<ApplierFormController>(context, listen: false);
+        return Provider.of<PatientFormController>(context, listen: false);
       case 2:
-      default:
+        return Provider.of<ApplierFormController>(context, listen: false);
+      case 3:
         return Provider.of<VaccineFormController>(context, listen: false);
+      default:
+        throw Exception('Unknown form index');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<VaccinationEntryController>(context);
+    final campaignFormController = Provider.of<CampaignFormController>(context);
     final patientFormController = Provider.of<PatientFormController>(context);
     final applierFormController = Provider.of<ApplierFormController>(context);
     final vaccineFormController = Provider.of<VaccineFormController>(context);
 
     return WillPopScope(
       onWillPop: () async {
+        campaignFormController.cleanAllInfo();
         patientFormController.cleanAllInfo();
         applierFormController.cleanAllInfo();
         // vaccineFormController.cleanAllInfo();
@@ -83,6 +90,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
                   child: IndexedStack(
                     index: _formIndex,
                     children: [
+                      CampaignForm(controller: campaignFormController),
                       PatientForm(controller: patientFormController),
                       ApplierForm(controller: applierFormController),
                       VaccineForm(controller: vaccineFormController),

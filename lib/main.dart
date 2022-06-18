@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:nurse/app/modules/ApplierEntry/applier_form_controller.dart';
+import 'package:nurse/app/modules/CampaignEntry/campaign_form_controller.dart';
 import 'package:nurse/app/modules/Home/home_controller.dart';
 import 'package:nurse/app/modules/PatientEntry/patient_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
@@ -28,6 +29,9 @@ void main() async {
           ),
           ChangeNotifierProvider(
             create: (_) => VaccineFormController(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => CampaignFormController(),
           ),
         ],
         child: Nurse(),
