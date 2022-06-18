@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Validator {
   static const _CPF_LENGTH = 11;
   static const _CNS_LENGTH = 15;
@@ -21,6 +23,14 @@ class Validator {
 
   /// Returns [true] or throws a [ValidatorException] if the [value] is not valid.
   static bool validate(ValidatorType type, Object value) {
+    DateTime? date = value is DateTime ? value : null;
+    if ((type == ValidatorType.Date ||
+            type == ValidatorType.BirthDate ||
+            type == ValidatorType.PastDate) &&
+        value is String) {
+      date = DateTime.tryParse(_formatDate(value));
+    }
+
     switch (type) {
       case ValidatorType.Id:
         return _isType<int>(value)
@@ -51,13 +61,13 @@ class Validator {
             ? _validateNumericalString(value as String)
             : throw ValidatorException.incompatibleType(String, value);
       case ValidatorType.Date:
-        return _isType<DateTime>(value)
-            ? _validateDate(value as DateTime)
+        return (_isType<DateTime>(date))
+            ? _validateDate(date as DateTime)
             : throw ValidatorException.incompatibleType(DateTime, value);
       case ValidatorType.BirthDate:
       case ValidatorType.PastDate:
-        return _isType<DateTime>(value)
-            ? _validateBirth(value as DateTime)
+        return (_isType<DateTime>(date))
+            ? _validateBirth(date as DateTime)
             : throw ValidatorException.incompatibleType(DateTime, value);
       case ValidatorType.IBGECode:
         return _isType<String>(value)
@@ -68,7 +78,7 @@ class Validator {
     }
   }
 
-  static bool _isType<T>(Object value) {
+  static bool _isType<T>(Object? value) {
     return value is T;
   }
 
@@ -234,6 +244,13 @@ class Validator {
     if (resto != 0) {
       throw ValidatorException.invalid(ValidatorType.CNS, cns);
     }
+  }
+
+  static String _formatDate(String oldFormattedDate) {
+    final date = DateFormat("dd/MM/yyyy").parse(oldFormattedDate);
+    final newFormattedDate = DateFormat("yyyy-MM-dd").format(date);
+
+    return newFormattedDate;
   }
 
   static bool _validateDate(DateTime date) {

@@ -5,6 +5,7 @@ import 'package:nurse/app/modules/CampaignEntry/campaign_form_controller.dart';
 import 'package:nurse/app/modules/Home/home_controller.dart';
 import 'package:nurse/app/modules/PatientEntry/patient_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
+import 'package:nurse/app/modules/VaccinationEntry/application_form_controller.dart';
 import 'package:nurse/app/modules/VaccineEntry/vaccine_form_controller.dart';
 import 'package:nurse/app/nurse_widget.dart';
 import 'package:nurse/shared/repositories/database/database_manager.dart';
@@ -32,6 +33,9 @@ void main() async {
           ),
           ChangeNotifierProvider(
             create: (_) => CampaignFormController(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => ApplicationFormController(),
           ),
         ],
         child: Nurse(),

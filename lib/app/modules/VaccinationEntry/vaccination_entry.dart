@@ -5,13 +5,13 @@ import 'package:nurse/app/modules/CampaignEntry/campaign_form.dart';
 import 'package:nurse/app/modules/CampaignEntry/campaign_form_controller.dart';
 import 'package:nurse/app/modules/PatientEntry/patient_form_controller.dart';
 import 'package:nurse/app/modules/PatientEntry/patient_form.dart';
+import 'package:nurse/app/modules/VaccinationEntry/application_form.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/form_save_step_button.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/form_step_button.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/vaccination_form.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
+import 'package:nurse/app/modules/VaccinationEntry/application_form_controller.dart';
 import 'package:nurse/app/modules/VaccineEntry/vaccine_form.dart';
 import 'package:nurse/app/modules/VaccineEntry/vaccine_form_controller.dart';
-import 'package:nurse/app/nurse_widget.dart';
 import 'package:nurse/app/utils/form_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -58,6 +58,8 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
         return Provider.of<ApplierFormController>(context, listen: false);
       case 3:
         return Provider.of<VaccineFormController>(context, listen: false);
+      case 4:
+        return Provider.of<ApplicationFormController>(context, listen: false);
       default:
         throw Exception('Unknown form index');
     }
@@ -70,6 +72,8 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
     final patientFormController = Provider.of<PatientFormController>(context);
     final applierFormController = Provider.of<ApplierFormController>(context);
     final vaccineFormController = Provider.of<VaccineFormController>(context);
+    final applicationFormController =
+        Provider.of<ApplicationFormController>(context);
 
     return WillPopScope(
       onWillPop: () async {
@@ -94,9 +98,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
                       PatientForm(controller: patientFormController),
                       ApplierForm(controller: applierFormController),
                       VaccineForm(controller: vaccineFormController),
-                      EmptyPage("Campaign"),
-                      VaccinationForm(),
-                      EmptyPage("Dados para revisão"),
+                      ApplicationForm(controller: applicationFormController),
                     ],
                   ),
                 ),

@@ -9,7 +9,7 @@ class VaccinationEntryController {
   late final String batchValue;
   late final String doseValue;
   late final String applierCNSValue;
-  late final String dateValue;
+  late final DateTime? dateValue;
   late final String groupValue;
 
   VaccinationEntryController();

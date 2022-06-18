@@ -5,6 +5,8 @@ import 'package:nurse/shared/utils/validator.dart';
 class CustomTextFormField extends CustomFormField {
   final ValidatorType validatorType;
   final TextEditingController? textEditingController;
+  final bool readOnly;
+  final void Function()? onTap;
   final ValueChanged<String?>? onChanged;
   final void Function(String?) onSaved;
 
@@ -12,11 +14,17 @@ class CustomTextFormField extends CustomFormField {
     Key? key,
     required Icon icon,
     required FormLabels label,
+    this.readOnly = false,
     required this.validatorType,
-    this.textEditingController, 
+    this.textEditingController,
+    this.onTap,
     this.onChanged,
     required this.onSaved,
-  }) : super(icon: icon, hint: label.hint, description: label.description);
+  }) : super(
+          icon: icon,
+          hint: label.hint,
+          description: label.description,
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +38,8 @@ class CustomTextFormField extends CustomFormField {
       controller: textEditingController,
       validator: (String? value) => validate(value, validatorType),
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      readOnly: readOnly,
+      onTap: onTap,
       onChanged: onChanged,
       onSaved: onSaved,
     );
@@ -41,7 +51,7 @@ class CustomTextFormField extends CustomFormField {
     }
 
     try {
-      return Validator.validate(validatorType, value)
+      return Validator.validate(type, value)
           ? null
           : "Please enter a valid value";
     } catch (e) {
