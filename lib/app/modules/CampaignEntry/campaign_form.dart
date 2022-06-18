@@ -7,10 +7,7 @@ import 'package:nurse/shared/models/infra/campaign_model.dart';
 class CampaignForm extends StatefulWidget {
   final CampaignFormController controller;
 
-  CampaignForm({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
+  CampaignForm(this.controller, {Key? key}) : super(key: key);
 
   @override
   State<CampaignForm> createState() => _CampaignFormState();

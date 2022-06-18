@@ -8,10 +8,7 @@ import 'package:nurse/shared/models/vaccination/applier_model.dart';
 class ApplierForm extends StatefulWidget {
   final ApplierFormController controller;
 
-  ApplierForm({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
+  ApplierForm(this.controller, {Key? key}) : super(key: key);
 
   @override
   State<ApplierForm> createState() => _ApplierFormState();

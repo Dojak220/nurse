@@ -8,10 +8,8 @@ import 'package:nurse/shared/utils/validator.dart';
 
 class ApplicationForm extends StatefulWidget {
   final ApplicationFormController controller;
-  const ApplicationForm({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
+
+  const ApplicationForm(this.controller, {Key? key}) : super(key: key);
 
   @override
   State<ApplicationForm> createState() => _ApplicationFormState();

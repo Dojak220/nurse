@@ -12,10 +12,7 @@ import 'package:provider/provider.dart';
 class PatientForm extends StatefulWidget {
   final PatientFormController controller;
 
-  PatientForm({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
+  PatientForm(this.controller, {Key? key}) : super(key: key);
 
   @override
   State<PatientForm> createState() => _PatientFormState();
