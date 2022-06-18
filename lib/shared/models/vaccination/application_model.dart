@@ -136,4 +136,19 @@ extension VaccineDoseExtension on VaccineDose {
         throw Exception("Invalid VaccineDose");
     }
   }
+
+  String get name {
+    switch (this) {
+      case VaccineDose.D1:
+        return "D1";
+      case VaccineDose.D2:
+        return "D2";
+      case VaccineDose.DA:
+        return "DA";
+      case VaccineDose.REF:
+        return "REF";
+      default:
+        throw Exception("Invalid VaccineDose");
+    }
+  }
 }

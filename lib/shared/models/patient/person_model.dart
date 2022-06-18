@@ -81,7 +81,7 @@ class Person implements GenericModel {
           map['birth_date'] != null ? DateTime.parse(map['birth_date']) : null,
       locality:
           map['locality'] != null ? Locality.fromMap(map['locality']) : null,
-      sex: SexExtension.fromString(map['sex'] ?? Sex.NONE.name),
+      sex: SexExtension.fromName(map['sex'] ?? Sex.NONE.name),
       motherName: map['mother_name'] ?? "",
       fatherName: map['father_name'] ?? "",
     );
@@ -123,7 +123,7 @@ class Person implements GenericModel {
 enum Sex { FEMALE, MALE, NONE }
 
 extension SexExtension on Sex {
-  static Sex fromString(String value) {
+  static Sex fromName(String value) {
     switch (value.toUpperCase()) {
       case "F":
       case "FEMALE":
@@ -138,6 +138,18 @@ extension SexExtension on Sex {
       case "NENHUM":
       default:
         return Sex.NONE;
+    }
+  }
+
+  String get toName {
+    switch (this) {
+      case Sex.FEMALE:
+        return "FEMININO";
+      case Sex.MALE:
+        return "MASCULINO";
+      case Sex.NONE:
+      default:
+        return "NÃO SE APLICA";
     }
   }
 }
