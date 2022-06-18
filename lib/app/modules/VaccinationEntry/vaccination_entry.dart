@@ -53,9 +53,8 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
       case 1:
         return Provider.of<ApplierFormController>(context, listen: false);
       case 2:
-        return Provider.of<VaccineFormController>(context, listen: false);
       default:
-        throw Exception('Invalid form index');
+        return Provider.of<VaccineFormController>(context, listen: false);
     }
   }
 
@@ -66,48 +65,56 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
     final applierFormController = Provider.of<ApplierFormController>(context);
     final vaccineFormController = Provider.of<VaccineFormController>(context);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, 25.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: IndexedStack(
-                  index: _formIndex,
+    return WillPopScope(
+      onWillPop: () async {
+        patientFormController.cleanAllInfo();
+        applierFormController.cleanAllInfo();
+        // vaccineFormController.cleanAllInfo();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(title: Text(widget.title)),
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, 25.0),
+            child: Column(
+              children: [
+                Expanded(
+                  child: IndexedStack(
+                    index: _formIndex,
+                    children: [
+                      PatientForm(controller: patientFormController),
+                      ApplierForm(controller: applierFormController),
+                      VaccineForm(controller: vaccineFormController),
+                      EmptyPage("Campaign"),
+                      VaccinationForm(),
+                      EmptyPage("Dados para revisão"),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20),
+                Row(
                   children: [
-                    PatientForm(controller: patientFormController),
-                    ApplierForm(controller: applierFormController),
-                    VaccineForm(controller: vaccineFormController),
-                    EmptyPage("Campaign"),
-                    VaccinationForm(),
-                    EmptyPage("Dados para revisão"),
+                    StepFormButton(
+                      active: _formIndex != 0,
+                      onPressed: () => _onFormIndexChanged(_formIndex - 1),
+                      text: "Voltar",
+                    ),
+                    SizedBox(width: 20),
+                    _formIndex == _formsCount
+                        ? SaveFormButton()
+                        : StepFormButton(
+                            active: _formIndex < _formsCount,
+                            onPressed: () => _onNextButtonPressed(
+                              controller,
+                              getFormController(context, _formIndex),
+                            ),
+                            text: "Avançar",
+                          ),
                   ],
                 ),
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  StepFormButton(
-                    active: _formIndex != 0,
-                    onPressed: () => _onFormIndexChanged(_formIndex - 1),
-                    text: "Voltar",
-                  ),
-                  SizedBox(width: 20),
-                  _formIndex == _formsCount
-                      ? SaveFormButton()
-                      : StepFormButton(
-                          active: _formIndex < _formsCount,
-                          onPressed: () => _onNextButtonPressed(
-                            controller,
-                            getFormController(context, _formIndex),
-                          ),
-                          text: "Avançar",
-                        ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

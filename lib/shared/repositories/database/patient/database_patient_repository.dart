@@ -62,6 +62,15 @@ class DatabasePatientRepository extends DatabaseInterface
     }
   }
 
+  @override
+  Future<Patient> getPatientByCpf(String cpf) async {
+    try {
+      return _getPatientFromMap(await get(cpf, where: "cpf = ?"));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<Patient> _getPatientFromMap(Map<String, dynamic> patientMap) async {
     final person = await _getPerson(patientMap["person"]);
     final priorityCategory = await _getPriorityCategory(

@@ -5,6 +5,7 @@ abstract class PatientRepository {
   Future<int> deletePatient(int id);
   Future<Patient> getPatientById(int id);
   Future<Patient> getPatientByCns(String cns);
+  Future<Patient> getPatientByCpf(String cpf);
   Future<List<Patient>> getPatients();
   Future<int> updatePatient(Patient patient);
 }

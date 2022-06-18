@@ -38,6 +38,11 @@ class ApplierFormController extends FormController {
     );
   }
 
+  void cleanAllInfo() {
+    selectedApplier = null;
+    selectedEstablishment = null;
+  }
+
   @override
   void submitForm() async {
     formKey.currentState!.save();
