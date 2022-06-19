@@ -58,13 +58,13 @@ class PatientFormController extends FormController {
     bool isCnsValid = false;
     try {
       isCnsValid = cns != null && Validator.validate(ValidatorType.CNS, cns);
+
+      if (isCnsValid) {
+        patient = await _patientRepository.getPatientByCns(cns);
+        if (patient != null) _setPatientAndNotify(patient!);
+      }
     } catch (e) {
       return;
-    }
-
-    if (isCnsValid) {
-      patient = await _patientRepository.getPatientByCns(cns);
-      if (patient != null) _setPatientAndNotify(patient!);
     }
   }
 

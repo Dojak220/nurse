@@ -14,6 +14,20 @@ class CampaignForm extends StatefulWidget {
 }
 
 class _CampaignFormState extends State<CampaignForm> {
+  List<Campaign> _campaigns = List<Campaign>.empty(growable: true);
+
+  @override
+  void initState() {
+    getCampaigns();
+
+    super.initState();
+  }
+
+  Future<void> getCampaigns() async {
+    _campaigns = await widget.controller.getCampaigns();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -25,7 +39,7 @@ class _CampaignFormState extends State<CampaignForm> {
             CustomDropdownButtonFormField(
               icon: Icon(Icons.campaign),
               label: FormLabels.campaign,
-              items: widget.controller.campaigns,
+              items: _campaigns,
               onChanged: (Campaign? value) =>
                   setState(() => widget.controller.selectedCampaign = value),
             ),

@@ -15,12 +15,12 @@ class CampaignFormController extends FormController {
     CampaignRepository? campaignRepository,
   ]) : _campaignRepository =
             campaignRepository ?? DatabaseCampaignRepository() {
-    _getCampaigns();
+    // _getCampaigns();
   }
 
-  void _getCampaigns() async {
-    _campaigns.addAll(await _campaignRepository.getCampaigns());
-    notifyListeners();
+  Future<List<Campaign>> getCampaigns() async {
+    return _campaigns..addAll(await _campaignRepository.getCampaigns());
+    // notifyListeners();
   }
 
   void cleanAllInfo() {
