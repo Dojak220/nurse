@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
   final String title;
-  static const List<int> appliedDoses = [30, 150, 600];
 
   Home({Key? key, required this.title}) : super(key: key);
 

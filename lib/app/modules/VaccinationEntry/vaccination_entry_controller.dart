@@ -24,44 +24,42 @@ class VaccinationEntryController {
   late final String doseValue;
   late final DateTime? dateValue;
 
+  bool get isLastForm => _formIndex == formsCount - 1;
+
   VaccinationEntryController();
 
-  FormController getFormController(
-      VaccinationEntryController controller, int formIndex) {
+  FormController getFormController() {
     switch (formIndex) {
       case 0:
-        return controller.campaignFormController;
+        return campaignFormController;
       case 1:
-        return controller.patientFormController;
+        return patientFormController;
       case 2:
-        return controller.applierFormController;
+        return applierFormController;
       case 3:
-        return controller.vaccineFormController;
+        return vaccineFormController;
       case 4:
-        return controller.applicationFormController;
+        return applicationFormController;
       default:
         throw Exception('Unknown form index');
     }
   }
 
-  void onFormIndexChanged(int index) {
+  void updateFormIndex(int index) {
     _formIndex = index;
   }
 
-  void onNextButtonPressed(
-    VaccinationEntryController controller,
-    FormController formController,
-  ) {
-    final allFieldsValid = formController.formKey.currentState!.validate();
-
-    if (allFieldsValid) {
-      formController.submitForm();
-      if (_formIndex < formsCount - 1) {
-        onFormIndexChanged(_formIndex + 1);
-      } else {
-        controller.saveVaccination();
-      }
+  void previousForm() {
+    if (_formIndex > 0) {
+      updateFormIndex(_formIndex - 1);
     }
+  }
+
+  void nextForm() {
+    final formController = getFormController();
+    final wasSubmited = submitIfFormValid(formController);
+
+    if (wasSubmited) updateFormIndex(_formIndex + 1);
   }
 
   bool cleanAllForms() {
@@ -72,6 +70,15 @@ class VaccinationEntryController {
     applicationFormController.cleanAllInfo();
 
     return true;
+  }
+
+  bool submitIfFormValid(FormController formController) {
+    final allFieldsValid = formController.formKey.currentState!.validate();
+    if (allFieldsValid) {
+      formController.submitForm();
+      return true;
+    }
+    return false;
   }
 
   void saveVaccination() {

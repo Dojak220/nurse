@@ -52,21 +52,17 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
                   children: [
                     StepFormButton(
                       active: controller.formIndex != 0,
-                      onPressed: () => controller
-                          .onFormIndexChanged(controller.formIndex - 1),
+                      onPressed: () =>
+                          setState(() => controller.previousForm()),
                       text: "Voltar",
                     ),
                     SizedBox(width: 20),
-                    controller.formIndex == controller.formsCount
-                        ? SaveFormButton()
+                    controller.isLastForm
+                        ? SaveFormButton(() => controller.saveVaccination())
                         : StepFormButton(
-                            active:
-                                controller.formIndex < controller.formsCount,
-                            onPressed: () => controller.onNextButtonPressed(
-                              controller,
-                              controller.getFormController(
-                                  controller, controller.formIndex),
-                            ),
+                            active: !controller.isLastForm,
+                            onPressed: () =>
+                                setState(() => controller.nextForm()),
                             text: "Avançar",
                           ),
                   ],
