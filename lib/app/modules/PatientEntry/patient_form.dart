@@ -7,7 +7,6 @@ import 'package:nurse/shared/models/patient/patient_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
 import 'package:nurse/shared/models/patient/priority_category_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
-import 'package:provider/provider.dart';
 
 class PatientForm extends StatefulWidget {
   final PatientFormController controller;
@@ -25,80 +24,78 @@ class _PatientFormState extends State<PatientForm> {
       key: widget.controller.formKey,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
-        child: Consumer<PatientFormController>(
-          builder: (_, controller, ___) => ListView(
-            children: [
-              CustomTextFormField(
-                icon: Icon(Icons.badge),
-                label: FormLabels.patientCns,
-                validatorType: ValidatorType.CNS,
-                onChanged: (String? value) async {
-                  await widget.controller.findPatientByCns(value);
-                  setState(() {});
-                },
-                onSaved: (value) =>
-                    setState(() => widget.controller.cns.text = value ?? ""),
-              ),
-              Divider(color: Colors.black),
-              CustomTextFormField(
-                icon: Icon(Icons.badge),
-                label: FormLabels.patientCpf,
-                textEditingController: widget.controller.cpf,
-                validatorType: ValidatorType.CPF,
-                onChanged: (String? value) async {
-                  await widget.controller.findPatientByCpf(value);
-                  setState(() {});
-                },
-                onSaved: (value) =>
-                    setState(() => widget.controller.cpf.text = value ?? ""),
-              ),
-              Divider(color: Colors.black),
-              CustomTextFormField(
-                icon: Icon(Icons.abc),
-                label: FormLabels.patientName,
-                textEditingController: widget.controller.name,
-                validatorType: ValidatorType.Name,
-                onSaved: (value) =>
-                    setState(() => widget.controller.name.text = value ?? ""),
-              ),
-              Divider(color: Colors.black),
-              CustomDropdownButtonFormField(
-                icon: (widget.controller.sex == Sex.NONE ||
-                        widget.controller.sex == null)
-                    ? Icon(Icons.question_mark)
-                    : widget.controller.sex == Sex.FEMALE
-                        ? Icon(Icons.female)
-                        : Icon(Icons.male),
-                label: FormLabels.sex,
-                items: Sex.values,
-                value: widget.controller.sex,
-                isEnum: true,
-                onChanged: (Sex? value) => setState(() {
-                  widget.controller.sex = value!;
-                }),
-              ),
-              Divider(color: Colors.black),
-              CustomDropdownButtonFormField(
-                icon: Icon(Icons.group),
-                label: FormLabels.category,
-                items: widget.controller.categories,
-                value: widget.controller.selectedCategory,
-                onChanged: (PriorityCategory? value) =>
-                    setState(() => widget.controller.selectedCategory = value),
-              ),
-              Divider(color: Colors.black),
-              CustomDropdownButtonFormField(
-                icon: Icon(Icons.pregnant_woman),
-                label: FormLabels.maternalCondition,
-                items: MaternalCondition.values,
-                value: widget.controller.maternalCondition,
-                isEnum: true,
-                onChanged: (MaternalCondition? value) => setState(() {
-                  widget.controller.maternalCondition = value!;
-                }),
-              ),
-            ],
-          ),
+        child: ListView(
+          children: [
+            CustomTextFormField(
+              icon: Icon(Icons.badge),
+              label: FormLabels.patientCns,
+              validatorType: ValidatorType.CNS,
+              onChanged: (String? value) async {
+                await widget.controller.findPatientByCns(value);
+                setState(() {});
+              },
+              onSaved: (value) =>
+                  setState(() => widget.controller.cns.text = value ?? ""),
+            ),
+            Divider(color: Colors.black),
+            CustomTextFormField(
+              icon: Icon(Icons.badge),
+              label: FormLabels.patientCpf,
+              textEditingController: widget.controller.cpf,
+              validatorType: ValidatorType.CPF,
+              onChanged: (String? value) async {
+                await widget.controller.findPatientByCpf(value);
+                setState(() {});
+              },
+              onSaved: (value) =>
+                  setState(() => widget.controller.cpf.text = value ?? ""),
+            ),
+            Divider(color: Colors.black),
+            CustomTextFormField(
+              icon: Icon(Icons.abc),
+              label: FormLabels.patientName,
+              textEditingController: widget.controller.name,
+              validatorType: ValidatorType.Name,
+              onSaved: (value) =>
+                  setState(() => widget.controller.name.text = value ?? ""),
+            ),
+            Divider(color: Colors.black),
+            CustomDropdownButtonFormField(
+              icon: (widget.controller.sex == Sex.NONE ||
+                      widget.controller.sex == null)
+                  ? Icon(Icons.question_mark)
+                  : widget.controller.sex == Sex.FEMALE
+                      ? Icon(Icons.female)
+                      : Icon(Icons.male),
+              label: FormLabels.sex,
+              items: Sex.values,
+              value: widget.controller.sex,
+              isEnum: true,
+              onChanged: (Sex? value) => setState(() {
+                widget.controller.sex = value!;
+              }),
+            ),
+            Divider(color: Colors.black),
+            CustomDropdownButtonFormField(
+              icon: Icon(Icons.group),
+              label: FormLabels.category,
+              items: widget.controller.categories,
+              value: widget.controller.selectedCategory,
+              onChanged: (PriorityCategory? value) =>
+                  setState(() => widget.controller.selectedCategory = value),
+            ),
+            Divider(color: Colors.black),
+            CustomDropdownButtonFormField(
+              icon: Icon(Icons.pregnant_woman),
+              label: FormLabels.maternalCondition,
+              items: MaternalCondition.values,
+              value: widget.controller.maternalCondition,
+              isEnum: true,
+              onChanged: (MaternalCondition? value) => setState(() {
+                widget.controller.maternalCondition = value!;
+              }),
+            ),
+          ],
         ),
       ),
     );

@@ -46,9 +46,7 @@ class DatabaseApplicationRepository extends DatabaseInterface
     map['vaccine_batch'] = await _vaccineBatchRepo
         .getVaccineBatchByNumber(application.vaccineBatch.number)
         .then((vaccine) => vaccine.id!);
-    map['patient'] = await _patientRepo
-        .getPatientByCns(application.patient.cns)
-        .then((patient) => patient.id!);
+    map["patient"] = await _getOrCreatePatient(application);
     map['campaign'] = await _campaignRepo
         .getCampaignByTitle(application.campaign.title)
         .then((campaign) => campaign.id!);
@@ -59,6 +57,23 @@ class DatabaseApplicationRepository extends DatabaseInterface
     final int result = await create(map);
 
     return result;
+  }
+
+  Future<int> _getOrCreatePatient(Application application,) async {
+    int patientId;
+    try {
+      patientId = await _patientRepo
+          .getPatientByCns(application.patient.cns)
+          .then((patient) => patient.id!);
+    } on StateError catch (e) {
+      if (e.message.contains("No element")) {
+        patientId = await _patientRepo.createPatient(application.patient);
+      } else {
+        rethrow;
+      }
+    }
+
+    return patientId;
   }
 
   @override
@@ -114,6 +129,21 @@ class DatabaseApplicationRepository extends DatabaseInterface
     final campaign = await _campaignRepo.getCampaignById(id);
 
     return campaign;
+  }
+
+  @override
+  Future<bool> exists(Application application) async {
+    try {
+      final applicationExists = await get(
+        objs: [application.patient.id, application.dose.name],
+        where: "patient = ? and dose = ?",
+      ).then((applications) => applications.isNotEmpty);
+
+      return applicationExists;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 
   @override

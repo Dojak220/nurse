@@ -8,22 +8,20 @@ class CampaignFormController extends FormController {
 
   final CampaignRepository _campaignRepository;
 
-  final _campaigns = List<Campaign>.empty(growable: true);
+  List<Campaign> _campaigns = List.empty(growable: true);
   List<Campaign> get campaigns => _campaigns;
 
   CampaignFormController([
     CampaignRepository? campaignRepository,
-  ]) : _campaignRepository =
-            campaignRepository ?? DatabaseCampaignRepository() {
-    // _getCampaigns();
-  }
+  ]) : _campaignRepository = campaignRepository ?? DatabaseCampaignRepository();
 
   Future<List<Campaign>> getCampaigns() async {
-    return _campaigns..addAll(await _campaignRepository.getCampaigns());
-    // notifyListeners();
+    return _campaigns = await _campaignRepository.getCampaigns();
   }
 
-  void cleanAllInfo() {
+  Campaign? get campaign => selectedCampaign;
+
+  void clearAllInfo() {
     selectedCampaign = null;
   }
 

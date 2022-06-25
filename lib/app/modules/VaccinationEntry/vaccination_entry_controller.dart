@@ -5,39 +5,44 @@ import 'package:nurse/app/modules/PatientEntry/patient_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/application_form_controller.dart';
 import 'package:nurse/app/modules/VaccineEntry/vaccine_form_controller.dart';
 import 'package:nurse/app/utils/form_controller.dart';
+import 'package:nurse/shared/models/vaccination/application_model.dart';
+import 'package:nurse/shared/repositories/database/vaccination/database_application_repository.dart';
+import 'package:nurse/shared/repositories/vaccination/application_repository.dart';
 
 class VaccinationEntryController {
+  VaccinationEntryController([
+    ApplicationRepository? applicationRepository,
+  ]) : _repository = applicationRepository ?? DatabaseApplicationRepository() {
+    applicationFormController = ApplicationFormController(_repository);
+  }
+
   final _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> get formKey => _formKey;
 
   final int formsCount = 5;
   int _formIndex = 0;
   int get formIndex => _formIndex;
+  bool get isLastForm => _formIndex == (formsCount - 1);
 
-  GlobalKey<FormState> get formKey => _formKey;
+  final ApplicationRepository _repository;
 
   final campaignFormController = CampaignFormController();
-  final patientFormController = PatientFormController();
   final applierFormController = ApplierFormController();
   final vaccineFormController = VaccineFormController();
-  final applicationFormController = ApplicationFormController();
+  final patientFormController = PatientFormController();
+  late final ApplicationFormController applicationFormController;
 
-  late final String doseValue;
-  late final DateTime? dateValue;
-
-  bool get isLastForm => _formIndex == formsCount - 1;
-
-  VaccinationEntryController();
-
-  FormController getFormController() {
+  FormController getCurrentFormController() {
+    print(formIndex);
     switch (formIndex) {
       case 0:
         return campaignFormController;
       case 1:
-        return patientFormController;
-      case 2:
         return applierFormController;
-      case 3:
+      case 2:
         return vaccineFormController;
+      case 3:
+        return patientFormController;
       case 4:
         return applicationFormController;
       default:
@@ -56,20 +61,19 @@ class VaccinationEntryController {
   }
 
   void nextForm() {
-    final formController = getFormController();
-    final wasSubmited = submitIfFormValid(formController);
+    final currentFormController = getCurrentFormController();
+    final wasSubmited = submitIfFormValid(currentFormController);
+
+    if (wasSubmited && nextFormIsApplicationForm) {
+      applicationFormController.setApplicationDependencies(
+        applierFormController.applier!,
+        vaccineFormController.vaccineBatch!,
+        patientFormController.patient!,
+        campaignFormController.campaign!,
+      );
+    }
 
     if (wasSubmited) updateFormIndex(_formIndex + 1);
-  }
-
-  bool cleanAllForms() {
-    campaignFormController.cleanAllInfo();
-    patientFormController.cleanAllInfo();
-    applierFormController.cleanAllInfo();
-    vaccineFormController.cleanAllInfo();
-    applicationFormController.cleanAllInfo();
-
-    return true;
   }
 
   bool submitIfFormValid(FormController formController) {
@@ -81,8 +85,39 @@ class VaccinationEntryController {
     return false;
   }
 
-  void saveVaccination() {
-    print('Saving vaccination');
+  bool get nextFormIsApplicationForm => formIndex + 1 == 4;
+
+  Future<bool> saveVaccination(BuildContext context) async {
+    final exists = await verifyIfApplicationExists();
+
+    if (exists) return false;
+
+    await save(applicationFormController.application!);
+
+    return cleanAllForms();
+  }
+
+  Future<bool> verifyIfApplicationExists() async {
+    if (applicationFormController.application != null &&
+        applicationFormController.application!.patient.id != null) {
+      return await _repository.exists(applicationFormController.application!);
+    } else {
+      return false;
+    }
+  }
+
+  Future<int> save(Application application) async {
+    return await _repository.createApplication(application);
+  }
+
+  bool cleanAllForms() {
+    campaignFormController.clearAllInfo();
+    applierFormController.clearAllInfo();
+    vaccineFormController.clearAllInfo();
+    patientFormController.clearAllInfo();
+    applicationFormController.clearAllInfo();
+
+    return true;
   }
 
   void submitForm() {

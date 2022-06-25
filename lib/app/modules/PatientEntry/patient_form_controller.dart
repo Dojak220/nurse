@@ -15,7 +15,7 @@ class PatientFormController extends FormController {
   final _categories = List<PriorityCategory>.empty(growable: true);
   List<PriorityCategory> get categories => _categories;
 
-  Patient? patient;
+  Patient? _patient;
 
   TextEditingController cns = TextEditingController();
   TextEditingController cpf = TextEditingController();
@@ -47,9 +47,9 @@ class PatientFormController extends FormController {
     }
 
     if (isCpfValid) {
-      patient = await _patientRepository.getPatientByCns(cpf);
-      if (patient != null) {
-        _setPatientAndNotify(patient!);
+      _patient = await _patientRepository.getPatientByCns(cpf);
+      if (_patient != null) {
+        _setPatientAndNotify(_patient!);
       }
     }
   }
@@ -60,8 +60,8 @@ class PatientFormController extends FormController {
       isCnsValid = cns != null && Validator.validate(ValidatorType.CNS, cns);
 
       if (isCnsValid) {
-        patient = await _patientRepository.getPatientByCns(cns);
-        if (patient != null) _setPatientAndNotify(patient!);
+        _patient = await _patientRepository.getPatientByCns(cns);
+        if (_patient != null) _setPatientAndNotify(_patient!);
       }
     } catch (e) {
       return;
@@ -79,8 +79,24 @@ class PatientFormController extends FormController {
     notifyListeners();
   }
 
-  void cleanAllInfo() {
-    patient = null;
+  Patient? get patient {
+    if (_allFieldsFulfilled) {
+      return _patient;
+    }
+    return null;
+  }
+
+  bool get _allFieldsFulfilled {
+    return cns.text.isNotEmpty &&
+        cpf.text.isNotEmpty &&
+        name.text.isNotEmpty &&
+        sex != null &&
+        selectedCategory != null &&
+        maternalCondition != null;
+  }
+
+  void clearAllInfo() {
+    _patient = null;
     cns.text = "";
     cpf.text = "";
     name.text = "";
@@ -93,7 +109,8 @@ class PatientFormController extends FormController {
   void submitForm() async {
     formKey.currentState!.save();
 
-    patient = Patient(
+    _patient = Patient(
+      id: _patient?.id,
       cns: cns.text,
       priorityCategory: selectedCategory!,
       maternalCondition: maternalCondition!,

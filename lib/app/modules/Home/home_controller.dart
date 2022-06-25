@@ -11,15 +11,16 @@ class HomeController {
     List<Application>.empty(growable: true),
   );
 
-  late final fetchApplications = Action(_fetchApplications);
+  late final fetchApplications = Action(getApplications);
 
   HomeController() : applicationRepository = DatabaseApplicationRepository() {
-    _fetchApplications(applicationRepository);
+    getApplications();
   }
 
-  Future<List<Application>> _fetchApplications(ApplicationRepository aR) async {
-    final result = await aR.getApplications();
-    applications.addAll(result);
+  Future<List<Application>> getApplications() async {
+    final result = await applicationRepository.getApplications();
+    applications.clear();
+    applications.addAll(result.reversed);
 
     return applications;
   }

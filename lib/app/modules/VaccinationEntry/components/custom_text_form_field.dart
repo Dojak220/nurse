@@ -3,9 +3,11 @@ import 'package:nurse/app/modules/VaccinationEntry/components/custom_form_field.
 import 'package:nurse/shared/utils/validator.dart';
 
 class CustomTextFormField extends CustomFormField {
-  final ValidatorType validatorType;
+  final ValidatorType? validatorType;
   final TextEditingController? textEditingController;
   final bool readOnly;
+  final String? initialValue;
+  final bool enabled;
   final void Function()? onTap;
   final ValueChanged<String?>? onChanged;
   final void Function(String?) onSaved;
@@ -15,6 +17,8 @@ class CustomTextFormField extends CustomFormField {
     required Icon icon,
     required FormLabels label,
     this.readOnly = false,
+    this.enabled = true,
+    this.initialValue,
     required this.validatorType,
     this.textEditingController,
     this.onTap,
@@ -36,9 +40,12 @@ class CustomTextFormField extends CustomFormField {
         labelText: description,
       ),
       controller: textEditingController,
-      validator: (String? value) => validate(value, validatorType),
+      validator: validatorType != null
+          ? (String? value) => validate(value, validatorType!)
+          : null,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       readOnly: readOnly,
+      enabled: enabled,
       onTap: onTap,
       onChanged: onChanged,
       onSaved: onSaved,
