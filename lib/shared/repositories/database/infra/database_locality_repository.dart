@@ -38,9 +38,9 @@ class DatabaseLocalityRepository extends DatabaseInterface
   @override
   Future<Locality> getLocalityByIbgeCode(String ibgeCode) async {
     try {
-      final localityMap = await get(ibgeCode, where: "ibge_code = ?");
+      final localityMap = await get(objs: [ibgeCode], where: "ibge_code = ?");
 
-      return Locality.fromMap(localityMap);
+      return Locality.fromMap(localityMap.single);
     } catch (e) {
       rethrow;
     }

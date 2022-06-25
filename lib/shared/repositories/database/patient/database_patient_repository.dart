@@ -56,7 +56,11 @@ class DatabasePatientRepository extends DatabaseInterface
   @override
   Future<Patient> getPatientByCns(String cns) async {
     try {
-      return _getPatientFromMap(await get(cns, where: "cns = ?"));
+      return _getPatientFromMap(
+        await get(objs: [cns], where: "cns = ?").then(
+          (maps) => maps.single,
+        ),
+      );
     } catch (e) {
       rethrow;
     }
@@ -65,7 +69,11 @@ class DatabasePatientRepository extends DatabaseInterface
   @override
   Future<Patient> getPatientByCpf(String cpf) async {
     try {
-      return _getPatientFromMap(await get(cpf, where: "cpf = ?"));
+      return _getPatientFromMap(
+        await get(objs: [cpf], where: "cpf = ?").then(
+          (maps) => maps.single,
+        ),
+      );
     } catch (e) {
       rethrow;
     }

@@ -38,9 +38,9 @@ class DatabaseCampaignRepository extends DatabaseInterface
   @override
   Future<Campaign> getCampaignByTitle(String title) async {
     try {
-      final campaignMap = await get(title, where: "title = ?");
+      final campaignMap = await get(objs: [title], where: "title = ?");
 
-      return Campaign.fromMap(campaignMap);
+      return Campaign.fromMap(campaignMap.single);
     } catch (e) {
       rethrow;
     }

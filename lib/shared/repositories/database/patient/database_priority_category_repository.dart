@@ -49,7 +49,11 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
   @override
   Future<PriorityCategory> getPriorityCategoryByCode(String code) async {
     try {
-      return _getPriorityCategoryFromMap(await get(code, where: "code = ?"));
+      return _getPriorityCategoryFromMap(
+        await get(objs: [code], where: "code = ?").then(
+          (map) => map.first,
+        ),
+      );
     } catch (e) {
       rethrow;
     }

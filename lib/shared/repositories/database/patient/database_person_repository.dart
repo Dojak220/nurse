@@ -50,7 +50,11 @@ class DatabasePersonRepository extends DatabaseInterface
   @override
   Future<Person> getPersonByCpf(String cpf) async {
     try {
-      return _getPersonFromMap(await get(cpf, where: "cpf = ?"));
+      return _getPersonFromMap(
+        await get(objs: [cpf], where: "cpf = ?").then(
+          (maps) => maps.single,
+        ),
+      );
     } catch (e) {
       rethrow;
     }

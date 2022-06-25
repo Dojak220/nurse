@@ -38,9 +38,9 @@ class DatabasePriorityGroupRepository extends DatabaseInterface
   @override
   Future<PriorityGroup> getPriorityGroupByCode(String code) async {
     try {
-      final priorityGroupMap = await get(code, where: "code = ?");
+      final priorityGroupMap = await get(objs: [code], where: "code = ?");
 
-      return PriorityGroup.fromMap(priorityGroupMap);
+      return PriorityGroup.fromMap(priorityGroupMap.single);
     } catch (e) {
       rethrow;
     }

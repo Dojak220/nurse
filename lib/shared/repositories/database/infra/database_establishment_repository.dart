@@ -49,7 +49,9 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
   @override
   Future<Establishment> getEstablishmentByCnes(String cnes) async {
     try {
-      return _getEstablishmentFromMap(await get(cnes, where: "cnes = ?"));
+      return _getEstablishmentFromMap(
+        await get(objs: [cnes], where: "cnes = ?").then((maps) => maps.single),
+      );
     } catch (e) {
       rethrow;
     }

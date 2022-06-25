@@ -49,7 +49,11 @@ class DatabaseVaccineBatchRepository extends DatabaseInterface
   @override
   Future<VaccineBatch> getVaccineBatchByNumber(String number) async {
     try {
-      return _getVaccineBatchFromMap(await get(number, where: "number = ?"));
+      return _getVaccineBatchFromMap(
+        await get(objs: [number], where: "number = ?").then(
+          (maps) => maps.single,
+        ),
+      );
     } catch (e) {
       rethrow;
     }

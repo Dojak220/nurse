@@ -57,7 +57,11 @@ class DatabaseApplierRepository extends DatabaseInterface
   @override
   Future<Applier> getApplierByCns(String cns) async {
     try {
-      return _getApplierFromMap(await get(cns, where: "cns = ?"));
+      return _getApplierFromMap(
+        await get(objs: [cns], where: "cns = ?").then(
+          (appliers) => appliers.first,
+        ),
+      );
     } catch (e) {
       rethrow;
     }

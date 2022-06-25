@@ -37,13 +37,13 @@ class DatabaseInterface {
   }
 
   Future<Map<String, dynamic>> getById(int id) async {
-    final result = await get(id, where: "id = ?");
-    return result;
+    final result = await get(objs: [id], where: "id = ?");
+    return result.single;
   }
 
-  Future<Map<String, dynamic>> get(
-    Object obj, {
-    required String where,
+  Future<List<Map<String, dynamic>>> get({
+    List<Object?>? objs,
+    String? where,
   }) async {
     List<Map<String, dynamic>> entityMap;
 
@@ -51,10 +51,10 @@ class DatabaseInterface {
       entityMap = await dbManager.db.query(
         tableName,
         where: where,
-        whereArgs: [obj],
+        whereArgs: objs,
       );
 
-      return entityMap.single;
+      return entityMap;
     } catch (e) {
       rethrow;
     }
@@ -62,12 +62,9 @@ class DatabaseInterface {
 
   Future<List<Map<String, dynamic>>> getAll() async {
     try {
-      final immutableMaps = await dbManager.db.query(tableName);
-      final entityMaps = List.of(
-        immutableMaps.map((map) => Map<String, dynamic>.from(map)),
-      );
+      final List<Map<String, dynamic>> immutableMapList = await get();
 
-      return entityMaps;
+      return List.of(immutableMapList.map((map) => Map.from(map)));
     } catch (e) {
       rethrow;
     }

@@ -38,9 +38,9 @@ class DatabaseVaccineRepository extends DatabaseInterface
   @override
   Future<Vaccine> getVaccineBySipniCode(String code) async {
     try {
-      final vaccineMap = await get(code, where: "sipni_code = ?");
+      final vaccineMap = await get(objs: [code], where: "sipni_code = ?");
 
-      return Vaccine.fromMap(vaccineMap);
+      return Vaccine.fromMap(vaccineMap.single);
     } catch (e) {
       rethrow;
     }
