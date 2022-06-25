@@ -29,6 +29,8 @@ class _ApplierFormState extends State<ApplierForm> {
               items: widget.controller.establishments,
               onChanged: (Establishment? value) => setState(
                   () => widget.controller.selectedEstablishment = value),
+              onSaved: (Establishment? value) =>
+                  widget.controller.selectedEstablishment = value,
             ),
             Divider(color: Colors.black),
             CustomDropdownButtonFormField(
@@ -37,6 +39,8 @@ class _ApplierFormState extends State<ApplierForm> {
               items: widget.controller.appliers,
               onChanged: (Applier? value) =>
                   setState(() => widget.controller.selectedApplier = value),
+              onSaved: (Applier? value) =>
+                  widget.controller.selectedApplier = value,
             ),
           ],
         ),

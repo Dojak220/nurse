@@ -6,6 +6,7 @@ class CustomDropdownButtonFormField<T> extends CustomFormField {
   final List<T> items;
   final T? value;
   final void Function(T?)? onChanged;
+  final void Function(T?)? onSaved;
   final bool isEnum;
 
   CustomDropdownButtonFormField({
@@ -16,6 +17,7 @@ class CustomDropdownButtonFormField<T> extends CustomFormField {
     this.value,
     this.isEnum = false,
     required this.onChanged,
+    this.onSaved,
   }) : super(icon: icon, hint: label.hint, description: label.description);
 
   List<T> _sortItemsAlphabetically() {
@@ -52,6 +54,7 @@ class CustomDropdownButtonFormField<T> extends CustomFormField {
               child: Text(isEnum ? enumToName(item as Enum) : item.toString())))
           .toList(),
       onChanged: onChanged,
+      onSaved: onSaved,
       autovalidateMode: AutovalidateMode.onUserInteraction,
     );
   }

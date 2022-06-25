@@ -42,6 +42,8 @@ class _CampaignFormState extends State<CampaignForm> {
               items: _campaigns,
               onChanged: (Campaign? value) =>
                   setState(() => widget.controller.selectedCampaign = value),
+              onSaved: (Campaign? value) =>
+                  widget.controller.selectedCampaign = value,
             ),
           ],
         ),

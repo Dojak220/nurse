@@ -29,6 +29,8 @@ class _VaccineFormState extends State<VaccineForm> {
               items: widget.controller.vaccines,
               onChanged: (Vaccine? value) =>
                   setState(() => widget.controller.selectedVaccine = value),
+              onSaved: (Vaccine? value) =>
+                  widget.controller.selectedVaccine = value,
             ),
             Divider(color: Colors.black),
             CustomDropdownButtonFormField(
@@ -37,6 +39,8 @@ class _VaccineFormState extends State<VaccineForm> {
               items: widget.controller.vaccineBatches,
               onChanged: (VaccineBatch? value) =>
                   setState(() => widget.controller.selectedBatch = value),
+              onSaved: (VaccineBatch? value) =>
+                  widget.controller.selectedBatch = value,
             ),
           ],
         ),

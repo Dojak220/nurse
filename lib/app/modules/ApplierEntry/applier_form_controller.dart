@@ -7,6 +7,7 @@ import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
 class ApplierFormController extends FormController {
   Applier? selectedApplier;
   Establishment? selectedEstablishment;
+  Applier? get applier => selectedApplier;
 
   final ApplierRepository _applierRepository;
 
@@ -38,7 +39,7 @@ class ApplierFormController extends FormController {
     );
   }
 
-  void cleanAllInfo() {
+  void clearAllInfo() {
     selectedApplier = null;
     selectedEstablishment = null;
   }
