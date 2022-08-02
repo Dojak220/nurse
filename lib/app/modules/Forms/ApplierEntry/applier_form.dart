@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/modules/ApplierEntry/applier_form_controller.dart';
+import 'package:nurse/app/modules/Forms/ApplierEntry/applier_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field%20.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_form_field.dart';
 import 'package:nurse/shared/models/infra/establishment_model.dart';

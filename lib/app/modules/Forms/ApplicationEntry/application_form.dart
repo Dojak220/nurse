@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nurse/app/modules/Forms/ApplicationEntry/application_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field%20.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_form_field.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
-import 'package:nurse/app/modules/VaccinationEntry/application_form_controller.dart';
 import 'package:nurse/shared/models/vaccination/application_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
