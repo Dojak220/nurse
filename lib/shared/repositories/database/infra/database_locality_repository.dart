@@ -67,4 +67,23 @@ class DatabaseLocalityRepository extends DatabaseInterface
 
     return count;
   }
+
+  @override
+  Future<List<Locality>> getLocalitiesByStateAndCity(
+      String state, String city) async {
+    try {
+      final localityMaps = await get(
+        objs: [state, city],
+        where: "ibge_code = ? AND city = ?",
+      );
+
+      final localities = List<Locality>.generate(localityMaps.length, (index) {
+        return Locality.fromMap(localityMaps[index]);
+      });
+
+      return localities;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

@@ -6,5 +6,9 @@ abstract class LocalityRepository {
   Future<Locality> getLocalityById(int id);
   Future<Locality> getLocalityByIbgeCode(String ibgeCode);
   Future<List<Locality>> getLocalities();
+  Future<List<Locality>> getLocalitiesByStateAndCity(
+    String state,
+    String city,
+  );
   Future<int> updateLocality(Locality locality);
 }
