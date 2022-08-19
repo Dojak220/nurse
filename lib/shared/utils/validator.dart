@@ -3,13 +3,17 @@ import 'package:intl/intl.dart';
 class Validator {
   static const _CPF_LENGTH = 11;
   static const _CNS_LENGTH = 15;
+  static const _CNES_LENGTH = 7;
   static const _IBGE_CODE_LENGTH = 7;
   static const _NAME_MAX_LENGTH = 100;
   static const _DESCRIPTION_MAX_LENGTH = 100;
 
-  static RegExp get _validCharactersRegex => RegExp(
+  static bool _isValidCharactersRegex(String value) => RegExp(
         r"^[a-zA-Z0-9-/\sáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ()≥]*$",
-      );
+      ).hasMatch(value);
+
+  static bool _isValidNumbersRegex(String value) =>
+      RegExp(r"^[0-9]*$").hasMatch(value);
 
   static bool validateAll(
     List<ValidationPair<ValidatorType, Object>> evaluatees,
@@ -56,6 +60,10 @@ class Validator {
         return _isType<String>(value)
             ? _validateCNS(value as String)
             : throw ValidatorException.incompatibleType(String, value);
+      case ValidatorType.CNES:
+        return _isType<String>(value)
+            ? _validateCNES(value as String)
+            : throw ValidatorException.incompatibleType(String, value);
       case ValidatorType.NumericalString:
         return _isType<String>(value)
             ? _validateNumericalString(value as String)
@@ -85,7 +93,7 @@ class Validator {
   static bool _validateName(String value) {
     final isEmpty = value.trim().isEmpty;
     final isTooLong = value.length > _NAME_MAX_LENGTH;
-    final allCharactersValid = _validCharactersRegex.hasMatch(value);
+    final allCharactersValid = _isValidCharactersRegex(value);
 
     return !isEmpty && !isTooLong && allCharactersValid
         ? true
@@ -94,7 +102,7 @@ class Validator {
 
   static bool _validateOptionalName(String value) {
     final isTooLong = value.length > _NAME_MAX_LENGTH;
-    final allCharactersValid = _validCharactersRegex.hasMatch(value);
+    final allCharactersValid = _isValidCharactersRegex(value);
 
     return !isTooLong && allCharactersValid
         ? true
@@ -103,7 +111,7 @@ class Validator {
 
   static bool _validateDescription(String value) {
     final isTooLong = value.length > _DESCRIPTION_MAX_LENGTH;
-    final allCharactersValid = _validCharactersRegex.hasMatch(value);
+    final allCharactersValid = _isValidCharactersRegex(value);
 
     return !isTooLong && allCharactersValid
         ? true
@@ -167,7 +175,9 @@ class Validator {
   static bool _validateCNS(String cns) {
     String cleanCNS = cns.replaceAll('.', '').replaceAll('-', '').trim();
 
-    if (cleanCNS.length != _CNS_LENGTH) {
+    final isExactLength = cleanCNS.length == _CNS_LENGTH;
+    final isNumericalString = _isValidNumbersRegex(cleanCNS);
+    if (!isExactLength || !isNumericalString) {
       throw ValidatorException.invalid(ValidatorType.CNS, cns);
     }
 
@@ -182,9 +192,21 @@ class Validator {
     return true;
   }
 
+  static bool _validateCNES(String cnes) {
+    String cleanCNES = cnes.trim();
+
+    final isExactLength = cleanCNES.length == _CNES_LENGTH;
+    final isNumericalString = _isValidNumbersRegex(cleanCNES);
+    if (!isExactLength || !isNumericalString) {
+      throw ValidatorException.invalid(ValidatorType.CNES, cnes);
+    }
+
+    return true;
+  }
+
   static bool _validateNumericalString(String value) {
     final isEmpty = value.trim().isEmpty;
-    final allCharactersValid = RegExp(r"^[0-9]*$").hasMatch(value);
+    final allCharactersValid = _isValidNumbersRegex(value);
 
     return !isEmpty && allCharactersValid
         ? true
@@ -311,6 +333,9 @@ enum ValidatorType {
 
   /// Fonte: https://integracao.esusab.ufsc.br/v211/docs/algoritmo_CNS.html
   CNS,
+
+  /// Fonte: https://integracao.esusab.ufsc.br/v20/docs/profissional.html#:~:text=HeaderCdsCadastro-,%231%20cnesUnidadeSaude,-CNES%20da%20unidade
+  CNES,
   NumericalString,
 
   /// Date must be between 1900 and 5 years from now
