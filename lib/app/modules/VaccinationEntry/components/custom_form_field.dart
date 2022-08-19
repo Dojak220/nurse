@@ -49,7 +49,8 @@ enum FormLabels {
   category,
   date,
   dose,
-  establishment,
+  establishmentCNES,
+  establishmentName,
   group,
   maternalCondition,
   patientCns,
@@ -79,8 +80,10 @@ extension LabelNamesAndHints on FormLabels {
         return "Data de Aplicação *";
       case FormLabels.dose:
         return "Dose *";
-      case FormLabels.establishment:
+      case FormLabels.establishmentCNES:
         return "CNES do Estabelecimento *";
+      case FormLabels.establishmentName:
+        return "Nome do Estabelecimento *";
       case FormLabels.group:
         return "Grupo Prioritário *";
       case FormLabels.maternalCondition:
@@ -122,8 +125,10 @@ extension LabelNamesAndHints on FormLabels {
         return "Data da aplicação da vacina";
       case FormLabels.dose:
         return "Dose da vacina";
-      case FormLabels.establishment:
-        return "CNES do estabelecimento de trabalho do aplicante";
+      case FormLabels.establishmentCNES:
+        return "CNES do estabelecimento";
+      case FormLabels.establishmentName:
+        return "Nome do estabelecimento";
       case FormLabels.group:
         return "Grupo do(a) paciente";
       case FormLabels.maternalCondition:

@@ -25,7 +25,7 @@ class _ApplierFormState extends State<ApplierForm> {
           children: [
             CustomDropdownButtonFormField(
               icon: Icon(Icons.local_hospital),
-              label: FormLabels.establishment,
+              label: FormLabels.establishmentCNES,
               items: widget.controller.establishments,
               onChanged: (Establishment? value) => setState(
                   () => widget.controller.selectedEstablishment = value),
