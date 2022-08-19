@@ -32,6 +32,7 @@ pubspec.lock
 .pub-cache/
 .pub/
 /build/
+coverage/
 
 # Generated files
 /test/**/*.mocks.dart
