@@ -45,10 +45,10 @@ class _ApplicationFormState extends State<ApplicationForm> {
             CustomTextFormField(
               icon: Icon(Icons.person),
               label: FormLabels.applierName,
+              textEditingController: widget.controller.applierName,
               validatorType: ValidatorType.Name,
               readOnly: true,
               enabled: false,
-              textEditingController: widget.controller.applierName,
               onSaved: (value) => {},
             ),
             Divider(color: Colors.black),

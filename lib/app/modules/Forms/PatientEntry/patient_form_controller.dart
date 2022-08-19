@@ -97,9 +97,9 @@ class PatientFormController extends FormController {
 
   void clearAllInfo() {
     _patient = null;
-    cns.text = "";
-    cpf.text = "";
-    name.text = "";
+    cns.clear();
+    cpf.clear();
+    name.clear();
     sex = null;
     selectedCategory = null;
     maternalCondition = null;
