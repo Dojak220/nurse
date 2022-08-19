@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:nurse/app/modules/EntityEntry/add_entities_menu_page.dart';
 import 'package:nurse/app/modules/Home/components/info_button.dart';
 import 'package:nurse/app/modules/Home/components/main_button.dart';
 import 'package:nurse/app/modules/Home/components/titled_list_view.dart';
@@ -17,7 +18,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      drawer: AppDrawer(),
+      drawer: AppDrawer(title: title),
       appBar: AppBar(
         title: Row(
           mainAxisSize: MainAxisSize.min,
@@ -55,8 +56,11 @@ class Home extends StatelessWidget {
 }
 
 class AppDrawer extends StatelessWidget {
+  final String title;
+
   const AppDrawer({
     Key? key,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -81,6 +85,17 @@ class AppDrawer extends StatelessWidget {
             title: Text("Compartilhar"),
             subtitle: Text("Enviar novas vacinas para o sistema"),
             onTap: () => print("Compartilhar"),
+          ),
+          SizedBox(height: 20),
+          ListTile(
+            leading: Icon(Icons.share),
+            title: Text("Cadastrar"),
+            subtitle: Text("Vacinas, estabelecimentos e mais"),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => AddEntitiesMenuPage(title: title),
+              ),
+            ),
           ),
         ],
       ),
