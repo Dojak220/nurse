@@ -17,7 +17,7 @@ class TitledListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+      padding: const EdgeInsets.only(top: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,7 +29,7 @@ class TitledListView extends StatelessWidget {
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.50,
+            height: MediaQuery.of(context).size.height * 0.407,
             child: Observer(builder: (_) {
               return ListView.separated(
                 itemCount: applications.length,

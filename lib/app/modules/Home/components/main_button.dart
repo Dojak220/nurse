@@ -15,7 +15,7 @@ class VaccinationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 0),
+      padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
       child: ElevatedButton(
         onPressed: () => Navigator.of(context)
             .pushNamed(newPage)

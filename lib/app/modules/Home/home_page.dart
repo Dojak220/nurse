@@ -37,16 +37,14 @@ class Home extends StatelessWidget {
         children: [
           VaccinationCountStatus(),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              children: [
-                LastVaccinationsList(),
-                VaccinationButton(
-                  newPage: "/vaccinations/new",
-                  onCallback: () =>
-                      context.read<HomeController>().getApplications(),
-                ),
-              ],
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: LastVaccinationsList()),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: VaccinationButton(
+              newPage: "/vaccinations/new",
+              onCallback: () =>
+                  context.read<HomeController>().getApplications(),
             ),
           ),
         ],
@@ -118,6 +116,7 @@ class _VaccinationCountStatusState extends State<VaccinationCountStatus> {
     final controller = Provider.of<HomeController>(context);
 
     return Container(
+      height: MediaQuery.of(context).size.height * 0.21,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [AppColors.verdeClaro, AppColors.white],
