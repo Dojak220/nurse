@@ -24,6 +24,8 @@ class VaccinationEntry extends StatefulWidget {
 class _VaccinationEntryState extends State<VaccinationEntry> {
   final controller = VaccinationEntryController();
 
+  /// TODO: Verificar se o build context é necessário, dado que o contexto pode 
+  /// ser acessado globalmente.
   void tryToSave(
     BuildContext ctx,
     VaccinationEntryController controller,
@@ -71,7 +73,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
         appBar: AppBar(title: Text(widget.title)),
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, 25.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
                 Expanded(

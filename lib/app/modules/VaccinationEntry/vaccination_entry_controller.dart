@@ -120,7 +120,5 @@ class VaccinationEntryController {
     return true;
   }
 
-  void submitForm() {
-    formKey.currentState!.save();
-  }
+
 }
