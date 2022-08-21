@@ -35,10 +35,8 @@ class Home extends StatelessWidget {
       ),
       body: Column(
         children: [
-          VaccinationCountStatus(),
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: LastVaccinationsList()),
+          Expanded(flex: 1, child: VaccinationCountStatus()),
+          Expanded(flex: 4, child: LastVaccinationsList()),
           Align(
             alignment: Alignment.bottomCenter,
             child: VaccinationButton(
@@ -178,9 +176,12 @@ class LastVaccinationsList extends StatelessWidget {
     final controller = Provider.of<HomeController>(context);
     final applications = controller.applications;
 
-    return TitledListView(
-      "Últimos cadastros",
-      applications: applications,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: TitledListView(
+        "Últimos cadastros",
+        applications: applications,
+      ),
     );
   }
 }

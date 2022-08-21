@@ -31,9 +31,7 @@ class _EstablishmentFormState extends State<EstablishmentForm> {
     setState(() {});
   }
 
-  void tryToSave(
-    EstablishmentFormController controller,
-  ) async {
+  void tryToSave(EstablishmentFormController controller) async {
     final wasSaved = await controller.saveInfo();
 
     if (wasSaved) {
