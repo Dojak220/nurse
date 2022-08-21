@@ -87,6 +87,7 @@ class ApplicationFormController extends FormController {
   void clearAllInfo() {
     selectedDose = null;
     selectedDate = null;
+
     notifyListeners();
   }
 

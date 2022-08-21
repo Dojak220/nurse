@@ -20,11 +20,11 @@ class VaccineFormController extends FormController {
     VaccineBatchRepository? batchRepository,
   ]) : _batchRepository = batchRepository ?? DatabaseVaccineBatchRepository() {
     _getVaccineBatches();
+    notifyListeners();
   }
 
   Future<void> _getVaccineBatches() async {
     _vaccineBatches.addAll(await _batchRepository.getVaccineBatches());
-    notifyListeners();
   }
 
   VaccineBatch? get vaccineBatch => selectedBatch;

@@ -19,11 +19,11 @@ class ApplierFormController extends FormController {
     ApplierRepository? applierRepository,
   ]) : _applierRepository = applierRepository ?? DatabaseApplierRepository() {
     _getAppliers();
+    notifyListeners();
   }
 
   void _getAppliers() async {
     _appliers.addAll(await _applierRepository.getAppliers());
-    notifyListeners();
   }
 
   List<Applier> getAppliersFromSelectedEstablishment() {
@@ -42,6 +42,8 @@ class ApplierFormController extends FormController {
   void clearAllInfo() {
     selectedApplier = null;
     selectedEstablishment = null;
+
+    notifyListeners();
   }
 
   @override

@@ -31,6 +31,7 @@ class PatientFormController extends FormController {
         _priorityCategoryRepository =
             priorityCategoryRepository ?? DatabasePriorityCategoryRepository() {
     _getCategories();
+    notifyListeners();
   }
 
   void _getCategories() async {
@@ -103,6 +104,8 @@ class PatientFormController extends FormController {
     sex = null;
     selectedCategory = null;
     maternalCondition = null;
+
+    notifyListeners();
   }
 
   @override
