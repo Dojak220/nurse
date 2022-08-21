@@ -50,6 +50,7 @@ enum FormLabels {
   date,
   dose,
   establishmentCNES,
+  establishmentLocalityName,
   establishmentName,
   group,
   maternalCondition,
@@ -82,6 +83,8 @@ extension LabelNamesAndHints on FormLabels {
         return "Dose *";
       case FormLabels.establishmentCNES:
         return "CNES do Estabelecimento *";
+      case FormLabels.establishmentLocalityName:
+        return "Localidade do Estabelecimento *";
       case FormLabels.establishmentName:
         return "Nome do Estabelecimento *";
       case FormLabels.group:
