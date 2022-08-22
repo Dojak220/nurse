@@ -90,6 +90,6 @@ class Locality implements GenericModel {
 
   @override
   String toString() {
-    return 'Locality(id: $id, name: $name, city: $city, state: $state, ibgeCode: $ibgeCode)';
+    return '$ibgeCode - $name, $city / $state';
   }
 }

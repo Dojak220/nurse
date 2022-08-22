@@ -35,7 +35,7 @@ class ApplierFormController extends FormController {
 
   List<Establishment> getEstablishmentsFromAllAppliers() {
     return List.of(
-      _appliers.map((applier) => applier.establishment),
+      _appliers.map((applier) => applier.establishment).toSet(),
     );
   }
 

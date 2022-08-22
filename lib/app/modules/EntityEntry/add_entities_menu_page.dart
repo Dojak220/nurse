@@ -34,7 +34,10 @@ class AddEntitiesMenuPage extends StatelessWidget {
               ),
               EntityButton(
                 title: "Aplicante",
-                onPressed: () => print("Aplicante"),
+                onPressed: () => Navigator.of(context)
+                    .pushNamed("/appliers/new", arguments: {
+                  "title": "Aplicante",
+                }),
               ),
               EntityButton(
                 title: "Lote",
