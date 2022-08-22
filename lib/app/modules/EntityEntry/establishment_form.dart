@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nurse/app/components/registration_failed_alert_dialog.dart';
 import 'package:nurse/app/modules/EntityEntry/establishment_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field%20.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/dialog_confirm_button.dart';
 import 'package:nurse/app/theme/app_theme.dart';
 import 'package:nurse/app/utils/form_labels.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
@@ -144,38 +144,6 @@ class _EstablishmentFormFieldsState extends State<_EstablishmentFormFields> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class RegistrationFailedAlertDialog extends StatelessWidget {
-  final String entityName;
-
-  const RegistrationFailedAlertDialog({
-    Key? key,
-    required this.entityName,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          const Icon(Icons.warning, size: 120.0),
-          Text(
-            'Falha ao cadastrar novo(a) $entityName!',
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-      content: Text(
-        'Cadastro já existia no banco de dados!',
-        textAlign: TextAlign.center,
-      ),
-      actions: [DialogConfirmButton(text: "Ok")],
-      actionsAlignment: MainAxisAlignment.spaceAround,
     );
   }
 }
