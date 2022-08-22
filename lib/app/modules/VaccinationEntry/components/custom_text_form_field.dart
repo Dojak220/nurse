@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_form_field.dart';
+import 'package:nurse/app/utils/form_labels.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
 class CustomTextFormField extends CustomFormField {

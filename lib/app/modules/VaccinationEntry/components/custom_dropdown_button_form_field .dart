@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_form_field.dart';
 import 'package:nurse/app/utils/enumToName.dart';
+import 'package:nurse/app/utils/form_labels.dart';
 
 class CustomDropdownButtonFormField<T> extends CustomFormField {
   final List<T> items;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:nurse/app/utils/date_picker.dart';
 import 'package:nurse/app/utils/form_controller.dart';
 import 'package:nurse/shared/models/infra/campaign_model.dart';
 import 'package:nurse/shared/models/patient/patient_model.dart';
@@ -44,17 +44,12 @@ class ApplicationFormController extends FormController {
   }
 
   Future<void> selectDate(BuildContext context) async {
-    final newSelectedDate = await showDatePicker(
-      context: context,
-      initialDate: selectedDate ?? DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100),
-    );
+    final newSelectedDate = await DatePicker.getNewDate(context, selectedDate);
 
     if (newSelectedDate != null) {
       selectedDate = newSelectedDate;
       date
-        ..text = DateFormat("dd/MM/yyyy").format(selectedDate!)
+        ..text = DatePicker.formatDateDDMMYYYY(selectedDate!)
         ..selection = TextSelection.fromPosition(TextPosition(
             offset: date.text.length, affinity: TextAffinity.upstream));
     }
