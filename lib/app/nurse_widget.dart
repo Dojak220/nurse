@@ -4,6 +4,8 @@ import 'package:nurse/app/modules/EntityEntry/add_applier_form.dart';
 import 'package:nurse/app/modules/EntityEntry/add_applier_form_controller.dart';
 import 'package:nurse/app/modules/EntityEntry/add_establishment_form.dart';
 import 'package:nurse/app/modules/EntityEntry/add_establishment_form_controller.dart';
+import 'package:nurse/app/modules/EntityEntry/add_locality_form.dart';
+import 'package:nurse/app/modules/EntityEntry/add_locality_form_controller.dart';
 import 'package:nurse/app/modules/Home/home_page.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry.dart';
 import 'package:nurse/app/theme/app_theme.dart';
@@ -41,7 +43,8 @@ class Nurse extends StatelessWidget {
         "/vaccineBatches": (context) => EmptyPage("vaccineBatch"),
         "/vaccineBatches/new": (context) => EmptyPage("vaccineBatch/new"),
         "/localities": (context) => EmptyPage("locality"),
-        "/localities/new": (context) => EmptyPage("locality/new"),
+        "/localities/new": (context) =>
+            AddLocalityForm(AddLocalityFormController()),
         "/campaigns": (context) => EmptyPage("campaign"),
         "/campaigns/new": (context) => EmptyPage("campaign/new"),
         "/priorityGroups": (context) => EmptyPage("priorityGroup"),

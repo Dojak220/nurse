@@ -40,6 +40,13 @@ class AddEntitiesMenuPage extends StatelessWidget {
                 }),
               ),
               EntityButton(
+                title: "Localidade",
+                onPressed: () => Navigator.of(context)
+                    .pushNamed("/localities/new", arguments: {
+                  "title": "Localidade",
+                }),
+              ),
+              EntityButton(
                 title: "Lote",
                 onPressed: () => print("Lote"),
               ),
