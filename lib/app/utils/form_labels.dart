@@ -11,6 +11,10 @@ enum FormLabels {
   establishmentLocalityName,
   establishmentName,
   fatherName,
+  localityName,
+  localityCity,
+  localityState,
+  localityCode,
   motherName,
   group,
   maternalCondition,
@@ -51,6 +55,14 @@ extension LabelNamesAndHints on FormLabels {
         return "Nome do Estabelecimento *";
       case FormLabels.fatherName:
         return "Nome do Pai *";
+      case FormLabels.localityName:
+        return "Nome da Localidade *";
+      case FormLabels.localityCity:
+        return "Cidade da Localidade *";
+      case FormLabels.localityState:
+        return "Estado da Localidade *";
+      case FormLabels.localityCode:
+        return "Código da Localidade *";
       case FormLabels.motherName:
         return "Nome da Mãe *";
       case FormLabels.group:
@@ -102,6 +114,14 @@ extension LabelNamesAndHints on FormLabels {
         return "Nome do estabelecimento";
       case FormLabels.fatherName:
         return "Nome do pai";
+      case FormLabels.localityName:
+        return "Nome da localidade";
+      case FormLabels.localityCity:
+        return "Cidade da localidade";
+      case FormLabels.localityState:
+        return "Estado da localidade";
+      case FormLabels.localityCode:
+        return "Código ibge da cidade da localidade";
       case FormLabels.motherName:
         return "Nome da mãe";
       case FormLabels.group:
