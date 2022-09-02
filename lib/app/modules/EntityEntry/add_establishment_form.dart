@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nurse/app/components/registration_failed_alert_dialog.dart';
-import 'package:nurse/app/modules/EntityEntry/establishment_form_controller.dart';
+import 'package:nurse/app/modules/EntityEntry/add_establishment_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field%20.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
 import 'package:nurse/app/theme/app_theme.dart';
@@ -8,16 +8,16 @@ import 'package:nurse/app/utils/form_labels.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
-class EstablishmentForm extends StatefulWidget {
-  final EstablishmentFormController controller;
+class AddEstablishmentForm extends StatefulWidget {
+  final AddEstablishmentFormController controller;
 
-  EstablishmentForm(this.controller, {Key? key}) : super(key: key);
+  AddEstablishmentForm(this.controller, {Key? key}) : super(key: key);
 
   @override
-  State<EstablishmentForm> createState() => _EstablishmentFormState();
+  State<AddEstablishmentForm> createState() => _AddEstablishmentFormState();
 }
 
-class _EstablishmentFormState extends State<EstablishmentForm> {
+class _AddEstablishmentFormState extends State<AddEstablishmentForm> {
   List<Locality> _localityCities = List<Locality>.empty(growable: true);
 
   @override
@@ -31,7 +31,7 @@ class _EstablishmentFormState extends State<EstablishmentForm> {
     setState(() {});
   }
 
-  void tryToSave(EstablishmentFormController controller) async {
+  void tryToSave(AddEstablishmentFormController controller) async {
     final wasSaved = await controller.saveInfo();
 
     if (wasSaved) {
@@ -49,7 +49,7 @@ class _EstablishmentFormState extends State<EstablishmentForm> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Map;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -88,7 +88,7 @@ class _EstablishmentFormState extends State<EstablishmentForm> {
 }
 
 class _EstablishmentFormFields extends StatefulWidget {
-  final EstablishmentFormController controller;
+  final AddEstablishmentFormController controller;
   final List<Locality> localityCities;
 
   const _EstablishmentFormFields(

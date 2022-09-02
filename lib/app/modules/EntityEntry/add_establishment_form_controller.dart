@@ -7,7 +7,7 @@ import 'package:nurse/shared/repositories/database/infra/database_locality_repos
 import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
 import 'package:nurse/shared/repositories/infra/locality_repository.dart';
 
-class EstablishmentFormController extends FormController {
+class AddEstablishmentFormController extends FormController {
   final EstablishmentRepository _repository;
   final LocalityRepository _localityRepository;
 
@@ -18,7 +18,7 @@ class EstablishmentFormController extends FormController {
   TextEditingController name = TextEditingController();
   Locality? locality;
 
-  EstablishmentFormController([
+  AddEstablishmentFormController([
     EstablishmentRepository? establishmentRepository,
     LocalityRepository? localityRepository,
   ])  : _repository =
