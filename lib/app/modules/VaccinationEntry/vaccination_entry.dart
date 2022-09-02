@@ -24,8 +24,8 @@ class VaccinationEntry extends StatefulWidget {
 class _VaccinationEntryState extends State<VaccinationEntry> {
   final controller = VaccinationEntryController();
 
-  /// TODO: Verificar se o build context é necessário, dado que o contexto pode 
-  /// ser acessado globalmente.
+  /// TODO: Verificar se o build context é necessário, dado que o contexto pode
+  ///  ser acessado globalmente.
   void tryToSave(
     BuildContext ctx,
     VaccinationEntryController controller,
@@ -99,7 +99,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
                     ),
                     SizedBox(width: 20),
                     controller.isLastForm
-                        ? SaveFormButton(
+                        ? SaveStepFormButton(
                             () => tryToSave(context, controller),
                           )
                         : StepFormButton(
