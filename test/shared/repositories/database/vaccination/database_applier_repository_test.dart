@@ -249,12 +249,12 @@ void testUpdateApplier(MockDatabase db, ApplierRepository repository) {
   });
 }
 
-final int _validApplierId = 1;
-final int _validPersonId = 1;
-final int _validEstablishmentId = 1;
-final int _validLocalityId = 1;
+const int _validApplierId = 1;
+const int _validPersonId = 1;
+const int _validEstablishmentId = 1;
+const int _validLocalityId = 1;
 
-final int _invalidApplierId = 2;
+const int _invalidApplierId = 2;
 
 final _validLocality = Locality(
   id: _validLocalityId,

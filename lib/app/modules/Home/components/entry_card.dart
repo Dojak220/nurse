@@ -22,10 +22,10 @@ class EntryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: new BoxDecoration(
-        borderRadius: new BorderRadius.circular(10.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
         color: AppColors.cinzaClaro,
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Color(0x29000000),
             blurRadius: 6.0,
@@ -73,7 +73,7 @@ class EntryCard extends StatelessWidget {
                 ),
                 Expanded(
                   child: Visibility(
-                    visible: pregnant != MaternalCondition.NENHUM.name,
+                    visible: pregnant != MaternalCondition.nenhum.name,
                     child: Text(
                       pregnant,
                       textAlign: TextAlign.end,

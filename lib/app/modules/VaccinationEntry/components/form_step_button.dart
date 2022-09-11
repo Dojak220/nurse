@@ -26,7 +26,7 @@ class StepFormButton extends StatelessWidget {
                   AppColors.cinzaClaro,
                 ),
                 textStyle: MaterialStateProperty.all(
-                  TextStyle(
+                  const TextStyle(
                     color: AppColors.cinzaClaro,
                   ),
                 ),

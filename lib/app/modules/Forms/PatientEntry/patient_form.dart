@@ -27,9 +27,9 @@ class _PatientFormState extends State<PatientForm> {
         child: ListView(
           children: [
             CustomTextFormField(
-              icon: Icon(Icons.badge),
+              icon: const Icon(Icons.badge),
               label: FormLabels.patientCns,
-              validatorType: ValidatorType.CNS,
+              validatorType: ValidatorType.cns,
               onChanged: (String? value) async {
                 await widget.controller.findPatientByCns(value);
                 setState(() {});
@@ -37,12 +37,12 @@ class _PatientFormState extends State<PatientForm> {
               onSaved: (value) =>
                   setState(() => widget.controller.cns.text = value ?? ""),
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.badge),
+              icon: const Icon(Icons.badge),
               label: FormLabels.patientCpf,
               textEditingController: widget.controller.cpf,
-              validatorType: ValidatorType.CPF,
+              validatorType: ValidatorType.cpf,
               onChanged: (String? value) async {
                 await widget.controller.findPatientByCpf(value);
                 setState(() {});
@@ -50,23 +50,23 @@ class _PatientFormState extends State<PatientForm> {
               onSaved: (value) =>
                   setState(() => widget.controller.cpf.text = value ?? ""),
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.abc),
+              icon: const Icon(Icons.abc),
               label: FormLabels.patientName,
               textEditingController: widget.controller.name,
-              validatorType: ValidatorType.Name,
+              validatorType: ValidatorType.name,
               onSaved: (value) =>
                   setState(() => widget.controller.name.text = value ?? ""),
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: (widget.controller.sex == Sex.NONE ||
+              icon: (widget.controller.sex == Sex.none ||
                       widget.controller.sex == null)
-                  ? Icon(Icons.question_mark)
-                  : widget.controller.sex == Sex.FEMALE
-                      ? Icon(Icons.female)
-                      : Icon(Icons.male),
+                  ? const Icon(Icons.question_mark)
+                  : widget.controller.sex == Sex.female
+                      ? const Icon(Icons.female)
+                      : const Icon(Icons.male),
               label: FormLabels.sex,
               items: Sex.values,
               value: widget.controller.sex,
@@ -75,18 +75,18 @@ class _PatientFormState extends State<PatientForm> {
                 widget.controller.sex = value!;
               }),
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: Icon(Icons.group),
+              icon: const Icon(Icons.group),
               label: FormLabels.category,
               items: widget.controller.categories,
               value: widget.controller.selectedCategory,
               onChanged: (PriorityCategory? value) =>
                   setState(() => widget.controller.selectedCategory = value),
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: Icon(Icons.pregnant_woman),
+              icon: const Icon(Icons.pregnant_woman),
               label: FormLabels.maternalCondition,
               items: MaternalCondition.values,
               value: widget.controller.maternalCondition,
@@ -101,9 +101,9 @@ class _PatientFormState extends State<PatientForm> {
     );
   }
 
-  // Future<bool?> showConfirmationRequestDialog(BuildContext ctx) {
-  //   return showDialog(
-  //     context: ctx,
+  // Future<bool?> showConfirmationRequestDialog(BuildContext context) {
+  //   return showDialog<void>(
+  //     context: context,
   //     builder: (_) {
   //       return AlertDialog(
   //         title: Column(
@@ -114,7 +114,7 @@ class _PatientFormState extends State<PatientForm> {
   //               Icons.question_mark_rounded,
   //               size: 120.0,
   //             ),
-  //             Text(
+  //             const Text(
   //               'Deseja finalizar o cadastro?',
   //               textAlign: TextAlign.center,
   //             ),
@@ -123,7 +123,7 @@ class _PatientFormState extends State<PatientForm> {
   //         actions: [
   //           DialogConfirmButton(onPressed: () {
   //             controller.submitForm();
-  //             Navigator.pop(ctx, controller.formKey.currentState!.validate());
+  //             Navigator.pop(context, controller.formKey.currentState!.validate());
   //           }),
   //           DialogCancelButton(),
   //         ],
@@ -133,9 +133,9 @@ class _PatientFormState extends State<PatientForm> {
   //   );
   // }
 
-  // Future<bool?> showConfirmationDialog(BuildContext ctx) {
-  //   return showDialog(
-  //     context: ctx,
+  // Future<bool?> showConfirmationDialog(BuildContext context) {
+  //   return showDialog<void>(
+  //     context: context,
   //     builder: (_) {
   //       return AlertDialog(
   //         title: Column(
@@ -143,20 +143,20 @@ class _PatientFormState extends State<PatientForm> {
   //           mainAxisSize: MainAxisSize.min,
   //           children: <Widget>[
   //             const Icon(Icons.check_sharp, size: 120.0),
-  //             Text(
+  //             const Text(
   //               'Cadastro realizado com sucesso!',
   //               textAlign: TextAlign.center,
   //             ),
   //           ],
   //         ),
-  //         content: Text(
+  //         content: const Text(
   //           'Deseja fazer outro cadastro?',
   //           textAlign: TextAlign.center,
   //         ),
   //         actions: [
   //           DialogConfirmButton(),
   //           DialogCancelButton(onPressed: () {
-  //             Navigator.pushReplacementNamed(ctx, "/");
+  //             Navigator.pushReplacementNamed(context, "/");
   //           }),
   //         ],
   //         actionsAlignment: MainAxisAlignment.spaceAround,

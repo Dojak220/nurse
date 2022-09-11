@@ -16,8 +16,8 @@ class Applier implements GenericModel {
     required this.person,
     required this.establishment,
   }) {
-    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
-    Validator.validate(ValidatorType.CNS, this.cns);
+    if (id != null) Validator.validate(ValidatorType.id, id!);
+    Validator.validate(ValidatorType.cns, cns);
   }
 
   Applier copyWith({
@@ -34,6 +34,7 @@ class Applier implements GenericModel {
     );
   }
 
+  @override
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -45,10 +46,11 @@ class Applier implements GenericModel {
 
   factory Applier.fromMap(Map<String, dynamic> map) {
     return Applier(
-      id: map['id'],
-      cns: map['cns'] ?? '',
-      person: Person.fromMap(map['person']),
-      establishment: Establishment.fromMap(map['establishment']),
+      id: map['id'] as int?,
+      cns: map['cns'] as String? ?? '',
+      person: Person.fromMap(map['person'] as Map<String, dynamic>),
+      establishment:
+          Establishment.fromMap(map['establishment'] as Map<String, dynamic>),
     );
   }
 

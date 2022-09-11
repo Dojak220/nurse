@@ -8,6 +8,7 @@ import 'package:nurse/shared/repositories/patient/person_repository.dart';
 
 class DatabasePersonRepository extends DatabaseInterface
     implements PersonRepository {
+  // ignore: constant_identifier_names
   static const String TABLE = "Person";
   final LocalityRepository _localityRepo;
 
@@ -61,7 +62,7 @@ class DatabasePersonRepository extends DatabaseInterface
   }
 
   Future<Person> _getPersonFromMap(Map<String, dynamic> personMap) async {
-    final locality = await _getLocality(personMap["locality"]);
+    final locality = await _getLocality(personMap["locality"] as int);
 
     final updatedPersonMap = Map.of(personMap);
     updatedPersonMap["locality"] = locality.toMap();
@@ -82,7 +83,7 @@ class DatabasePersonRepository extends DatabaseInterface
 
       await Future.forEach(personMaps, (Map<String, dynamic> p) async {
         final result = p["locality"] != null
-            ? await _localityRepo.getLocalityById(p["locality"])
+            ? await _localityRepo.getLocalityById(p["locality"] as int)
             : null;
 
         p["locality"] = result?.toMap();

@@ -11,7 +11,7 @@ import 'package:nurse/shared/utils/validator.dart';
 class AddEstablishmentForm extends StatefulWidget {
   final AddEstablishmentFormController controller;
 
-  AddEstablishmentForm(this.controller, {Key? key}) : super(key: key);
+  const AddEstablishmentForm(this.controller, {Key? key}) : super(key: key);
 
   @override
   State<AddEstablishmentForm> createState() => _AddEstablishmentFormState();
@@ -35,12 +35,14 @@ class _AddEstablishmentFormState extends State<AddEstablishmentForm> {
     final wasSaved = await controller.saveInfo();
 
     if (wasSaved) {
+      if (!mounted) return;
       Navigator.of(context).pop();
     } else {
-      showDialog(
+      showDialog<void>(
         context: context,
         builder: (_) {
-          return RegistrationFailedAlertDialog(entityName: "estabelecimento");
+          return const RegistrationFailedAlertDialog(
+              entityName: "estabelecimento");
         },
       );
     }
@@ -48,13 +50,14 @@ class _AddEstablishmentFormState extends State<AddEstablishmentForm> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          args["title"],
-          style: TextStyle(
+          args["title"]!,
+          style: const TextStyle(
             fontSize: 32,
           ),
         ),
@@ -101,7 +104,7 @@ class _EstablishmentFormFieldsState extends State<_EstablishmentFormFields> {
           semanticChildCount: 3,
           children: [
             CustomDropdownButtonFormField(
-              icon: Icon(Icons.pin),
+              icon: const Icon(Icons.pin),
               label: FormLabels.establishmentLocalityName,
               items: widget.localityCities
                   .map<String>((Locality l) => l.city)
@@ -114,20 +117,20 @@ class _EstablishmentFormFieldsState extends State<_EstablishmentFormFields> {
               onSaved: (String? city) => widget.controller.locality =
                   widget.localityCities.singleWhere((lc) => lc.city == city),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             CustomTextFormField(
-              icon: Icon(Icons.local_hospital),
+              icon: const Icon(Icons.local_hospital),
               label: FormLabels.establishmentCNES,
               textEditingController: widget.controller.cnes,
-              validatorType: ValidatorType.CNES,
+              validatorType: ValidatorType.cnes,
               onSaved: (value) => {},
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             CustomTextFormField(
-              icon: Icon(Icons.abc),
+              icon: const Icon(Icons.abc),
               label: FormLabels.establishmentName,
               textEditingController: widget.controller.name,
-              validatorType: ValidatorType.Name,
+              validatorType: ValidatorType.name,
               onSaved: (value) => {},
             ),
           ],

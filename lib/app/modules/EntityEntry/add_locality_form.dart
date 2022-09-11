@@ -9,7 +9,7 @@ import 'package:nurse/shared/utils/validator.dart';
 class AddLocalityForm extends StatefulWidget {
   final AddLocalityFormController controller;
 
-  AddLocalityForm(this.controller, {Key? key}) : super(key: key);
+  const AddLocalityForm(this.controller, {Key? key}) : super(key: key);
 
   @override
   State<AddLocalityForm> createState() => _AddLocalityFormState();
@@ -20,12 +20,13 @@ class _AddLocalityFormState extends State<AddLocalityForm> {
     final wasSaved = await controller.saveInfo();
 
     if (wasSaved) {
+      if (!mounted) return;
       Navigator.of(context).pop();
     } else {
-      showDialog(
+      showDialog<void>(
         context: context,
         builder: (_) {
-          return RegistrationFailedAlertDialog(entityName: "locality");
+          return const RegistrationFailedAlertDialog(entityName: "locality");
         },
       );
     }
@@ -33,13 +34,14 @@ class _AddLocalityFormState extends State<AddLocalityForm> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          args["title"],
-          style: TextStyle(
+          args["title"]!,
+          style: const TextStyle(
             fontSize: 32,
           ),
         ),
@@ -80,34 +82,34 @@ class _LocalityFormFieldsState extends State<_LocalityFormFields> {
           semanticChildCount: 4,
           children: [
             CustomTextFormField(
-              icon: Icon(Icons.abc),
+              icon: const Icon(Icons.abc),
               label: FormLabels.localityName,
               textEditingController: widget.controller.name,
-              validatorType: ValidatorType.Name,
+              validatorType: ValidatorType.name,
               onSaved: (value) => {},
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             CustomTextFormField(
-              icon: Icon(Icons.location_city),
+              icon: const Icon(Icons.location_city),
               label: FormLabels.localityCity,
               textEditingController: widget.controller.city,
-              validatorType: ValidatorType.Name,
+              validatorType: ValidatorType.name,
               onSaved: (value) => {},
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             CustomTextFormField(
-              icon: Icon(Icons.map),
+              icon: const Icon(Icons.map),
               label: FormLabels.localityState,
               textEditingController: widget.controller.state,
-              validatorType: ValidatorType.Name,
+              validatorType: ValidatorType.name,
               onSaved: (value) => {},
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             CustomTextFormField(
-              icon: Icon(Icons.numbers),
+              icon: const Icon(Icons.numbers),
               label: FormLabels.localityCode,
               textEditingController: widget.controller.ibgeCode,
-              validatorType: ValidatorType.IBGECode,
+              validatorType: ValidatorType.ibgeCode,
               onSaved: (value) => {},
             ),
           ],

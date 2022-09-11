@@ -252,8 +252,8 @@ void testUpdatePriorityGroup(
   });
 }
 
-final int _validPriorityGroupId = 1;
-final int _invalidPriorityGroupId = 2;
+const int _validPriorityGroupId = 1;
+const int _invalidPriorityGroupId = 2;
 
 final _validPriorityGroup = PriorityGroup(
   id: _validPriorityGroupId,

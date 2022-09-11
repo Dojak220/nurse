@@ -42,7 +42,7 @@ class PatientFormController extends FormController {
   Future<void> findPatientByCpf(String? cpf) async {
     bool isCpfValid = false;
     try {
-      isCpfValid = cpf != null && Validator.validate(ValidatorType.CNS, cpf);
+      isCpfValid = cpf != null && Validator.validate(ValidatorType.cns, cpf);
     } catch (e) {
       return;
     }
@@ -58,7 +58,7 @@ class PatientFormController extends FormController {
   Future<void> findPatientByCns(String? cns) async {
     bool isCnsValid = false;
     try {
-      isCnsValid = cns != null && Validator.validate(ValidatorType.CNS, cns);
+      isCnsValid = cns != null && Validator.validate(ValidatorType.cns, cns);
 
       if (isCnsValid) {
         _patient = await _patientRepository.getPatientByCns(cns);
@@ -96,6 +96,7 @@ class PatientFormController extends FormController {
         maternalCondition != null;
   }
 
+  @override
   void clearAllInfo() {
     _patient = null;
     cns.clear();

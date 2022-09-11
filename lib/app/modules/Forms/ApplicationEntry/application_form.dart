@@ -25,35 +25,35 @@ class _ApplicationFormState extends State<ApplicationForm> {
         child: ListView(
           children: [
             CustomDropdownButtonFormField(
-              icon: Icon(Icons.vaccines),
+              icon: const Icon(Icons.vaccines),
               label: FormLabels.dose,
               items: VaccineDose.values,
               onChanged: (VaccineDose? value) =>
                   {widget.controller.selectedDose = value!.name},
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.calendar_month),
+              icon: const Icon(Icons.calendar_month),
               label: FormLabels.applicationDate,
               textEditingController: widget.controller.date,
-              validatorType: ValidatorType.PastDate,
+              validatorType: ValidatorType.pastDate,
               onTap: () async => widget.controller.selectDate(context),
               readOnly: true,
               onSaved: (value) => {},
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.person),
+              icon: const Icon(Icons.person),
               label: FormLabels.applierName,
               textEditingController: widget.controller.applierName,
-              validatorType: ValidatorType.Name,
+              validatorType: ValidatorType.name,
               readOnly: true,
               enabled: false,
               onSaved: (value) => {},
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.vaccines),
+              icon: const Icon(Icons.vaccines),
               label: FormLabels.vaccineBatch,
               validatorType: null,
               readOnly: true,
@@ -61,21 +61,21 @@ class _ApplicationFormState extends State<ApplicationForm> {
               textEditingController: widget.controller.vaccineBatchNumber,
               onSaved: (value) => {},
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.person),
+              icon: const Icon(Icons.person),
               label: FormLabels.patientName,
-              validatorType: ValidatorType.Name,
+              validatorType: ValidatorType.name,
               readOnly: true,
               enabled: false,
               textEditingController: widget.controller.patientName,
               onSaved: (value) => {},
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.campaign),
+              icon: const Icon(Icons.campaign),
               label: FormLabels.campaignName,
-              validatorType: ValidatorType.Name,
+              validatorType: ValidatorType.name,
               readOnly: true,
               enabled: false,
               textEditingController: widget.controller.campaignTitle,
@@ -87,9 +87,9 @@ class _ApplicationFormState extends State<ApplicationForm> {
     );
   }
 
-  // Future<bool?> showConfirmationRequestDialog(BuildContext ctx) {
-  //   return showDialog(
-  //     context: ctx,
+  // Future<bool?> showConfirmationRequestDialog(BuildContext context) {
+  //   return showDialog<void>(
+  //     context: context,
   //     builder: (context) {
   //       final controller = Provider.of<VaccinationEntryController>(context);
 
@@ -102,7 +102,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
   //               Icons.question_mark_rounded,
   //               size: 120.0,
   //             ),
-  //             Text(
+  //             const Text(
   //               'Deseja finalizar o cadastro?',
   //               textAlign: TextAlign.center,
   //             ),
@@ -111,7 +111,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
   //         actions: [
   //           DialogConfirmButton(onPressed: () {
   //             controller.submitForm();
-  //             Navigator.pop(ctx, controller.formKey.currentState!.validate());
+  //             Navigator.pop(context, controller.formKey.currentState!.validate());
   //           }),
   //           DialogCancelButton(),
   //         ],
@@ -121,9 +121,9 @@ class _ApplicationFormState extends State<ApplicationForm> {
   //   );
   // }
 
-  // Future<bool?> showConfirmationDialog(BuildContext ctx) {
-  //   return showDialog(
-  //     context: ctx,
+  // Future<bool?> showConfirmationDialog(BuildContext context) {
+  //   return showDialog<void>(
+  //     context: context,
   //     builder: (_) {
   //       return AlertDialog(
   //         title: Column(
@@ -131,20 +131,20 @@ class _ApplicationFormState extends State<ApplicationForm> {
   //           mainAxisSize: MainAxisSize.min,
   //           children: <Widget>[
   //             const Icon(Icons.check_sharp, size: 120.0),
-  //             Text(
+  //             const Text(
   //               'Cadastro realizado com sucesso!',
   //               textAlign: TextAlign.center,
   //             ),
   //           ],
   //         ),
-  //         content: Text(
+  //         content: const Text(
   //           'Deseja fazer outro cadastro?',
   //           textAlign: TextAlign.center,
   //         ),
   //         actions: [
   //           DialogConfirmButton(),
   //           DialogCancelButton(onPressed: () {
-  //             Navigator.pushReplacementNamed(ctx, "/");
+  //             Navigator.pushReplacementNamed(context, "/");
   //           }),
   //         ],
   //         actionsAlignment: MainAxisAlignment.spaceAround,

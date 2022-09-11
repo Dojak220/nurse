@@ -8,7 +8,7 @@ import 'package:nurse/shared/models/vaccination/applier_model.dart';
 class ApplierForm extends StatefulWidget {
   final ApplierFormController controller;
 
-  ApplierForm(this.controller, {Key? key}) : super(key: key);
+  const ApplierForm(this.controller, {Key? key}) : super(key: key);
 
   @override
   State<ApplierForm> createState() => _ApplierFormState();
@@ -24,7 +24,7 @@ class _ApplierFormState extends State<ApplierForm> {
         child: ListView(
           children: [
             CustomDropdownButtonFormField(
-              icon: Icon(Icons.local_hospital),
+              icon: const Icon(Icons.local_hospital),
               label: FormLabels.establishmentCNES,
               items: widget.controller.establishments,
               onChanged: (Establishment? value) => setState(
@@ -32,9 +32,9 @@ class _ApplierFormState extends State<ApplierForm> {
               onSaved: (Establishment? value) =>
                   widget.controller.selectedEstablishment = value,
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: Icon(Icons.person),
+              icon: const Icon(Icons.person),
               label: FormLabels.applierName,
               items: widget.controller.appliers,
               onChanged: (Applier? value) =>
@@ -48,9 +48,9 @@ class _ApplierFormState extends State<ApplierForm> {
     );
   }
 
-  // Future<bool?> showConfirmationRequestDialog(BuildContext ctx) {
-  //   return showDialog(
-  //     context: ctx,
+  // Future<bool?> showConfirmationRequestDialog(BuildContext context) {
+  //   return showDialog<void>(
+  //     context: context,
   //     builder: (_) {
   //       return AlertDialog(
   //         title: Column(
@@ -61,7 +61,7 @@ class _ApplierFormState extends State<ApplierForm> {
   //               Icons.question_mark_rounded,
   //               size: 120.0,
   //             ),
-  //             Text(
+  //             const Text(
   //               'Deseja finalizar o cadastro?',
   //               textAlign: TextAlign.center,
   //             ),
@@ -70,7 +70,7 @@ class _ApplierFormState extends State<ApplierForm> {
   //         actions: [
   //           DialogConfirmButton(onPressed: () {
   //             controller.submitForm();
-  //             Navigator.pop(ctx, controller.formKey.currentState!.validate());
+  //             Navigator.pop(context, controller.formKey.currentState!.validate());
   //           }),
   //           DialogCancelButton(),
   //         ],
@@ -80,9 +80,9 @@ class _ApplierFormState extends State<ApplierForm> {
   //   );
   // }
 
-  // Future<bool?> showConfirmationDialog(BuildContext ctx) {
-  //   return showDialog(
-  //     context: ctx,
+  // Future<bool?> showConfirmationDialog(BuildContext context) {
+  //   return showDialog<void>(
+  //     context: context,
   //     builder: (_) {
   //       return AlertDialog(
   //         title: Column(
@@ -90,20 +90,20 @@ class _ApplierFormState extends State<ApplierForm> {
   //           mainAxisSize: MainAxisSize.min,
   //           children: <Widget>[
   //             const Icon(Icons.check_sharp, size: 120.0),
-  //             Text(
+  //             const Text(
   //               'Cadastro realizado com sucesso!',
   //               textAlign: TextAlign.center,
   //             ),
   //           ],
   //         ),
-  //         content: Text(
+  //         content: const Text(
   //           'Deseja fazer outro cadastro?',
   //           textAlign: TextAlign.center,
   //         ),
   //         actions: [
   //           DialogConfirmButton(),
   //           DialogCancelButton(onPressed: () {
-  //             Navigator.pushReplacementNamed(ctx, "/");
+  //             Navigator.pushReplacementNamed(context, "/");
   //           }),
   //         ],
   //         actionsAlignment: MainAxisAlignment.spaceAround,

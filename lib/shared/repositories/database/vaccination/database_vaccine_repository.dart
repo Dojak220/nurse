@@ -5,6 +5,7 @@ import 'package:nurse/shared/repositories/vaccination/vaccine_repository.dart';
 
 class DatabaseVaccineRepository extends DatabaseInterface
     implements VaccineRepository {
+  // ignore: constant_identifier_names
   static const String TABLE = "Vaccine";
 
   DatabaseVaccineRepository({DatabaseManager? dbManager})

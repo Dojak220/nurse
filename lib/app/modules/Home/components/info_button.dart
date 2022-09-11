@@ -16,10 +16,10 @@ class InfoButton extends StatelessWidget {
     return Container(
       height: 73,
       width: 94,
-      decoration: new BoxDecoration(
-        borderRadius: new BorderRadius.circular(10),
-        color: Color(0xFFF5F5F5),
-        boxShadow: [
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: const Color(0xFFF5F5F5),
+        boxShadow: const [
           BoxShadow(
             color: Color(0x29000000),
             blurRadius: 6.0,
@@ -46,7 +46,7 @@ class InfoButton extends StatelessWidget {
           Positioned(
             bottom: 6,
             child: Text(
-              "$text",
+              text,
               style: AppTheme.infoButtonTextStyle,
             ),
           ),

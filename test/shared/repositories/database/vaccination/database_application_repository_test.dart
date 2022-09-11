@@ -314,15 +314,15 @@ void testUpdateApplication(MockDatabase db, ApplicationRepository repository) {
   });
 }
 
-final int _validApplicationId = 1;
-final int _validPatientId = 1;
-final int _validVaccineId = 1;
-final int _validApplierId = 1;
-final int _validCampaignId = 1;
-final int _validPersonId = 1;
-final int _validVaccineBatchId = 1;
+const int _validApplicationId = 1;
+const int _validPatientId = 1;
+const int _validVaccineId = 1;
+const int _validApplierId = 1;
+const int _validCampaignId = 1;
+const int _validPersonId = 1;
+const int _validVaccineBatchId = 1;
 
-final int _invalidApplicationId = 2;
+const int _invalidApplicationId = 2;
 
 final _validLocality = Locality(
   id: 1,
@@ -361,7 +361,7 @@ final _validPerson = Person(
 final _validPatient = Patient(
   id: _validPatientId,
   cns: "748477761910001",
-  maternalCondition: MaternalCondition.GESTANTE,
+  maternalCondition: MaternalCondition.gestante,
   priorityCategory: PriorityCategory(
     id: 1,
     priorityGroup: PriorityGroup(
@@ -395,7 +395,7 @@ final _validApplication = Application(
   vaccineBatch: _validVaccineBatch,
   applicationDate: DateTime(2022, 3, 4),
   applier: _validApplier,
-  dose: VaccineDose.D1,
+  dose: VaccineDose.d1,
   campaign: _validCampaign,
   dueDate: DateTime(2022, 4),
 );
@@ -497,7 +497,7 @@ final _validApplications = [
     patient: _validPatients[1],
     applicationDate: DateTime(2022, 4, 4),
     applier: _validAppliers[1],
-    dose: VaccineDose.D2,
+    dose: VaccineDose.d2,
     campaign: _validCampaigns[1],
     dueDate: DateTime(2023),
   ),

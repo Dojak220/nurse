@@ -42,11 +42,11 @@ class DatabaseManager {
     final String script = await rootBundle.loadString("assets/script_v4_0.sql");
     final List<String> scripts = script.split(";");
 
-    scripts.forEach((script) {
+    for (final script in scripts) {
       if (isValidScript(script)) {
         batch.execute(script.trim());
       }
-    });
+    }
 
     await batch.commit();
   }

@@ -27,7 +27,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
   /// TODO: Verificar se o build context é necessário, dado que o contexto pode
   ///  ser acessado globalmente.
   void tryToSave(
-    BuildContext ctx,
+    BuildContext context,
     VaccinationEntryController controller,
   ) async {
     final isValid = controller.submitIfFormValid(
@@ -36,28 +36,29 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
 
     if (!isValid) return;
 
-    final wasSaved = await controller.saveVaccination(ctx);
+    final wasSaved = await controller.saveVaccination(context);
 
     if (wasSaved) {
-      Navigator.of(ctx).pop();
+      if (!mounted) return;
+      Navigator.of(context).pop();
     } else {
-      showDialog(
+      showDialog<void>(
         context: context,
         builder: (_) {
           return AlertDialog(
             title: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Icon(Icons.warning, size: 120.0),
+              children: const <Widget>[
+                Icon(Icons.warning, size: 120.0),
                 Text('Falha ao cadastrar!', textAlign: TextAlign.center),
               ],
             ),
-            content: Text(
+            content: const Text(
               'Cadastro já existia no banco de dados!',
               textAlign: TextAlign.center,
             ),
-            actions: [DialogConfirmButton(text: "Ok")],
+            actions: const [DialogConfirmButton(text: "Ok")],
             actionsAlignment: MainAxisAlignment.spaceAround,
           );
         },
@@ -73,7 +74,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
         appBar: AppBar(title: Text(widget.title)),
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
                 Expanded(
@@ -88,7 +89,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     StepFormButton(
@@ -97,7 +98,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
                           setState(() => controller.previousForm()),
                       text: "Voltar",
                     ),
-                    SizedBox(width: 20),
+                    const SizedBox(width: 20),
                     controller.isLastForm
                         ? SaveStepFormButton(
                             () => tryToSave(context, controller),

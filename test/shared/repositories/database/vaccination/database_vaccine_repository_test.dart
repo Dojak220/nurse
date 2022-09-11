@@ -185,7 +185,7 @@ void testGetVaccines(MockDatabase db, VaccineRepository repository) {
 }
 
 void testUpdateVaccine(MockDatabase db, VaccineRepository repository) {
-  final int _invalidVaccineId = 2;
+  const int invalidVaccineId = 2;
   group("updateVaccine function:", () {
     group('try to update a valid vaccine', () {
       setUp(() {
@@ -209,17 +209,15 @@ void testUpdateVaccine(MockDatabase db, VaccineRepository repository) {
       setUp(() {
         when(db.update(
           DatabaseVaccineRepository.TABLE,
-          _validVaccine
-              .copyWith(id: _invalidVaccineId, name: "Updated")
-              .toMap(),
+          _validVaccine.copyWith(id: invalidVaccineId, name: "Updated").toMap(),
           where: anyNamed("where"),
-          whereArgs: [_invalidVaccineId],
+          whereArgs: [invalidVaccineId],
         )).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {
         final updatedCount = await repository.updateVaccine(
-          _validVaccine.copyWith(id: _invalidVaccineId, name: "Updated"),
+          _validVaccine.copyWith(id: invalidVaccineId, name: "Updated"),
         );
 
         expect(updatedCount, 0);
@@ -228,9 +226,9 @@ void testUpdateVaccine(MockDatabase db, VaccineRepository repository) {
   });
 }
 
-final int _validVaccineId = 1;
+const int _validVaccineId = 1;
 
-final int _invalidVaccineId = 2;
+const int _invalidVaccineId = 2;
 
 // final _validVaccineBatch = VaccineBatch(
 //   id: _validVaccineBatchId,

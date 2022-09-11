@@ -16,19 +16,19 @@ class PriorityCategory implements GenericModel {
     required this.priorityGroup,
     String name = "",
     String description = "",
-  })  : this.name = name.isEmpty ? code : name,
-        this.code = code.trim(),
-        this.description = description.trim() {
+  })  : name = name.isEmpty ? code : name,
+        code = code.trim(),
+        description = description.trim() {
     _validatePriorityCategory();
   }
 
   void _validatePriorityCategory() {
-    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
+    if (id != null) Validator.validate(ValidatorType.id, id!);
     Validator.validateAll(
       [
-        ValidationPair(ValidatorType.Name, code),
-        ValidationPair(ValidatorType.Name, name),
-        ValidationPair(ValidatorType.Description, this.description),
+        ValidationPair(ValidatorType.name, code),
+        ValidationPair(ValidatorType.name, name),
+        ValidationPair(ValidatorType.description, description),
       ],
     );
   }
@@ -62,11 +62,12 @@ class PriorityCategory implements GenericModel {
 
   factory PriorityCategory.fromMap(Map<String, dynamic> map) {
     return PriorityCategory(
-      id: map['id'],
-      priorityGroup: PriorityGroup.fromMap(map['priority_group']),
-      code: map['code'] ?? '',
-      name: map['name'] ?? '',
-      description: map['description'] ?? '',
+      id: map['id'] as int?,
+      priorityGroup:
+          PriorityGroup.fromMap(map['priority_group'] as Map<String, dynamic>),
+      code: map['code'] as String? ?? '',
+      name: map['name'] as String? ?? '',
+      description: map['description'] as String? ?? '',
     );
   }
 

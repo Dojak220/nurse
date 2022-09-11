@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:nurse/shared/models/generic_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
@@ -15,14 +16,14 @@ class Campaign implements GenericModel {
     required this.startDate,
     DateTime? endDate,
     String description = "",
-  })  : this.title = title.trim(),
-        this.description = description.trim().isEmpty ? "$title" : description,
-        this.endDate = endDate ?? startDate.add(Duration(days: 365)) {
+  })  : title = title.trim(),
+        description = description.trim().isEmpty ? title : description,
+        endDate = endDate ?? startDate.add(const Duration(days: 365)) {
     _validateCampaign();
   }
 
   void _validateCampaign() {
-    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
+    if (id != null) Validator.validate(ValidatorType.id, id!);
 
     if (endDate.isBefore(startDate)) {
       throw Exception('End date must be after start date');
@@ -30,10 +31,10 @@ class Campaign implements GenericModel {
 
     Validator.validateAll(
       [
-        ValidationPair(ValidatorType.Name, this.title),
-        ValidationPair(ValidatorType.Date, this.startDate),
-        ValidationPair(ValidatorType.Date, this.endDate),
-        ValidationPair(ValidatorType.Description, this.description),
+        ValidationPair(ValidatorType.name, title),
+        ValidationPair(ValidatorType.date, startDate),
+        ValidationPair(ValidatorType.date, endDate),
+        ValidationPair(ValidatorType.description, description),
       ],
     );
   }
@@ -60,18 +61,20 @@ class Campaign implements GenericModel {
       'id': id,
       'title': title,
       'description': description,
-      'start_date': startDate.toString(),
-      'end_date': endDate.toString(),
+      'start_date': DateFormat("yyyy-MM-dd").format(startDate),
+      'end_date': DateFormat("yyyy-MM-dd").format(endDate),
     };
   }
 
   factory Campaign.fromMap(Map<String, dynamic> map) {
     return Campaign(
-      id: map['id'],
-      title: map['title'] ?? '',
-      description: map['description'] ?? '',
-      startDate: DateTime.parse(map['start_date']),
-      endDate: DateTime.parse(map['end_date']),
+      id: map['id'] as int?,
+      title: map['title'] as String? ?? '',
+      description: map['description'] as String? ?? '',
+      startDate: DateTime.parse(map['start_date'] as String),
+      endDate: map['end_date'] != null
+          ? DateTime.parse(map['end_date'] as String)
+          : null,
     );
   }
 

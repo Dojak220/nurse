@@ -8,6 +8,7 @@ import 'package:nurse/shared/repositories/vaccination/vaccine_repository.dart';
 
 class DatabaseVaccineBatchRepository extends DatabaseInterface
     implements VaccineBatchRepository {
+  // ignore: constant_identifier_names
   static const String TABLE = "Vaccine_Batch";
   final VaccineRepository _vaccineRepo;
 
@@ -61,7 +62,7 @@ class DatabaseVaccineBatchRepository extends DatabaseInterface
 
   Future<VaccineBatch> _getVaccineBatchFromMap(
       Map<String, dynamic> vaccineBatchMap) async {
-    final vaccine = await _getVaccine(vaccineBatchMap["vaccine"]);
+    final vaccine = await _getVaccine(vaccineBatchMap["vaccine"] as int);
 
     final updatedVaccineBatchMap = Map.of(vaccineBatchMap);
     updatedVaccineBatchMap["vaccine"] = vaccine.toMap();
@@ -81,13 +82,13 @@ class DatabaseVaccineBatchRepository extends DatabaseInterface
       final vaccineBatchMaps = await getAll();
       final vaccines = await _getVaccines();
 
-      vaccineBatchMaps.forEach((b) {
+      for (final vaccineBatchMap in vaccineBatchMaps) {
         final vaccine = vaccines.firstWhere((vaccine) {
-          return vaccine.id == b["vaccine"];
+          return vaccine.id == vaccineBatchMap["vaccine"];
         });
 
-        b["vaccine"] = vaccine.toMap();
-      });
+        vaccineBatchMap["vaccine"] = vaccine.toMap();
+      }
 
       final vaccineBatches = vaccineBatchMaps.map((batch) {
         return VaccineBatch.fromMap(batch);

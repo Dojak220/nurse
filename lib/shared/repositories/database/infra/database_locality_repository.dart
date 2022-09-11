@@ -5,6 +5,7 @@ import 'package:nurse/shared/repositories/infra/locality_repository.dart';
 
 class DatabaseLocalityRepository extends DatabaseInterface
     implements LocalityRepository {
+  // ignore: constant_identifier_names
   static const String TABLE = "Locality";
 
   DatabaseLocalityRepository([DatabaseManager? dbManager])

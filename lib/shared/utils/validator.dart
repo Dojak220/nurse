@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:intl/intl.dart';
 
 class Validator {
@@ -18,66 +20,66 @@ class Validator {
   static bool validateAll(
     List<ValidationPair<ValidatorType, Object>> evaluatees,
   ) {
-    evaluatees.forEach((evaluatee) {
+    for (final evaluatee in evaluatees) {
       validate(evaluatee.type, evaluatee.value);
-    });
+    }
 
     return true;
   }
 
-  /// Returns [true] or throws a [ValidatorException] if the [value] is not valid.
+  /// Returns true or throws a [ValidatorException] if the [value] is not valid.
   static bool validate(ValidatorType type, Object value) {
     DateTime? date = value is DateTime ? value : null;
-    if ((type == ValidatorType.Date ||
-            type == ValidatorType.BirthDate ||
-            type == ValidatorType.PastDate) &&
+    if ((type == ValidatorType.date ||
+            type == ValidatorType.birthDate ||
+            type == ValidatorType.pastDate) &&
         value is String) {
       date = DateTime.tryParse(_formatDate(value));
     }
 
     switch (type) {
-      case ValidatorType.Id:
+      case ValidatorType.id:
         return _isType<int>(value)
             ? _validateId(value as int)
             : throw ValidatorException.incompatibleType(int, value);
-      case ValidatorType.Name:
+      case ValidatorType.name:
         return _isType<String>(value)
             ? _validateName(value as String)
             : throw ValidatorException.incompatibleType(String, value);
-      case ValidatorType.OptionalName:
+      case ValidatorType.optionalName:
         return _isType<String>(value)
             ? _validateOptionalName(value as String)
             : throw ValidatorException.incompatibleType(String, value);
-      case ValidatorType.Description:
+      case ValidatorType.description:
         return _isType<String>(value)
             ? _validateDescription(value as String)
             : throw ValidatorException.incompatibleType(String, value);
-      case ValidatorType.CPF:
+      case ValidatorType.cpf:
         return _isType<String>(value)
             ? _validateCPF(value as String)
             : throw ValidatorException.incompatibleType(String, value);
-      case ValidatorType.CNS:
+      case ValidatorType.cns:
         return _isType<String>(value)
             ? _validateCNS(value as String)
             : throw ValidatorException.incompatibleType(String, value);
-      case ValidatorType.CNES:
+      case ValidatorType.cnes:
         return _isType<String>(value)
             ? _validateCNES(value as String)
             : throw ValidatorException.incompatibleType(String, value);
-      case ValidatorType.NumericalString:
+      case ValidatorType.numericalString:
         return _isType<String>(value)
             ? _validateNumericalString(value as String)
             : throw ValidatorException.incompatibleType(String, value);
-      case ValidatorType.Date:
+      case ValidatorType.date:
         return (_isType<DateTime>(date))
             ? _validateDate(date as DateTime)
             : throw ValidatorException.incompatibleType(DateTime, value);
-      case ValidatorType.BirthDate:
-      case ValidatorType.PastDate:
+      case ValidatorType.birthDate:
+      case ValidatorType.pastDate:
         return (_isType<DateTime>(date))
             ? _validateBirth(date as DateTime)
             : throw ValidatorException.incompatibleType(DateTime, value);
-      case ValidatorType.IBGECode:
+      case ValidatorType.ibgeCode:
         return _isType<String>(value)
             ? _validateIBGECode(value as String)
             : throw ValidatorException.incompatibleType(String, value);
@@ -97,7 +99,7 @@ class Validator {
 
     return !isEmpty && !isTooLong && allCharactersValid
         ? true
-        : throw ValidatorException.invalid(ValidatorType.Name, value);
+        : throw ValidatorException.invalid(ValidatorType.name, value);
   }
 
   static bool _validateOptionalName(String value) {
@@ -106,7 +108,7 @@ class Validator {
 
     return !isTooLong && allCharactersValid
         ? true
-        : throw ValidatorException.invalid(ValidatorType.Name, value);
+        : throw ValidatorException.invalid(ValidatorType.name, value);
   }
 
   static bool _validateDescription(String value) {
@@ -115,7 +117,7 @@ class Validator {
 
     return !isTooLong && allCharactersValid
         ? true
-        : throw ValidatorException.invalid(ValidatorType.Name, value);
+        : throw ValidatorException.invalid(ValidatorType.name, value);
   }
 
   static bool _validateCPF(String cpf) {
@@ -125,7 +127,7 @@ class Validator {
     final isExceptionFormat = cleanCPF == "0" * 11;
 
     if (isExceptionFormat || !isExactLength) {
-      throw ValidatorException.invalid(ValidatorType.CPF, cpf);
+      throw ValidatorException.invalid(ValidatorType.cpf, cpf);
     }
 
     _verifyFirstDigitOf(cleanCPF);
@@ -149,8 +151,9 @@ class Validator {
     if ((resto == 10) || (resto == 11)) resto = 0;
 
     final int firstCheckDigit = int.parse(cpf.substring(9, 10));
-    if (resto != firstCheckDigit)
-      throw ValidatorException.invalid(ValidatorType.CPF, cpf);
+    if (resto != firstCheckDigit) {
+      throw ValidatorException.invalid(ValidatorType.cpf, cpf);
+    }
   }
 
   static void _verifySecondDigitOf(String cpf) {
@@ -168,8 +171,9 @@ class Validator {
     if ((resto == 10) || (resto == 11)) resto = 0;
 
     final int secondCheckDigit = int.parse(cpf.substring(10, 11));
-    if (resto != secondCheckDigit)
-      throw ValidatorException.invalid(ValidatorType.CPF, cpf);
+    if (resto != secondCheckDigit) {
+      throw ValidatorException.invalid(ValidatorType.cpf, cpf);
+    }
   }
 
   static bool _validateCNS(String cns) {
@@ -178,7 +182,7 @@ class Validator {
     final isExactLength = cleanCNS.length == _CNS_LENGTH;
     final isNumericalString = _isValidNumbersRegex(cleanCNS);
     if (!isExactLength || !isNumericalString) {
-      throw ValidatorException.invalid(ValidatorType.CNS, cns);
+      throw ValidatorException.invalid(ValidatorType.cns, cns);
     }
 
     if (cleanCNS.startsWith(RegExp(r"[1-2]"))) {
@@ -186,7 +190,7 @@ class Validator {
     } else if (cleanCNS.startsWith(RegExp(r"[7-9]"))) {
       _validateCnsStartingWith7To9(cleanCNS);
     } else {
-      throw ValidatorException.invalid(ValidatorType.CNS, cns);
+      throw ValidatorException.invalid(ValidatorType.cns, cns);
     }
 
     return true;
@@ -198,7 +202,7 @@ class Validator {
     final isExactLength = cleanCNES.length == _CNES_LENGTH;
     final isNumericalString = _isValidNumbersRegex(cleanCNES);
     if (!isExactLength || !isNumericalString) {
-      throw ValidatorException.invalid(ValidatorType.CNES, cnes);
+      throw ValidatorException.invalid(ValidatorType.cnes, cnes);
     }
 
     return true;
@@ -211,7 +215,7 @@ class Validator {
     return !isEmpty && allCharactersValid
         ? true
         : throw ValidatorException.invalid(
-            ValidatorType.NumericalString,
+            ValidatorType.numericalString,
             value,
           );
   }
@@ -240,13 +244,13 @@ class Validator {
 
       resto = soma % 11;
       dv = 11 - resto;
-      resultado = pis + "001" + dv.toString();
+      resultado = "${pis}001$dv";
     } else {
-      resultado = pis + "000" + dv.toString();
+      resultado = "${pis}000$dv";
     }
 
     if (cns != resultado) {
-      throw ValidatorException.invalid(ValidatorType.CNS, cns);
+      throw ValidatorException.invalid(ValidatorType.cns, cns);
     }
   }
 
@@ -264,7 +268,7 @@ class Validator {
     resto = soma % 11;
 
     if (resto != 0) {
-      throw ValidatorException.invalid(ValidatorType.CNS, cns);
+      throw ValidatorException.invalid(ValidatorType.cns, cns);
     }
   }
 
@@ -278,11 +282,11 @@ class Validator {
   static bool _validateDate(DateTime date) {
     final isBefore1900 = date.year < 1900;
     final isAfter5YearsFromNow = date.isAfter(
-      DateTime.now().add(Duration(days: 365 * 5)),
+      DateTime.now().add(const Duration(days: 365 * 5)),
     );
 
     if (isBefore1900 || isAfter5YearsFromNow) {
-      throw ValidatorException.invalid(ValidatorType.Date, date);
+      throw ValidatorException.invalid(ValidatorType.date, date);
     }
 
     return true;
@@ -293,7 +297,7 @@ class Validator {
     final isAfterNow = birth.isAfter(DateTime.now());
 
     if (isBefore1900 || isAfterNow) {
-      throw ValidatorException.invalid(ValidatorType.BirthDate, birth);
+      throw ValidatorException.invalid(ValidatorType.birthDate, birth);
     }
 
     return true;
@@ -305,7 +309,7 @@ class Validator {
 
     return isCorrectLength && isOnlyNumbers
         ? true
-        : throw ValidatorException.invalid(ValidatorType.IBGECode, code);
+        : throw ValidatorException.invalid(ValidatorType.ibgeCode, code);
   }
 
   static bool _validateId(int id) {
@@ -325,29 +329,29 @@ class ValidationPair<ValidatorType, Object> {
 }
 
 enum ValidatorType {
-  Id,
-  Name,
-  OptionalName,
-  Description,
-  CPF,
+  id,
+  name,
+  optionalName,
+  description,
+  cpf,
 
   /// Fonte: https://integracao.esusab.ufsc.br/v211/docs/algoritmo_CNS.html
-  CNS,
+  cns,
 
   /// Fonte: https://integracao.esusab.ufsc.br/v20/docs/profissional.html#:~:text=HeaderCdsCadastro-,%231%20cnesUnidadeSaude,-CNES%20da%20unidade
-  CNES,
-  NumericalString,
+  cnes,
+  numericalString,
 
   /// Date must be between 1900 and 5 years from now
-  Date,
+  date,
 
   /// Date must be between 1900 and now
-  BirthDate,
+  birthDate,
 
   /// Date must be between 1900 and now (equals to BirthDate)
-  PastDate,
-  IBGECode,
-  Email
+  pastDate,
+  ibgeCode,
+  email
 }
 
 class ValidatorException implements Exception {
@@ -367,6 +371,6 @@ but it was of type '${value.runtimeType}'.
 
   @override
   String toString() {
-    return super.toString();
+    return message;
   }
 }

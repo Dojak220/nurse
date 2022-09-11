@@ -25,14 +25,14 @@ class Application implements GenericModel {
     required this.dose,
     required this.applicationDate,
     DateTime? dueDate,
-  }) : dueDate = dueDate ?? applicationDate.add(Duration(days: 3 * 30)) {
+  }) : dueDate = dueDate ?? applicationDate.add(const Duration(days: 3 * 30)) {
     _validateApplication();
   }
   void _validateApplication() {
-    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
+    if (id != null) Validator.validate(ValidatorType.id, id!);
     Validator.validateAll([
-      ValidationPair(ValidatorType.PastDate, this.applicationDate),
-      ValidationPair(ValidatorType.Date, this.dueDate),
+      ValidationPair(ValidatorType.pastDate, applicationDate),
+      ValidationPair(ValidatorType.date, dueDate),
     ]);
   }
 
@@ -58,6 +58,7 @@ class Application implements GenericModel {
     );
   }
 
+  @override
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -73,16 +74,19 @@ class Application implements GenericModel {
 
   factory Application.fromMap(Map<String, dynamic> map) {
     return Application(
-      id: map['id'],
-      applier: Applier.fromMap(map['applier']),
-      vaccineBatch: VaccineBatch.fromMap(map['vaccine_batch']),
-      patient: Patient.fromMap(map['patient']),
-      campaign: Campaign.fromMap(map['campaign']),
-      dose: VaccineDoseExtension.fromString(map['dose']),
+      id: map['id'] as int?,
+      applier: Applier.fromMap(map['applier'] as Map<String, dynamic>),
+      vaccineBatch:
+          VaccineBatch.fromMap(map['vaccine_batch'] as Map<String, dynamic>),
+      patient: Patient.fromMap(map['patient'] as Map<String, dynamic>),
+      campaign: Campaign.fromMap(map['campaign'] as Map<String, dynamic>),
+      dose: VaccineDoseExtension.fromString(map['dose'] as String),
       applicationDate: DateTime.parse(
-        map['application_date'],
+        map['application_date'] as String,
       ),
-      dueDate: DateTime.parse(map['due_date']),
+      dueDate: map['due_date'] != null
+          ? DateTime.parse(map['due_date'] as String)
+          : null,
     );
   }
 
@@ -119,19 +123,19 @@ class Application implements GenericModel {
   }
 }
 
-enum VaccineDose { D1, D2, DA, REF }
+enum VaccineDose { d1, d2, da, ref }
 
 extension VaccineDoseExtension on VaccineDose {
   static VaccineDose fromString(String value) {
     switch (value.toUpperCase()) {
       case "D1":
-        return VaccineDose.D1;
+        return VaccineDose.d1;
       case "D2":
-        return VaccineDose.D2;
+        return VaccineDose.d2;
       case "DA":
-        return VaccineDose.DA;
+        return VaccineDose.da;
       case "REF":
-        return VaccineDose.REF;
+        return VaccineDose.ref;
       default:
         throw Exception("Invalid VaccineDose");
     }
@@ -139,13 +143,13 @@ extension VaccineDoseExtension on VaccineDose {
 
   String get name {
     switch (this) {
-      case VaccineDose.D1:
+      case VaccineDose.d1:
         return "D1";
-      case VaccineDose.D2:
+      case VaccineDose.d2:
         return "D2";
-      case VaccineDose.DA:
+      case VaccineDose.da:
         return "DA";
-      case VaccineDose.REF:
+      case VaccineDose.ref:
         return "REF";
       default:
         throw Exception("Invalid VaccineDose");

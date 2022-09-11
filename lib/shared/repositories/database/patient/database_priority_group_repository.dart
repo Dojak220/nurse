@@ -5,6 +5,7 @@ import 'package:nurse/shared/repositories/patient/priority_group_repository.dart
 
 class DatabasePriorityGroupRepository extends DatabaseInterface
     implements PriorityGroupRepository {
+  // ignore: constant_identifier_names
   static const String TABLE = "Priority_Group";
 
   DatabasePriorityGroupRepository([DatabaseManager? dbManager])

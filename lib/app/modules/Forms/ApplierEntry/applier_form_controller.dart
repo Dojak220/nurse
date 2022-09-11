@@ -39,6 +39,7 @@ class ApplierFormController extends FormController {
     );
   }
 
+  @override
   void clearAllInfo() {
     selectedApplier = null;
     selectedEstablishment = null;

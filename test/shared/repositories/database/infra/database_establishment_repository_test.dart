@@ -110,8 +110,8 @@ void testDeleteEstablishment(
 
 void testGetEstablishment(MockDatabase db, EstablishmentRepository repository) {
   group("getEstablishment function:", () {
-    final int _validEstablishmentId = 1;
-    final int validLocalityId = 1;
+    const int validEstablishmentId = 1;
+    const int validLocalityId = 1;
     final expectedLocality = Locality(
       id: validLocalityId,
       name: "Local",
@@ -120,7 +120,7 @@ void testGetEstablishment(MockDatabase db, EstablishmentRepository repository) {
       ibgeCode: "1234567",
     );
     final expectedEstablishment = Establishment(
-      id: _validEstablishmentId,
+      id: validEstablishmentId,
       cnes: "1234567",
       name: "Test",
       locality: expectedLocality,
@@ -131,7 +131,7 @@ void testGetEstablishment(MockDatabase db, EstablishmentRepository repository) {
         when(db.query(
           DatabaseEstablishmentRepository.TABLE,
           where: anyNamed("where"),
-          whereArgs: [_validEstablishmentId],
+          whereArgs: [validEstablishmentId],
         )).thenAnswer((_) => Future.value([
               {
                 "id": expectedEstablishment.id,
@@ -160,7 +160,7 @@ void testGetEstablishment(MockDatabase db, EstablishmentRepository repository) {
 
       test("should get an establishment entry by its id", () async {
         final actualEstablishment =
-            await repository.getEstablishmentById(_validEstablishmentId);
+            await repository.getEstablishmentById(validEstablishmentId);
 
         expect(actualEstablishment, isA<Establishment>());
         expect(actualEstablishment, expectedEstablishment);
@@ -283,9 +283,9 @@ void testUpdateEstablishment(
   });
 }
 
-final int _validLocalityId = 1;
-final int _validEstablishmentId = 1;
-final int _invalidEstablishmentId = 2;
+const int _validLocalityId = 1;
+const int _validEstablishmentId = 1;
+const int _invalidEstablishmentId = 2;
 
 final _validLocality = Locality(
   id: _validLocalityId,

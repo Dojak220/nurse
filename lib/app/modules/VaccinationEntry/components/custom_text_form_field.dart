@@ -36,7 +36,7 @@ class CustomTextFormField extends CustomFormField {
     return TextFormField(
       decoration: InputDecoration(
         icon: icon,
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
         hintText: hint,
         labelText: description,
       ),

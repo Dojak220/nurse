@@ -39,7 +39,7 @@ void main() {
         today.year,
         today.month,
         today.day,
-      ).add(Duration(days: 1));
+      ).add(const Duration(days: 1));
 
       final actualCampaign = validCampaign.copyWith(
         startDate: tomorrow,
@@ -54,7 +54,7 @@ void main() {
         today.year,
         today.month,
         today.day,
-      ).add(Duration(days: -1));
+      ).add(const Duration(days: -1));
 
       final actualCampaign = validCampaign.copyWith(
         startDate: DateTime(2022),

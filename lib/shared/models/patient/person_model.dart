@@ -19,20 +19,20 @@ class Person implements GenericModel {
     required String name,
     this.birthDate,
     this.locality,
-    this.sex = Sex.NONE,
+    this.sex = Sex.none,
     String motherName = "",
     String fatherName = "",
-  })  : this.name = name.trim(),
-        this.motherName = motherName.trim(),
-        this.fatherName = fatherName.trim() {
-    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
+  })  : name = name.trim(),
+        motherName = motherName.trim(),
+        fatherName = fatherName.trim() {
+    if (id != null) Validator.validate(ValidatorType.id, id!);
     Validator.validateAll([
-      ValidationPair(ValidatorType.CPF, this.cpf),
-      ValidationPair(ValidatorType.Name, this.name),
-      ValidationPair(ValidatorType.OptionalName, this.motherName),
-      ValidationPair(ValidatorType.OptionalName, this.fatherName),
-      if (this.birthDate != null)
-        ValidationPair(ValidatorType.BirthDate, this.birthDate!),
+      ValidationPair(ValidatorType.cpf, cpf),
+      ValidationPair(ValidatorType.name, this.name),
+      ValidationPair(ValidatorType.optionalName, this.motherName),
+      ValidationPair(ValidatorType.optionalName, this.fatherName),
+      if (birthDate != null)
+        ValidationPair(ValidatorType.birthDate, birthDate!),
     ]);
   }
 
@@ -74,16 +74,18 @@ class Person implements GenericModel {
 
   factory Person.fromMap(Map<String, dynamic> map) {
     return Person(
-      id: map['id'],
-      cpf: map['cpf'],
-      name: map['name'],
-      birthDate:
-          map['birth_date'] != null ? DateTime.parse(map['birth_date']) : null,
-      locality:
-          map['locality'] != null ? Locality.fromMap(map['locality']) : null,
-      sex: SexExtension.fromName(map['sex'] ?? Sex.NONE.name),
-      motherName: map['mother_name'] ?? "",
-      fatherName: map['father_name'] ?? "",
+      id: map['id'] as int?,
+      cpf: map['cpf'] as String,
+      name: map['name'] as String,
+      birthDate: map['birth_date'] != null
+          ? DateTime.parse(map['birth_date'] as String)
+          : null,
+      locality: map['locality'] != null
+          ? Locality.fromMap(map['locality'] as Map<String, dynamic>)
+          : null,
+      sex: SexExtension.fromName(map['sex'] as String? ?? Sex.none.name),
+      motherName: map['mother_name'] as String? ?? "",
+      fatherName: map['father_name'] as String? ?? "",
     );
   }
 
@@ -120,7 +122,7 @@ class Person implements GenericModel {
   }
 }
 
-enum Sex { FEMALE, MALE, NONE }
+enum Sex { female, male, none }
 
 extension SexExtension on Sex {
   static Sex fromName(String value) {
@@ -128,26 +130,26 @@ extension SexExtension on Sex {
       case "F":
       case "FEMALE":
       case "FEMININO":
-        return Sex.FEMALE;
+        return Sex.female;
       case "M":
       case "MALE":
       case "MASCULINO":
-        return Sex.MALE;
+        return Sex.male;
       case "N":
       case "NONE":
       case "NENHUM":
       default:
-        return Sex.NONE;
+        return Sex.none;
     }
   }
 
   String get toName {
     switch (this) {
-      case Sex.FEMALE:
+      case Sex.female:
         return "FEMININO";
-      case Sex.MALE:
+      case Sex.male:
         return "MASCULINO";
-      case Sex.NONE:
+      case Sex.none:
       default:
         return "NÃO SE APLICA";
     }

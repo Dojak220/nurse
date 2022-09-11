@@ -236,8 +236,8 @@ void testUpdateLocality(MockDatabase db, LocalityRepository repository) {
   });
 }
 
-final int _validLocalityId = 1;
-final int _invalidLocalityId = 2;
+const int _validLocalityId = 1;
+const int _invalidLocalityId = 2;
 
 final _validLocality = Locality(
   id: _validLocalityId,

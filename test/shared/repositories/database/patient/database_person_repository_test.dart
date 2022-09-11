@@ -248,10 +248,10 @@ void testUpdatePerson(MockDatabase db, PersonRepository repository) {
   });
 }
 
-final int _validPersonId = 1;
-final int _validLocalityId = 1;
+const int _validPersonId = 1;
+const int _validLocalityId = 1;
 
-final int _invalidPersonId = 2;
+const int _invalidPersonId = 2;
 
 final _validLocality = Locality(
   id: _validLocalityId,
@@ -267,7 +267,7 @@ final _validPerson = Person(
   name: "Name LastName",
   birthDate: DateTime(2000),
   locality: _validLocality,
-  sex: Sex.FEMALE,
+  sex: Sex.female,
   motherName: "Mãe",
   fatherName: "Pai",
 );

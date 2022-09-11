@@ -13,7 +13,7 @@ import 'package:nurse/shared/utils/validator.dart';
 class AddApplierForm extends StatefulWidget {
   final AddApplierFormController controller;
 
-  AddApplierForm(this.controller, {Key? key}) : super(key: key);
+  const AddApplierForm(this.controller, {Key? key}) : super(key: key);
 
   @override
   State<AddApplierForm> createState() => _AddApplierFormState();
@@ -45,12 +45,13 @@ class _AddApplierFormState extends State<AddApplierForm> {
     final wasSaved = await controller.saveInfo();
 
     if (wasSaved) {
+      if (!mounted) return;
       Navigator.of(context).pop();
     } else {
-      showDialog(
+      showDialog<void>(
         context: context,
         builder: (_) {
-          return RegistrationFailedAlertDialog(entityName: "aplicante");
+          return const RegistrationFailedAlertDialog(entityName: "aplicante");
         },
       );
     }
@@ -58,13 +59,14 @@ class _AddApplierFormState extends State<AddApplierForm> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          args["title"],
-          style: TextStyle(
+          args["title"]!,
+          style: const TextStyle(
             fontSize: 32,
           ),
         ),
@@ -87,7 +89,7 @@ class _AddApplierFormState extends State<AddApplierForm> {
                 child: ElevatedButton(
                   style: AppTheme.stepButtonStyle,
                   onPressed: () => tryToSave(widget.controller),
-                  child: Text("Salvar"),
+                  child: const Text("Salvar"),
                 ),
               ),
             ),
@@ -124,7 +126,7 @@ class _ApplierFormFieldsState extends State<_ApplierFormFields> {
         child: ListView(
           children: [
             CustomDropdownButtonFormField(
-              icon: Icon(Icons.local_hospital),
+              icon: const Icon(Icons.local_hospital),
               label: FormLabels.establishmentCNES,
               items: widget.establishments,
               onChanged: (Establishment? value) => setState(
@@ -132,43 +134,43 @@ class _ApplierFormFieldsState extends State<_ApplierFormFields> {
               onSaved: (Establishment? value) =>
                   widget.controller.selectedEstablishment = value,
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.abc),
+              icon: const Icon(Icons.abc),
               label: FormLabels.applierName,
               textEditingController: widget.controller.name,
-              validatorType: ValidatorType.Name,
+              validatorType: ValidatorType.name,
               onSaved: (value) => {},
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.badge),
+              icon: const Icon(Icons.badge),
               label: FormLabels.applierCns,
               textEditingController: widget.controller.cns,
-              validatorType: ValidatorType.CNS,
+              validatorType: ValidatorType.cns,
               onSaved: (value) => {},
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.badge),
+              icon: const Icon(Icons.badge),
               label: FormLabels.applierCpf,
               textEditingController: widget.controller.cpf,
-              validatorType: ValidatorType.CPF,
+              validatorType: ValidatorType.cpf,
               onSaved: (value) => {},
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.calendar_month),
+              icon: const Icon(Icons.calendar_month),
               label: FormLabels.birthDate,
               textEditingController: widget.controller.birthDate,
-              validatorType: ValidatorType.BirthDate,
+              validatorType: ValidatorType.birthDate,
               onTap: () async => widget.controller.selectDate(context),
               readOnly: true,
               onSaved: (value) => {},
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: Icon(Icons.pin),
+              icon: const Icon(Icons.pin),
               label: FormLabels.establishmentLocalityName,
               items: widget.localities,
               value: widget.controller.selectedLocality,
@@ -177,13 +179,13 @@ class _ApplierFormFieldsState extends State<_ApplierFormFields> {
               onSaved: (Locality? value) =>
                   setState(() => widget.controller.selectedLocality = value),
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: widget.controller.selectedSex == Sex.NONE
-                  ? Icon(Icons.question_mark)
-                  : widget.controller.selectedSex == Sex.FEMALE
-                      ? Icon(Icons.female)
-                      : Icon(Icons.male),
+              icon: widget.controller.selectedSex == Sex.none
+                  ? const Icon(Icons.question_mark)
+                  : widget.controller.selectedSex == Sex.female
+                      ? const Icon(Icons.female)
+                      : const Icon(Icons.male),
               label: FormLabels.sex,
               items: Sex.values,
               value: widget.controller.selectedSex,
@@ -192,20 +194,20 @@ class _ApplierFormFieldsState extends State<_ApplierFormFields> {
                 widget.controller.selectedSex = value!;
               }),
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.abc),
+              icon: const Icon(Icons.abc),
               label: FormLabels.motherName,
               textEditingController: widget.controller.motherName,
-              validatorType: ValidatorType.OptionalName,
+              validatorType: ValidatorType.optionalName,
               onSaved: (value) => {},
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.abc),
+              icon: const Icon(Icons.abc),
               label: FormLabels.fatherName,
               textEditingController: widget.controller.fatherName,
-              validatorType: ValidatorType.OptionalName,
+              validatorType: ValidatorType.optionalName,
               onSaved: (value) => {},
             ),
           ],

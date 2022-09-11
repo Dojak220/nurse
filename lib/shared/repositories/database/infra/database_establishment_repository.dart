@@ -8,6 +8,7 @@ import 'package:nurse/shared/repositories/infra/locality_repository.dart';
 
 class DatabaseEstablishmentRepository extends DatabaseInterface
     implements EstablishmentRepository {
+  // ignore: constant_identifier_names
   static const String TABLE = "Establishment";
   final LocalityRepository _localityRepo;
 
@@ -59,7 +60,7 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
 
   Future<Establishment> _getEstablishmentFromMap(
       Map<String, dynamic> establishmentMap) async {
-    final locality = await _getLocality(establishmentMap["locality"]);
+    final locality = await _getLocality(establishmentMap["locality"] as int);
 
     final updatedEstablishmentMap = Map.of(establishmentMap);
     updatedEstablishmentMap["locality"] = locality.toMap();
@@ -79,13 +80,13 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
       final establishmentMaps = await getAll();
       final localities = await _getLocalities();
 
-      establishmentMaps.forEach((e) {
+      for (final establishmentMap in establishmentMaps) {
         final locality = localities.firstWhere((l) {
-          return l.id == e["locality"];
+          return l.id == establishmentMap["locality"];
         });
 
-        e["locality"] = locality.toMap();
-      });
+        establishmentMap["locality"] = locality.toMap();
+      }
 
       final establishments = establishmentMaps
           .map((establishment) => Establishment.fromMap(establishment))

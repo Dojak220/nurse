@@ -11,6 +11,7 @@ import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
 
 class DatabaseApplierRepository extends DatabaseInterface
     implements ApplierRepository {
+  // ignore: constant_identifier_names
   static const String TABLE = "Applier";
   final EstablishmentRepository _establishmentRepo;
   final PersonRepository _personRepo;
@@ -68,8 +69,9 @@ class DatabaseApplierRepository extends DatabaseInterface
   }
 
   Future<Applier> _getApplierFromMap(Map<String, dynamic> applierMap) async {
-    final person = await _getPerson(applierMap["person"]);
-    final establishment = await _getEstablishment(applierMap["establishment"]);
+    final person = await _getPerson(applierMap["person"] as int);
+    final establishment =
+        await _getEstablishment(applierMap["establishment"] as int);
 
     final updatedApplierMap = Map.of(applierMap);
     updatedApplierMap["person"] = person.toMap();
@@ -97,18 +99,18 @@ class DatabaseApplierRepository extends DatabaseInterface
       final persons = await _getPersons();
       final establishments = await _getEstablishments();
 
-      applierMaps.forEach((a) {
+      for (final applierMap in applierMaps) {
         final person = persons.firstWhere((p) {
-          return p.id == a["person"];
+          return p.id == applierMap["person"];
         });
 
         final establishment = establishments.firstWhere((e) {
-          return e.id == a["establishment"];
+          return e.id == applierMap["establishment"];
         });
 
-        a["person"] = person.toMap();
-        a["establishment"] = establishment.toMap();
-      });
+        applierMap["person"] = person.toMap();
+        applierMap["establishment"] = establishment.toMap();
+      }
 
       final appliers = applierMaps.map((applier) {
         return Applier.fromMap(applier);

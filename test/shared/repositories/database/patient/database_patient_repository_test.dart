@@ -258,12 +258,12 @@ void testGetPatients(MockDatabase db, PatientRepository repository) {
 
 void testUpdatePatient(MockDatabase db, PatientRepository repository) {
   group("updatePatient function:", () {
-    final int invalidPatientId = 2;
+    const int invalidPatientId = 2;
 
     final validPatient = Patient(
       id: _validPatientId,
       cns: "734759395100004",
-      maternalCondition: MaternalCondition.GESTANTE,
+      maternalCondition: MaternalCondition.gestante,
       person: _validPerson,
       priorityCategory: _validPriorityCategory,
     );
@@ -310,13 +310,13 @@ void testUpdatePatient(MockDatabase db, PatientRepository repository) {
   });
 }
 
-final int _validPatientId = 1;
-final int _validLocalityId = 1;
-final int _validPersonId = 1;
-final int _validPriorityGroupId = 1;
-final int _validPriorityCategoryId = 1;
+const int _validPatientId = 1;
+const int _validLocalityId = 1;
+const int _validPersonId = 1;
+const int _validPriorityGroupId = 1;
+const int _validPriorityCategoryId = 1;
 
-final int _invalidPatientId = 2;
+const int _invalidPatientId = 2;
 
 final _validLocality = Locality(
   id: _validLocalityId,
@@ -332,7 +332,7 @@ final _validPerson = Person(
   name: "Name LastName",
   birthDate: DateTime(2000),
   locality: _validLocality,
-  sex: Sex.FEMALE,
+  sex: Sex.female,
   motherName: "Mãe",
   fatherName: "Pai",
 );
@@ -355,7 +355,7 @@ final _validPriorityCategory = PriorityCategory(
 final _validPatient = Patient(
   id: _validPatientId,
   cns: "138068523490004",
-  maternalCondition: MaternalCondition.GESTANTE,
+  maternalCondition: MaternalCondition.gestante,
   priorityCategory: _validPriorityCategory,
   person: _validPerson,
 );

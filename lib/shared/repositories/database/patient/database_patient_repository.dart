@@ -11,6 +11,7 @@ import 'package:nurse/shared/repositories/patient/priority_category_repository.d
 
 class DatabasePatientRepository extends DatabaseInterface
     implements PatientRepository {
+  // ignore: constant_identifier_names
   static const String TABLE = "Patient";
   final PersonRepository _personRepo;
   final PriorityCategoryRepository _categoryRepo;
@@ -80,9 +81,9 @@ class DatabasePatientRepository extends DatabaseInterface
   }
 
   Future<Patient> _getPatientFromMap(Map<String, dynamic> patientMap) async {
-    final person = await _getPerson(patientMap["person"]);
+    final person = await _getPerson(patientMap["person"] as int);
     final priorityCategory = await _getPriorityCategory(
-      patientMap["priority_category"],
+      patientMap["priority_category"] as int,
     );
 
     final updatedPatientMap = Map.of(patientMap);
@@ -111,17 +112,17 @@ class DatabasePatientRepository extends DatabaseInterface
       final persons = await _getPersons();
       final priorityCategories = await _getPriorityCategories();
 
-      patientMaps.forEach((pat) {
+      for (final patientMap in patientMaps) {
         final person = persons.firstWhere((per) {
-          return per.id == pat["person"];
+          return per.id == patientMap["person"];
         });
         final priorityCategory = priorityCategories.firstWhere((c) {
-          return c.id == pat["priority_category"];
+          return c.id == patientMap["priority_category"];
         });
 
-        pat["person"] = person.toMap();
-        pat["priority_category"] = priorityCategory.toMap();
-      });
+        patientMap["person"] = person.toMap();
+        patientMap["priority_category"] = priorityCategory.toMap();
+      }
 
       final patients = patientMaps
           .map(

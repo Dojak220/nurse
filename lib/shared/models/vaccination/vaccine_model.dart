@@ -13,18 +13,18 @@ class Vaccine implements GenericModel {
     required String sipniCode,
     required String name,
     required String laboratory,
-  })  : this.sipniCode = sipniCode.trim(),
-        this.name = name.trim(),
-        this.laboratory = laboratory.trim() {
+  })  : sipniCode = sipniCode.trim(),
+        name = name.trim(),
+        laboratory = laboratory.trim() {
     _validateVaccine();
   }
 
   void _validateVaccine() {
-    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
+    if (id != null) Validator.validate(ValidatorType.id, id!);
     Validator.validateAll([
-      ValidationPair(ValidatorType.NumericalString, this.sipniCode),
-      ValidationPair(ValidatorType.Name, this.name),
-      ValidationPair(ValidatorType.Name, this.laboratory),
+      ValidationPair(ValidatorType.numericalString, sipniCode),
+      ValidationPair(ValidatorType.name, name),
+      ValidationPair(ValidatorType.name, laboratory),
     ]);
   }
 
@@ -42,6 +42,7 @@ class Vaccine implements GenericModel {
     );
   }
 
+  @override
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -53,10 +54,10 @@ class Vaccine implements GenericModel {
 
   factory Vaccine.fromMap(Map<String, dynamic> map) {
     return Vaccine(
-      id: map['id'],
-      sipniCode: map['sipni_code'] ?? '',
-      name: map['name'] ?? '',
-      laboratory: map['laboratory'] ?? '',
+      id: map['id'] as int?,
+      sipniCode: map['sipni_code'] as String? ?? '',
+      name: map['name'] as String? ?? '',
+      laboratory: map['laboratory'] as String? ?? '',
     );
   }
 

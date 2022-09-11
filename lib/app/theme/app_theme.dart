@@ -19,7 +19,7 @@ class AppTheme {
     textTheme: _textTheme,
   );
 
-  static AppBarTheme _appBarTheme = AppBarTheme(
+  static const AppBarTheme _appBarTheme = AppBarTheme(
     backgroundColor: AppColors.verdeClaro,
     shadowColor: AppColors.transparent,
     titleTextStyle: _appBarTextStyle,
@@ -28,7 +28,7 @@ class AppTheme {
     toolbarHeight: 60.0,
   );
 
-  static TextStyle _appBarTextStyle = const TextStyle(
+  static const TextStyle _appBarTextStyle = TextStyle(
     fontSize: 45.0,
     fontFamily: 'Roboto',
     fontWeight: FontWeight.bold,
@@ -92,8 +92,8 @@ class AppTheme {
       borderRadius: BorderRadius.circular(10.0),
     ),
     primary: AppColors.verdeEscuro,
-    fixedSize: Size(120, 25),
-    side: BorderSide(color: AppColors.verdeEscuro, width: 2),
+    fixedSize: const Size(120, 25),
+    side: const BorderSide(color: AppColors.verdeEscuro, width: 2),
   );
 
   static ButtonStyle stepButtonStyle = ElevatedButton.styleFrom(
@@ -102,8 +102,8 @@ class AppTheme {
       borderRadius: BorderRadius.circular(10.0),
     ),
     primary: AppColors.verdeEscuro,
-    fixedSize: Size.fromHeight(50),
-    side: BorderSide(color: AppColors.verdeEscuro, width: 2),
+    fixedSize: const Size.fromHeight(50),
+    side: const BorderSide(color: AppColors.verdeEscuro, width: 2),
   );
 
   // static ButtonStyle nextButtonStyle = backButtonStyle.copyWith(
@@ -124,7 +124,7 @@ class AppTheme {
             : null,
       );
 
-  static TextTheme _textTheme = TextTheme(
+  static final TextTheme _textTheme = TextTheme(
     bodyText2: defaultTextStyle,
   );
 }

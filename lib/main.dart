@@ -12,7 +12,7 @@ void main() async {
         providers: [
           Provider<HomeController>(create: (_) => HomeController()),
         ],
-        child: Nurse(),
+        child: const Nurse(),
       ));
     });
   });

@@ -2,35 +2,35 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
 void main() {
-  group("incompatible type for [ValidatorType.Id]", () {
-    _testValidator<int>(ValidatorType.Id);
+  group("incompatible type for [ValidatorType.id]", () {
+    _testValidator<int>(ValidatorType.id);
   });
 
-  group("incompatible type for [ValidatorType.Name]", () {
-    _testValidator<String>(ValidatorType.Name);
+  group("incompatible type for [ValidatorType.name]", () {
+    _testValidator<String>(ValidatorType.name);
   });
 
-  group("incompatible type for [ValidatorType.CPF]", () {
-    _testValidator<String>(ValidatorType.CPF);
+  group("incompatible type for [ValidatorType.cpf]", () {
+    _testValidator<String>(ValidatorType.cpf);
   });
 
-  group("incompatible type for [ValidatorType.CNS]", () {
-    _testValidator<String>(ValidatorType.CNS);
+  group("incompatible type for [ValidatorType.cns]", () {
+    _testValidator<String>(ValidatorType.cns);
   });
 
-  group("incompatible type for [ValidatorType.BirthDate]", () {
-    _testValidator<DateTime>(ValidatorType.BirthDate);
+  group("incompatible type for [ValidatorType.birthDate]", () {
+    _testValidator<DateTime>(ValidatorType.birthDate);
   });
 
   group("unimplemented type validator", () {
     test("should throw an [ValidatorException] if type has no validation.", () {
       expect(
-        () => Validator.validate(ValidatorType.Email, "example@example.com"),
+        () => Validator.validate(ValidatorType.email, "example@example.com"),
         throwsA(
           allOf(
             isA<ValidatorException>(),
             predicate((ValidatorException e) {
-              return e.message == "Unimplemented type: '$ValidatorType.Email'";
+              return e.message == "Unimplemented type: '$ValidatorType.email'";
             }),
           ),
         ),

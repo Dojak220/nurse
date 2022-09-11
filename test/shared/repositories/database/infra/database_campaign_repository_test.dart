@@ -236,8 +236,8 @@ void testUpdateCampaign(MockDatabase db, CampaignRepository repository) {
   });
 }
 
-final int _validCampaignId = 1;
-final int _invalidCampaignId = 2;
+const int _validCampaignId = 1;
+const int _invalidCampaignId = 2;
 
 final _validCampaign = Campaign(
   id: _validCampaignId,
@@ -252,11 +252,11 @@ final _validCampaigns = [
   _validCampaign.copyWith(
     id: _validCampaignId + 1,
     title: "Campaign Title 2",
-    startDate: DateTime(2022).add(Duration(days: 1)),
+    startDate: DateTime(2022).add(const Duration(days: 1)),
   ),
   _validCampaign.copyWith(
     id: _validCampaignId + 1,
     title: "Campaign Title 3",
-    startDate: DateTime(2022).add(Duration(days: 100)),
+    startDate: DateTime(2022).add(const Duration(days: 100)),
   ),
 ];

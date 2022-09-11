@@ -5,6 +5,7 @@ import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
 
 class DatabaseCampaignRepository extends DatabaseInterface
     implements CampaignRepository {
+  // ignore: constant_identifier_names
   static const String TABLE = "Campaign";
 
   DatabaseCampaignRepository([DatabaseManager? dbManager])

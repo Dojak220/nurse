@@ -16,7 +16,7 @@ class SaveFormButton extends StatelessWidget {
         child: ElevatedButton(
           style: AppTheme.stepButtonStyle,
           onPressed: onPressed,
-          child: Text("Salvar"),
+          child: const Text("Salvar"),
         ),
       ),
     );

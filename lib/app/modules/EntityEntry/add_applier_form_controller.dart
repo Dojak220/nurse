@@ -19,7 +19,7 @@ class AddApplierFormController extends FormController {
 
   Establishment? selectedEstablishment;
   Locality? selectedLocality;
-  Sex selectedSex = Sex.NONE;
+  Sex selectedSex = Sex.none;
   DateTime? selectedBirthDate;
   TextEditingController cns = TextEditingController();
   TextEditingController cpf = TextEditingController();
@@ -100,10 +100,11 @@ class AddApplierFormController extends FormController {
     return false;
   }
 
+  @override
   void clearAllInfo() {
     selectedLocality = null;
     selectedEstablishment = null;
-    selectedSex = Sex.NONE;
+    selectedSex = Sex.none;
     selectedBirthDate = null;
 
     notifyListeners();

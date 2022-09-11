@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class Home extends StatelessWidget {
   final String title;
 
-  Home({Key? key, required this.title}) : super(key: key);
+  const Home({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +30,13 @@ class Home extends StatelessWidget {
             ),
           ],
         ),
-        iconTheme: IconThemeData(color: AppColors.black),
+        iconTheme: const IconThemeData(color: AppColors.black),
         toolbarHeight: MediaQuery.of(context).size.height * 0.15,
       ),
       body: Column(
         children: [
-          Expanded(flex: 1, child: VaccinationCountStatus()),
-          Expanded(flex: 4, child: LastVaccinationsList()),
+          const Expanded(flex: 1, child: VaccinationCountStatus()),
+          const Expanded(flex: 4, child: LastVaccinationsList()),
           Align(
             alignment: Alignment.bottomCenter,
             child: VaccinationButton(
@@ -65,28 +65,28 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          DrawerHeader(
-            child: Text('Menu'),
+          const DrawerHeader(
             decoration: BoxDecoration(color: AppColors.verdeEscuro),
+            child: Text('Menu'),
           ),
           ListTile(
-            leading: Icon(Icons.edit),
-            title: Text("Editar"),
-            subtitle: Text("Modificar vacinas cadastradas"),
+            leading: const Icon(Icons.edit),
+            title: const Text("Editar"),
+            subtitle: const Text("Modificar vacinas cadastradas"),
             onTap: () => print("Editar"),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ListTile(
-            leading: Icon(Icons.share),
-            title: Text("Compartilhar"),
-            subtitle: Text("Enviar novas vacinas para o sistema"),
+            leading: const Icon(Icons.share),
+            title: const Text("Compartilhar"),
+            subtitle: const Text("Enviar novas vacinas para o sistema"),
             onTap: () => print("Compartilhar"),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ListTile(
-            leading: Icon(Icons.share),
-            title: Text("Cadastrar"),
-            subtitle: Text("Vacinas, estabelecimentos e mais"),
+            leading: const Icon(Icons.share),
+            title: const Text("Cadastrar"),
+            subtitle: const Text("Vacinas, estabelecimentos e mais"),
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute<void>(
                 builder: (_) => AddEntitiesMenuPage(title: title),
@@ -115,7 +115,7 @@ class _VaccinationCountStatusState extends State<VaccinationCountStatus> {
 
     return Container(
       height: MediaQuery.of(context).size.height * 0.21,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [AppColors.verdeClaro, AppColors.white],
           begin: Alignment.topCenter,
@@ -136,7 +136,7 @@ class _VaccinationCountStatusState extends State<VaccinationCountStatus> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28),
             child: Row(
-              key: Key("applied_doses_row"),
+              key: const Key("applied_doses_row"),
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Observer(builder: (_) {

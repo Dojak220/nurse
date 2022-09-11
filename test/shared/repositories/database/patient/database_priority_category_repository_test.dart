@@ -278,10 +278,10 @@ void testUpdatePriorityCategory(
   });
 }
 
-final int _validPriorityCategoryId = 1;
-final int _validPriorityGroupId = 1;
+const int _validPriorityCategoryId = 1;
+const int _validPriorityGroupId = 1;
 
-final int _invalidPriorityCategoryId = 2;
+const int _invalidPriorityCategoryId = 2;
 
 final _validPriorityGroup = PriorityGroup(
   id: _validPriorityGroupId,

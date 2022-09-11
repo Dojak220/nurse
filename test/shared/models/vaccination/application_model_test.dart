@@ -48,7 +48,7 @@ void main() {
   final expectedPatient = Patient(
     id: 1,
     cns: "748477761910001",
-    maternalCondition: MaternalCondition.GESTANTE,
+    maternalCondition: MaternalCondition.gestante,
     priorityCategory: expectedPriorityCategory,
     person: Person(
       id: 1,
@@ -90,7 +90,7 @@ void main() {
       vaccineBatch: expectedVaccineBatch,
       applicationDate: DateTime(2022, 3, 4),
       applier: expectedApplier,
-      dose: VaccineDose.D1,
+      dose: VaccineDose.d1,
       campaign: Campaign(
         id: 1,
         title: "Campaign Title",
@@ -106,7 +106,7 @@ void main() {
       expect(validApplication.id, 1);
 
       expect(validApplication.applicationDate, DateTime(2022, 3, 4));
-      expect(validApplication.dose, VaccineDose.D1);
+      expect(validApplication.dose, VaccineDose.d1);
       expect(validApplication.dueDate, DateTime(2022, 4));
     });
 
@@ -119,7 +119,7 @@ void main() {
       expect(actualApplication.id, 1);
       expect(
         actualApplication.dueDate,
-        DateTime(2022, 1, 1).add(Duration(days: 3 * 30)),
+        DateTime(2022, 1, 1).add(const Duration(days: 3 * 30)),
       );
     });
   });

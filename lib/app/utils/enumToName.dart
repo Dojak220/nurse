@@ -13,6 +13,6 @@ String enumToName(Enum enumValue) {
       return (enumValue as VaccineDose).name;
 
     default:
-      throw "Invalid enum type";
+      throw Exception("Invalid enum type");
   }
 }

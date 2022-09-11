@@ -1,4 +1,4 @@
-abstract class GenericModel<T> {
+abstract class GenericModel {
   final int? id;
 
   GenericModel(this.id);

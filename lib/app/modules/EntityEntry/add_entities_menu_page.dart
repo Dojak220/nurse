@@ -67,7 +67,7 @@ class AddEntitiesMenuPage extends StatelessWidget {
 
 class EntityButton extends StatelessWidget {
   final String title;
-  final Function() onPressed;
+  final void Function() onPressed;
   const EntityButton({
     Key? key,
     required this.title,
@@ -77,9 +77,9 @@ class EntityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      style: ButtonStyle(alignment: AlignmentDirectional.center),
-      child: Text(title, textAlign: TextAlign.center),
+      style: const ButtonStyle(alignment: AlignmentDirectional.center),
       onPressed: onPressed,
+      child: Text(title, textAlign: TextAlign.center),
     );
   }
 }

@@ -20,8 +20,8 @@ class Establishment implements GenericModel {
   }
 
   void _validateEstablishment() {
-    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
-    Validator.validate(ValidatorType.Name, this.name);
+    if (id != null) Validator.validate(ValidatorType.id, id!);
+    Validator.validate(ValidatorType.name, name);
 
     if (cnes.trim().length != 7) {
       throw Exception('Establishment cnes must be 7 characters long');
@@ -31,6 +31,7 @@ class Establishment implements GenericModel {
     }
   }
 
+  @override
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -42,10 +43,10 @@ class Establishment implements GenericModel {
 
   factory Establishment.fromMap(Map<String, dynamic> map) {
     return Establishment(
-      id: map['id'],
-      cnes: map['cnes'] ?? '',
-      name: map['name'] ?? '',
-      locality: Locality.fromMap(map['locality']),
+      id: map['id'] as int?,
+      cnes: map['cnes'] as String? ?? '',
+      name: map['name'] as String? ?? '',
+      locality: Locality.fromMap(map['locality'] as Map<String, dynamic>),
     );
   }
 
@@ -68,6 +69,7 @@ class Establishment implements GenericModel {
     );
   }
 
+  @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 

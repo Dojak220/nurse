@@ -19,6 +19,7 @@ import 'package:nurse/shared/repositories/vaccination/vaccine_batch_repository.d
 class DatabaseApplicationRepository extends DatabaseInterface
     with ChangeNotifier
     implements ApplicationRepository {
+  // ignore: constant_identifier_names
   static const String TABLE = "Application";
 
   final VaccineBatchRepository _vaccineBatchRepo;
@@ -59,7 +60,9 @@ class DatabaseApplicationRepository extends DatabaseInterface
     return result;
   }
 
-  Future<int> _getOrCreatePatient(Application application,) async {
+  Future<int> _getOrCreatePatient(
+    Application application,
+  ) async {
     int patientId;
     try {
       patientId = await _patientRepo
@@ -88,11 +91,11 @@ class DatabaseApplicationRepository extends DatabaseInterface
     try {
       final applicationMap = await getById(id);
 
-      final applier = await _getApplier(applicationMap["applier"]);
+      final applier = await _getApplier(applicationMap["applier"] as int);
       final vaccineBatch =
-          await _getVaccineBatch(applicationMap["vaccine_batch"]);
-      final patient = await _getPatient(applicationMap["patient"]);
-      final campaign = await _getCampaign(applicationMap["campaign"]);
+          await _getVaccineBatch(applicationMap["vaccine_batch"] as int);
+      final patient = await _getPatient(applicationMap["patient"] as int);
+      final campaign = await _getCampaign(applicationMap["campaign"] as int);
 
       applicationMap["applier"] = applier.toMap();
       applicationMap["vaccine_batch"] = vaccineBatch.toMap();
@@ -155,28 +158,28 @@ class DatabaseApplicationRepository extends DatabaseInterface
       final patients = await _getPatients();
       final campaigns = await _getCampaigns();
 
-      applicationMaps.forEach((a) {
+      for (final applicationMap in applicationMaps) {
         final applier = appliers.firstWhere((applier) {
-          return applier.id == a["applier"];
+          return applier.id == applicationMap["applier"];
         });
 
         final vaccineBatch = vaccineBatches.firstWhere((vaccineBatch) {
-          return vaccineBatch.id == a["vaccine_batch"];
+          return vaccineBatch.id == applicationMap["vaccine_batch"];
         });
 
         final patient = patients.firstWhere((p) {
-          return p.id == a["patient"];
+          return p.id == applicationMap["patient"];
         });
 
         final campaign = campaigns.firstWhere((e) {
-          return e.id == a["campaign"];
+          return e.id == applicationMap["campaign"];
         });
 
-        a["applier"] = applier.toMap();
-        a["vaccine_batch"] = vaccineBatch.toMap();
-        a["patient"] = patient.toMap();
-        a["campaign"] = campaign.toMap();
-      });
+        applicationMap["applier"] = applier.toMap();
+        applicationMap["vaccine_batch"] = vaccineBatch.toMap();
+        applicationMap["patient"] = patient.toMap();
+        applicationMap["campaign"] = campaign.toMap();
+      }
 
       final applications = applicationMaps.map((application) {
         return Application.fromMap(application);

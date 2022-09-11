@@ -30,15 +30,15 @@ class AddEstablishmentFormController extends FormController {
     final localities = await _localityRepository.getLocalities();
     final oneLocalityByCity = List<Locality>.empty(growable: true);
 
-    localities.forEach((locality) {
+    for (final locality in localities) {
       final isCityAlreadyAdded = oneLocalityByCity.any((city) {
         return city.city == locality.city;
       });
 
-      if (isCityAlreadyAdded) return;
+      if (isCityAlreadyAdded) continue;
 
       oneLocalityByCity.add(locality);
-    });
+    }
 
     _localityCities.addAll(oneLocalityByCity);
 

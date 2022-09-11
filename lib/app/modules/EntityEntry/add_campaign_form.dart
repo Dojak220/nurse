@@ -9,7 +9,7 @@ import 'package:nurse/shared/utils/validator.dart';
 class AddCampaignForm extends StatefulWidget {
   final AddCampaignFormController controller;
 
-  AddCampaignForm(this.controller, {Key? key}) : super(key: key);
+  const AddCampaignForm(this.controller, {Key? key}) : super(key: key);
 
   @override
   State<AddCampaignForm> createState() => _AddCampaignFormState();
@@ -20,12 +20,13 @@ class _AddCampaignFormState extends State<AddCampaignForm> {
     final wasSaved = await controller.saveInfo();
 
     if (wasSaved) {
+      if (!mounted) return;
       Navigator.of(context).pop();
     } else {
-      showDialog(
+      showDialog<void>(
         context: context,
         builder: (_) {
-          return RegistrationFailedAlertDialog(entityName: "campaign");
+          return const RegistrationFailedAlertDialog(entityName: "campaign");
         },
       );
     }
@@ -33,13 +34,14 @@ class _AddCampaignFormState extends State<AddCampaignForm> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          args["title"],
-          style: TextStyle(
+          args["title"]!,
+          style: const TextStyle(
             fontSize: 32,
           ),
         ),
@@ -80,36 +82,36 @@ class _CampaignFormFieldsState extends State<_CampaignFormFields> {
           semanticChildCount: 4,
           children: [
             CustomTextFormField(
-              icon: Icon(Icons.abc),
+              icon: const Icon(Icons.abc),
               label: FormLabels.campaignName,
               textEditingController: widget.controller.title,
-              validatorType: ValidatorType.Name,
+              validatorType: ValidatorType.name,
               onSaved: (value) => {},
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             CustomTextFormField(
-              icon: Icon(Icons.description),
+              icon: const Icon(Icons.description),
               label: FormLabels.campaignDescription,
               textEditingController: widget.controller.description,
-              validatorType: ValidatorType.OptionalName,
+              validatorType: ValidatorType.optionalName,
               onSaved: (value) => {},
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.today),
+              icon: const Icon(Icons.today),
               label: FormLabels.campaignStartDate,
               textEditingController: widget.controller.startDate,
-              validatorType: ValidatorType.PastDate,
+              validatorType: ValidatorType.pastDate,
               onTap: () async => widget.controller.selectStartDate(context),
               readOnly: true,
               onSaved: (value) => {},
             ),
-            Divider(color: Colors.black),
+            const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: Icon(Icons.event),
+              icon: const Icon(Icons.event),
               label: FormLabels.campaignEndDate,
               textEditingController: widget.controller.endDate,
-              validatorType: ValidatorType.Date,
+              validatorType: ValidatorType.date,
               onTap: () async => widget.controller.selectEndDate(context),
               readOnly: true,
               onSaved: (value) => {},

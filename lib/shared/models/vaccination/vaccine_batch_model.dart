@@ -14,17 +14,17 @@ class VaccineBatch implements GenericModel {
     required String number,
     required this.quantity,
     required this.vaccine,
-  }) : this.number = number.trim() {
+  }) : number = number.trim() {
     _validateVaccineBatch();
   }
 
   void _validateVaccineBatch() {
-    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
+    if (id != null) Validator.validate(ValidatorType.id, id!);
     if (quantity <= 0) {
       throw Exception('Quantity must be greater than 0');
     }
 
-    Validator.validate(ValidatorType.NumericalString, this.number);
+    Validator.validate(ValidatorType.numericalString, number);
   }
 
   VaccineBatch copyWith({
@@ -41,6 +41,7 @@ class VaccineBatch implements GenericModel {
     );
   }
 
+  @override
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -52,10 +53,10 @@ class VaccineBatch implements GenericModel {
 
   factory VaccineBatch.fromMap(Map<String, dynamic> map) {
     return VaccineBatch(
-      id: map['id'],
-      number: map['number'] ?? '',
-      quantity: map['quantity']?.toInt() ?? 0,
-      vaccine: Vaccine.fromMap(map['vaccine']),
+      id: map['id'] as int?,
+      number: map['number'] as String? ?? '',
+      quantity: map['quantity'] as int? ?? 0,
+      vaccine: Vaccine.fromMap(map['vaccine'] as Map<String, dynamic>),
     );
   }
 

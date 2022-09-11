@@ -18,7 +18,7 @@ class DatePicker {
     return newSelectedDate;
   }
 
-  static formatDateDDMMYYYY(DateTime date) {
+  static String formatDateDDMMYYYY(DateTime date) {
     return DateFormat("dd/MM/yyyy").format(date);
   }
 }

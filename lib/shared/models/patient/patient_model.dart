@@ -18,8 +18,8 @@ class Patient implements GenericModel {
     required this.maternalCondition,
     required this.person,
   }) {
-    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
-    Validator.validate(ValidatorType.CNS, this.cns);
+    if (id != null) Validator.validate(ValidatorType.id, id!);
+    Validator.validate(ValidatorType.cns, cns);
   }
 
   Patient copyWith({
@@ -51,12 +51,14 @@ class Patient implements GenericModel {
 
   factory Patient.fromMap(Map<String, dynamic> map) {
     return Patient(
-      id: map['id'],
-      cns: map['cns'] ?? "",
-      priorityCategory: PriorityCategory.fromMap(map['priority_category']),
+      id: map['id'] as int?,
+      cns: map['cns'] as String? ?? "",
+      priorityCategory: PriorityCategory.fromMap(
+          map['priority_category'] as Map<String, dynamic>),
       maternalCondition: MaternalConditionExtension.fromString(
-          map['maternal_condition'] ?? MaternalCondition.NENHUM.name),
-      person: Person.fromMap(map['person']),
+          map['maternal_condition'] as String? ??
+              MaternalCondition.nenhum.name),
+      person: Person.fromMap(map['person'] as Map<String, dynamic>),
     );
   }
 
@@ -87,18 +89,18 @@ class Patient implements GenericModel {
   }
 }
 
-enum MaternalCondition { NENHUM, GESTANTE, PUERPERA }
+enum MaternalCondition { nenhum, gestante, puerpera }
 
 extension MaternalConditionExtension on MaternalCondition {
   static MaternalCondition fromString(String value) {
     switch (value.toUpperCase()) {
       case "GESTANTE":
-        return MaternalCondition.GESTANTE;
+        return MaternalCondition.gestante;
       case "PUERPERA":
-        return MaternalCondition.PUERPERA;
+        return MaternalCondition.puerpera;
       case "NENHUM":
       default:
-        return MaternalCondition.NENHUM;
+        return MaternalCondition.nenhum;
     }
   }
 }

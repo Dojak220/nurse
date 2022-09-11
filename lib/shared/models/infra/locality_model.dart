@@ -20,13 +20,13 @@ class Locality implements GenericModel {
   }
 
   void _validateLocality() {
-    if (this.id != null) Validator.validate(ValidatorType.Id, this.id!);
+    if (id != null) Validator.validate(ValidatorType.id, id!);
     Validator.validateAll(
       [
-        ValidationPair(ValidatorType.Name, this.name),
-        ValidationPair(ValidatorType.Name, this.city),
-        ValidationPair(ValidatorType.Name, this.state),
-        ValidationPair(ValidatorType.IBGECode, this.ibgeCode),
+        ValidationPair(ValidatorType.name, name),
+        ValidationPair(ValidatorType.name, city),
+        ValidationPair(ValidatorType.name, state),
+        ValidationPair(ValidatorType.ibgeCode, ibgeCode),
       ],
     );
   }
@@ -47,6 +47,7 @@ class Locality implements GenericModel {
     );
   }
 
+  @override
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -59,11 +60,11 @@ class Locality implements GenericModel {
 
   factory Locality.fromMap(Map<String, dynamic> map) {
     return Locality(
-      id: map['id'],
-      name: map['name'] ?? '',
-      city: map['city'] ?? '',
-      state: map['state'] ?? '',
-      ibgeCode: map['ibge_code'] ?? '',
+      id: map['id'] as int?,
+      name: map['name'] as String? ?? '',
+      city: map['city'] as String? ?? '',
+      state: map['state'] as String? ?? '',
+      ibgeCode: map['ibge_code'] as String? ?? '',
     );
   }
 

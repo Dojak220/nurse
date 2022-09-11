@@ -5,7 +5,7 @@ import 'package:nurse/app/theme/app_theme.dart';
 import 'package:nurse/shared/models/vaccination/application_model.dart';
 
 class TitledListView extends StatelessWidget {
-  TitledListView(
+  const TitledListView(
     this.title, {
     Key? key,
     required this.applications,
@@ -28,7 +28,7 @@ class TitledListView extends StatelessWidget {
               style: AppTheme.titleTextStyle,
             ),
           ),
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height * 0.407,
             child: Observer(builder: (_) {
               return ListView.separated(
@@ -46,7 +46,7 @@ class TitledListView extends StatelessWidget {
                     pregnant: applications[i].patient.maternalCondition.name,
                   );
                 }),
-                separatorBuilder: (context, index) => SizedBox(height: 10),
+                separatorBuilder: (_, __) => const SizedBox(height: 10),
               );
             }),
           ),

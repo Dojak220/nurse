@@ -25,7 +25,7 @@ void main() {
     validPatient = Patient(
       id: 1,
       cns: "748477761910001",
-      maternalCondition: MaternalCondition.GESTANTE,
+      maternalCondition: MaternalCondition.gestante,
       priorityCategory: expectedPriorityCategory,
       person: Person(
         id: 1,
@@ -48,7 +48,7 @@ void main() {
       expect(validPatient, isA<Patient>());
       expect(validPatient.id, 1);
       expect(validPatient.cns, "748477761910001");
-      expect(validPatient.maternalCondition, MaternalCondition.GESTANTE);
+      expect(validPatient.maternalCondition, MaternalCondition.gestante);
       expect(validPatient.priorityCategory.id, 1);
       expect(validPatient.priorityCategory.code, "Pessoas idosas");
       expect(validPatient.person.id, 1);

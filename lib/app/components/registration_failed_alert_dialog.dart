@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/dialog_confirm_button.dart';
 
@@ -24,11 +23,11 @@ class RegistrationFailedAlertDialog extends StatelessWidget {
           ),
         ],
       ),
-      content: Text(
+      content: const Text(
         'Cadastro já existia no banco de dados!',
         textAlign: TextAlign.center,
       ),
-      actions: [DialogConfirmButton(text: "Ok")],
+      actions: const [DialogConfirmButton(text: "Ok")],
       actionsAlignment: MainAxisAlignment.spaceAround,
     );
   }

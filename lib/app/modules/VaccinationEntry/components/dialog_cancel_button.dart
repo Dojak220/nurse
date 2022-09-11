@@ -10,9 +10,9 @@ class DialogCancelButton extends StatelessWidget {
   final void Function()? onPressed;
 
   @override
-  Widget build(BuildContext ctx) {
+  Widget build(BuildContext context) {
     return TextButton(
-      onPressed: onPressed ?? () => Navigator.pop(ctx),
+      onPressed: onPressed ?? () => Navigator.pop(context),
       style: AppTheme.dialogButtonStyle.copyWith(
         backgroundColor: MaterialStateProperty.all(null),
       ),

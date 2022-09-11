@@ -8,6 +8,7 @@ import 'package:nurse/shared/repositories/patient/priority_group_repository.dart
 
 class DatabasePriorityCategoryRepository extends DatabaseInterface
     implements PriorityCategoryRepository {
+  // ignore: constant_identifier_names
   static const String TABLE = "Priority_Category";
   final PriorityGroupRepository _groupRepo;
 
@@ -63,7 +64,7 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
     Map<String, dynamic> categoryMap,
   ) async {
     final priorityGroup = await _getPriorityGroup(
-      categoryMap["priority_group"],
+      categoryMap["priority_group"] as int,
     );
 
     final updatedPriorityCategoryMap = Map.of(categoryMap);
@@ -84,13 +85,13 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
       final priorityCategoryMaps = await getAll();
       final priorityGroups = await _getPriorityGroups();
 
-      priorityCategoryMaps.forEach((c) {
+      for (final priorityCategoryMap in priorityCategoryMaps) {
         final priorityGroup = priorityGroups.firstWhere((g) {
-          return g.id == c["priority_group"];
+          return g.id == priorityCategoryMap["priority_group"];
         });
 
-        c["priority_group"] = priorityGroup.toMap();
-      });
+        priorityCategoryMap["priority_group"] = priorityGroup.toMap();
+      }
 
       final priorityCategories = priorityCategoryMaps
           .map((priorityCategory) => PriorityCategory.fromMap(priorityCategory))

@@ -278,10 +278,10 @@ void testUpdateVaccineBatch(
   });
 }
 
-final int _validVaccineBatchId = 1;
-final int _validVaccineId = 1;
+const int _validVaccineBatchId = 1;
+const int _validVaccineId = 1;
 
-final int _invalidVaccineBatchId = 2;
+const int _invalidVaccineBatchId = 2;
 
 final _validVaccine = Vaccine(
   id: _validVaccineId,

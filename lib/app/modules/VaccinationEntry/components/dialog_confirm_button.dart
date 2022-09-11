@@ -12,9 +12,9 @@ class DialogConfirmButton extends StatelessWidget {
   final String text;
 
   @override
-  Widget build(BuildContext ctx) {
+  Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed ?? () => Navigator.pop(ctx),
+      onPressed: onPressed ?? () => Navigator.pop(context),
       style: AppTheme.dialogButtonStyle,
       child: Text(text),
     );
