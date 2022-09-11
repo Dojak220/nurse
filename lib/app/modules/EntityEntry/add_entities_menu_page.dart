@@ -18,6 +18,13 @@ class AddEntitiesMenuPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               EntityButton(
+                title: "Campanha",
+                onPressed: () => Navigator.of(context)
+                    .pushNamed("/campaigns/new", arguments: {
+                  "title": "Campanha",
+                }),
+              ),
+              EntityButton(
                 title: "Estabelecimento",
                 onPressed: () => Navigator.of(context)
                     .pushNamed("/establishments/new", arguments: {

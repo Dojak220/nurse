@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:nurse/app/modules/EntityEntry/add_applier_form.dart';
 import 'package:nurse/app/modules/EntityEntry/add_applier_form_controller.dart';
+import 'package:nurse/app/modules/EntityEntry/add_campaign_form.dart';
+import 'package:nurse/app/modules/EntityEntry/add_campaign_form_controller.dart';
 import 'package:nurse/app/modules/EntityEntry/add_establishment_form.dart';
 import 'package:nurse/app/modules/EntityEntry/add_establishment_form_controller.dart';
 import 'package:nurse/app/modules/EntityEntry/add_locality_form.dart';
@@ -46,7 +48,8 @@ class Nurse extends StatelessWidget {
         "/localities/new": (context) =>
             AddLocalityForm(AddLocalityFormController()),
         "/campaigns": (context) => EmptyPage("campaign"),
-        "/campaigns/new": (context) => EmptyPage("campaign/new"),
+        "/campaigns/new": (context) =>
+            AddCampaignForm(AddCampaignFormController()),
         "/priorityGroups": (context) => EmptyPage("priorityGroup"),
         "/priorityGroups/new": (context) => EmptyPage("priorityGroup/new"),
         "/priorityCategories": (context) => EmptyPage("priorityCategory"),
