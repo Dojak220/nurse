@@ -15,8 +15,6 @@ class AddLocalityFormController extends FormController {
   TextEditingController state = TextEditingController();
   TextEditingController ibgeCode = TextEditingController();
 
-  Locality? locality;
-
   AddLocalityFormController([LocalityRepository? localityRepository])
       : _repository = localityRepository ?? DatabaseLocalityRepository();
 
@@ -26,8 +24,6 @@ class AddLocalityFormController extends FormController {
     city.clear();
     state.clear();
     ibgeCode.clear();
-
-    locality = null;
 
     notifyListeners();
   }
