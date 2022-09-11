@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nurse/app/components/registration_failed_alert_dialog.dart';
 import 'package:nurse/app/components/save_form_button.dart';
 import 'package:nurse/app/modules/EntityEntry/add_establishment_form_controller.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field%20.dart';
+import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
 import 'package:nurse/app/utils/form_labels.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
