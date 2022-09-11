@@ -11,7 +11,7 @@ import 'package:nurse/shared/utils/validator.dart';
 class PatientForm extends StatefulWidget {
   final PatientFormController controller;
 
-  PatientForm(this.controller, {Key? key}) : super(key: key);
+  const PatientForm(this.controller, {Key? key}) : super(key: key);
 
   @override
   State<PatientForm> createState() => _PatientFormState();

@@ -8,7 +8,7 @@ import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
 class VaccineForm extends StatefulWidget {
   final VaccineFormController controller;
 
-  VaccineForm(this.controller, {Key? key}) : super(key: key);
+  const VaccineForm(this.controller, {Key? key}) : super(key: key);
 
   @override
   State<VaccineForm> createState() => _VaccineFormState();
