@@ -38,7 +38,7 @@ class _CampaignFormState extends State<CampaignForm> {
           children: [
             CustomDropdownButtonFormField(
               icon: Icon(Icons.campaign),
-              label: FormLabels.campaign,
+              label: FormLabels.campaignName,
               items: _campaigns,
               onChanged: (Campaign? value) =>
                   setState(() => widget.controller.selectedCampaign = value),

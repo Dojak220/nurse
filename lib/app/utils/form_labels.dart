@@ -1,11 +1,14 @@
 enum FormLabels {
+  applicationDate,
   applierCns,
   applierCpf,
   applierName,
   birthDate,
-  campaign,
+  campaignName,
+  campaignDescription,
+  campaignStartDate,
+  campaignEndDate,
   category,
-  date,
   dose,
   establishmentCNES,
   establishmentLocalityName,
@@ -31,6 +34,8 @@ enum FormLabels {
 extension LabelNamesAndHints on FormLabels {
   String get description {
     switch (this) {
+      case FormLabels.applicationDate:
+        return "Data de Aplicação *";
       case FormLabels.applierCns:
         return "CNS do(a) Aplicante *";
       case FormLabels.applierCpf:
@@ -39,12 +44,16 @@ extension LabelNamesAndHints on FormLabels {
         return "Nome Completo do(a) Aplicante *";
       case FormLabels.birthDate:
         return "Data de Nascimento";
-      case FormLabels.campaign:
+      case FormLabels.campaignName:
         return "Campanha *";
+      case FormLabels.campaignDescription:
+        return "Descrição da Campanha";
+      case FormLabels.campaignStartDate:
+        return "Data de Início *";
+      case FormLabels.campaignEndDate:
+        return "Data de Término";
       case FormLabels.category:
         return "Categoria Prioritária *";
-      case FormLabels.date:
-        return "Data de Aplicação *";
       case FormLabels.dose:
         return "Dose *";
       case FormLabels.establishmentCNES:
@@ -92,6 +101,8 @@ extension LabelNamesAndHints on FormLabels {
 
   String get hint {
     switch (this) {
+      case FormLabels.applicationDate:
+        return "Data da aplicação da vacina";
       case FormLabels.applierCns:
         return "Número do Cartão Nacional de Saúde do(a) aplicador(a)";
       case FormLabels.applierCpf:
@@ -100,12 +111,16 @@ extension LabelNamesAndHints on FormLabels {
         return "Nome completo do(a) aplicante";
       case FormLabels.birthDate:
         return "Data de Nascimento";
-      case FormLabels.campaign:
+      case FormLabels.campaignName:
         return "Campanha de vacinação";
+      case FormLabels.campaignDescription:
+        return "Descrição da campanha de vacinação";
+      case FormLabels.campaignStartDate:
+        return "Data de início da campanha de vacinação";
+      case FormLabels.campaignEndDate:
+        return "Data de término da campanha de vacinação";
       case FormLabels.category:
         return "Categoria do(a) paciente";
-      case FormLabels.date:
-        return "Data da aplicação da vacina";
       case FormLabels.dose:
         return "Dose da vacina";
       case FormLabels.establishmentCNES:

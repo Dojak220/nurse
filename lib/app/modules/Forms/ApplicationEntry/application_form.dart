@@ -34,7 +34,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
             Divider(color: Colors.black),
             CustomTextFormField(
               icon: Icon(Icons.calendar_month),
-              label: FormLabels.date,
+              label: FormLabels.applicationDate,
               textEditingController: widget.controller.date,
               validatorType: ValidatorType.PastDate,
               onTap: () async => widget.controller.selectDate(context),
@@ -74,7 +74,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
             Divider(color: Colors.black),
             CustomTextFormField(
               icon: Icon(Icons.campaign),
-              label: FormLabels.campaign,
+              label: FormLabels.campaignName,
               validatorType: ValidatorType.Name,
               readOnly: true,
               enabled: false,
