@@ -19,7 +19,12 @@ class CustomDropdownButtonFormField<T> extends CustomFormField {
     this.isEnum = false,
     required this.onChanged,
     this.onSaved,
-  }) : super(icon: icon, hint: label.hint, description: label.description);
+  }) : super(
+          key: key,
+          icon: icon,
+          hint: label.hint,
+          description: label.description,
+        );
 
   List<T> _sortItemsAlphabetically() {
     final sortedList = List.of(items);

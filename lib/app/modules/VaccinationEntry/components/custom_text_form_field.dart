@@ -26,6 +26,7 @@ class CustomTextFormField extends CustomFormField {
     this.onChanged,
     required this.onSaved,
   }) : super(
+          key: key,
           icon: icon,
           hint: label.hint,
           description: label.description,
