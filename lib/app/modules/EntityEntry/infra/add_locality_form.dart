@@ -26,7 +26,7 @@ class _AddLocalityFormState extends State<AddLocalityForm> {
       showDialog<void>(
         context: context,
         builder: (_) {
-          return const RegistrationFailedAlertDialog(entityName: "locality");
+          return const RegistrationFailedAlertDialog(entityName: "localidade");
         },
       );
     }

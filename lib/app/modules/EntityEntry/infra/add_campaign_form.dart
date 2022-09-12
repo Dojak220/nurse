@@ -26,7 +26,7 @@ class _AddCampaignFormState extends State<AddCampaignForm> {
       showDialog<void>(
         context: context,
         builder: (_) {
-          return const RegistrationFailedAlertDialog(entityName: "campaign");
+          return const RegistrationFailedAlertDialog(entityName: "campanha");
         },
       );
     }
