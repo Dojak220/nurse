@@ -40,7 +40,10 @@ class AddEntitiesMenuPage extends StatelessWidget {
               ),
               EntityButton(
                 title: "Paciente",
-                onPressed: () => print("Paciente"),
+                onPressed: () => Navigator.of(context)
+                    .pushNamed("/patients/new", arguments: {
+                  "title": "Paciente",
+                }),
               ),
               EntityButton(
                 title: "Aplicante",

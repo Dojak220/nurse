@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:nurse/app/modules/EntityEntry/patient/add_patient_form.dart';
+import 'package:nurse/app/modules/EntityEntry/patient/add_patient_form_controller.dart';
 import 'package:nurse/app/modules/EntityEntry/vaccination/add_applier_form.dart';
 import 'package:nurse/app/modules/EntityEntry/vaccination/add_applier_form_controller.dart';
 import 'package:nurse/app/modules/EntityEntry/infra/add_campaign_form.dart';
@@ -38,7 +40,8 @@ class Nurse extends StatelessWidget {
         "/persons": (context) => const EmptyPage("person"),
         "/persons/new": (context) => const EmptyPage("person/new"),
         "/patients": (context) => const EmptyPage("patient"),
-        "/patients/new": (context) => const EmptyPage("patient/new"),
+        "/patients/new": (context) =>
+            AddPatientForm(AddPatientFormController()),
         "/establishments": (context) => const EmptyPage("establishment"),
         "/establishments/new": (context) =>
             AddEstablishmentForm(AddEstablishmentFormController()),
