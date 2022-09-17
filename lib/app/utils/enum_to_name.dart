@@ -8,7 +8,7 @@ String enumToName(Enum enumValue) {
     case Sex:
       return (enumValue as Sex).toName;
     case MaternalCondition:
-      return (enumValue as MaternalCondition).name;
+      return (enumValue as MaternalCondition).toName;
     case VaccineDose:
       return (enumValue as VaccineDose).name;
 

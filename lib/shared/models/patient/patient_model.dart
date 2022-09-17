@@ -103,4 +103,16 @@ extension MaternalConditionExtension on MaternalCondition {
         return MaternalCondition.nenhum;
     }
   }
+
+  String get toName {
+    switch (this) {
+      case MaternalCondition.gestante:
+        return "GESTANTE";
+      case MaternalCondition.puerpera:
+        return "PUERPERA";
+      case MaternalCondition.nenhum:
+      default:
+        return "NENHUM";
+    }
+  }
 }
