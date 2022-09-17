@@ -107,6 +107,13 @@ class AddApplierFormController extends FormController {
     selectedSex = Sex.none;
     selectedBirthDate = null;
 
+    cns.clear();
+    cpf.clear();
+    name.clear();
+    birthDate.clear();
+    motherName.clear();
+    fatherName.clear();
+
     notifyListeners();
   }
 
