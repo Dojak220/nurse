@@ -10,6 +10,8 @@ import 'package:nurse/app/modules/EntityEntry/infra/add_establishment_form.dart'
 import 'package:nurse/app/modules/EntityEntry/infra/add_establishment_form_controller.dart';
 import 'package:nurse/app/modules/EntityEntry/infra/add_locality_form.dart';
 import 'package:nurse/app/modules/EntityEntry/infra/add_locality_form_controller.dart';
+import 'package:nurse/app/modules/EntityEntry/vaccination/add_vaccine_batch_form.dart';
+import 'package:nurse/app/modules/EntityEntry/vaccination/add_vaccine_batch_form_controller.dart';
 import 'package:nurse/app/modules/EntityEntry/vaccination/add_vaccine_form.dart';
 import 'package:nurse/app/modules/EntityEntry/vaccination/add_vaccine_form_controller.dart';
 import 'package:nurse/app/modules/Home/home_page.dart';
@@ -51,7 +53,8 @@ class Nurse extends StatelessWidget {
         "/vaccines/new": (context) =>
             AddVaccineForm(AddVaccineFormController()),
         "/vaccineBatches": (context) => const EmptyPage("vaccineBatch"),
-        "/vaccineBatches/new": (context) => const EmptyPage("vaccineBatch/new"),
+        "/vaccineBatches/new": (context) =>
+            AddVaccineBatchForm(AddVaccineBatchFormController()),
         "/localities": (context) => const EmptyPage("locality"),
         "/localities/new": (context) =>
             AddLocalityForm(AddLocalityFormController()),

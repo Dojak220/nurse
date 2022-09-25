@@ -39,6 +39,13 @@ class AddEntitiesMenuPage extends StatelessWidget {
                 }),
               ),
               EntityButton(
+                title: "Lote de Vacina",
+                onPressed: () => Navigator.of(context)
+                    .pushNamed("/vaccineBatches/new", arguments: {
+                  "title": "Lote de Vacina",
+                }),
+              ),
+              EntityButton(
                 title: "Paciente",
                 onPressed: () => Navigator.of(context)
                     .pushNamed("/patients/new", arguments: {
