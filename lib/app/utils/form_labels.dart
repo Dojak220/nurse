@@ -29,7 +29,7 @@ enum FormLabels {
   vaccineBatchNumber,
   vaccineBatchQuantity,
   vaccineLaboratory,
-  vaccine,
+  vaccineName,
   vaccineSipniCode,
 }
 
@@ -96,7 +96,7 @@ extension LabelNamesAndHints on FormLabels {
         return "Quantidade do lote*";
       case FormLabels.vaccineLaboratory:
         return "Laboratório *";
-      case FormLabels.vaccine:
+      case FormLabels.vaccineName:
         return "Nome da Vacina *";
       case FormLabels.vaccineSipniCode:
         return "Código SIPNI *";
@@ -165,7 +165,7 @@ extension LabelNamesAndHints on FormLabels {
         return "Quantidade de vacinas no lote";
       case FormLabels.vaccineLaboratory:
         return "Laboratório da vacina";
-      case FormLabels.vaccine:
+      case FormLabels.vaccineName:
         return "Nome da vacina";
       case FormLabels.vaccineSipniCode:
         return "Código SIPNI da vacina";

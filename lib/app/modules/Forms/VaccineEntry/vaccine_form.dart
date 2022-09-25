@@ -25,7 +25,7 @@ class _VaccineFormState extends State<VaccineForm> {
           children: [
             CustomDropdownButtonFormField(
               icon: const Icon(Icons.vaccines),
-              label: FormLabels.vaccine,
+              label: FormLabels.vaccineName,
               items: widget.controller.vaccines,
               onChanged: (Vaccine? value) =>
                   setState(() => widget.controller.selectedVaccine = value),

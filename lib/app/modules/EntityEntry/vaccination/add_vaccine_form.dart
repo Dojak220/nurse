@@ -102,7 +102,7 @@ class _VaccineFormFieldsState extends State<_VaccineFormFields> {
             const Divider(color: Colors.black),
             CustomTextFormField(
               icon: const Icon(Icons.abc),
-              label: FormLabels.vaccine,
+              label: FormLabels.vaccineName,
               textEditingController: widget.controller.name,
               validatorType: ValidatorType.name,
               onSaved: (value) => {},
