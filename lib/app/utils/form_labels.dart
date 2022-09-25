@@ -8,7 +8,10 @@ enum FormLabels {
   campaignDescription,
   campaignStartDate,
   campaignEndDate,
-  category,
+  categoryGroup,
+  categoryCode,
+  categoryName,
+  categoryDescription,
   dose,
   establishmentCNES,
   establishmentLocalityName,
@@ -19,7 +22,9 @@ enum FormLabels {
   localityState,
   localityCode,
   motherName,
-  group,
+  groupCode,
+  groupName,
+  groupDescription,
   maternalCondition,
   patientCns,
   patientCpf,
@@ -54,8 +59,14 @@ extension LabelNamesAndHints on FormLabels {
         return "Data de Início *";
       case FormLabels.campaignEndDate:
         return "Data de Término";
-      case FormLabels.category:
-        return "Categoria Prioritária *";
+      case FormLabels.categoryGroup:
+        return "Grupo da Categoria *";
+      case FormLabels.categoryCode:
+        return "Código da Categoria *";
+      case FormLabels.categoryName:
+        return "Nome da Categoria Prioritária";
+      case FormLabels.categoryDescription:
+        return "Descrição da Categoria";
       case FormLabels.dose:
         return "Dose *";
       case FormLabels.establishmentCNES:
@@ -76,8 +87,12 @@ extension LabelNamesAndHints on FormLabels {
         return "Código da Localidade *";
       case FormLabels.motherName:
         return "Nome da Mãe *";
-      case FormLabels.group:
-        return "Grupo Prioritário *";
+      case FormLabels.groupCode:
+        return "Código do Grupo *";
+      case FormLabels.groupName:
+        return "Grupo Prioritário";
+      case FormLabels.groupDescription:
+        return "Descrição do Grupo";
       case FormLabels.maternalCondition:
         return "Condição Maternal *";
       case FormLabels.patientCns:
@@ -125,8 +140,14 @@ extension LabelNamesAndHints on FormLabels {
         return "Data de início da campanha de vacinação";
       case FormLabels.campaignEndDate:
         return "Data de término da campanha de vacinação";
-      case FormLabels.category:
-        return "Categoria do(a) paciente";
+      case FormLabels.categoryGroup:
+        return "Grupo do(a) paciente";
+      case FormLabels.categoryCode:
+        return "Código da categoria do(a) paciente";
+      case FormLabels.categoryName:
+        return "Nome da Categoria do(a) paciente";
+      case FormLabels.categoryDescription:
+        return "Descrição da categoria do(a) paciente";
       case FormLabels.dose:
         return "Dose da vacina";
       case FormLabels.establishmentCNES:
@@ -145,8 +166,12 @@ extension LabelNamesAndHints on FormLabels {
         return "Código ibge da cidade da localidade";
       case FormLabels.motherName:
         return "Nome da mãe";
-      case FormLabels.group:
+      case FormLabels.groupCode:
+        return "Código do grupo";
+      case FormLabels.groupName:
         return "Grupo do(a) paciente";
+      case FormLabels.groupDescription:
+        return "Descrição do grupo";
       case FormLabels.maternalCondition:
         return "Condição Maternal do(a) paciente";
       case FormLabels.patientCns:

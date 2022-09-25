@@ -77,8 +77,8 @@ class _PatientFormState extends State<PatientForm> {
             ),
             const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.group),
-              label: FormLabels.category,
+              icon: const Icon(Icons.category),
+              label: FormLabels.categoryName,
               items: widget.controller.categories,
               value: widget.controller.selectedCategory,
               onChanged: (PriorityCategory? value) =>
