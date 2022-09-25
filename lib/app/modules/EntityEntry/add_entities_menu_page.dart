@@ -67,8 +67,18 @@ class AddEntitiesMenuPage extends StatelessWidget {
                 }),
               ),
               EntityButton(
-                title: "Lote",
-                onPressed: () => print("Lote"),
+                title: "Grupo Prioritário",
+                onPressed: () => Navigator.of(context)
+                    .pushNamed("/priorityGroups/new", arguments: {
+                  "title": "Grupo Prioritário",
+                }),
+              ),
+              EntityButton(
+                title: "Categoria Prioritária",
+                onPressed: () => Navigator.of(context)
+                    .pushNamed("/priorityCategories/new", arguments: {
+                  "title": "Categoria Prioritário",
+                }),
               ),
             ],
           ),

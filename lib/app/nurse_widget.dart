@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:nurse/app/modules/EntityEntry/patient/add_patient_form.dart';
 import 'package:nurse/app/modules/EntityEntry/patient/add_patient_form_controller.dart';
+import 'package:nurse/app/modules/EntityEntry/patient/add_priority_category_form.dart';
+import 'package:nurse/app/modules/EntityEntry/patient/add_priority_category_form_controller.dart';
+import 'package:nurse/app/modules/EntityEntry/patient/add_priority_group_form.dart';
+import 'package:nurse/app/modules/EntityEntry/patient/add_priority_group_form_controller.dart';
 import 'package:nurse/app/modules/EntityEntry/vaccination/add_applier_form.dart';
 import 'package:nurse/app/modules/EntityEntry/vaccination/add_applier_form_controller.dart';
 import 'package:nurse/app/modules/EntityEntry/infra/add_campaign_form.dart';
@@ -63,10 +67,10 @@ class Nurse extends StatelessWidget {
             AddCampaignForm(AddCampaignFormController()),
         "/priorityGroups": (context) => const EmptyPage("priorityGroup"),
         "/priorityGroups/new": (context) =>
-            const EmptyPage("priorityGroup/new"),
+            AddPriorityGroupForm(AddPriorityGroupFormController()),
         "/priorityCategories": (context) => const EmptyPage("priorityCategory"),
         "/priorityCategories/new": (context) =>
-            const EmptyPage("priorityCategory/new"),
+            AddPriorityCategoryForm(AddPriorityCategoryFormController()),
       },
     );
   }
