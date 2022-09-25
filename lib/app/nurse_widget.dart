@@ -14,6 +14,7 @@ import 'package:nurse/app/modules/EntityEntry/vaccination/add_vaccine_form.dart'
 import 'package:nurse/app/modules/EntityEntry/vaccination/add_vaccine_form_controller.dart';
 import 'package:nurse/app/modules/Home/home_page.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry.dart';
+import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
 import 'package:nurse/app/theme/app_theme.dart';
 
 class Nurse extends StatelessWidget {
@@ -34,11 +35,9 @@ class Nurse extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (context) => const Home(title: "Nurse"),
-        "/vaccinations": (context) => const VaccinationEntry(title: "Nurse"),
+        "/vaccinations": (context) => const EmptyPage("vaccination"),
         "/vaccinations/new": (context) =>
-            const VaccinationEntry(title: "Nurse"),
-        "/persons": (context) => const EmptyPage("person"),
-        "/persons/new": (context) => const EmptyPage("person/new"),
+            VaccinationEntry(VaccinationEntryController()),
         "/patients": (context) => const EmptyPage("patient"),
         "/patients/new": (context) =>
             AddPatientForm(AddPatientFormController()),

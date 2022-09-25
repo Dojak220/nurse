@@ -10,11 +10,11 @@ import 'package:nurse/app/modules/VaccinationEntry/components/form_step_button.d
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
 
 class VaccinationEntry extends StatefulWidget {
-  final String title;
+  final VaccinationEntryController controller;
 
-  const VaccinationEntry({
+  const VaccinationEntry(
+    this.controller, {
     Key? key,
-    required this.title,
   }) : super(key: key);
 
   @override
@@ -22,8 +22,6 @@ class VaccinationEntry extends StatefulWidget {
 }
 
 class _VaccinationEntryState extends State<VaccinationEntry> {
-  final controller = VaccinationEntryController();
-
   /// TODO: Verificar se o build context é necessário, dado que o contexto pode
   ///  ser acessado globalmente.
   void tryToSave(
@@ -68,10 +66,12 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
 
   @override
   Widget build(BuildContext context) {
+    final VaccinationEntryController controller = widget.controller;
+
     return WillPopScope(
       onWillPop: () async => controller.cleanAllForms(),
       child: Scaffold(
-        appBar: AppBar(title: Text(widget.title)),
+        appBar: AppBar(title: const Text("Nurse")),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
