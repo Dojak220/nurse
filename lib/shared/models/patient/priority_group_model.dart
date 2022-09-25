@@ -81,6 +81,6 @@ class PriorityGroup implements GenericModel {
 
   @override
   String toString() {
-    return 'PriorityGroup(id: $id, code: $code, name: $name, description: $description)';
+    return name;
   }
 }
