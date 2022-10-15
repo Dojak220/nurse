@@ -6,9 +6,9 @@ String enumToName(Enum enumValue) {
   final type = enumValue.runtimeType;
   switch (type) {
     case Sex:
-      return (enumValue as Sex).toName;
+      return (enumValue as Sex).name;
     case MaternalCondition:
-      return (enumValue as MaternalCondition).toName;
+      return (enumValue as MaternalCondition).name;
     case VaccineDose:
       return (enumValue as VaccineDose).name;
 

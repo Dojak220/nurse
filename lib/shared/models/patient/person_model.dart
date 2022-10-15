@@ -143,7 +143,7 @@ extension SexExtension on Sex {
     }
   }
 
-  String get toName {
+  String get name {
     switch (this) {
       case Sex.female:
         return "FEMININO";

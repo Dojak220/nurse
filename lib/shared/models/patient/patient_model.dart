@@ -104,7 +104,7 @@ extension MaternalConditionExtension on MaternalCondition {
     }
   }
 
-  String get toName {
+  String get name {
     switch (this) {
       case MaternalCondition.gestante:
         return "GESTANTE";
