@@ -16,9 +16,14 @@ dependencies:
   sqflite_sqlcipher: ^2.1.0
   path: ^1.8.0
   provider: ^6.0.3
+  flutter_archive: ^5.0.0
   flutter_dotenv: ^5.0.2
   flutter_mobx: ^2.0.5
   mobx: ^2.0.7
+  syncfusion_flutter_xlsio: ^20.2.50-beta
+  path_provider: ^2.0.11
+  open_file: ^3.2.1
+  share_plus: ^4.4.0
 
 dev_dependencies:
   flutter_test:
@@ -26,6 +31,7 @@ dev_dependencies:
   mockito: ^5.1.0
   build_runner: ^2.1.8
   flutter_lints: ^2.0.1
+
 
 flutter:
   uses-material-design: true
