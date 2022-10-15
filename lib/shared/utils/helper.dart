@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:nurse/shared/models/vaccination/application_model.dart';
 
 class Helper {
@@ -34,10 +35,100 @@ class Helper {
             .length;
     }
   }
+
+  static Map<DateTime, List<Application>> applicationsForRange(
+    List<Application> applications,
+    DateTimeRange dateRange,
+  ) {
+    final startDate = DateTime(
+      dateRange.start.year,
+      dateRange.start.month,
+      dateRange.start.day,
+    );
+
+    final endDate = DateTime(
+      dateRange.end.year,
+      dateRange.end.month,
+      dateRange.end.day,
+      23,
+      59,
+      59,
+    );
+
+    final applicationsInRange = applications.where((element) {
+      return element.applicationDate.isBetween(startDate, endDate);
+    }).toList();
+
+    final applicationsGroupedByDate = Map<DateTime, List<Application>>.of(
+      applicationsInRange.fold(
+        Map<DateTime, List<Application>>.of({}),
+        (previousValue, element) {
+          if (previousValue.containsKey(element.applicationDate)) {
+            previousValue[element.applicationDate]!.add(element);
+          } else {
+            previousValue[element.applicationDate] = [element];
+          }
+
+          return previousValue;
+        },
+      ),
+    );
+
+    return applicationsGroupedByDate;
+  }
+
+  /// Get applications by dose
+  static Map<VaccineDose, List<Application>> applicationsByDose(
+    List<Application> applications,
+  ) {
+    final applicationsByDose = Map<VaccineDose, List<Application>>.of(
+      applications.fold(
+        Map<VaccineDose, List<Application>>.of({}),
+        (previousValue, element) {
+          if (previousValue.containsKey(element.dose)) {
+            previousValue[element.dose]!.add(element);
+          } else {
+            previousValue[element.dose] = [element];
+          }
+
+          return previousValue;
+        },
+      ),
+    );
+
+    return applicationsByDose;
+  }
 }
 
 enum Period {
   day,
   week,
   month,
+}
+
+extension DateTimeExtension on DateTime {
+  bool isAfterOrEqualTo(DateTime dateTime) {
+    final date = this;
+    final isAtSameMomentAs = dateTime.isAtSameMomentAs(date);
+
+    return isAtSameMomentAs | date.isAfter(dateTime);
+  }
+
+  bool isBeforeOrEqualTo(DateTime dateTime) {
+    final date = this;
+    final isAtSameMomentAs = dateTime.isAtSameMomentAs(date);
+
+    return isAtSameMomentAs | date.isBefore(dateTime);
+  }
+
+  bool isBetween(
+    DateTime fromDateTime,
+    DateTime toDateTime,
+  ) {
+    final date = this;
+    final isAfter = date.isAfterOrEqualTo(fromDateTime);
+    final isBefore = date.isBeforeOrEqualTo(toDateTime);
+
+    return isAfter && isBefore;
+  }
 }
