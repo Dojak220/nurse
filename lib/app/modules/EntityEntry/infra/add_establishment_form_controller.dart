@@ -54,6 +54,7 @@ class AddEstablishmentFormController extends AddFormController {
     notifyListeners();
   }
 
+  @override
   Future<bool> saveInfo() async {
     submitForm();
     final allFieldsValid = super.formKey.currentState!.validate();

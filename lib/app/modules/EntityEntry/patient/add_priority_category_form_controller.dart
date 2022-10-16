@@ -30,6 +30,7 @@ class AddPriorityCategoryFormController extends AddFormController {
     return priorityGroups;
   }
 
+  @override
   Future<bool> saveInfo() async {
     submitForm();
     final allFieldsValid = super.formKey.currentState!.validate();

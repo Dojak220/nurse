@@ -16,6 +16,7 @@ class AddPriorityGroupFormController extends AddFormController {
   ]) : _repository =
             priorityGroupRepository ?? DatabasePriorityGroupRepository();
 
+  @override
   Future<bool> saveInfo() async {
     submitForm();
     final allFieldsValid = super.formKey.currentState!.validate();

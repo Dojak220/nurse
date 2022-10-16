@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:nurse/app/modules/EntityEntry/edit_entities_menu_page.dart';
+import 'package:nurse/app/modules/EntityList/edit_entities_menu_page.dart';
 import 'package:provider/provider.dart';
 
 import 'package:nurse/app/modules/EntityEntry/add_entities_menu_page.dart';

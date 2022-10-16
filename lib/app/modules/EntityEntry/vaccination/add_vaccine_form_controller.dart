@@ -14,6 +14,7 @@ class AddVaccineFormController extends AddFormController {
   AddVaccineFormController([VaccineRepository? vaccineRepository])
       : _repository = vaccineRepository ?? DatabaseVaccineRepository();
 
+  @override
   Future<bool> saveInfo() async {
     submitForm();
     final allFieldsValid = super.formKey.currentState!.validate();

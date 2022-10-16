@@ -63,6 +63,7 @@ class AddApplierFormController extends AddFormController {
     }
   }
 
+  @override
   Future<bool> saveInfo() async {
     submitForm();
     final allFieldsValid = super.formKey.currentState!.validate();

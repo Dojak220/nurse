@@ -28,6 +28,7 @@ class AddVaccineBatchFormController extends AddFormController {
     return vaccines;
   }
 
+  @override
   Future<bool> saveInfo() async {
     submitForm();
     final allFieldsValid = super.formKey.currentState!.validate();
