@@ -26,28 +26,23 @@ class Home extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset("assets/images/nurse-logo-2.png", height: 44),
-            Text(
-              title,
-            ),
+            Text(title),
           ],
         ),
         iconTheme: const IconThemeData(color: AppColors.black),
         toolbarHeight: MediaQuery.of(context).size.height * 0.15,
       ),
       body: Column(
-        children: [
-          const Expanded(flex: 1, child: VaccinationCountStatus()),
-          const Expanded(flex: 4, child: LastVaccinationsList()),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: VaccinationButton(
-              newPage: "/vaccinations/new",
-              onCallback: () =>
-                  context.read<HomeController>().getApplications(),
-            ),
-          ),
+        children: const [
+          Expanded(flex: 1, child: VaccinationCountStatus()),
+          Expanded(flex: 4, child: LastVaccinationsList()),
         ],
       ),
+      floatingActionButton: VaccinationButton(
+        newPage: "/vaccinations/new",
+        onCallback: () => context.read<HomeController>().getApplications(),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

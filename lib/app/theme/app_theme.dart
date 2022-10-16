@@ -120,7 +120,7 @@ class AppTheme {
         ),
         primary: AppColors.verdeEscuro,
         fixedSize: context != null
-            ? Size(MediaQuery.of(context).size.width, 50)
+            ? Size(MediaQuery.of(context).size.width * 0.90, 50)
             : null,
       );
 

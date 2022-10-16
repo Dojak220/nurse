@@ -40,7 +40,7 @@ class Nurse extends StatelessWidget {
       supportedLocales: const [Locale('pt', 'BR')],
       initialRoute: "/",
       routes: {
-        "/": (context) => const Home(title: "Nurse"),
+        "/": (context) => const Home(title: "Imunização"),
         "/vaccinations": (context) => const EmptyPage("vaccination"),
         "/vaccinations/new": (context) =>
             VaccinationEntry(VaccinationEntryController()),
