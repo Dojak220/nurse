@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/modules/Forms/ApplicationEntry/application_form_controller.dart';
-import 'package:nurse/app/modules/Forms/ApplierEntry/applier_form_controller.dart';
-import 'package:nurse/app/modules/Forms/CampaignEntry/campaign_form_controller.dart';
-import 'package:nurse/app/modules/Forms/PatientEntry/patient_form_controller.dart';
-import 'package:nurse/app/modules/Forms/VaccineEntry/vaccine_form_controller.dart';
+import 'package:nurse/app/modules/VaccinationEntry/Forms/ApplicationEntry/application_form_controller.dart';
+import 'package:nurse/app/modules/VaccinationEntry/Forms/ApplierEntry/applier_form_controller.dart';
+import 'package:nurse/app/modules/VaccinationEntry/Forms/CampaignEntry/campaign_form_controller.dart';
+import 'package:nurse/app/modules/VaccinationEntry/Forms/PatientEntry/patient_form_controller.dart';
+import 'package:nurse/app/modules/VaccinationEntry/Forms/VaccineEntry/vaccine_form_controller.dart';
 import 'package:nurse/app/utils/form_controller.dart';
 import 'package:nurse/shared/models/vaccination/application_model.dart';
 import 'package:nurse/shared/repositories/database/vaccination/database_application_repository.dart';
@@ -119,6 +119,4 @@ class VaccinationEntryController {
 
     return true;
   }
-
-
 }

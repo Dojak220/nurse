@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/modules/Forms/ApplicationEntry/application_form.dart';
-import 'package:nurse/app/modules/Forms/ApplierEntry/applier_form.dart';
-import 'package:nurse/app/modules/Forms/CampaignEntry/campaign_form.dart';
-import 'package:nurse/app/modules/Forms/PatientEntry/patient_form.dart';
-import 'package:nurse/app/modules/Forms/VaccineEntry/vaccine_form.dart';
+import 'package:nurse/app/modules/VaccinationEntry/Forms/ApplicationEntry/application_form.dart';
+import 'package:nurse/app/modules/VaccinationEntry/Forms/ApplierEntry/applier_form.dart';
+import 'package:nurse/app/modules/VaccinationEntry/Forms/CampaignEntry/campaign_form.dart';
+import 'package:nurse/app/modules/VaccinationEntry/Forms/PatientEntry/patient_form.dart';
+import 'package:nurse/app/modules/VaccinationEntry/Forms/VaccineEntry/vaccine_form.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/dialog_confirm_button.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/form_save_step_button.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/form_step_button.dart';
