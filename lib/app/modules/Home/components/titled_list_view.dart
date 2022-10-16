@@ -29,7 +29,7 @@ class TitledListView extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.407,
+            height: MediaQuery.of(context).size.height * 0.55,
             child: Observer(builder: (_) {
               return ListView.separated(
                 itemCount: applications.length,
@@ -44,6 +44,10 @@ class TitledListView extends StatelessWidget {
                         .priorityGroup
                         .name,
                     pregnant: applications[i].patient.maternalCondition.name,
+                    onEditPressed: () async {
+                      /// TODO: Jump to edit page and return to this page
+                      // await controller.updateApplication(applications[i]);
+                    },
                   );
                 }),
                 separatorBuilder: (_, __) => const SizedBox(height: 10),

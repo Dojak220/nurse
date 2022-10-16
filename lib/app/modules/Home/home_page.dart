@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:nurse/app/modules/EntityEntry/edit_entities_menu_page.dart';
 import 'package:provider/provider.dart';
 
 import 'package:nurse/app/modules/EntityEntry/add_entities_menu_page.dart';
@@ -68,8 +69,12 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.edit),
             title: const Text("Editar"),
-            subtitle: const Text("Modificar vacinas cadastradas"),
-            onTap: () => print("Editar"),
+            subtitle: const Text("Modificar vacinas, estabelecimentos e mais"),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => const EditEntitiesMenuPage(title: "Editar"),
+              ),
+            ),
           ),
           const SizedBox(height: 20),
           ListTile(
@@ -88,7 +93,7 @@ class AppDrawer extends StatelessWidget {
             subtitle: const Text("Vacinas, estabelecimentos e mais"),
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute<void>(
-                builder: (_) => AddEntitiesMenuPage(title: title),
+                builder: (_) => const AddEntitiesMenuPage(title: "Cadastrar"),
               ),
             ),
           ),
