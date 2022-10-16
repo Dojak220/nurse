@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nurse/app/utils/date_picker.dart';
-import 'package:nurse/app/utils/form_controller.dart';
+import 'package:nurse/app/utils/add_form_controller.dart';
 import 'package:nurse/shared/models/infra/establishment_model.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
@@ -12,7 +12,7 @@ import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
 import 'package:nurse/shared/repositories/infra/locality_repository.dart';
 import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
 
-class AddApplierFormController extends FormController {
+class AddApplierFormController extends AddFormController {
   final LocalityRepository _localityRepository;
   final EstablishmentRepository _establishmentRepository;
   final ApplierRepository _repository;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/utils/form_controller.dart';
+import 'package:nurse/app/utils/add_form_controller.dart';
 import 'package:nurse/shared/models/patient/priority_category_model.dart';
 import 'package:nurse/shared/models/patient/priority_group_model.dart';
 import 'package:nurse/shared/repositories/database/patient/database_priority_category_repository.dart';
@@ -7,7 +7,7 @@ import 'package:nurse/shared/repositories/database/patient/database_priority_gro
 import 'package:nurse/shared/repositories/patient/priority_category_repository.dart';
 import 'package:nurse/shared/repositories/patient/priority_group_repository.dart';
 
-class AddPriorityCategoryFormController extends FormController {
+class AddPriorityCategoryFormController extends AddFormController {
   final PriorityGroupRepository _priorityGroupRepository;
   final PriorityCategoryRepository _repository;
 

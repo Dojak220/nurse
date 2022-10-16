@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/utils/form_controller.dart';
+import 'package:nurse/app/utils/add_form_controller.dart';
 import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
 import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
 import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_batch_repository.dart';
@@ -7,7 +7,7 @@ import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_
 import 'package:nurse/shared/repositories/vaccination/vaccine_batch_repository.dart';
 import 'package:nurse/shared/repositories/vaccination/vaccine_repository.dart';
 
-class AddVaccineBatchFormController extends FormController {
+class AddVaccineBatchFormController extends AddFormController {
   final VaccineRepository _vaccineRepository;
   final VaccineBatchRepository _repository;
 

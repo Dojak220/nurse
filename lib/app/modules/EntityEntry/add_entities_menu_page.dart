@@ -77,7 +77,7 @@ class AddEntitiesMenuPage extends StatelessWidget {
                 title: "Categoria Prioritária",
                 onPressed: () => Navigator.of(context)
                     .pushNamed("/priorityCategories/new", arguments: {
-                  "title": "Categoria Prioritário",
+                  "title": "Categoria Prioritária",
                 }),
               ),
             ],

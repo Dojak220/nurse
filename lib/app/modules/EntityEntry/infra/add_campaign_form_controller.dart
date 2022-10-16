@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nurse/app/utils/date_picker.dart';
-import 'package:nurse/app/utils/form_controller.dart';
+import 'package:nurse/app/utils/add_form_controller.dart';
 import 'package:nurse/shared/models/infra/campaign_model.dart';
 import 'package:nurse/shared/repositories/database/infra/database_campaign_repository.dart';
 import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
 
-class AddCampaignFormController extends FormController {
+class AddCampaignFormController extends AddFormController {
   final CampaignRepository _repository;
 
   final _campaigns = List<Campaign>.empty(growable: true);
@@ -64,6 +64,7 @@ class AddCampaignFormController extends FormController {
           offset: controller.text.length, affinity: TextAffinity.upstream));
   }
 
+  @override
   Future<bool> saveInfo() async {
     submitForm();
     final allFieldsValid = super.formKey.currentState!.validate();

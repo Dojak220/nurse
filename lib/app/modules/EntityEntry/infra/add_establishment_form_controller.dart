@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/utils/form_controller.dart';
+import 'package:nurse/app/utils/add_form_controller.dart';
 import 'package:nurse/shared/models/infra/establishment_model.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/repositories/database/infra/database_establishment_repository.dart';
@@ -7,7 +7,7 @@ import 'package:nurse/shared/repositories/database/infra/database_locality_repos
 import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
 import 'package:nurse/shared/repositories/infra/locality_repository.dart';
 
-class AddEstablishmentFormController extends FormController {
+class AddEstablishmentFormController extends AddFormController {
   final EstablishmentRepository _repository;
   final LocalityRepository _localityRepository;
 
