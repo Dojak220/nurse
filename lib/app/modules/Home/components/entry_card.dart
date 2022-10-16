@@ -10,6 +10,7 @@ class EntryCard extends StatelessWidget {
     required this.vaccine,
     required this.group,
     required this.pregnant,
+    required this.onEditPressed,
   }) : super(key: key);
 
   final String cns;
@@ -17,15 +18,19 @@ class EntryCard extends StatelessWidget {
   final String vaccine;
   final String group;
   final String pregnant;
+  final void Function() onEditPressed;
 
   @override
   Widget build(BuildContext context) {
     return CustomCard(
       title: name,
       upperTitle: cns,
-      leftInfo: vaccine,
+      startInfo: vaccine,
       centerInfo: group,
-      rightInfo: pregnant != MaternalCondition.nenhum.name ? pregnant : null,
+      endInfo: pregnant.toUpperCase() != MaternalCondition.nenhum.name
+          ? pregnant
+          : null,
+      onEditPressed: onEditPressed,
     );
   }
 }

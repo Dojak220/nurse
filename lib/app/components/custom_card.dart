@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nurse/app/components/edit_button.dart';
+import 'package:nurse/app/components/info_text.dart';
 import 'package:nurse/app/theme/app_theme.dart';
 import 'package:nurse/app/theme/app_colors.dart';
 
@@ -7,93 +9,90 @@ class CustomCard extends StatelessWidget {
     Key? key,
     this.upperTitle,
     required this.title,
-    this.leftInfo,
+    this.startInfo,
     this.centerInfo,
-    this.rightInfo,
+    this.endInfo,
+    required this.onEditPressed,
   }) : super(key: key);
 
   final String? upperTitle;
   final String title;
-  final String? leftInfo;
+  final String? startInfo;
   final String? centerInfo;
-  final String? rightInfo;
+  final String? endInfo;
+
+  final void Function() onEditPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: AppColors.cinzaClaro,
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x29000000),
-            blurRadius: 6.0,
-            spreadRadius: 0,
-            blurStyle: BlurStyle.normal,
-            offset: Offset(
-              0.0,
-              3.0,
-            ),
-          ),
-        ],
-      ),
-      margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 10.0, 0, 0),
-            child: Visibility(
-              visible: upperTitle != null,
-              child: Text(
-                upperTitle!,
-                style: AppTheme.tileHeaderStyle,
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            color: AppColors.cinzaClaro,
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x29000000),
+                blurRadius: 6.0,
+                spreadRadius: 0,
+                blurStyle: BlurStyle.normal,
+                offset: Offset(
+                  0.0,
+                  3.0,
+                ),
               ),
-            ),
+            ],
           ),
-          ListTile(
-            dense: true,
-            title: Text(title, style: AppTheme.tileTitleStyle),
-            subtitle: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Visibility(
-                    visible: leftInfo != null,
-                    child: Text(
-                      leftInfo!,
-                      textAlign: TextAlign.start,
-                      style: AppTheme.tileHeaderStyle
-                          .copyWith(fontWeight: FontWeight.w500),
-                    ),
-                  ),
+          margin: const EdgeInsets.fromLTRB(4.0, 0, 4.0, 4.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              UpperTitle(upperTitle: upperTitle),
+              ListTile(
+                dense: true,
+                title: Text(title, style: AppTheme.tileTitleStyle),
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InfoText(info: startInfo, textAlign: TextAlign.start),
+                    InfoText(info: centerInfo, textAlign: TextAlign.center),
+                    InfoText(info: endInfo, textAlign: TextAlign.end),
+                  ],
                 ),
-                Expanded(
-                  child: Visibility(
-                    visible: centerInfo != null,
-                    child: Text(
-                      centerInfo!,
-                      textAlign: TextAlign.center,
-                      style: AppTheme.tileHeaderStyle
-                          .copyWith(fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Visibility(
-                    visible: rightInfo != null,
-                    child: Text(
-                      rightInfo!,
-                      textAlign: TextAlign.end,
-                      style: AppTheme.tileHeaderStyle
-                          .copyWith(fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
+        SizedBox(
+          child: Align(
+            alignment: const Alignment(0.975, 0),
+            child: EditButton(onEditPressed: onEditPressed),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class UpperTitle extends StatelessWidget {
+  const UpperTitle({
+    Key? key,
+    required this.upperTitle,
+  }) : super(key: key);
+
+  final String? upperTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16.0, 10.0, 0, 0),
+      child: Visibility(
+        visible: upperTitle != null,
+        child: Text(
+          upperTitle!,
+          style: AppTheme.tileHeaderStyle,
+        ),
       ),
     );
   }
