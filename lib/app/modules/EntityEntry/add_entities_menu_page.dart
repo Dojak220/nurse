@@ -24,8 +24,8 @@ class AddEntitiesMenuPage extends StatelessWidget {
             children: [
               EntityButton(
                 title: "Campanha",
-                onPressed: () => Navigator.of(context)
-                    .pushNamed("/campaigns/new", arguments: {
+                onPressed: () =>
+                    Navigator.of(context).pushNamed("/campaigns", arguments: {
                   "title": "Campanha",
                 }),
               ),
