@@ -6,5 +6,13 @@ abstract class FormController extends ChangeNotifier {
 
   void clearAllInfo();
 
-  void submitForm();
+  bool submitForm(GlobalKey<FormState> formKey) {
+    bool isValid = formKey.currentState!.validate();
+
+    if (isValid) {
+      formKey.currentState!.save();
+    }
+
+    return isValid;
+  }
 }

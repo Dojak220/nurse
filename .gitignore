@@ -33,6 +33,7 @@ pubspec.lock
 .pub/
 /build/
 coverage/
+nurse.db
 
 # Generated files
 /test/**/*.mocks.dart

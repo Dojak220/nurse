@@ -176,6 +176,9 @@ VALUES ("278794316530006", 1, 1);
 INSERT INTO Campaign (title, start_date, end_date, description)
 VALUES ("Campanha de Vacinação", "2021-01-01", "2022-12-31", "Campanha de Vacinação");
 
+INSERT INTO Campaign (title, start_date, end_date, description)
+VALUES ("Nova Campanha de Vacinação", "2022-01-01", "2022-12-30", "Nova Campanha de Vacinação");
+
 INSERT INTO Establishment (cnes, name, locality)
 VALUES ("1234567", "Estabelecimento 1", 1);
 
