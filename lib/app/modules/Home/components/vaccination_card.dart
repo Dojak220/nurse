@@ -29,7 +29,7 @@ class VaccinationCard extends StatelessWidget {
       centerInfo: group,
       endInfo: pregnant.toUpperCase() != MaternalCondition.nenhum.name
           ? pregnant
-          : null,
+          : "",
       onEditPressed: onEditPressed,
     );
   }

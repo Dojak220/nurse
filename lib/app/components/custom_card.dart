@@ -55,9 +55,12 @@ class CustomCard extends StatelessWidget {
                 subtitle: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InfoText(info: startInfo, textAlign: TextAlign.start),
-                    InfoText(info: centerInfo, textAlign: TextAlign.center),
-                    InfoText(info: endInfo, textAlign: TextAlign.end),
+                    if (startInfo != null)
+                      InfoText(info: startInfo, textAlign: TextAlign.start),
+                    if (centerInfo != null)
+                      InfoText(info: centerInfo, textAlign: TextAlign.center),
+                    if (endInfo != null)
+                      InfoText(info: endInfo, textAlign: TextAlign.end),
                   ],
                 ),
               ),
