@@ -7,11 +7,13 @@ class TitledListView extends StatelessWidget {
     Key? key,
     required this.itemCount,
     required this.itemBuilder,
+    this.maxHeight,
   }) : super(key: key);
 
   final String title;
   final int itemCount;
   final Widget Function(BuildContext, int) itemBuilder;
+  final double? maxHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +29,12 @@ class TitledListView extends StatelessWidget {
               style: AppTheme.titleTextStyle,
             ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.55,
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: maxHeight ?? MediaQuery.of(context).size.height * 0.52,
+            ),
             child: ListView.separated(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
               itemCount: itemCount,
               itemBuilder: itemBuilder,
               separatorBuilder: (_, __) => const SizedBox(height: 10),

@@ -67,6 +67,7 @@ class EntityListBuilder<T> extends StatelessWidget {
           title,
           itemCount: entities.length,
           itemBuilder: itemBuilder,
+          maxHeight: MediaQuery.of(context).size.height * 0.7,
         ),
       ),
     );
