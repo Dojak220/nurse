@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:nurse/app/modules/EntityEntry/infra/add_locality_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
 import 'package:nurse/app/utils/form_labels.dart';
+import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
 class LocalityFormFields extends StatefulWidget {
   final AddLocalityFormController controller;
+  final Locality? initialValue;
 
-  const LocalityFormFields({Key? key, required this.controller})
-      : super(key: key);
+  const LocalityFormFields({
+    Key? key,
+    required this.controller,
+    this.initialValue,
+  }) : super(key: key);
 
   @override
   State<LocalityFormFields> createState() => LocalityFormFieldsState();

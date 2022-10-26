@@ -66,8 +66,8 @@ class AddEntitiesMenuPage extends StatelessWidget {
               ),
               EntityButton(
                 title: "Localidade",
-                onPressed: () => Navigator.of(context)
-                    .pushNamed("/localities/new", arguments: {
+                onPressed: () =>
+                    Navigator.of(context).pushNamed("/localities", arguments: {
                   "title": "Localidade",
                 }),
               ),

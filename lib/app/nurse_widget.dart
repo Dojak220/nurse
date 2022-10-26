@@ -20,11 +20,13 @@ import 'package:nurse/app/modules/EntityEntry/infra/add_establishment_form_field
 import 'package:nurse/app/modules/EntityEntry/infra/add_establishment_form_controller.dart';
 import 'package:nurse/app/modules/EntityEntry/infra/add_locality_form_controller.dart';
 import 'package:nurse/app/modules/EntityList/infra/campaigns_page.dart';
+import 'package:nurse/app/modules/EntityList/infra/locality_page.dart';
 import 'package:nurse/app/modules/Home/home_page.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
 import 'package:nurse/app/theme/app_theme.dart';
 import 'package:nurse/shared/models/infra/campaign_model.dart';
+import 'package:nurse/shared/models/infra/locality_model.dart';
 
 class Nurse extends StatelessWidget {
   const Nurse({Key? key}) : super(key: key);
@@ -97,14 +99,21 @@ class Nurse extends StatelessWidget {
             formFields: VaccineBatchFormFields(controller: controller),
           );
         },
-        "/localities": (context) => const EmptyPage("locality"),
+        "/localities": (context) => const Localities(),
         "/localities/new": (context) {
-          final controller = AddLocalityFormController();
+          final currentLocality =
+              ModalRoute.of(context)!.settings.arguments as Locality?;
+
+          final controller = AddLocalityFormController(currentLocality);
 
           return AddForm(
             controller,
             title: "Localidade",
-            formFields: LocalityFormFields(controller: controller),
+            formFields: LocalityFormFields(
+              controller: controller,
+              initialValue: currentLocality,
+            ),
+            isEditing: currentLocality != null,
           );
         },
         "/campaigns": (context) => const Campaigns(),

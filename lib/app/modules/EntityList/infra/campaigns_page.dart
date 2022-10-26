@@ -34,7 +34,6 @@ class Campaigns extends StatelessWidget {
             title: campaign.title,
             upperTitle: campaignStatus,
             startInfo: DatePicker.formatDateDDMMYYYY(campaign.startDate),
-            centerInfo: "",
             endInfo: DatePicker.formatDateDDMMYYYY(campaign.endDate),
             onEditPressed: () => Navigator.of(context)
                 .pushNamed("/campaigns/new", arguments: campaign)
