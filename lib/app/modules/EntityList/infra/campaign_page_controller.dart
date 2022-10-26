@@ -1,15 +1,12 @@
 import 'package:mobx/mobx.dart';
+import 'package:nurse/app/modules/EntityList/entity_page_controller.dart';
 
 import 'package:nurse/shared/models/infra/campaign_model.dart';
 import 'package:nurse/shared/repositories/database/infra/database_campaign_repository.dart';
 import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
 
-class CampaignsPageController {
+class CampaignsPageController extends EntityPageController<Campaign> {
   final CampaignRepository campaignRepository;
-
-  final campaigns = ObservableList<Campaign>.of(
-    List<Campaign>.empty(growable: true),
-  );
 
   late final fetchCampaigns = Action(getCampaigns);
 
@@ -20,9 +17,9 @@ class CampaignsPageController {
 
   Future<List<Campaign>> getCampaigns() async {
     final result = await campaignRepository.getCampaigns();
-    campaigns.clear();
-    campaigns.addAll(result.reversed);
+    entities.clear();
+    entities.addAll(result.reversed);
 
-    return campaigns;
+    return entities;
   }
 }

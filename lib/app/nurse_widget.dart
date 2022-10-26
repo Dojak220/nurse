@@ -106,7 +106,7 @@ class Nurse extends StatelessWidget {
             formFields: LocalityFormFields(controller: controller),
           );
         },
-        "/campaigns": (context) => const Campaigns(title: "Campanhas"),
+        "/campaigns": (context) => const Campaigns(),
         "/campaigns/new": (context) {
           final controller = AddCampaignFormController();
 
