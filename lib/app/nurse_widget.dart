@@ -45,32 +45,95 @@ class Nurse extends StatelessWidget {
         "/vaccinations/new": (context) =>
             VaccinationEntry(VaccinationEntryController()),
         "/patients": (context) => const EmptyPage("patient"),
-        "/patients/new": (context) =>
-            AddPatientForm(AddPatientFormController()),
+        "/patients/new": (context) {
+          final controller = AddPatientFormController();
+
+          return AddForm(
+            controller,
+            title: "Paciente",
+            formFields: PatientFormFields(controller: controller),
+          );
+        },
         "/establishments": (context) => const EmptyPage("establishment"),
-        "/establishments/new": (context) =>
-            AddEstablishmentForm(AddEstablishmentFormController()),
+        "/establishments/new": (context) {
+          final controller = AddEstablishmentFormController();
+
+          return AddForm(
+            controller,
+            title: "Estabelecimento",
+            formFields: EstablishmentFormFields(controller: controller),
+          );
+        },
         "/appliers": (context) => const EmptyPage("applier"),
-        "/appliers/new": (context) =>
-            AddApplierForm(AddApplierFormController()),
+        "/appliers/new": (context) {
+          final controller = AddApplierFormController();
+
+          return AddForm(
+            controller,
+            title: "Aplicante",
+            formFields: ApplierFormFields(controller: controller),
+          );
+        },
         "/vaccines": (context) => const EmptyPage("vaccine"),
-        "/vaccines/new": (context) =>
-            AddVaccineForm(AddVaccineFormController()),
+        "/vaccines/new": (context) {
+          final controller = AddVaccineFormController();
+
+          return AddForm(
+            controller,
+            title: "Vacina",
+            formFields: VaccineFormFields(controller: controller),
+          );
+        },
         "/vaccineBatches": (context) => const EmptyPage("vaccineBatch"),
-        "/vaccineBatches/new": (context) =>
-            AddVaccineBatchForm(AddVaccineBatchFormController()),
+        "/vaccineBatches/new": (context) {
+          final controller = AddVaccineBatchFormController();
+
+          return AddForm(
+            controller,
+            title: "Lote de Vacina",
+            formFields: VaccineBatchFormFields(controller: controller),
+          );
+        },
         "/localities": (context) => const EmptyPage("locality"),
-        "/localities/new": (context) =>
-            AddLocalityForm(AddLocalityFormController()),
-        "/campaigns": (context) => const EmptyPage("campaign"),
-        "/campaigns/new": (context) =>
-            AddCampaignForm(AddCampaignFormController()),
+        "/localities/new": (context) {
+          final controller = AddLocalityFormController();
+
+          return AddForm(
+            controller,
+            title: "Localidade",
+            formFields: LocalityFormFields(controller: controller),
+          );
+        },
+        "/campaigns": (context) => const Campaigns(title: "Campanhas"),
+        "/campaigns/new": (context) {
+          final controller = AddCampaignFormController();
+
+          return AddForm(
+            controller,
+            title: "Campanha",
+            formFields: CampaignFormFields(controller: controller),
+          );
+        },
         "/priorityGroups": (context) => const EmptyPage("priorityGroup"),
-        "/priorityGroups/new": (context) =>
-            AddPriorityGroupForm(AddPriorityGroupFormController()),
+        "/priorityGroups/new": (context) {
+          final controller = AddPriorityGroupFormController();
+
+          return AddForm(
+            controller,
+            title: "Grupo Prioritário",
+            formFields: PriorityGroupFormFields(controller: controller),
+          );
+        },
         "/priorityCategories": (context) => const EmptyPage("priorityCategory"),
-        "/priorityCategories/new": (context) =>
-            AddPriorityCategoryForm(AddPriorityCategoryFormController()),
+        "/priorityCategories/new": (context) {
+          final controller = AddPriorityCategoryFormController();
+
+          return AddForm(
+            controller,
+            title: "Categoria Prioritária",
+            formFields: PriorityCategoryFormFields(controller: controller),
+          );
+        },
       },
     );
   }

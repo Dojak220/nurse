@@ -55,7 +55,7 @@ class CustomTextFormField extends CustomFormField {
   }
 
   String? validate(String? value, ValidatorType type) {
-    if (value == null || value.isEmpty) {
+    if (value == null) {
       return 'Please enter some text';
     }
 

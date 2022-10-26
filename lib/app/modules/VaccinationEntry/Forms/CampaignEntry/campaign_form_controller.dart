@@ -25,9 +25,4 @@ class CampaignFormController extends FormController {
   void clearAllInfo() {
     selectedCampaign = null;
   }
-
-  @override
-  void submitForm() async {
-    formKey.currentState!.save();
-  }
 }

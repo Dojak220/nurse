@@ -77,12 +77,9 @@ class VaccinationEntryController {
   }
 
   bool submitIfFormValid(FormController formController) {
-    final allFieldsValid = formController.formKey.currentState!.validate();
-    if (allFieldsValid) {
-      formController.submitForm();
-      return true;
-    }
-    return false;
+    final submitted = formController.submitForm(formController.formKey);
+
+    return submitted;
   }
 
   bool get nextFormIsApplicationForm => formIndex + 1 == 4;

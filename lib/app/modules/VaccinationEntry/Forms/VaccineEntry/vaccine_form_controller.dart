@@ -35,9 +35,4 @@ class VaccineFormController extends FormController {
     selectedBatch = null;
     notifyListeners();
   }
-
-  @override
-  void submitForm() async {
-    formKey.currentState!.save();
-  }
 }

@@ -85,9 +85,4 @@ class ApplicationFormController extends FormController {
 
     notifyListeners();
   }
-
-  @override
-  void submitForm() async {
-    formKey.currentState!.save();
-  }
 }
