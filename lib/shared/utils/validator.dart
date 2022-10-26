@@ -79,6 +79,10 @@ class Validator {
         return (_isType<DateTime>(date))
             ? _validateBirth(date as DateTime)
             : throw ValidatorException.incompatibleType(DateTime, value);
+      case ValidatorType.optionalDate:
+        return (_isType<DateTime?>(date))
+            ? _validateOptionalDate(date)
+            : throw ValidatorException.incompatibleType(DateTime, value);
       case ValidatorType.ibgeCode:
         return _isType<String>(value)
             ? _validateIBGECode(value as String)
@@ -303,6 +307,20 @@ class Validator {
     return true;
   }
 
+  static bool _validateOptionalDate(DateTime? optionalDate) {
+    if (optionalDate == null) return true;
+
+    final isBefore1900 = optionalDate.year < 1900;
+    final isAfterNow = optionalDate.isAfter(DateTime.now());
+
+    if (isBefore1900 || isAfterNow) {
+      throw ValidatorException.invalid(
+          ValidatorType.optionalDate, optionalDate);
+    }
+
+    return true;
+  }
+
   static bool _validateIBGECode(String code) {
     final isCorrectLength = code.length == _IBGE_CODE_LENGTH;
     final isOnlyNumbers = int.tryParse(code) != null;
@@ -342,6 +360,8 @@ enum ValidatorType {
   cnes,
   numericalString,
 
+  optionalDate,
+
   /// Date must be between 1900 and 5 years from now
   date,
 
@@ -350,6 +370,7 @@ enum ValidatorType {
 
   /// Date must be between 1900 and now (equals to BirthDate)
   pastDate,
+
   ibgeCode,
   email
 }

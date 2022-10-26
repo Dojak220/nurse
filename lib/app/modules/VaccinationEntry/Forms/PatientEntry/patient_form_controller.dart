@@ -48,10 +48,8 @@ class PatientFormController extends FormController {
     }
 
     if (isCpfValid) {
-      _patient = await _patientRepository.getPatientByCns(cpf);
-      if (_patient != null) {
-        _setPatientAndNotify(_patient!);
-      }
+      _patient = await _patientRepository.getPatientByCpf(cpf);
+      if (_patient != null) _setPatientAndNotify(_patient!);
     }
   }
 
@@ -110,15 +108,19 @@ class PatientFormController extends FormController {
   }
 
   @override
-  void submitForm() async {
-    formKey.currentState!.save();
+  bool submitForm(GlobalKey<FormState> formKey) {
+    final result = super.submitForm(formKey);
 
-    _patient = Patient(
-      id: _patient?.id,
-      cns: cns.text,
-      priorityCategory: selectedCategory!,
-      maternalCondition: maternalCondition!,
-      person: Person(cpf: cpf.text, name: name.text),
-    );
+    if (result) {
+      _patient = Patient(
+        id: _patient?.id,
+        cns: cns.text,
+        priorityCategory: selectedCategory!,
+        maternalCondition: maternalCondition!,
+        person: Person(cpf: cpf.text, name: name.text),
+      );
+    }
+
+    return result;
   }
 }
