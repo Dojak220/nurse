@@ -1,76 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/components/registration_failed_alert_dialog.dart';
-import 'package:nurse/app/components/save_form_button.dart';
 import 'package:nurse/app/modules/EntityEntry/infra/add_campaign_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
 import 'package:nurse/app/utils/form_labels.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
-class AddCampaignForm extends StatefulWidget {
+class CampaignFormFields extends StatefulWidget {
   final AddCampaignFormController controller;
+  final String initialTitle;
+  final String initialDescription;
+  final DateTime? initialStartDate;
+  final DateTime? initialEndDate;
 
-  const AddCampaignForm(this.controller, {Key? key}) : super(key: key);
-
-  @override
-  State<AddCampaignForm> createState() => _AddCampaignFormState();
-}
-
-class _AddCampaignFormState extends State<AddCampaignForm> {
-  void tryToSave(AddCampaignFormController controller) async {
-    final wasSaved = await controller.saveInfo();
-
-    if (wasSaved) {
-      if (!mounted) return;
-      Navigator.of(context).pop();
-    } else {
-      showDialog<void>(
-        context: context,
-        builder: (_) {
-          return const RegistrationFailedAlertDialog(entityName: "campanha");
-        },
-      );
-    }
-  }
+  const CampaignFormFields({
+    Key? key,
+    required this.controller,
+    this.initialTitle = "",
+    this.initialDescription = "",
+    this.initialStartDate,
+    this.initialEndDate,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          args["title"]!,
-          style: const TextStyle(
-            fontSize: 32,
-          ),
-        ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: _CampaignFormFields(controller: widget.controller),
-            ),
-            SaveFormButton(onPressed: () => tryToSave(widget.controller)),
-          ],
-        ),
-      ),
-    );
-  }
+  State<CampaignFormFields> createState() => _CampaignFormFieldsState();
 }
 
-class _CampaignFormFields extends StatefulWidget {
-  final AddCampaignFormController controller;
-
-  const _CampaignFormFields({Key? key, required this.controller})
-      : super(key: key);
-
-  @override
-  State<_CampaignFormFields> createState() => _CampaignFormFieldsState();
-}
-
-class _CampaignFormFieldsState extends State<_CampaignFormFields> {
+class _CampaignFormFieldsState extends State<CampaignFormFields> {
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -84,6 +38,7 @@ class _CampaignFormFieldsState extends State<_CampaignFormFields> {
             CustomTextFormField(
               icon: const Icon(Icons.abc),
               label: FormLabels.campaignName,
+              initialValue: widget.initialTitle,
               textEditingController: widget.controller.title,
               validatorType: ValidatorType.name,
               onSaved: (value) => {},
@@ -92,6 +47,7 @@ class _CampaignFormFieldsState extends State<_CampaignFormFields> {
             CustomTextFormField(
               icon: const Icon(Icons.description),
               label: FormLabels.campaignDescription,
+              initialValue: widget.initialDescription,
               textEditingController: widget.controller.description,
               validatorType: ValidatorType.optionalName,
               onSaved: (value) => {},
@@ -100,18 +56,20 @@ class _CampaignFormFieldsState extends State<_CampaignFormFields> {
             CustomTextFormField(
               icon: const Icon(Icons.today),
               label: FormLabels.campaignStartDate,
+              initialValue: widget.initialStartDate?.toString(),
               textEditingController: widget.controller.startDate,
-              validatorType: ValidatorType.pastDate,
+              validatorType: ValidatorType.date,
               onTap: () async => widget.controller.selectStartDate(context),
               readOnly: true,
-              onSaved: (value) => {},
+              onSaved: (_) => widget.controller.selectedStartDate != null,
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
               icon: const Icon(Icons.event),
               label: FormLabels.campaignEndDate,
+              initialValue: widget.initialEndDate?.toString(),
               textEditingController: widget.controller.endDate,
-              validatorType: ValidatorType.date,
+              validatorType: ValidatorType.optionalDate,
               onTap: () async => widget.controller.selectEndDate(context),
               readOnly: true,
               onSaved: (value) => {},

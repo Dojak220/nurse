@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/components/registration_failed_alert_dialog.dart';
 import 'package:nurse/app/modules/EntityEntry/patient/add_patient_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
-import 'package:nurse/app/theme/app_theme.dart';
 import 'package:nurse/app/utils/form_labels.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/models/patient/patient_model.dart';
@@ -11,16 +9,19 @@ import 'package:nurse/shared/models/patient/person_model.dart';
 import 'package:nurse/shared/models/patient/priority_category_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
-class AddPatientForm extends StatefulWidget {
+class PatientFormFields extends StatefulWidget {
   final AddPatientFormController controller;
 
-  const AddPatientForm(this.controller, {Key? key}) : super(key: key);
+  const PatientFormFields({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
 
   @override
-  State<AddPatientForm> createState() => _AddPatientFormState();
+  State<PatientFormFields> createState() => PatientFormFieldsState();
 }
 
-class _AddPatientFormState extends State<AddPatientForm> {
+class PatientFormFieldsState extends State<PatientFormFields> {
   List<Locality> _localities = List<Locality>.empty(growable: true);
   List<PriorityCategory> _categories =
       List<PriorityCategory>.empty(growable: true);
@@ -42,88 +43,6 @@ class _AddPatientFormState extends State<AddPatientForm> {
     setState(() {});
   }
 
-  void tryToSave(AddPatientFormController controller) async {
-    final wasSaved = await controller.saveInfo();
-
-    if (wasSaved) {
-      if (!mounted) return;
-      Navigator.of(context).pop();
-    } else {
-      showDialog<void>(
-        context: context,
-        builder: (_) {
-          return const RegistrationFailedAlertDialog(entityName: "paciente");
-        },
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          args["title"]!,
-          style: const TextStyle(
-            fontSize: 32,
-          ),
-        ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: _PatientFormFields(
-                controller: widget.controller,
-                categories: _categories,
-                localities: _localities,
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: const EdgeInsets.all(5),
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: AppTheme.stepButtonStyle,
-                  onPressed: () => tryToSave(widget.controller),
-                  child: const Text("Salvar"),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    widget.controller.dispose();
-    super.dispose();
-  }
-}
-
-class _PatientFormFields extends StatefulWidget {
-  final AddPatientFormController controller;
-  final List<Locality> localities;
-  final List<PriorityCategory> categories;
-
-  const _PatientFormFields({
-    Key? key,
-    required this.controller,
-    required this.localities,
-    required this.categories,
-  }) : super(key: key);
-
-  @override
-  State<_PatientFormFields> createState() => _PatientFormFieldsState();
-}
-
-class _PatientFormFieldsState extends State<_PatientFormFields> {
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -167,9 +86,20 @@ class _PatientFormFieldsState extends State<_PatientFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
+              icon: const Icon(Icons.pin),
+              label: FormLabels.localityName,
+              items: _localities,
+              value: widget.controller.selectedLocality,
+              onChanged: (Locality? value) =>
+                  setState(() => widget.controller.selectedLocality = value),
+              onSaved: (Locality? value) =>
+                  setState(() => widget.controller.selectedLocality = value),
+            ),
+            const Divider(color: Colors.black),
+            CustomDropdownButtonFormField(
               icon: const Icon(Icons.category),
               label: FormLabels.categoryName,
-              items: widget.categories,
+              items: _categories,
               onChanged: (PriorityCategory? value) => setState(
                   () => widget.controller.selectedPriorityCategory = value),
               onSaved: (PriorityCategory? value) =>

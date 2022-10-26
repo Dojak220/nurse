@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'package:nurse/app/components/save_form_button.dart';
+import 'package:nurse/app/utils/add_form_controller.dart';
+import 'package:nurse/app/utils/try_to_save.dart';
+
+class AddForm extends StatefulWidget {
+  final AddFormController controller;
+  final String title;
+  final Widget formFields;
+
+  const AddForm(
+    this.controller, {
+    Key? key,
+    required this.title,
+    required this.formFields,
+  }) : super(key: key);
+
+  @override
+  State<AddForm> createState() => _AddFormState();
+}
+
+class _AddFormState extends State<AddForm> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title, style: const TextStyle(fontSize: 32)),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: widget.formFields,
+            ),
+            SaveFormButton(
+              onPressed: () => tryToSave(
+                widget.controller,
+                context: context,
+                mounted: mounted,
+                entityName: widget.title.toLowerCase(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    widget.controller.dispose();
+    super.dispose();
+  }
+}

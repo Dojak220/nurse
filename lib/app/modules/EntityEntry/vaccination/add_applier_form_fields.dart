@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/components/registration_failed_alert_dialog.dart';
 import 'package:nurse/app/modules/EntityEntry/vaccination/add_applier_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
-import 'package:nurse/app/theme/app_theme.dart';
 import 'package:nurse/app/utils/form_labels.dart';
 import 'package:nurse/shared/models/infra/establishment_model.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/models/patient/person_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
-class AddApplierForm extends StatefulWidget {
+class ApplierFormFields extends StatefulWidget {
   final AddApplierFormController controller;
 
-  const AddApplierForm(this.controller, {Key? key}) : super(key: key);
+  const ApplierFormFields({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
 
   @override
-  State<AddApplierForm> createState() => _AddApplierFormState();
+  State<ApplierFormFields> createState() => ApplierFormFieldsState();
 }
 
-class _AddApplierFormState extends State<AddApplierForm> {
+class ApplierFormFieldsState extends State<ApplierFormFields> {
   List<Locality> _localities = List<Locality>.empty(growable: true);
   List<Establishment> _establishments =
       List<Establishment>.empty(growable: true);
@@ -41,82 +42,6 @@ class _AddApplierFormState extends State<AddApplierForm> {
     setState(() {});
   }
 
-  void tryToSave(AddApplierFormController controller) async {
-    final wasSaved = await controller.saveInfo();
-
-    if (wasSaved) {
-      if (!mounted) return;
-      Navigator.of(context).pop();
-    } else {
-      showDialog<void>(
-        context: context,
-        builder: (_) {
-          return const RegistrationFailedAlertDialog(entityName: "aplicante");
-        },
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          args["title"]!,
-          style: const TextStyle(
-            fontSize: 32,
-          ),
-        ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: _ApplierFormFields(
-                controller: widget.controller,
-                establishments: _establishments,
-                localities: _localities,
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: const EdgeInsets.all(5),
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: AppTheme.stepButtonStyle,
-                  onPressed: () => tryToSave(widget.controller),
-                  child: const Text("Salvar"),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ApplierFormFields extends StatefulWidget {
-  final AddApplierFormController controller;
-  final List<Locality> localities;
-  final List<Establishment> establishments;
-
-  const _ApplierFormFields({
-    Key? key,
-    required this.controller,
-    required this.localities,
-    required this.establishments,
-  }) : super(key: key);
-
-  @override
-  State<_ApplierFormFields> createState() => _ApplierFormFieldsState();
-}
-
-class _ApplierFormFieldsState extends State<_ApplierFormFields> {
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -128,7 +53,7 @@ class _ApplierFormFieldsState extends State<_ApplierFormFields> {
             CustomDropdownButtonFormField(
               icon: const Icon(Icons.local_hospital),
               label: FormLabels.establishmentCNES,
-              items: widget.establishments,
+              items: _establishments,
               onChanged: (Establishment? value) => setState(
                   () => widget.controller.selectedEstablishment = value),
               onSaved: (Establishment? value) =>
@@ -172,7 +97,7 @@ class _ApplierFormFieldsState extends State<_ApplierFormFields> {
             CustomDropdownButtonFormField(
               icon: const Icon(Icons.pin),
               label: FormLabels.establishmentLocalityName,
-              items: widget.localities,
+              items: _localities,
               value: widget.controller.selectedLocality,
               onChanged: (Locality? value) =>
                   setState(() => widget.controller.selectedLocality = value),
