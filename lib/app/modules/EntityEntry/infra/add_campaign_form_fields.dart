@@ -2,22 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:nurse/app/modules/EntityEntry/infra/add_campaign_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
 import 'package:nurse/app/utils/form_labels.dart';
+import 'package:nurse/shared/models/infra/campaign_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
 class CampaignFormFields extends StatefulWidget {
   final AddCampaignFormController controller;
-  final String initialTitle;
-  final String initialDescription;
-  final DateTime? initialStartDate;
-  final DateTime? initialEndDate;
+  final Campaign? initialValue;
 
   const CampaignFormFields({
     Key? key,
     required this.controller,
-    this.initialTitle = "",
-    this.initialDescription = "",
-    this.initialStartDate,
-    this.initialEndDate,
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -38,7 +33,7 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
             CustomTextFormField(
               icon: const Icon(Icons.abc),
               label: FormLabels.campaignName,
-              initialValue: widget.initialTitle,
+              initialValue: widget.initialValue?.title,
               textEditingController: widget.controller.title,
               validatorType: ValidatorType.name,
               onSaved: (value) => {},
@@ -47,7 +42,7 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
             CustomTextFormField(
               icon: const Icon(Icons.description),
               label: FormLabels.campaignDescription,
-              initialValue: widget.initialDescription,
+              initialValue: widget.initialValue?.description,
               textEditingController: widget.controller.description,
               validatorType: ValidatorType.optionalName,
               onSaved: (value) => {},
@@ -56,7 +51,7 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
             CustomTextFormField(
               icon: const Icon(Icons.today),
               label: FormLabels.campaignStartDate,
-              initialValue: widget.initialStartDate?.toString(),
+              initialValue: widget.initialValue?.startDate.toString(),
               textEditingController: widget.controller.startDate,
               validatorType: ValidatorType.date,
               onTap: () async => widget.controller.selectStartDate(context),
@@ -67,7 +62,7 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
             CustomTextFormField(
               icon: const Icon(Icons.event),
               label: FormLabels.campaignEndDate,
-              initialValue: widget.initialEndDate?.toString(),
+              initialValue: widget.initialValue?.endDate.toString(),
               textEditingController: widget.controller.endDate,
               validatorType: ValidatorType.optionalDate,
               onTap: () async => widget.controller.selectEndDate(context),

@@ -4,15 +4,13 @@ import 'package:nurse/app/components/nurse_appbar.dart';
 import 'package:nurse/app/components/registration_button.dart';
 import 'package:nurse/app/components/titled_list_view.dart';
 import 'package:nurse/app/modules/EntityList/entity_page_controller.dart';
-import 'package:nurse/app/modules/EntityList/infra/campaign_page_controller.dart';
 import 'package:nurse/app/theme/app_colors.dart';
-import 'package:nurse/shared/models/infra/campaign_model.dart';
-import 'package:provider/provider.dart';
 
-class EntityList extends StatelessWidget {
+class EntityList<T> extends StatelessWidget {
   final String title;
   final String newPage;
   final String buttonText;
+  final EntityPageController<T> controller;
   final Widget Function(BuildContext, int) itemBuilder;
   final void Function() onCallback;
 
@@ -23,6 +21,7 @@ class EntityList extends StatelessWidget {
     required this.newPage,
     required this.buttonText,
     required this.itemBuilder,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -30,9 +29,9 @@ class EntityList extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: NurseAppBar(title: title),
-      body: EntityListBuilder(
+      body: EntityListBuilder<T>(
         title: "$title cadastrada(o)s",
-        controller: context.read<CampaignsPageController>(),
+        controller: controller,
         itemBuilder: itemBuilder,
       ),
       floatingActionButton: RegistrationButton(
@@ -45,7 +44,7 @@ class EntityList extends StatelessWidget {
   }
 }
 
-class EntityListBuilder extends StatelessWidget {
+class EntityListBuilder<T> extends StatelessWidget {
   const EntityListBuilder({
     Key? key,
     required this.controller,
@@ -54,7 +53,7 @@ class EntityListBuilder extends StatelessWidget {
   }) : super(key: key);
 
   final String title;
-  final EntityPageController<Campaign> controller;
+  final EntityPageController<T> controller;
   final Widget Function(BuildContext, int) itemBuilder;
 
   @override

@@ -24,6 +24,7 @@ import 'package:nurse/app/modules/Home/home_page.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
 import 'package:nurse/app/theme/app_theme.dart';
+import 'package:nurse/shared/models/infra/campaign_model.dart';
 
 class Nurse extends StatelessWidget {
   const Nurse({Key? key}) : super(key: key);
@@ -110,10 +111,16 @@ class Nurse extends StatelessWidget {
         "/campaigns/new": (context) {
           final controller = AddCampaignFormController();
 
+          final currentCampaign =
+              ModalRoute.of(context)!.settings.arguments as Campaign;
+
           return AddForm(
             controller,
             title: "Campanha",
-            formFields: CampaignFormFields(controller: controller),
+            formFields: CampaignFormFields(
+              controller: controller,
+              initialValue: currentCampaign,
+            ),
           );
         },
         "/priorityGroups": (context) => const EmptyPage("priorityGroup"),

@@ -18,8 +18,22 @@ class CampaignsPageController extends EntityPageController<Campaign> {
   Future<List<Campaign>> getCampaigns() async {
     final result = await campaignRepository.getCampaigns();
     entities.clear();
-    entities.addAll(result.reversed);
+
+    result.sort((date1, date2) {
+      final int comparisonByStartDate = _sortByStartDate(date1, date2);
+
+      return comparisonByStartDate != 0
+          ? comparisonByStartDate
+          : _sortByEndDate(date1, date2);
+    });
+
+    entities.addAll(result);
 
     return entities;
   }
+
+  int _sortByStartDate(Campaign a, Campaign b) =>
+      a.startDate.compareTo(b.startDate);
+
+  int _sortByEndDate(Campaign a, Campaign b) => a.endDate.compareTo(b.endDate);
 }
