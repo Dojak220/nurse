@@ -22,6 +22,25 @@ class AddCampaignFormController extends AddFormController {
       : _repository = campaignRepository ?? DatabaseCampaignRepository();
 
   @override
+  Future<bool> saveInfo() async {
+    if (submitForm(formKey)) {
+      final newCampaign = Campaign(
+        title: title.text,
+        description: description.text,
+        startDate: selectedStartDate!,
+        endDate: selectedEndDate,
+      );
+
+      return super.createEntity<Campaign>(
+        newCampaign,
+        _repository.createCampaign,
+      );
+    } else {
+      return false;
+    }
+  }
+
+  @override
   void clearAllInfo() {
     title.clear();
     description.clear();
@@ -42,6 +61,8 @@ class AddCampaignFormController extends AddFormController {
       selectedStartDate = newSelectedDate;
       _updateDateText(startDate, selectedStartDate!);
     }
+
+    notifyListeners();
   }
 
   Future<void> selectEndDate(BuildContext context) async {
@@ -62,41 +83,5 @@ class AddCampaignFormController extends AddFormController {
       ..text = DatePicker.formatDateDDMMYYYY(date)
       ..selection = TextSelection.fromPosition(TextPosition(
           offset: controller.text.length, affinity: TextAffinity.upstream));
-  }
-
-  @override
-  Future<bool> saveInfo() async {
-    submitForm();
-    final allFieldsValid = super.formKey.currentState!.validate();
-
-    if (allFieldsValid) {
-      try {
-        if (selectedStartDate == null) throw Exception("Start date is null");
-        final id = await _repository.createCampaign(
-          Campaign(
-              title: title.text,
-              description: description.text,
-              startDate: selectedStartDate!,
-              endDate: selectedEndDate),
-        );
-
-        if (id != 0) {
-          clearAllInfo();
-          return true;
-        } else {
-          return false;
-        }
-      } catch (error) {
-        print(error);
-        return false;
-      }
-    }
-
-    return false;
-  }
-
-  @override
-  void submitForm() async {
-    formKey.currentState!.save();
   }
 }

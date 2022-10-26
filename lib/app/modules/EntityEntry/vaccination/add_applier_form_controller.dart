@@ -65,40 +65,24 @@ class AddApplierFormController extends AddFormController {
 
   @override
   Future<bool> saveInfo() async {
-    submitForm();
-    final allFieldsValid = super.formKey.currentState!.validate();
+    final newApplier = Applier(
+      cns: cns.text,
+      person: Person(
+        cpf: cpf.text,
+        name: name.text,
+        locality: selectedLocality,
+        sex: selectedSex,
+        birthDate: selectedBirthDate,
+        fatherName: fatherName.text,
+        motherName: motherName.text,
+      ),
+      establishment: selectedEstablishment!,
+    );
 
-    if (allFieldsValid) {
-      try {
-        final id = await _repository.createApplier(
-          Applier(
-            cns: cns.text,
-            person: Person(
-              cpf: cpf.text,
-              name: name.text,
-              locality: selectedLocality,
-              sex: selectedSex,
-              birthDate: selectedBirthDate,
-              fatherName: fatherName.text,
-              motherName: motherName.text,
-            ),
-            establishment: selectedEstablishment!,
-          ),
-        );
-
-        if (id != 0) {
-          clearAllInfo();
-          return true;
-        } else {
-          return false;
-        }
-      } catch (error) {
-        print(error);
-        return false;
-      }
-    }
-
-    return false;
+    return super.createEntity<Applier>(
+      newApplier,
+      _repository.createApplier,
+    );
   }
 
   @override
@@ -116,10 +100,5 @@ class AddApplierFormController extends AddFormController {
     fatherName.clear();
 
     notifyListeners();
-  }
-
-  @override
-  void submitForm() async {
-    formKey.currentState!.save();
   }
 }

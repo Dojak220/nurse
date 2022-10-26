@@ -30,32 +30,16 @@ class AddVaccineBatchFormController extends AddFormController {
 
   @override
   Future<bool> saveInfo() async {
-    submitForm();
-    final allFieldsValid = super.formKey.currentState!.validate();
+    final newVaccineBatch = VaccineBatch(
+      number: number.text,
+      quantity: int.parse(quantity.text),
+      vaccine: selectedVaccine!,
+    );
 
-    if (allFieldsValid) {
-      try {
-        final id = await _repository.createVaccineBatch(
-          VaccineBatch(
-            number: number.text,
-            quantity: int.parse(quantity.text),
-            vaccine: selectedVaccine!,
-          ),
-        );
-
-        if (id != 0) {
-          clearAllInfo();
-          return true;
-        } else {
-          return false;
-        }
-      } catch (error) {
-        print(error);
-        return false;
-      }
-    }
-
-    return false;
+    return super.createEntity<VaccineBatch>(
+      newVaccineBatch,
+      _repository.createVaccineBatch,
+    );
   }
 
   @override
@@ -67,10 +51,5 @@ class AddVaccineBatchFormController extends AddFormController {
     quantity.clear();
 
     notifyListeners();
-  }
-
-  @override
-  void submitForm() async {
-    formKey.currentState!.save();
   }
 }

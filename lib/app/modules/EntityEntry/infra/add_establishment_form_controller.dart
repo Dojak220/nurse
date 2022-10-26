@@ -56,34 +56,19 @@ class AddEstablishmentFormController extends AddFormController {
 
   @override
   Future<bool> saveInfo() async {
-    submitForm();
-    final allFieldsValid = super.formKey.currentState!.validate();
+    if (submitForm(formKey)) {
+      final newEstablishment = Establishment(
+        cnes: cnes.text,
+        name: name.text,
+        locality: locality!,
+      );
 
-    if (allFieldsValid) {
-      try {
-        final id = await _repository.createEstablishment(Establishment(
-          cnes: cnes.text,
-          name: name.text,
-          locality: locality!,
-        ));
-
-        if (id != 0) {
-          clearAllInfo();
-          return true;
-        } else {
-          return false;
-        }
-      } catch (error) {
-        print(error);
-        return false;
-      }
+      return super.createEntity<Establishment>(
+        newEstablishment,
+        _repository.createEstablishment,
+      );
+    } else {
+      return false;
     }
-
-    return false;
-  }
-
-  @override
-  void submitForm() async {
-    formKey.currentState!.save();
   }
 }

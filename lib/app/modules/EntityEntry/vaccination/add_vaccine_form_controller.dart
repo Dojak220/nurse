@@ -16,39 +16,24 @@ class AddVaccineFormController extends AddFormController {
 
   @override
   Future<bool> saveInfo() async {
-    submitForm();
-    final allFieldsValid = super.formKey.currentState!.validate();
+    final newVaccine = Vaccine(
+      sipniCode: sipniCode.text,
+      name: name.text,
+      laboratory: laboratory.text,
+    );
 
-    if (allFieldsValid) {
-      try {
-        final id = await _repository.createVaccine(Vaccine(
-          sipniCode: sipniCode.text,
-          name: name.text,
-          laboratory: laboratory.text,
-        ));
-
-        if (id != 0) {
-          clearAllInfo();
-          return true;
-        } else {
-          return false;
-        }
-      } catch (error) {
-        print(error);
-        return false;
-      }
-    }
-
-    return false;
+    return super.createEntity<Vaccine>(
+      newVaccine,
+      _repository.createVaccine,
+    );
   }
 
   @override
   void clearAllInfo() {
-    notifyListeners();
-  }
+    sipniCode.clear();
+    name.clear();
+    laboratory.clear();
 
-  @override
-  void submitForm() async {
-    formKey.currentState!.save();
+    notifyListeners();
   }
 }

@@ -67,41 +67,22 @@ class AddPatientFormController extends AddFormController {
 
   @override
   Future<bool> saveInfo() async {
-    submitForm();
-    final allFieldsValid = super.formKey.currentState!.validate();
+    final newPatient = Patient(
+      cns: cns.text,
+      person: Person(
+        cpf: cpf.text,
+        name: name.text,
+        locality: selectedLocality,
+        sex: selectedSex,
+        birthDate: selectedBirthDate,
+        fatherName: fatherName.text,
+        motherName: motherName.text,
+      ),
+      maternalCondition: selectedMaternalCondition,
+      priorityCategory: selectedPriorityCategory!,
+    );
 
-    if (allFieldsValid) {
-      try {
-        final id = await _repository.createPatient(
-          Patient(
-            cns: cns.text,
-            person: Person(
-              cpf: cpf.text,
-              name: name.text,
-              locality: selectedLocality,
-              sex: selectedSex,
-              birthDate: selectedBirthDate,
-              fatherName: fatherName.text,
-              motherName: motherName.text,
-            ),
-            maternalCondition: selectedMaternalCondition,
-            priorityCategory: selectedPriorityCategory!,
-          ),
-        );
-
-        if (id != 0) {
-          clearAllInfo();
-          return true;
-        } else {
-          return false;
-        }
-      } catch (error) {
-        print(error);
-        return false;
-      }
-    }
-
-    return false;
+    return super.createEntity<Patient>(newPatient, _repository.createPatient);
   }
 
   @override
@@ -120,10 +101,5 @@ class AddPatientFormController extends AddFormController {
     fatherName.clear();
 
     notifyListeners();
-  }
-
-  @override
-  void submitForm() async {
-    formKey.currentState!.save();
   }
 }

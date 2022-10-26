@@ -18,32 +18,16 @@ class AddPriorityGroupFormController extends AddFormController {
 
   @override
   Future<bool> saveInfo() async {
-    submitForm();
-    final allFieldsValid = super.formKey.currentState!.validate();
+    final newPriorityGroup = PriorityGroup(
+      code: code.text,
+      name: name.text,
+      description: description.text,
+    );
 
-    if (allFieldsValid) {
-      try {
-        final id = await _repository.createPriorityGroup(
-          PriorityGroup(
-            code: code.text,
-            name: name.text,
-            description: description.text,
-          ),
-        );
-
-        if (id != 0) {
-          clearAllInfo();
-          return true;
-        } else {
-          return false;
-        }
-      } catch (error) {
-        print(error);
-        return false;
-      }
-    }
-
-    return false;
+    return super.createEntity<PriorityGroup>(
+      newPriorityGroup,
+      _repository.createPriorityGroup,
+    );
   }
 
   @override
@@ -53,10 +37,5 @@ class AddPriorityGroupFormController extends AddFormController {
     description.clear();
 
     notifyListeners();
-  }
-
-  @override
-  void submitForm() async {
-    formKey.currentState!.save();
   }
 }

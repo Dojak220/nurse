@@ -32,33 +32,17 @@ class AddPriorityCategoryFormController extends AddFormController {
 
   @override
   Future<bool> saveInfo() async {
-    submitForm();
-    final allFieldsValid = super.formKey.currentState!.validate();
+    final newPriorityCategory = PriorityCategory(
+      priorityGroup: selectedPriorityGroup!,
+      code: code.text,
+      name: name.text,
+      description: description.text,
+    );
 
-    if (allFieldsValid) {
-      try {
-        final id = await _repository.createPriorityCategory(
-          PriorityCategory(
-            priorityGroup: selectedPriorityGroup!,
-            code: code.text,
-            name: name.text,
-            description: description.text,
-          ),
-        );
-
-        if (id != 0) {
-          clearAllInfo();
-          return true;
-        } else {
-          return false;
-        }
-      } catch (error) {
-        print(error);
-        return false;
-      }
-    }
-
-    return false;
+    return super.createEntity<PriorityCategory>(
+      newPriorityCategory,
+      _repository.createPriorityCategory,
+    );
   }
 
   @override
@@ -70,10 +54,5 @@ class AddPriorityCategoryFormController extends AddFormController {
     description.clear();
 
     notifyListeners();
-  }
-
-  @override
-  void submitForm() async {
-    formKey.currentState!.save();
   }
 }

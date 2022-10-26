@@ -19,6 +19,21 @@ class AddLocalityFormController extends AddFormController {
       : _repository = localityRepository ?? DatabaseLocalityRepository();
 
   @override
+  Future<bool> saveInfo() async {
+    final newLocality = Locality(
+      name: name.text,
+      city: city.text,
+      state: state.text,
+      ibgeCode: ibgeCode.text,
+    );
+
+    return super.createEntity<Locality>(
+      newLocality,
+      _repository.createLocality,
+    );
+  }
+
+  @override
   void clearAllInfo() {
     name.clear();
     city.clear();
@@ -26,41 +41,5 @@ class AddLocalityFormController extends AddFormController {
     ibgeCode.clear();
 
     notifyListeners();
-  }
-
-  @override
-  Future<bool> saveInfo() async {
-    submitForm();
-    final allFieldsValid = super.formKey.currentState!.validate();
-
-    if (allFieldsValid) {
-      try {
-        final id = await _repository.createLocality(
-          Locality(
-            name: name.text,
-            city: city.text,
-            state: state.text,
-            ibgeCode: ibgeCode.text,
-          ),
-        );
-
-        if (id != 0) {
-          clearAllInfo();
-          return true;
-        } else {
-          return false;
-        }
-      } catch (error) {
-        print(error);
-        return false;
-      }
-    }
-
-    return false;
-  }
-
-  @override
-  void submitForm() async {
-    formKey.currentState!.save();
   }
 }
