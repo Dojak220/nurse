@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nurse/app/components/nurse_appbar.dart';
 
 class AddEntitiesMenuPage extends StatelessWidget {
   final String title;
@@ -11,7 +12,11 @@ class AddEntitiesMenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title, style: const TextStyle(fontSize: 32))),
+      appBar: NurseAppBar(
+        title: title,
+        toolbarHeight: kToolbarHeight,
+        imageHeight: 30,
+      ),
       body: SafeArea(
         child: Center(
           child: Column(

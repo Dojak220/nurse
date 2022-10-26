@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/theme/app_colors.dart';
-import 'package:nurse/app/theme/app_theme.dart';
+import 'package:nurse/app/components/main_button.dart';
 
-class VaccinationButton extends StatelessWidget {
+class RegistrationButton extends StatelessWidget {
+  final String text;
   final String newPage;
   final void Function() onCallback;
 
-  const VaccinationButton({
+  const RegistrationButton({
     Key? key,
+    required this.text,
     required this.newPage,
     required this.onCallback,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return MainButton(
+      text: text,
       onPressed: () => Navigator.of(context)
           .pushNamed(newPage)
           .whenComplete(() => onCallback()),
-      style: AppTheme.mainButtonStyle(context),
-      child: Text(
-        "Vacinar",
-        style: AppTheme.titleTextStyle.copyWith(color: AppColors.white),
-      ),
     );
   }
 }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nurse/app/components/custom_card.dart';
 import 'package:nurse/shared/models/patient/patient_model.dart';
 
-class EntryCard extends StatelessWidget {
-  const EntryCard({
+class VaccinationCard extends StatelessWidget {
+  const VaccinationCard({
     Key? key,
     required this.cns,
     required this.name,

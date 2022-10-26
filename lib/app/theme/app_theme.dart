@@ -29,7 +29,7 @@ class AppTheme {
   );
 
   static const TextStyle _appBarTextStyle = TextStyle(
-    fontSize: 45.0,
+    fontSize: 38.0,
     fontFamily: 'Roboto',
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,

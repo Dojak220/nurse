@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:nurse/app/components/nurse_appbar.dart';
 import 'package:nurse/app/modules/EntityList/edit_entities_menu_page.dart';
+import 'package:nurse/app/modules/Home/components/vaccination_button.dart';
+import 'package:nurse/app/modules/Home/components/vaccination_list_view.dart';
 import 'package:provider/provider.dart';
 
 import 'package:nurse/app/modules/EntityEntry/add_entities_menu_page.dart';
 import 'package:nurse/app/modules/Home/components/info_button.dart';
-import 'package:nurse/app/modules/Home/components/main_button.dart';
-import 'package:nurse/app/modules/Home/components/titled_list_view.dart';
 import 'package:nurse/app/modules/Home/home_controller.dart';
 import 'package:nurse/app/theme/app_colors.dart';
 import 'package:nurse/app/theme/app_theme.dart';
@@ -21,18 +22,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       drawer: AppDrawer(title: title),
-      appBar: AppBar(
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset("assets/images/nurse-logo-2.png", height: 44),
-            Text(title),
-          ],
-        ),
-        iconTheme: const IconThemeData(color: AppColors.black),
-        toolbarHeight: MediaQuery.of(context).size.height * 0.15,
-      ),
+      appBar: NurseAppBar(title: title),
       body: Column(
         children: const [
           Expanded(flex: 1, child: VaccinationCountStatus()),
@@ -265,7 +255,7 @@ class LastVaccinationsList extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: TitledListView(
+      child: VaccinationListView(
         "Últimos cadastros",
         applications: applications,
       ),
