@@ -7,6 +7,7 @@ import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
 
 class AddCampaignFormController extends AddFormController {
   final CampaignRepository _repository;
+  final Campaign? initialCampaignInfo;
 
   final _campaigns = List<Campaign>.empty(growable: true);
   List<Campaign> get campaigns => _campaigns;
@@ -18,8 +19,13 @@ class AddCampaignFormController extends AddFormController {
   TextEditingController startDate = TextEditingController();
   TextEditingController endDate = TextEditingController();
 
-  AddCampaignFormController([CampaignRepository? campaignRepository])
-      : _repository = campaignRepository ?? DatabaseCampaignRepository();
+  AddCampaignFormController(this.initialCampaignInfo,
+      [CampaignRepository? campaignRepository])
+      : _repository = campaignRepository ?? DatabaseCampaignRepository() {
+    if (initialCampaignInfo != null) {
+      setInfo(initialCampaignInfo!);
+    }
+  }
 
   @override
   Future<bool> saveInfo() async {
@@ -38,6 +44,38 @@ class AddCampaignFormController extends AddFormController {
     } else {
       return false;
     }
+  }
+
+  @override
+  Future<bool> updateInfo() async {
+    if (initialCampaignInfo == null) return false;
+
+    if (submitForm(formKey)) {
+      final updatedCampaign = initialCampaignInfo!.copyWith(
+        title: title.text,
+        description: description.text,
+        startDate: selectedStartDate!,
+        endDate: selectedEndDate,
+      );
+
+      return super.createEntity<Campaign>(
+        updatedCampaign,
+        _repository.updateCampaign,
+      );
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> setInfo(Campaign campaign) async {
+    title.text = campaign.title;
+    description.text = campaign.description;
+    selectedStartDate = campaign.startDate;
+    selectedEndDate = campaign.endDate;
+    startDate.text = DatePicker.formatDateDDMMYYYY(campaign.startDate);
+    endDate.text = DatePicker.formatDateDDMMYYYY(campaign.endDate);
+
+    return true;
   }
 
   @override

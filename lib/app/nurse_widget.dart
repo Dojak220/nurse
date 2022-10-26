@@ -109,18 +109,16 @@ class Nurse extends StatelessWidget {
         },
         "/campaigns": (context) => const Campaigns(),
         "/campaigns/new": (context) {
-          final controller = AddCampaignFormController();
-
           final currentCampaign =
-              ModalRoute.of(context)!.settings.arguments as Campaign;
+              ModalRoute.of(context)!.settings.arguments as Campaign?;
+
+          final controller = AddCampaignFormController(currentCampaign);
 
           return AddForm(
             controller,
             title: "Campanha",
-            formFields: CampaignFormFields(
-              controller: controller,
-              initialValue: currentCampaign,
-            ),
+            formFields: CampaignFormFields(controller: controller),
+            isEditing: currentCampaign != null,
           );
         },
         "/priorityGroups": (context) => const EmptyPage("priorityGroup"),

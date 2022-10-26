@@ -29,7 +29,7 @@ class EditButton extends StatelessWidget {
           color: AppColors.verdeEscuro,
           size: 18.0,
         ),
-        onPressed: () => onEditPressed,
+        onPressed: onEditPressed,
       ),
     );
   }

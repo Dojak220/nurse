@@ -7,12 +7,14 @@ class AddForm extends StatefulWidget {
   final AddFormController controller;
   final String title;
   final Widget formFields;
+  final bool isEditing;
 
   const AddForm(
     this.controller, {
     Key? key,
     required this.title,
     required this.formFields,
+    this.isEditing = false,
   }) : super(key: key);
 
   @override
@@ -38,6 +40,7 @@ class _AddFormState extends State<AddForm> {
                 context: context,
                 mounted: mounted,
                 entityName: widget.title.toLowerCase(),
+                isEditing: widget.isEditing,
               ),
             ),
           ],

@@ -7,8 +7,10 @@ void tryToSave(
   required BuildContext context,
   required bool mounted,
   required String entityName,
+  required bool isEditing,
 }) async {
-  final wasSaved = await controller.saveInfo();
+  final wasSaved =
+      await (isEditing ? controller.updateInfo() : controller.saveInfo());
 
   if (wasSaved) {
     if (!mounted) return;
