@@ -33,7 +33,6 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
             CustomTextFormField(
               icon: const Icon(Icons.abc),
               label: FormLabels.campaignName,
-              initialValue: widget.initialValue?.title,
               textEditingController: widget.controller.title,
               validatorType: ValidatorType.name,
               onSaved: (value) => {},
@@ -42,7 +41,6 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
             CustomTextFormField(
               icon: const Icon(Icons.description),
               label: FormLabels.campaignDescription,
-              initialValue: widget.initialValue?.description,
               textEditingController: widget.controller.description,
               validatorType: ValidatorType.optionalName,
               onSaved: (value) => {},
@@ -51,7 +49,6 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
             CustomTextFormField(
               icon: const Icon(Icons.today),
               label: FormLabels.campaignStartDate,
-              initialValue: widget.initialValue?.startDate.toString(),
               textEditingController: widget.controller.startDate,
               validatorType: ValidatorType.date,
               onTap: () async => widget.controller.selectStartDate(context),
@@ -62,7 +59,6 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
             CustomTextFormField(
               icon: const Icon(Icons.event),
               label: FormLabels.campaignEndDate,
-              initialValue: widget.initialValue?.endDate.toString(),
               textEditingController: widget.controller.endDate,
               validatorType: ValidatorType.optionalDate,
               onTap: () async => widget.controller.selectEndDate(context),

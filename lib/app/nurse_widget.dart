@@ -111,7 +111,6 @@ class Nurse extends StatelessWidget {
             title: "Localidade",
             formFields: LocalityFormFields(
               controller: controller,
-              initialValue: currentLocality,
             ),
             isEditing: currentLocality != null,
           );
