@@ -20,12 +20,14 @@ import 'package:nurse/app/modules/EntityEntry/infra/add_establishment_form_field
 import 'package:nurse/app/modules/EntityEntry/infra/add_establishment_form_controller.dart';
 import 'package:nurse/app/modules/EntityEntry/infra/add_locality_form_controller.dart';
 import 'package:nurse/app/modules/EntityList/infra/campaigns_page.dart';
+import 'package:nurse/app/modules/EntityList/infra/establishment_page.dart';
 import 'package:nurse/app/modules/EntityList/infra/locality_page.dart';
 import 'package:nurse/app/modules/Home/home_page.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
 import 'package:nurse/app/theme/app_theme.dart';
 import 'package:nurse/shared/models/infra/campaign_model.dart';
+import 'package:nurse/shared/models/infra/establishment_model.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
 
 class Nurse extends StatelessWidget {
@@ -59,14 +61,19 @@ class Nurse extends StatelessWidget {
             formFields: PatientFormFields(controller: controller),
           );
         },
-        "/establishments": (context) => const EmptyPage("establishment"),
+        "/establishments": (context) => const Establishments(),
         "/establishments/new": (context) {
-          final controller = AddEstablishmentFormController();
+          final currentEstablishment =
+              ModalRoute.of(context)!.settings.arguments as Establishment?;
+
+          final controller =
+              AddEstablishmentFormController(currentEstablishment);
 
           return AddForm(
             controller,
-            title: "Estabelecimento",
+            title: "Estabelecimentos",
             formFields: EstablishmentFormFields(controller: controller),
+            isEditing: currentEstablishment != null,
           );
         },
         "/appliers": (context) => const EmptyPage("applier"),

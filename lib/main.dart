@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:nurse/app/modules/EntityList/infra/campaign_page_controller.dart';
+import 'package:nurse/app/modules/EntityList/infra/establishment_page_controller.dart';
 import 'package:nurse/app/modules/EntityList/infra/locality_page_controller.dart';
 import 'package:nurse/app/modules/Home/home_controller.dart';
 import 'package:nurse/app/nurse_widget.dart';
@@ -18,6 +19,9 @@ void main() async {
           ),
           Provider<LocalitiesPageController>(
             create: (_) => LocalitiesPageController(),
+          ),
+          Provider<EstablishmentsPageController>(
+            create: (_) => EstablishmentsPageController(),
           ),
         ],
         child: const Nurse(),

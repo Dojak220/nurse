@@ -10,6 +10,7 @@ import 'package:nurse/shared/repositories/infra/locality_repository.dart';
 class AddEstablishmentFormController extends AddFormController {
   final EstablishmentRepository _repository;
   final LocalityRepository _localityRepository;
+  final Establishment? initialEstablishmentInfo;
 
   final _localityCities = List<Locality>.empty(growable: true);
   List<Locality> get localityCities => _localityCities;
@@ -18,13 +19,18 @@ class AddEstablishmentFormController extends AddFormController {
   TextEditingController name = TextEditingController();
   Locality? locality;
 
-  AddEstablishmentFormController([
+  AddEstablishmentFormController(
+    this.initialEstablishmentInfo, [
     EstablishmentRepository? establishmentRepository,
     LocalityRepository? localityRepository,
   ])  : _repository =
             establishmentRepository ?? DatabaseEstablishmentRepository(),
         _localityRepository =
-            localityRepository ?? DatabaseLocalityRepository();
+            localityRepository ?? DatabaseLocalityRepository() {
+    if (initialEstablishmentInfo != null) {
+      setInfo(initialEstablishmentInfo!);
+    }
+  }
 
   Future<List<Locality>> getCitiesFromLocalities() async {
     final localities = await _localityRepository.getLocalities();
@@ -46,15 +52,6 @@ class AddEstablishmentFormController extends AddFormController {
   }
 
   @override
-  void clearAllInfo() {
-    cnes.clear();
-    name.clear();
-    locality = null;
-
-    notifyListeners();
-  }
-
-  @override
   Future<bool> saveInfo() async {
     if (submitForm(formKey)) {
       final newEstablishment = Establishment(
@@ -70,5 +67,42 @@ class AddEstablishmentFormController extends AddFormController {
     } else {
       return false;
     }
+  }
+
+  @override
+  Future<bool> updateInfo() async {
+    if (initialEstablishmentInfo == null) return false;
+
+    if (submitForm(formKey)) {
+      final updatedEstablishment = initialEstablishmentInfo!.copyWith(
+        cnes: cnes.text,
+        name: name.text,
+        locality: locality!,
+      );
+
+      return super.createEntity<Establishment>(
+        updatedEstablishment,
+        _repository.updateEstablishment,
+      );
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> setInfo(Establishment campaign) async {
+    cnes.text = campaign.cnes;
+    name.text = campaign.name;
+    locality = campaign.locality;
+
+    return true;
+  }
+
+  @override
+  void clearAllInfo() {
+    cnes.clear();
+    name.clear();
+    locality = null;
+
+    notifyListeners();
   }
 }

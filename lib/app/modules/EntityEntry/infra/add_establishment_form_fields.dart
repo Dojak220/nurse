@@ -8,16 +8,10 @@ import 'package:nurse/shared/utils/validator.dart';
 
 class EstablishmentFormFields extends StatefulWidget {
   final AddEstablishmentFormController controller;
-  final Locality? initialLocality;
-  final String initialCNES;
-  final String initialName;
 
   const EstablishmentFormFields({
     Key? key,
     required this.controller,
-    this.initialLocality,
-    this.initialCNES = "",
-    this.initialName = "",
   }) : super(key: key);
 
   @override
@@ -31,7 +25,6 @@ class EstablishmentFormFieldsState extends State<EstablishmentFormFields> {
   @override
   void initState() {
     _getCities();
-    widget.controller.locality = widget.initialLocality;
     super.initState();
   }
 
@@ -67,7 +60,6 @@ class EstablishmentFormFieldsState extends State<EstablishmentFormFields> {
             CustomTextFormField(
               icon: const Icon(Icons.local_hospital),
               label: FormLabels.establishmentCNES,
-              initialValue: widget.initialCNES,
               textEditingController: widget.controller.cnes,
               validatorType: ValidatorType.cnes,
               onSaved: (value) => {},
@@ -76,7 +68,6 @@ class EstablishmentFormFieldsState extends State<EstablishmentFormFields> {
             CustomTextFormField(
               icon: const Icon(Icons.abc),
               label: FormLabels.establishmentName,
-              initialValue: widget.initialName,
               textEditingController: widget.controller.name,
               validatorType: ValidatorType.name,
               onSaved: (value) => {},
