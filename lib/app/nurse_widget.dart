@@ -115,10 +115,8 @@ class Nurse extends StatelessWidget {
 
           return AddForm(
             controller,
-            title: "Localidade",
-            formFields: LocalityFormFields(
-              controller: controller,
-            ),
+            title: "Localidades",
+            formFields: LocalityFormFields(controller: controller),
             isEditing: currentLocality != null,
           );
         },
@@ -131,7 +129,7 @@ class Nurse extends StatelessWidget {
 
           return AddForm(
             controller,
-            title: "Campanha",
+            title: "Campanhas",
             formFields: CampaignFormFields(controller: controller),
             isEditing: currentCampaign != null,
           );
