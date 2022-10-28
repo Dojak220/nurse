@@ -51,7 +51,7 @@ class AddLocalityFormController extends AddFormController {
         ibgeCode: ibgeCode.text,
       );
 
-      return super.createEntity<Locality>(
+      return super.updateEntity<Locality>(
         updatedLocality,
         _repository.updateLocality,
       );
@@ -60,13 +60,11 @@ class AddLocalityFormController extends AddFormController {
     }
   }
 
-  Future<bool> setInfo(Locality campaign) async {
+  void setInfo(Locality campaign) {
     name.text = campaign.name;
     city.text = campaign.city;
     state.text = campaign.state;
     ibgeCode.text = campaign.ibgeCode;
-
-    return true;
   }
 
   @override

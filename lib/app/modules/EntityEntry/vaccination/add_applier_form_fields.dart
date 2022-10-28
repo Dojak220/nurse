@@ -54,6 +54,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
               icon: const Icon(Icons.local_hospital),
               label: FormLabels.establishmentCNES,
               items: _establishments,
+              value: widget.controller.selectedEstablishment,
               onChanged: (Establishment? value) => setState(
                   () => widget.controller.selectedEstablishment = value),
               onSaved: (Establishment? value) =>

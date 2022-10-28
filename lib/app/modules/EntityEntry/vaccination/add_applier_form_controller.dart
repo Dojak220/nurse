@@ -16,6 +16,7 @@ class AddApplierFormController extends AddFormController {
   final LocalityRepository _localityRepository;
   final EstablishmentRepository _establishmentRepository;
   final ApplierRepository _repository;
+  final Applier? initialApplierInfo;
 
   Establishment? selectedEstablishment;
   Locality? selectedLocality;
@@ -28,7 +29,8 @@ class AddApplierFormController extends AddFormController {
   TextEditingController motherName = TextEditingController();
   TextEditingController fatherName = TextEditingController();
 
-  AddApplierFormController([
+  AddApplierFormController(
+    this.initialApplierInfo, [
     LocalityRepository? localityRepository,
     EstablishmentRepository? establishmentRepository,
     ApplierRepository? applierRepository,
@@ -36,7 +38,11 @@ class AddApplierFormController extends AddFormController {
             localityRepository ?? DatabaseLocalityRepository(),
         _establishmentRepository =
             establishmentRepository ?? DatabaseEstablishmentRepository(),
-        _repository = applierRepository ?? DatabaseApplierRepository();
+        _repository = applierRepository ?? DatabaseApplierRepository() {
+    if (initialApplierInfo != null) {
+      setInfo(initialApplierInfo!);
+    }
+  }
 
   Future<List<Locality>> getLocalities() async {
     final localities = await _localityRepository.getLocalities();
@@ -65,24 +71,73 @@ class AddApplierFormController extends AddFormController {
 
   @override
   Future<bool> saveInfo() async {
-    final newApplier = Applier(
-      cns: cns.text,
-      person: Person(
-        cpf: cpf.text,
-        name: name.text,
-        locality: selectedLocality,
-        sex: selectedSex,
-        birthDate: selectedBirthDate,
-        fatherName: fatherName.text,
-        motherName: motherName.text,
-      ),
-      establishment: selectedEstablishment!,
-    );
+    if (submitForm(formKey)) {
+      final newApplier = Applier(
+        cns: cns.text,
+        person: Person(
+          cpf: cpf.text,
+          name: name.text,
+          locality: selectedLocality,
+          sex: selectedSex,
+          birthDate: selectedBirthDate,
+          fatherName: fatherName.text,
+          motherName: motherName.text,
+        ),
+        establishment: selectedEstablishment!,
+      );
 
-    return super.createEntity<Applier>(
-      newApplier,
-      _repository.createApplier,
-    );
+      return super.createEntity<Applier>(
+        newApplier,
+        _repository.createApplier,
+      );
+    } else {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> updateInfo() async {
+    if (initialApplierInfo == null) return false;
+
+    if (submitForm(formKey)) {
+      final updatedApplier = initialApplierInfo!.copyWith(
+        cns: cns.text,
+        person: Person(
+          cpf: cpf.text,
+          name: name.text,
+          locality: selectedLocality,
+          sex: selectedSex,
+          birthDate: selectedBirthDate,
+          fatherName: fatherName.text,
+          motherName: motherName.text,
+        ),
+        establishment: selectedEstablishment!,
+      );
+
+      return super.updateEntity<Applier>(
+        updatedApplier,
+        _repository.updateApplier,
+      );
+    } else {
+      return false;
+    }
+  }
+
+  void setInfo(Applier applier) {
+    cns.text = applier.cns;
+
+    name.text = applier.person.name;
+    cpf.text = applier.person.cpf;
+    selectedLocality = applier.person.locality;
+    selectedSex = applier.person.sex;
+
+    selectedBirthDate = applier.person.birthDate;
+    birthDate.text = DatePicker.formatDateDDMMYYYY(selectedBirthDate!);
+
+    fatherName.text = applier.person.fatherName;
+    motherName.text = applier.person.motherName;
+
+    selectedEstablishment = applier.establishment;
   }
 
   @override

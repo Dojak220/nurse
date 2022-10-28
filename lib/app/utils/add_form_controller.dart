@@ -8,13 +8,24 @@ abstract class AddFormController extends FormController {
   @protected
   Future<bool> createEntity<T>(
       T entity, Future<int> Function(T entity) create) async {
+    return await _handleEntity(entity, create);
+  }
+
+  @protected
+  Future<bool> updateEntity<T>(
+      T entity, Future<int> Function(T entity) update) async {
+    return await _handleEntity(entity, update);
+  }
+
+  Future<bool> _handleEntity<T>(
+      T entity, Future<int> Function(T entity) handler) async {
     final allFieldsValid = submitForm(formKey);
 
     if (allFieldsValid) {
       try {
-        final id = await create(entity);
+        final result = await handler(entity);
 
-        if (id != 0) {
+        if (result != 0) {
           clearAllInfo();
           return true;
         } else {

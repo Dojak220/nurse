@@ -16,6 +16,7 @@ class AddPatientFormController extends AddFormController {
   final LocalityRepository _localityRepository;
   final PriorityCategoryRepository _priorityCategoryRepository;
   final PatientRepository _repository;
+  final Patient? initialPatientInfo;
 
   Locality? selectedLocality;
   PriorityCategory? selectedPriorityCategory;
@@ -29,7 +30,8 @@ class AddPatientFormController extends AddFormController {
   TextEditingController motherName = TextEditingController();
   TextEditingController fatherName = TextEditingController();
 
-  AddPatientFormController([
+  AddPatientFormController(
+    this.initialPatientInfo, [
     LocalityRepository? localityRepository,
     PriorityCategoryRepository? priorityCategoryRepository,
     PatientRepository? patientRepository,
@@ -37,7 +39,11 @@ class AddPatientFormController extends AddFormController {
             localityRepository ?? DatabaseLocalityRepository(),
         _priorityCategoryRepository =
             priorityCategoryRepository ?? DatabasePriorityCategoryRepository(),
-        _repository = patientRepository ?? DatabasePatientRepository();
+        _repository = patientRepository ?? DatabasePatientRepository() {
+    if (initialPatientInfo != null) {
+      setInfo(initialPatientInfo!);
+    }
+  }
 
   Future<List<Locality>> getLocalities() async {
     final localities = await _localityRepository.getLocalities();
@@ -67,22 +73,73 @@ class AddPatientFormController extends AddFormController {
 
   @override
   Future<bool> saveInfo() async {
-    final newPatient = Patient(
-      cns: cns.text,
-      person: Person(
-        cpf: cpf.text,
-        name: name.text,
-        locality: selectedLocality,
-        sex: selectedSex,
-        birthDate: selectedBirthDate,
-        fatherName: fatherName.text,
-        motherName: motherName.text,
-      ),
-      maternalCondition: selectedMaternalCondition,
-      priorityCategory: selectedPriorityCategory!,
-    );
+    if (submitForm(formKey)) {
+      final newPatient = Patient(
+        cns: cns.text,
+        person: Person(
+          cpf: cpf.text,
+          name: name.text,
+          locality: selectedLocality,
+          sex: selectedSex,
+          birthDate: selectedBirthDate,
+          fatherName: fatherName.text,
+          motherName: motherName.text,
+        ),
+        maternalCondition: selectedMaternalCondition,
+        priorityCategory: selectedPriorityCategory!,
+      );
 
-    return super.createEntity<Patient>(newPatient, _repository.createPatient);
+      return super.createEntity<Patient>(newPatient, _repository.createPatient);
+    } else {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> updateInfo() async {
+    if (initialPatientInfo == null) return false;
+
+    if (submitForm(formKey)) {
+      final updatedPatient = initialPatientInfo!.copyWith(
+        cns: cns.text,
+        person: Person(
+          cpf: cpf.text,
+          name: name.text,
+          locality: selectedLocality,
+          sex: selectedSex,
+          birthDate: selectedBirthDate,
+          fatherName: fatherName.text,
+          motherName: motherName.text,
+        ),
+        maternalCondition: selectedMaternalCondition,
+        priorityCategory: selectedPriorityCategory!,
+      );
+
+      return super.updateEntity<Patient>(
+        updatedPatient,
+        _repository.updatePatient,
+      );
+    } else {
+      return false;
+    }
+  }
+
+  void setInfo(Patient patient) {
+    cns.text = patient.cns;
+
+    name.text = patient.person.name;
+    cpf.text = patient.person.cpf;
+    selectedLocality = patient.person.locality;
+    selectedSex = patient.person.sex;
+
+    selectedBirthDate = patient.person.birthDate;
+    birthDate.text = DatePicker.formatDateDDMMYYYY(selectedBirthDate!);
+
+    fatherName.text = patient.person.fatherName;
+    motherName.text = patient.person.motherName;
+
+    selectedPriorityCategory = patient.priorityCategory;
+    selectedMaternalCondition = patient.maternalCondition;
   }
 
   @override

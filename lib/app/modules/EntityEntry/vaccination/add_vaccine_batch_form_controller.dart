@@ -10,17 +10,23 @@ import 'package:nurse/shared/repositories/vaccination/vaccine_repository.dart';
 class AddVaccineBatchFormController extends AddFormController {
   final VaccineRepository _vaccineRepository;
   final VaccineBatchRepository _repository;
+  final VaccineBatch? initialVaccineBatchInfo;
 
   Vaccine? selectedVaccine;
   TextEditingController number = TextEditingController();
   TextEditingController quantity = TextEditingController();
 
-  AddVaccineBatchFormController([
+  AddVaccineBatchFormController(
+    this.initialVaccineBatchInfo, [
     VaccineRepository? vaccineRepository,
     VaccineBatchRepository? vaccineBatchRepository,
   ])  : _vaccineRepository = vaccineRepository ?? DatabaseVaccineRepository(),
         _repository =
-            vaccineBatchRepository ?? DatabaseVaccineBatchRepository();
+            vaccineBatchRepository ?? DatabaseVaccineBatchRepository() {
+    if (initialVaccineBatchInfo != null) {
+      setInfo(initialVaccineBatchInfo!);
+    }
+  }
 
   Future<List<Vaccine>> getLocalities() async {
     final vaccines = await _vaccineRepository.getVaccines();
@@ -30,21 +36,50 @@ class AddVaccineBatchFormController extends AddFormController {
 
   @override
   Future<bool> saveInfo() async {
-    final newVaccineBatch = VaccineBatch(
-      number: number.text,
-      quantity: int.parse(quantity.text),
-      vaccine: selectedVaccine!,
-    );
+    if (submitForm(formKey)) {
+      final newVaccineBatch = VaccineBatch(
+        number: number.text,
+        quantity: int.parse(quantity.text),
+        vaccine: selectedVaccine!,
+      );
 
-    return super.createEntity<VaccineBatch>(
-      newVaccineBatch,
-      _repository.createVaccineBatch,
-    );
+      return super.createEntity<VaccineBatch>(
+        newVaccineBatch,
+        _repository.createVaccineBatch,
+      );
+    } else {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> updateInfo() async {
+    if (initialVaccineBatchInfo == null) return false;
+
+    if (submitForm(formKey)) {
+      final updatedVaccineBatch = initialVaccineBatchInfo!.copyWith(
+        number: number.text,
+        quantity: int.parse(quantity.text),
+        vaccine: selectedVaccine!,
+      );
+
+      return super.updateEntity<VaccineBatch>(
+        updatedVaccineBatch,
+        _repository.updateVaccineBatch,
+      );
+    } else {
+      return false;
+    }
+  }
+
+  void setInfo(VaccineBatch vaccineBatch) {
+    selectedVaccine = vaccineBatch.vaccine;
+    number.text = vaccineBatch.number;
+    quantity.text = vaccineBatch.quantity.toString();
   }
 
   @override
   void clearAllInfo() {
-    selectedVaccine = null;
     selectedVaccine = null;
 
     number.clear();

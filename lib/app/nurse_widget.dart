@@ -22,6 +22,12 @@ import 'package:nurse/app/modules/EntityEntry/infra/add_locality_form_controller
 import 'package:nurse/app/modules/EntityList/infra/campaigns_page.dart';
 import 'package:nurse/app/modules/EntityList/infra/establishment_page.dart';
 import 'package:nurse/app/modules/EntityList/infra/locality_page.dart';
+import 'package:nurse/app/modules/EntityList/patient/patient_page.dart';
+import 'package:nurse/app/modules/EntityList/patient/priority_category_page.dart';
+import 'package:nurse/app/modules/EntityList/patient/priority_group_page.dart';
+import 'package:nurse/app/modules/EntityList/vaccination/applier_page.dart';
+import 'package:nurse/app/modules/EntityList/vaccination/vaccine_batch_page.dart';
+import 'package:nurse/app/modules/EntityList/vaccination/vaccine_page.dart';
 import 'package:nurse/app/modules/Home/home_page.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
@@ -29,6 +35,12 @@ import 'package:nurse/app/theme/app_theme.dart';
 import 'package:nurse/shared/models/infra/campaign_model.dart';
 import 'package:nurse/shared/models/infra/establishment_model.dart';
 import 'package:nurse/shared/models/infra/locality_model.dart';
+import 'package:nurse/shared/models/patient/patient_model.dart';
+import 'package:nurse/shared/models/patient/priority_category_model.dart';
+import 'package:nurse/shared/models/patient/priority_group_model.dart';
+import 'package:nurse/shared/models/vaccination/applier_model.dart';
+import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
+import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
 
 class Nurse extends StatelessWidget {
   const Nurse({Key? key}) : super(key: key);
@@ -51,14 +63,18 @@ class Nurse extends StatelessWidget {
         "/vaccinations": (context) => const EmptyPage("vaccination"),
         "/vaccinations/new": (context) =>
             VaccinationEntry(VaccinationEntryController()),
-        "/patients": (context) => const EmptyPage("patient"),
+        "/patients": (context) => const Patients(),
         "/patients/new": (context) {
-          final controller = AddPatientFormController();
+          final currentPatient =
+              ModalRoute.of(context)!.settings.arguments as Patient?;
+
+          final controller = AddPatientFormController(currentPatient);
 
           return AddForm(
             controller,
-            title: "Paciente",
+            title: "Pacientes",
             formFields: PatientFormFields(controller: controller),
+            isEditing: currentPatient != null,
           );
         },
         "/establishments": (context) => const Establishments(),
@@ -76,34 +92,46 @@ class Nurse extends StatelessWidget {
             isEditing: currentEstablishment != null,
           );
         },
-        "/appliers": (context) => const EmptyPage("applier"),
+        "/appliers": (context) => const Appliers(),
         "/appliers/new": (context) {
-          final controller = AddApplierFormController();
+          final currentApplier =
+              ModalRoute.of(context)!.settings.arguments as Applier?;
+
+          final controller = AddApplierFormController(currentApplier);
 
           return AddForm(
             controller,
-            title: "Aplicante",
+            title: "Aplicantes",
             formFields: ApplierFormFields(controller: controller),
+            isEditing: currentApplier != null,
           );
         },
-        "/vaccines": (context) => const EmptyPage("vaccine"),
+        "/vaccines": (context) => const Vaccines(),
         "/vaccines/new": (context) {
-          final controller = AddVaccineFormController();
+          final currentVaccine =
+              ModalRoute.of(context)!.settings.arguments as Vaccine?;
+
+          final controller = AddVaccineFormController(currentVaccine);
 
           return AddForm(
             controller,
-            title: "Vacina",
+            title: "Vacinas",
             formFields: VaccineFormFields(controller: controller),
+            isEditing: currentVaccine != null,
           );
         },
-        "/vaccineBatches": (context) => const EmptyPage("vaccineBatch"),
+        "/vaccineBatches": (context) => const VaccineBatches(),
         "/vaccineBatches/new": (context) {
-          final controller = AddVaccineBatchFormController();
+          final currentVaccineBatch =
+              ModalRoute.of(context)!.settings.arguments as VaccineBatch?;
+
+          final controller = AddVaccineBatchFormController(currentVaccineBatch);
 
           return AddForm(
             controller,
-            title: "Lote de Vacina",
+            title: "Lotes de Vacina",
             formFields: VaccineBatchFormFields(controller: controller),
+            isEditing: currentVaccineBatch != null,
           );
         },
         "/localities": (context) => const Localities(),
@@ -134,24 +162,33 @@ class Nurse extends StatelessWidget {
             isEditing: currentCampaign != null,
           );
         },
-        "/priorityGroups": (context) => const EmptyPage("priorityGroup"),
+        "/priorityGroups": (context) => const PriorityGroups(),
         "/priorityGroups/new": (context) {
-          final controller = AddPriorityGroupFormController();
+          final currentPriorityGroup =
+              ModalRoute.of(context)!.settings.arguments as PriorityGroup?;
+          final controller =
+              AddPriorityGroupFormController(currentPriorityGroup);
 
           return AddForm(
             controller,
-            title: "Grupo Prioritário",
+            title: "Grupos Prioritário",
             formFields: PriorityGroupFormFields(controller: controller),
+            isEditing: currentPriorityGroup != null,
           );
         },
-        "/priorityCategories": (context) => const EmptyPage("priorityCategory"),
+        "/priorityCategories": (context) => const PriorityCategories(),
         "/priorityCategories/new": (context) {
-          final controller = AddPriorityCategoryFormController();
+          final currentPriorityCategory =
+              ModalRoute.of(context)!.settings.arguments as PriorityCategory?;
+
+          final controller =
+              AddPriorityCategoryFormController(currentPriorityCategory);
 
           return AddForm(
             controller,
             title: "Categoria Prioritária",
             formFields: PriorityCategoryFormFields(controller: controller),
+            isEditing: currentPriorityCategory != null,
           );
         },
       },

@@ -100,6 +100,7 @@ class PatientFormFieldsState extends State<PatientFormFields> {
               icon: const Icon(Icons.category),
               label: FormLabels.categoryName,
               items: _categories,
+              value: widget.controller.selectedPriorityCategory,
               onChanged: (PriorityCategory? value) => setState(
                   () => widget.controller.selectedPriorityCategory = value),
               onSaved: (PriorityCategory? value) =>

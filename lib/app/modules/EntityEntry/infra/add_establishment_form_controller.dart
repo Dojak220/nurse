@@ -80,7 +80,7 @@ class AddEstablishmentFormController extends AddFormController {
         locality: locality!,
       );
 
-      return super.createEntity<Establishment>(
+      return super.updateEntity<Establishment>(
         updatedEstablishment,
         _repository.updateEstablishment,
       );
@@ -89,12 +89,10 @@ class AddEstablishmentFormController extends AddFormController {
     }
   }
 
-  Future<bool> setInfo(Establishment campaign) async {
+  void setInfo(Establishment campaign) {
     cnes.text = campaign.cnes;
     name.text = campaign.name;
     locality = campaign.locality;
-
-    return true;
   }
 
   @override

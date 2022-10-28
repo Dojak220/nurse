@@ -2,17 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:nurse/app/modules/EntityEntry/infra/add_campaign_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
 import 'package:nurse/app/utils/form_labels.dart';
-import 'package:nurse/shared/models/infra/campaign_model.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
 class CampaignFormFields extends StatefulWidget {
   final AddCampaignFormController controller;
-  final Campaign? initialValue;
 
   const CampaignFormFields({
     Key? key,
     required this.controller,
-    this.initialValue,
   }) : super(key: key);
 
   @override

@@ -44,6 +44,7 @@ class VaccineBatchFormFieldsState extends State<VaccineBatchFormFields> {
               icon: const Icon(Icons.vaccines),
               label: FormLabels.vaccineName,
               items: _vaccines,
+              value: widget.controller.selectedVaccine,
               onChanged: (Vaccine? value) =>
                   setState(() => widget.controller.selectedVaccine = value),
               onSaved: (Vaccine? value) =>

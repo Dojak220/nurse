@@ -38,29 +38,29 @@ class AddEntitiesMenuPage extends StatelessWidget {
               ),
               EntityButton(
                 title: "Vacina",
-                onPressed: () => Navigator.of(context)
-                    .pushNamed("/vaccines/new", arguments: {
+                onPressed: () =>
+                    Navigator.of(context).pushNamed("/vaccines", arguments: {
                   "title": "Vacina",
                 }),
               ),
               EntityButton(
                 title: "Lote de Vacina",
                 onPressed: () => Navigator.of(context)
-                    .pushNamed("/vaccineBatches/new", arguments: {
+                    .pushNamed("/vaccineBatches", arguments: {
                   "title": "Lote de Vacina",
                 }),
               ),
               EntityButton(
                 title: "Paciente",
-                onPressed: () => Navigator.of(context)
-                    .pushNamed("/patients/new", arguments: {
+                onPressed: () =>
+                    Navigator.of(context).pushNamed("/patients", arguments: {
                   "title": "Paciente",
                 }),
               ),
               EntityButton(
                 title: "Aplicante",
-                onPressed: () => Navigator.of(context)
-                    .pushNamed("/appliers/new", arguments: {
+                onPressed: () =>
+                    Navigator.of(context).pushNamed("/appliers", arguments: {
                   "title": "Aplicante",
                 }),
               ),
@@ -74,14 +74,14 @@ class AddEntitiesMenuPage extends StatelessWidget {
               EntityButton(
                 title: "Grupo Prioritário",
                 onPressed: () => Navigator.of(context)
-                    .pushNamed("/priorityGroups/new", arguments: {
+                    .pushNamed("/priorityGroups", arguments: {
                   "title": "Grupo Prioritário",
                 }),
               ),
               EntityButton(
                 title: "Categoria Prioritária",
                 onPressed: () => Navigator.of(context)
-                    .pushNamed("/priorityCategories/new", arguments: {
+                    .pushNamed("/priorityCategories", arguments: {
                   "title": "Categoria Prioritária",
                 }),
               ),

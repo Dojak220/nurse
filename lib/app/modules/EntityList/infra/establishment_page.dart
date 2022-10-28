@@ -14,12 +14,12 @@ class Establishments extends StatelessWidget {
     final establishments = controller.entities;
 
     return EntityList<Establishment>(
-      title: "Localidades",
+      title: "Estabelecimentos",
       controller: controller,
       onCallback: () =>
           context.read<EstablishmentsPageController>().getEstablishments(),
       newPage: "/establishments/new",
-      buttonText: "Nova Localidade",
+      buttonText: "Novo Estabelecimento",
       itemBuilder: (_, index) {
         final establishment = establishments[index];
 

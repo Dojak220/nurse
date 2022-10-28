@@ -46,6 +46,7 @@ class PriorityCategoryFormFieldsState
               icon: const Icon(Icons.group),
               label: FormLabels.categoryGroup,
               items: _groups,
+              value: widget.controller.selectedPriorityGroup,
               onChanged: (PriorityGroup? value) => setState(
                   () => widget.controller.selectedPriorityGroup = value),
               onSaved: (PriorityGroup? value) =>

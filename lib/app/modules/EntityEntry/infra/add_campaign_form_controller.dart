@@ -58,7 +58,7 @@ class AddCampaignFormController extends AddFormController {
         endDate: selectedEndDate,
       );
 
-      return super.createEntity<Campaign>(
+      return super.updateEntity<Campaign>(
         updatedCampaign,
         _repository.updateCampaign,
       );
@@ -67,15 +67,13 @@ class AddCampaignFormController extends AddFormController {
     }
   }
 
-  Future<bool> setInfo(Campaign campaign) async {
+  void setInfo(Campaign campaign) {
     title.text = campaign.title;
     description.text = campaign.description;
     selectedStartDate = campaign.startDate;
     selectedEndDate = campaign.endDate;
     startDate.text = DatePicker.formatDateDDMMYYYY(campaign.startDate);
     endDate.text = DatePicker.formatDateDDMMYYYY(campaign.endDate);
-
-    return true;
   }
 
   @override
