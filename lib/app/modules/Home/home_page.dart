@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nurse/app/components/nurse_appbar.dart';
-import 'package:nurse/app/modules/EntityList/edit_entities_menu_page.dart';
 import 'package:nurse/app/modules/Home/components/app_drawer.dart';
 import 'package:nurse/app/modules/Home/components/vaccination_button.dart';
 import 'package:nurse/app/modules/Home/components/vaccination_list_view.dart';
