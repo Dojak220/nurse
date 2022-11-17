@@ -29,7 +29,7 @@ class Home extends StatelessWidget {
       ),
       floatingActionButton: VaccinationButton(
         newPage: "/vaccinations/new",
-        onCallback: () => context.read<HomeController>().getApplications(),
+        onCallback: () => context.read<HomeController>().fetchApplications(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -57,7 +57,7 @@ class _VaccinationCountStatusState extends State<VaccinationCountStatus> {
           colors: [AppColors.verdeClaro, AppColors.white],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          stops: [0.7, 0.0],
+          stops: [0.6, 0.0],
         ),
       ),
       child: Column(
