@@ -43,9 +43,9 @@ class Patient implements GenericModel {
     return {
       'id': id,
       'cns': cns,
-      'priority_category': priorityCategory.toMap(),
+      'priority_category': priorityCategory.id,
       'maternal_condition': maternalCondition.name,
-      'person': person.toMap(),
+      'person': person.id,
     };
   }
 

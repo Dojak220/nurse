@@ -65,7 +65,7 @@ class Person implements GenericModel {
       'cpf': cpf,
       'name': name,
       'birth_date': birthDate?.toString(),
-      'locality': locality?.toMap(),
+      'locality': locality?.id,
       'sex': sex.name,
       'mother_name': motherName,
       'father_name': fatherName,

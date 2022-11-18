@@ -53,7 +53,7 @@ class PriorityCategory implements GenericModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'priority_group': priorityGroup.toMap(),
+      'priority_group': priorityGroup.id,
       'code': code,
       'name': name,
       'description': description,

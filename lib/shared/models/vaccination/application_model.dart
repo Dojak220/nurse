@@ -62,10 +62,10 @@ class Application implements GenericModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'applier': applier.toMap(),
-      'vaccine_batch': vaccineBatch.toMap(),
-      'patient': patient.toMap(),
-      'campaign': campaign.toMap(),
+      'applier': applier.id,
+      'vaccine_batch': vaccineBatch.id,
+      'patient': patient.id,
+      'campaign': campaign.id,
       'dose': dose.name,
       'application_date': applicationDate.toString(),
       'due_date': dueDate.toString(),

@@ -47,7 +47,7 @@ class VaccineBatch implements GenericModel {
       'id': id,
       'number': number,
       'quantity': quantity,
-      'vaccine': vaccine.toMap(),
+      'vaccine': vaccine.id,
     };
   }
 

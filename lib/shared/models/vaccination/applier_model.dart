@@ -39,8 +39,8 @@ class Applier implements GenericModel {
     return {
       'id': id,
       'cns': cns,
-      'person': person.toMap(),
-      'establishment': establishment.toMap(),
+      'person': person.id,
+      'establishment': establishment.id,
     };
   }
 
