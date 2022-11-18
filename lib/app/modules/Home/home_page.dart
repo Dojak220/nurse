@@ -22,7 +22,11 @@ class Home extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       drawer: AppDrawer(title: title),
-      appBar: NurseAppBar(title: title),
+      appBar: NurseAppBar(
+        title: title,
+        imageHeight: 60,
+        titleFontSize: 36,
+      ),
       body: Column(
         children: const [
           Expanded(flex: 1, child: VaccinationCountStatus()),

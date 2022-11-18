@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nurse/app/components/save_form_button.dart';
 import 'package:nurse/app/utils/add_form_controller.dart';
+import 'package:nurse/app/utils/strings_and_styles.dart';
 import 'package:nurse/app/utils/try_to_save.dart';
 
 class AddForm extends StatefulWidget {
@@ -24,9 +25,11 @@ class AddForm extends StatefulWidget {
 class _AddFormState extends State<AddForm> {
   @override
   Widget build(BuildContext context) {
+    final double fontSize = adjustFontSize(widget.title);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title, style: const TextStyle(fontSize: 32)),
+        title: Text(widget.title, style: TextStyle(fontSize: fontSize)),
       ),
       body: SafeArea(
         child: Column(

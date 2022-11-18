@@ -15,7 +15,7 @@ class AddEntitiesMenuPage extends StatelessWidget {
       appBar: NurseAppBar(
         title: title,
         toolbarHeight: kToolbarHeight,
-        imageHeight: 30,
+        imageHeight: 80,
       ),
       body: SafeArea(
         child: Center(
