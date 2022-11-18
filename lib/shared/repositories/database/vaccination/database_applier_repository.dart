@@ -109,7 +109,11 @@ class DatabaseApplierRepository extends DatabaseInterface
         });
 
         applierMap["person"] = person.toMap();
+        applierMap["person"]["locality"] = person.locality?.toMap();
+
         applierMap["establishment"] = establishment.toMap();
+        applierMap["establishment"]["locality"] =
+            establishment.locality.toMap();
       }
 
       final appliers = applierMaps.map((applier) {

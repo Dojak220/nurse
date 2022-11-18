@@ -176,8 +176,30 @@ class DatabaseApplicationRepository extends DatabaseInterface
         });
 
         applicationMap["applier"] = applier.toMap();
+
+        applicationMap["applier"]["establishment"] =
+            applier.establishment.toMap();
+        applicationMap["applier"]["establishment"]["locality"] =
+            applier.establishment.locality.toMap();
+
+        applicationMap["applier"]["person"] = applier.person.toMap();
+        applicationMap["applier"]["person"]["locality"] =
+            applier.person.locality?.toMap();
+
         applicationMap["vaccine_batch"] = vaccineBatch.toMap();
+        applicationMap["vaccine_batch"]["vaccine"] =
+            vaccineBatch.vaccine.toMap();
+
         applicationMap["patient"] = patient.toMap();
+        applicationMap["patient"]["person"] = patient.person.toMap();
+        applicationMap["patient"]["person"]["locality"] =
+            patient.person.locality?.toMap();
+
+        applicationMap["patient"]["priority_category"] =
+            patient.priorityCategory.toMap();
+        applicationMap["patient"]["priority_category"]["priority_group"] =
+            patient.priorityCategory.priorityGroup.toMap();
+
         applicationMap["campaign"] = campaign.toMap();
       }
 

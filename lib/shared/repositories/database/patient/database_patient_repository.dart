@@ -121,7 +121,11 @@ class DatabasePatientRepository extends DatabaseInterface
         });
 
         patientMap["person"] = person.toMap();
+        patientMap["person"]["locality"] = person.locality?.toMap();
+
         patientMap["priority_category"] = priorityCategory.toMap();
+        patientMap["priority_category"]["priority_group"] =
+            priorityCategory.priorityGroup.toMap();
       }
 
       final patients = patientMaps
