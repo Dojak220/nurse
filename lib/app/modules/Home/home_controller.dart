@@ -23,7 +23,7 @@ class HomeController {
   late final fetchApplications = Action(getApplications);
 
   HomeController() : applicationRepository = DatabaseApplicationRepository() {
-    getApplications();
+    fetchApplications();
   }
 
   Future<List<Application>> getApplications() async {
