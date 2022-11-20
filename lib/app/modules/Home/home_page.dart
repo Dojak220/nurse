@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:nurse/app/components/nurse_appbar.dart';
-import 'package:nurse/app/modules/Home/components/app_drawer.dart';
-import 'package:nurse/app/modules/Home/components/vaccination_button.dart';
 import 'package:nurse/app/modules/Home/components/vaccination_list_view.dart';
 import 'package:provider/provider.dart';
 import 'package:nurse/app/modules/Home/components/info_button.dart';
@@ -11,51 +8,32 @@ import 'package:nurse/app/theme/app_colors.dart';
 import 'package:nurse/app/theme/app_theme.dart';
 
 class Home extends StatelessWidget {
-  final String title;
-
-  const Home({Key? key, required this.title}) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      drawer: AppDrawer(title: title),
-      appBar: NurseAppBar(
-        title: title,
-        imageHeight: 60,
-        titleFontSize: 36,
-      ),
       body: Column(
         children: const [
           Expanded(flex: 1, child: VaccinationCountStatus()),
           Expanded(flex: 4, child: LastVaccinationsList()),
         ],
       ),
-      floatingActionButton: VaccinationButton(
-        newPage: "/vaccinations/new",
-        onCallback: () => context.read<HomeController>().fetchApplications(),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
 
-class VaccinationCountStatus extends StatefulWidget {
+class VaccinationCountStatus extends StatelessWidget {
   const VaccinationCountStatus({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<VaccinationCountStatus> createState() => _VaccinationCountStatusState();
-}
-
-class _VaccinationCountStatusState extends State<VaccinationCountStatus> {
-  @override
   Widget build(BuildContext context) {
     final controller = Provider.of<HomeController>(context);
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.21,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [AppColors.verdeClaro, AppColors.white],

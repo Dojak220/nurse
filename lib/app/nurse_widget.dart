@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:nurse/app/main_screen.dart';
+import 'package:nurse/app/modules/EntityList/add_entities_menu_page.dart';
 import 'package:nurse/app/modules/EntityList/add_form.dart';
 import 'package:nurse/app/modules/EntityList/infra/locality/add_locality_form_fields.dart';
 import 'package:nurse/app/modules/EntityList/patient/patient/add_patient_form_fields.dart';
@@ -28,6 +30,7 @@ import 'package:nurse/app/modules/EntityList/patient/priorityGroup/priority_grou
 import 'package:nurse/app/modules/EntityList/vaccination/applier/applier_page.dart';
 import 'package:nurse/app/modules/EntityList/vaccination/vaccineBatch/vaccine_batch_page.dart';
 import 'package:nurse/app/modules/EntityList/vaccination/vaccine/vaccine_page.dart';
+import 'package:nurse/app/modules/Export/export_data_page.dart';
 import 'package:nurse/app/modules/Home/home_page.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
@@ -59,12 +62,12 @@ class Nurse extends StatelessWidget {
       supportedLocales: const [Locale('pt', 'BR')],
       initialRoute: "/",
       routes: {
-        "/": (context) => const Home(title: "Imunização"),
-        "/vaccinations": (context) => const EmptyPage("vaccination"),
-        "/vaccinations/new": (context) =>
-            VaccinationEntry(VaccinationEntryController()),
-        "/patients": (context) => const Patients(),
-        "/patients/new": (context) => newPatientFormPage(context),
+        "/": (context) => const MainScreen(),
+        "/home": (context) => const Home(),
+
+        // Entity List
+        "/entities": (context) => const AddEntitiesMenuPage(),
+
         "/establishments": (context) => const Establishments(),
         "/establishments/new": (context) => newEstablishmentFormPage(context),
         "/appliers": (context) => const Appliers(),
@@ -82,6 +85,8 @@ class Nurse extends StatelessWidget {
         "/priorityCategories": (context) => const PriorityCategories(),
         "/priorityCategories/new": (context) =>
             newPriorityCategoryFormPage(context),
+        // SHARE ROUTE
+        "/share": (context) => const ExportVaccinationDataPage(),
       },
     );
   }
