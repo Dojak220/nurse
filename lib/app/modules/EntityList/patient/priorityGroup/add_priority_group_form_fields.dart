@@ -27,7 +27,7 @@ class PriorityGroupFormFieldsState extends State<PriorityGroupFormFields> {
         child: ListView(
           children: [
             CustomTextFormField(
-              icon: const Icon(Icons.group),
+              icon: const Icon(Icons.group_rounded),
               label: FormLabels.groupCode,
               textEditingController: widget.controller.code,
               validatorType: ValidatorType.name,
@@ -35,7 +35,7 @@ class PriorityGroupFormFieldsState extends State<PriorityGroupFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.abc),
+              icon: const Icon(Icons.abc_rounded),
               label: FormLabels.groupName,
               textEditingController: widget.controller.name,
               validatorType: ValidatorType.optionalName,
@@ -43,7 +43,7 @@ class PriorityGroupFormFieldsState extends State<PriorityGroupFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.description),
+              icon: const Icon(Icons.description_rounded),
               label: FormLabels.groupDescription,
               textEditingController: widget.controller.description,
               validatorType: ValidatorType.description,

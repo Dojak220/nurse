@@ -41,7 +41,7 @@ class VaccineBatchFormFieldsState extends State<VaccineBatchFormFields> {
         child: ListView(
           children: [
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.vaccines),
+              icon: const Icon(Icons.vaccines_rounded),
               label: FormLabels.vaccineName,
               items: _vaccines,
               value: widget.controller.selectedVaccine,
@@ -52,7 +52,7 @@ class VaccineBatchFormFieldsState extends State<VaccineBatchFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.numbers),
+              icon: const Icon(Icons.numbers_rounded),
               label: FormLabels.vaccineBatchNumber,
               textEditingController: widget.controller.number,
               validatorType: ValidatorType.numericalString,
@@ -60,7 +60,7 @@ class VaccineBatchFormFieldsState extends State<VaccineBatchFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.batch_prediction),
+              icon: const Icon(Icons.batch_prediction_rounded),
               label: FormLabels.vaccineBatchQuantity,
               textEditingController: widget.controller.quantity,
               validatorType: ValidatorType.numericalString,

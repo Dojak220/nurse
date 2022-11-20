@@ -116,7 +116,7 @@ class ExportVaccinationDataPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: const <Widget>[
                   Icon(
-                    Icons.file_open,
+                    Icons.file_open_rounded,
                     size: 120.0,
                   ),
                   Text(

@@ -37,7 +37,7 @@ class _CampaignFormState extends State<CampaignForm> {
         child: ListView(
           children: [
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.campaign),
+              icon: const Icon(Icons.campaign_rounded),
               label: FormLabels.campaignName,
               items: _campaigns,
               onChanged: (Campaign? value) =>

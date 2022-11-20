@@ -24,7 +24,7 @@ class _VaccineFormState extends State<VaccineForm> {
         child: ListView(
           children: [
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.vaccines),
+              icon: const Icon(Icons.vaccines_rounded),
               label: FormLabels.vaccineName,
               items: widget.controller.vaccines,
               onChanged: (Vaccine? value) =>
@@ -34,7 +34,7 @@ class _VaccineFormState extends State<VaccineForm> {
             ),
             const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.batch_prediction),
+              icon: const Icon(Icons.batch_prediction_rounded),
               label: FormLabels.vaccineBatch,
               items: widget.controller.vaccineBatches,
               onChanged: (VaccineBatch? value) =>

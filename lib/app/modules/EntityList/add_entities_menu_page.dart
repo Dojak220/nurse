@@ -30,7 +30,7 @@ class AddEntitiesMenuPage extends StatelessWidget {
               ),
               EntityButton(
                 title: "Estabelecimento",
-                icon: Icons.local_hospital,
+                icon: Icons.local_hospital_rounded,
                 onPressed: () => Navigator.of(context)
                     .pushNamed("/establishments", arguments: {
                   "title": "Estabelecimento",
@@ -54,7 +54,7 @@ class AddEntitiesMenuPage extends StatelessWidget {
               ),
               EntityButton(
                 title: "Paciente",
-                icon: Icons.person,
+                icon: Icons.person_rounded,
                 onPressed: () =>
                     Navigator.of(context).pushNamed("/patients", arguments: {
                   "title": "Paciente",
@@ -62,7 +62,7 @@ class AddEntitiesMenuPage extends StatelessWidget {
               ),
               EntityButton(
                 title: "Aplicante",
-                icon: Icons.person,
+                icon: Icons.person_rounded,
                 onPressed: () =>
                     Navigator.of(context).pushNamed("/appliers", arguments: {
                   "title": "Aplicante",
@@ -78,7 +78,7 @@ class AddEntitiesMenuPage extends StatelessWidget {
               ),
               EntityButton(
                 title: "Grupo Prioritário",
-                icon: Icons.group,
+                icon: Icons.group_rounded,
                 onPressed: () => Navigator.of(context)
                     .pushNamed("/priorityGroups", arguments: {
                   "title": "Grupo Prioritário",
@@ -86,7 +86,7 @@ class AddEntitiesMenuPage extends StatelessWidget {
               ),
               EntityButton(
                 title: "Categoria Prioritária",
-                icon: Icons.category,
+                icon: Icons.category_rounded,
                 onPressed: () => Navigator.of(context)
                     .pushNamed("/priorityCategories", arguments: {
                   "title": "Categoria Prioritária",

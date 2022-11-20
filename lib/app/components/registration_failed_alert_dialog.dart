@@ -16,7 +16,7 @@ class RegistrationFailedAlertDialog extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          const Icon(Icons.warning, size: 120.0),
+          const Icon(Icons.warning_rounded, size: 120.0),
           Text(
             'Falha ao cadastrar novo(a) $entityName!',
             textAlign: TextAlign.center,
