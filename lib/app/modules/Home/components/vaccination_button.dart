@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/components/main_button.dart';
+import 'package:nurse/app/theme/app_colors.dart';
 
 class VaccinationButton extends StatelessWidget {
   final String newPage;
@@ -13,11 +13,24 @@ class VaccinationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MainButton(
-      text: "Vacinar",
-      onPressed: () => Navigator.of(context)
-          .pushNamed(newPage)
-          .whenComplete(() => onCallback()),
+    return Container(
+      margin: const EdgeInsets.fromLTRB(0, 18, 10, 0),
+      height: 60,
+      width: 60,
+      decoration: BoxDecoration(
+        color: AppColors.verdeEscuro,
+        borderRadius: BorderRadius.circular(100),
+      ),
+      child: IconButton(
+        icon: const Icon(
+          Icons.vaccines_rounded,
+          color: AppColors.white,
+          size: 40,
+        ),
+        onPressed: () => Navigator.of(context)
+            .pushNamed(newPage)
+            .whenComplete(() => onCallback()),
+      ),
     );
   }
 }

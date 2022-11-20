@@ -7,16 +7,26 @@ class MainButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.onPressed,
+    this.isEnable = true,
   }) : super(key: key);
 
-  final void Function()? onPressed;
   final String text;
+  final void Function()? onPressed;
+  final bool isEnable;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
-      style: AppTheme.mainButtonStyle(context),
+      onPressed: isEnable ? onPressed : () {},
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        onPrimary: isEnable ? AppColors.verdeClaro : AppColors.cinzaMedio,
+        primary: isEnable ? AppColors.verdeEscuro : AppColors.cinzaMedio2,
+        fixedSize: Size(MediaQuery.of(context).size.width * 0.90, 50),
+        shadowColor: AppColors.black,
+      ),
       child: Text(
         text,
         style: AppTheme.titleTextStyle.copyWith(color: AppColors.white),
