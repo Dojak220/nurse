@@ -62,10 +62,12 @@ class DatabasePersonRepository extends DatabaseInterface
   }
 
   Future<Person> _getPersonFromMap(Map<String, dynamic> personMap) async {
-    final locality = await _getLocality(personMap["locality"] as int);
+    final locality = personMap["locality"] != null
+        ? await _getLocality(personMap["locality"] as int)
+        : null;
 
     final updatedPersonMap = Map.of(personMap);
-    updatedPersonMap["locality"] = locality.toMap();
+    updatedPersonMap["locality"] = locality?.toMap();
 
     return Person.fromMap(updatedPersonMap);
   }

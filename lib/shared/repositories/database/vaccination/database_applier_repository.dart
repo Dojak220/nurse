@@ -75,7 +75,11 @@ class DatabaseApplierRepository extends DatabaseInterface
 
     final updatedApplierMap = Map.of(applierMap);
     updatedApplierMap["person"] = person.toMap();
+    updatedApplierMap["person"]["locality"] = person.locality?.toMap();
+
     updatedApplierMap["establishment"] = establishment.toMap();
+    updatedApplierMap["establishment"]["locality"] =
+        establishment.locality.toMap();
 
     return Applier.fromMap(updatedApplierMap);
   }

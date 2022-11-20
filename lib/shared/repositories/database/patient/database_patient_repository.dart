@@ -87,8 +87,13 @@ class DatabasePatientRepository extends DatabaseInterface
     );
 
     final updatedPatientMap = Map.of(patientMap);
+
     updatedPatientMap["person"] = person.toMap();
+    updatedPatientMap["person"]["locality"] = person.locality?.toMap();
+
     updatedPatientMap["priority_category"] = priorityCategory.toMap();
+    updatedPatientMap["priority_category"]["priority_group"] =
+        priorityCategory.priorityGroup.toMap();
 
     return Patient.fromMap(updatedPatientMap);
   }
