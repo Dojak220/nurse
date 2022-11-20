@@ -68,23 +68,32 @@ class Nurse extends StatelessWidget {
         // Entity List
         "/entities": (context) => const AddEntitiesMenuPage(),
 
+        // INFRA ROUTES
+        "/campaigns": (context) => const Campaigns(),
+        "/campaigns/new": (context) => newCampaignFormPage(context),
         "/establishments": (context) => const Establishments(),
         "/establishments/new": (context) => newEstablishmentFormPage(context),
-        "/appliers": (context) => const Appliers(),
-        "/appliers/new": (context) => newApplierFormPage(context),
-        "/vaccines": (context) => const Vaccines(),
-        "/vaccines/new": (context) => newVaccineFormPage(context),
-        "/vaccineBatches": (context) => const VaccineBatches(),
-        "/vaccineBatches/new": (context) => newVaccineBatchFormPage(context),
         "/localities": (context) => const Localities(),
         "/localities/new": (context) => newLocalityFormPage(context),
-        "/campaigns": (context) => const Campaigns(),
-        "/campaigns/new": (context) => newLocalityFormPage(context),
-        "/priorityGroups": (context) => const PriorityGroups(),
-        "/priorityGroups/new": (context) => newPriorityGroupFormPage(context),
+
+        // PATIENT ROUTES
+        "/patients": (context) => const Patients(),
+        "/patients/new": (context) => newPatientFormPage(context),
         "/priorityCategories": (context) => const PriorityCategories(),
         "/priorityCategories/new": (context) =>
             newPriorityCategoryFormPage(context),
+        "/priorityGroups": (context) => const PriorityGroups(),
+        "/priorityGroups/new": (context) => newPriorityGroupFormPage(context),
+
+        // VACCINATION ROUTES
+        "/vaccinations/new": (context) => newVaccinationFormPage(context),
+        "/appliers": (context) => const Appliers(),
+        "/appliers/new": (context) => newApplierFormPage(context),
+        "/vaccineBatches": (context) => const VaccineBatches(),
+        "/vaccineBatches/new": (context) => newVaccineBatchFormPage(context),
+        "/vaccines": (context) => const Vaccines(),
+        "/vaccines/new": (context) => newVaccineFormPage(context),
+
         // SHARE ROUTE
         "/share": (context) => const ExportVaccinationDataPage(),
       },
