@@ -22,8 +22,9 @@ class MainButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        onPrimary: isEnable ? AppColors.verdeClaro : AppColors.cinzaMedio,
-        primary: isEnable ? AppColors.verdeEscuro : AppColors.cinzaMedio2,
+        foregroundColor: isEnable ? AppColors.verdeClaro : AppColors.cinzaMedio,
+        backgroundColor:
+            isEnable ? AppColors.verdeEscuro : AppColors.cinzaMedio2,
         fixedSize: Size(MediaQuery.of(context).size.width * 0.90, 50),
         shadowColor: AppColors.black,
       ),

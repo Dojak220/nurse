@@ -91,7 +91,7 @@ class AppTheme {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
     ),
-    primary: AppColors.verdeEscuro,
+    backgroundColor: AppColors.verdeEscuro,
     fixedSize: const Size(120, 25),
     side: const BorderSide(color: AppColors.verdeEscuro, width: 2),
   );
@@ -101,7 +101,7 @@ class AppTheme {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
     ),
-    primary: AppColors.verdeEscuro,
+    backgroundColor: AppColors.verdeEscuro,
     fixedSize: const Size.fromHeight(50),
     side: const BorderSide(color: AppColors.verdeEscuro, width: 2),
   );
