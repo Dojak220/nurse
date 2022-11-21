@@ -44,14 +44,14 @@ class DatabaseApplicationRepository extends DatabaseInterface
   Future<int> createApplication(Application application) async {
     final map = application.toMap();
 
-    map['vaccine_batch'] = await _vaccineBatchRepo
+    map["vaccine_batch"] = await _vaccineBatchRepo
         .getVaccineBatchByNumber(application.vaccineBatch.number)
         .then((vaccine) => vaccine.id!);
     map["patient"] = await _getOrCreatePatient(application);
-    map['campaign'] = await _campaignRepo
+    map["campaign"] = await _campaignRepo
         .getCampaignByTitle(application.campaign.title)
         .then((campaign) => campaign.id!);
-    map['applier'] = await _applierRepo
+    map["applier"] = await _applierRepo
         .getApplierByCns(application.applier.cns)
         .then((applier) => applier.id!);
 
@@ -98,8 +98,29 @@ class DatabaseApplicationRepository extends DatabaseInterface
       final campaign = await _getCampaign(applicationMap["campaign"] as int);
 
       applicationMap["applier"] = applier.toMap();
+
+      applicationMap["applier"]["establishment"] =
+          applier.establishment.toMap();
+      applicationMap["applier"]["establishment"]["locality"] =
+          applier.establishment.locality.toMap();
+
+      applicationMap["applier"]["person"] = applier.person.toMap();
+      applicationMap["applier"]["person"]["locality"] =
+          applier.person.locality?.toMap();
+
       applicationMap["vaccine_batch"] = vaccineBatch.toMap();
+      applicationMap["vaccine_batch"]["vaccine"] = vaccineBatch.vaccine.toMap();
+
       applicationMap["patient"] = patient.toMap();
+      applicationMap["patient"]["person"] = patient.person.toMap();
+      applicationMap["patient"]["person"]["locality"] =
+          patient.person.locality?.toMap();
+
+      applicationMap["patient"]["priority_category"] =
+          patient.priorityCategory.toMap();
+      applicationMap["patient"]["priority_category"]["priority_group"] =
+          patient.priorityCategory.priorityGroup.toMap();
+
       applicationMap["campaign"] = campaign.toMap();
 
       final application = Application.fromMap(applicationMap);

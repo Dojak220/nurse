@@ -22,6 +22,7 @@ class NurseAppBar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       titleSpacing: 0,
+      backgroundColor: AppColors.verdeClaro,
       actions: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:nurse/app/main_screen.dart';
+import 'package:nurse/app/modules/EntityList/add_entities_menu_page.dart';
 import 'package:nurse/app/modules/EntityList/add_form.dart';
 import 'package:nurse/app/modules/EntityList/infra/locality/add_locality_form_fields.dart';
 import 'package:nurse/app/modules/EntityList/patient/patient/add_patient_form_fields.dart';
@@ -28,6 +30,7 @@ import 'package:nurse/app/modules/EntityList/patient/priorityGroup/priority_grou
 import 'package:nurse/app/modules/EntityList/vaccination/applier/applier_page.dart';
 import 'package:nurse/app/modules/EntityList/vaccination/vaccineBatch/vaccine_batch_page.dart';
 import 'package:nurse/app/modules/EntityList/vaccination/vaccine/vaccine_page.dart';
+import 'package:nurse/app/modules/Export/export_data_page.dart';
 import 'package:nurse/app/modules/Home/home_page.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
@@ -59,153 +62,166 @@ class Nurse extends StatelessWidget {
       supportedLocales: const [Locale('pt', 'BR')],
       initialRoute: "/",
       routes: {
-        "/": (context) => const Home(title: "Imunização"),
-        "/vaccinations": (context) => const EmptyPage("vaccination"),
-        "/vaccinations/new": (context) =>
-            VaccinationEntry(VaccinationEntryController()),
-        "/patients": (context) => const Patients(),
-        "/patients/new": (context) {
-          final currentPatient =
-              ModalRoute.of(context)!.settings.arguments as Patient?;
+        "/": (context) => const MainScreen(),
+        "/home": (context) => const Home(),
 
-          final controller = AddPatientFormController(currentPatient);
+        // Entity List
+        "/entities": (context) => const AddEntitiesMenuPage(),
 
-          return AddForm(
-            controller,
-            title: "Pacientes",
-            formFields: PatientFormFields(controller: controller),
-            isEditing: currentPatient != null,
-          );
-        },
-        "/establishments": (context) => const Establishments(),
-        "/establishments/new": (context) {
-          final currentEstablishment =
-              ModalRoute.of(context)!.settings.arguments as Establishment?;
-
-          final controller =
-              AddEstablishmentFormController(currentEstablishment);
-
-          return AddForm(
-            controller,
-            title: "Estabelecimentos",
-            formFields: EstablishmentFormFields(controller: controller),
-            isEditing: currentEstablishment != null,
-          );
-        },
-        "/appliers": (context) => const Appliers(),
-        "/appliers/new": (context) {
-          final currentApplier =
-              ModalRoute.of(context)!.settings.arguments as Applier?;
-
-          final controller = AddApplierFormController(currentApplier);
-
-          return AddForm(
-            controller,
-            title: "Aplicantes",
-            formFields: ApplierFormFields(controller: controller),
-            isEditing: currentApplier != null,
-          );
-        },
-        "/vaccines": (context) => const Vaccines(),
-        "/vaccines/new": (context) {
-          final currentVaccine =
-              ModalRoute.of(context)!.settings.arguments as Vaccine?;
-
-          final controller = AddVaccineFormController(currentVaccine);
-
-          return AddForm(
-            controller,
-            title: "Vacinas",
-            formFields: VaccineFormFields(controller: controller),
-            isEditing: currentVaccine != null,
-          );
-        },
-        "/vaccineBatches": (context) => const VaccineBatches(),
-        "/vaccineBatches/new": (context) {
-          final currentVaccineBatch =
-              ModalRoute.of(context)!.settings.arguments as VaccineBatch?;
-
-          final controller = AddVaccineBatchFormController(currentVaccineBatch);
-
-          return AddForm(
-            controller,
-            title: "Lotes de Vacina",
-            formFields: VaccineBatchFormFields(controller: controller),
-            isEditing: currentVaccineBatch != null,
-          );
-        },
-        "/localities": (context) => const Localities(),
-        "/localities/new": (context) {
-          final currentLocality =
-              ModalRoute.of(context)!.settings.arguments as Locality?;
-
-          final controller = AddLocalityFormController(currentLocality);
-
-          return AddForm(
-            controller,
-            title: "Localidades",
-            formFields: LocalityFormFields(controller: controller),
-            isEditing: currentLocality != null,
-          );
-        },
+        // INFRA ROUTES
         "/campaigns": (context) => const Campaigns(),
-        "/campaigns/new": (context) {
-          final currentCampaign =
-              ModalRoute.of(context)!.settings.arguments as Campaign?;
+        "/campaigns/new": (context) => newCampaignFormPage(context),
+        "/establishments": (context) => const Establishments(),
+        "/establishments/new": (context) => newEstablishmentFormPage(context),
+        "/localities": (context) => const Localities(),
+        "/localities/new": (context) => newLocalityFormPage(context),
 
-          final controller = AddCampaignFormController(currentCampaign);
-
-          return AddForm(
-            controller,
-            title: "Campanhas",
-            formFields: CampaignFormFields(controller: controller),
-            isEditing: currentCampaign != null,
-          );
-        },
-        "/priorityGroups": (context) => const PriorityGroups(),
-        "/priorityGroups/new": (context) {
-          final currentPriorityGroup =
-              ModalRoute.of(context)!.settings.arguments as PriorityGroup?;
-          final controller =
-              AddPriorityGroupFormController(currentPriorityGroup);
-
-          return AddForm(
-            controller,
-            title: "Grupos Prioritário",
-            formFields: PriorityGroupFormFields(controller: controller),
-            isEditing: currentPriorityGroup != null,
-          );
-        },
+        // PATIENT ROUTES
+        "/patients": (context) => const Patients(),
+        "/patients/new": (context) => newPatientFormPage(context),
         "/priorityCategories": (context) => const PriorityCategories(),
-        "/priorityCategories/new": (context) {
-          final currentPriorityCategory =
-              ModalRoute.of(context)!.settings.arguments as PriorityCategory?;
+        "/priorityCategories/new": (context) =>
+            newPriorityCategoryFormPage(context),
+        "/priorityGroups": (context) => const PriorityGroups(),
+        "/priorityGroups/new": (context) => newPriorityGroupFormPage(context),
 
-          final controller =
-              AddPriorityCategoryFormController(currentPriorityCategory);
+        // VACCINATION ROUTES
+        "/vaccinations/new": (context) => newVaccinationFormPage(context),
+        "/appliers": (context) => const Appliers(),
+        "/appliers/new": (context) => newApplierFormPage(context),
+        "/vaccineBatches": (context) => const VaccineBatches(),
+        "/vaccineBatches/new": (context) => newVaccineBatchFormPage(context),
+        "/vaccines": (context) => const Vaccines(),
+        "/vaccines/new": (context) => newVaccineFormPage(context),
 
-          return AddForm(
-            controller,
-            title: "Categoria Prioritária",
-            formFields: PriorityCategoryFormFields(controller: controller),
-            isEditing: currentPriorityCategory != null,
-          );
-        },
+        // SHARE ROUTE
+        "/share": (context) => const ExportVaccinationDataPage(),
       },
     );
   }
-}
 
-class EmptyPage extends StatelessWidget {
-  final String title;
-
-  const EmptyPage(
-    this.title, {
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text(title));
+  VaccinationEntry newVaccinationFormPage(BuildContext context) {
+    return VaccinationEntry(VaccinationEntryController());
   }
+
+  AddForm newPriorityCategoryFormPage(BuildContext context) {
+    final priorityCategoryToEdit = getEntityToEdit<PriorityCategory>(context);
+
+    final controller =
+        AddPriorityCategoryFormController(priorityCategoryToEdit);
+
+    return AddForm(
+      controller,
+      title: "Categoria Prioritária",
+      formFields: PriorityCategoryFormFields(controller: controller),
+      isEditing: priorityCategoryToEdit != null,
+    );
+  }
+
+  AddForm newPriorityGroupFormPage(BuildContext context) {
+    final priorityGroupToEdit = getEntityToEdit<PriorityGroup>(context);
+
+    final controller = AddPriorityGroupFormController(priorityGroupToEdit);
+
+    return AddForm(
+      controller,
+      title: "Grupos Prioritário",
+      formFields: PriorityGroupFormFields(controller: controller),
+      isEditing: priorityGroupToEdit != null,
+    );
+  }
+
+  AddForm newCampaignFormPage(BuildContext context) {
+    final campaignToEdit = getEntityToEdit<Campaign>(context);
+
+    final controller = AddCampaignFormController(campaignToEdit);
+
+    return AddForm(
+      controller,
+      title: "Campanhas",
+      formFields: CampaignFormFields(controller: controller),
+      isEditing: campaignToEdit != null,
+    );
+  }
+
+  AddForm newLocalityFormPage(BuildContext context) {
+    final localityToEdit = getEntityToEdit<Locality>(context);
+
+    final controller = AddLocalityFormController(localityToEdit);
+
+    return AddForm(
+      controller,
+      title: "Localidades",
+      formFields: LocalityFormFields(controller: controller),
+      isEditing: localityToEdit != null,
+    );
+  }
+
+  AddForm newVaccineBatchFormPage(BuildContext context) {
+    final vaccineBatchToEdit = getEntityToEdit<VaccineBatch>(context);
+
+    final controller = AddVaccineBatchFormController(vaccineBatchToEdit);
+
+    return AddForm(
+      controller,
+      title: "Lotes de Vacina",
+      formFields: VaccineBatchFormFields(controller: controller),
+      isEditing: vaccineBatchToEdit != null,
+    );
+  }
+
+  AddForm newVaccineFormPage(BuildContext context) {
+    final vaccineToEdit = getEntityToEdit<Vaccine>(context);
+
+    final controller = AddVaccineFormController(vaccineToEdit);
+
+    return AddForm(
+      controller,
+      title: "Vacinas",
+      formFields: VaccineFormFields(controller: controller),
+      isEditing: vaccineToEdit != null,
+    );
+  }
+
+  AddForm newApplierFormPage(BuildContext context) {
+    final applierToEdit = getEntityToEdit<Applier>(context);
+
+    final controller = AddApplierFormController(applierToEdit);
+
+    return AddForm(
+      controller,
+      title: "Aplicantes",
+      formFields: ApplierFormFields(controller: controller),
+      isEditing: applierToEdit != null,
+    );
+  }
+
+  AddForm newEstablishmentFormPage(BuildContext context) {
+    final establishmentToEdit = getEntityToEdit<Establishment>(context);
+
+    final controller = AddEstablishmentFormController(establishmentToEdit);
+
+    return AddForm(
+      controller,
+      title: "Estabelecimentos",
+      formFields: EstablishmentFormFields(controller: controller),
+      isEditing: establishmentToEdit != null,
+    );
+  }
+
+  AddForm newPatientFormPage(BuildContext context) {
+    final patientToEdit = getEntityToEdit<Patient>(context);
+
+    final controller = AddPatientFormController(patientToEdit);
+
+    return AddForm(
+      controller,
+      title: "Pacientes",
+      formFields: PatientFormFields(controller: controller),
+      isEditing: patientToEdit != null,
+    );
+  }
+
+  T? getEntityToEdit<T>(BuildContext context) =>
+      ModalRoute.of(context)!.settings.arguments as T?;
 }

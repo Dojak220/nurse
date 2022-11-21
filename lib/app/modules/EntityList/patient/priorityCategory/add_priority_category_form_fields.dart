@@ -43,7 +43,7 @@ class PriorityCategoryFormFieldsState
         child: ListView(
           children: [
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.group),
+              icon: const Icon(Icons.group_rounded),
               label: FormLabels.categoryGroup,
               items: _groups,
               value: widget.controller.selectedPriorityGroup,
@@ -54,7 +54,7 @@ class PriorityCategoryFormFieldsState
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.category),
+              icon: const Icon(Icons.category_rounded),
               label: FormLabels.categoryCode,
               textEditingController: widget.controller.code,
               validatorType: ValidatorType.name,
@@ -62,7 +62,7 @@ class PriorityCategoryFormFieldsState
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.abc),
+              icon: const Icon(Icons.abc_rounded),
               label: FormLabels.categoryName,
               textEditingController: widget.controller.name,
               validatorType: ValidatorType.optionalName,
@@ -70,7 +70,7 @@ class PriorityCategoryFormFieldsState
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.description),
+              icon: const Icon(Icons.description_rounded),
               label: FormLabels.categoryDescription,
               textEditingController: widget.controller.description,
               validatorType: ValidatorType.description,

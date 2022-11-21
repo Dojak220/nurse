@@ -48,7 +48,7 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: const <Widget>[
-                Icon(Icons.warning, size: 120.0),
+                Icon(Icons.warning_rounded, size: 120.0),
                 Text('Falha ao cadastrar!', textAlign: TextAlign.center),
               ],
             ),

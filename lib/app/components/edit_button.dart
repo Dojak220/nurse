@@ -25,7 +25,7 @@ class EditButton extends StatelessWidget {
         alignment: Alignment.topRight,
         padding: const EdgeInsets.only(top: 4.0, right: 4.0),
         icon: const Icon(
-          Icons.edit,
+          Icons.edit_rounded,
           color: AppColors.verdeEscuro,
           size: 18.0,
         ),

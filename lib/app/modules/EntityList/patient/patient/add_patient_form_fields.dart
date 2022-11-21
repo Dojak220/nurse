@@ -52,7 +52,7 @@ class PatientFormFieldsState extends State<PatientFormFields> {
         child: ListView(
           children: [
             CustomTextFormField(
-              icon: const Icon(Icons.abc),
+              icon: const Icon(Icons.abc_rounded),
               label: FormLabels.patientName,
               textEditingController: widget.controller.name,
               validatorType: ValidatorType.name,
@@ -60,7 +60,7 @@ class PatientFormFieldsState extends State<PatientFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.badge),
+              icon: const Icon(Icons.badge_rounded),
               label: FormLabels.patientCns,
               textEditingController: widget.controller.cns,
               validatorType: ValidatorType.cns,
@@ -68,7 +68,7 @@ class PatientFormFieldsState extends State<PatientFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.badge),
+              icon: const Icon(Icons.badge_rounded),
               label: FormLabels.patientCpf,
               textEditingController: widget.controller.cpf,
               validatorType: ValidatorType.cpf,
@@ -76,7 +76,7 @@ class PatientFormFieldsState extends State<PatientFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.calendar_month),
+              icon: const Icon(Icons.calendar_month_rounded),
               label: FormLabels.birthDate,
               textEditingController: widget.controller.birthDate,
               validatorType: ValidatorType.birthDate,
@@ -86,7 +86,7 @@ class PatientFormFieldsState extends State<PatientFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.pin),
+              icon: const Icon(Icons.pin_rounded),
               label: FormLabels.localityName,
               items: _localities,
               value: widget.controller.selectedLocality,
@@ -97,7 +97,7 @@ class PatientFormFieldsState extends State<PatientFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.category),
+              icon: const Icon(Icons.category_rounded),
               label: FormLabels.categoryName,
               items: _categories,
               value: widget.controller.selectedPriorityCategory,
@@ -109,10 +109,10 @@ class PatientFormFieldsState extends State<PatientFormFields> {
             const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
               icon: widget.controller.selectedSex == Sex.none
-                  ? const Icon(Icons.question_mark)
+                  ? const Icon(Icons.question_mark_rounded)
                   : widget.controller.selectedSex == Sex.female
-                      ? const Icon(Icons.female)
-                      : const Icon(Icons.male),
+                      ? const Icon(Icons.female_rounded)
+                      : const Icon(Icons.male_rounded),
               label: FormLabels.sex,
               items: Sex.values,
               value: widget.controller.selectedSex,
@@ -125,11 +125,11 @@ class PatientFormFieldsState extends State<PatientFormFields> {
             CustomDropdownButtonFormField(
               icon: widget.controller.selectedMaternalCondition ==
                       MaternalCondition.nenhum
-                  ? const Icon(Icons.question_mark)
+                  ? const Icon(Icons.question_mark_rounded)
                   : widget.controller.selectedMaternalCondition ==
                           MaternalCondition.gestante
-                      ? const Icon(Icons.pregnant_woman)
-                      : const Icon(Icons.baby_changing_station),
+                      ? const Icon(Icons.pregnant_woman_rounded)
+                      : const Icon(Icons.baby_changing_station_rounded),
               label: FormLabels.maternalCondition,
               items: widget.controller.selectedSex == Sex.male
                   ? [MaternalCondition.nenhum]
@@ -144,7 +144,7 @@ class PatientFormFieldsState extends State<PatientFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.abc),
+              icon: const Icon(Icons.abc_rounded),
               label: FormLabels.motherName,
               textEditingController: widget.controller.motherName,
               validatorType: ValidatorType.optionalName,
@@ -152,7 +152,7 @@ class PatientFormFieldsState extends State<PatientFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.abc),
+              icon: const Icon(Icons.abc_rounded),
               label: FormLabels.fatherName,
               textEditingController: widget.controller.fatherName,
               validatorType: ValidatorType.optionalName,

@@ -26,7 +26,7 @@ class VaccineFormFieldsState extends State<VaccineFormFields> {
         child: ListView(
           children: [
             CustomTextFormField(
-              icon: const Icon(Icons.local_pharmacy),
+              icon: const Icon(Icons.local_pharmacy_rounded),
               label: FormLabels.vaccineLaboratory,
               textEditingController: widget.controller.laboratory,
               validatorType: ValidatorType.name,
@@ -34,7 +34,7 @@ class VaccineFormFieldsState extends State<VaccineFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.abc),
+              icon: const Icon(Icons.abc_rounded),
               label: FormLabels.vaccineName,
               textEditingController: widget.controller.name,
               validatorType: ValidatorType.name,
@@ -42,7 +42,7 @@ class VaccineFormFieldsState extends State<VaccineFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.numbers),
+              icon: const Icon(Icons.numbers_rounded),
               label: FormLabels.vaccineSipniCode,
               textEditingController: widget.controller.sipniCode,
               validatorType: ValidatorType.numericalString,

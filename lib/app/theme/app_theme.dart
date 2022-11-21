@@ -91,7 +91,7 @@ class AppTheme {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
     ),
-    primary: AppColors.verdeEscuro,
+    backgroundColor: AppColors.verdeEscuro,
     fixedSize: const Size(120, 25),
     side: const BorderSide(color: AppColors.verdeEscuro, width: 2),
   );
@@ -101,28 +101,10 @@ class AppTheme {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
     ),
-    primary: AppColors.verdeEscuro,
+    backgroundColor: AppColors.verdeEscuro,
     fixedSize: const Size.fromHeight(50),
     side: const BorderSide(color: AppColors.verdeEscuro, width: 2),
   );
-
-  // static ButtonStyle nextButtonStyle = backButtonStyle.copyWith(
-  //   backgroundColor: MaterialStateProperty.all(AppColors.verdeEscuro),
-  //   side: MaterialStateProperty.all(
-  //     BorderSide(color: AppColors.verdeEscuro, width: 2),
-  //   ),
-  // );
-
-  static ButtonStyle mainButtonStyle([BuildContext? context]) =>
-      ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        primary: AppColors.verdeEscuro,
-        fixedSize: context != null
-            ? Size(MediaQuery.of(context).size.width * 0.90, 50)
-            : null,
-      );
 
   static final TextTheme _textTheme = TextTheme(
     bodyText2: defaultTextStyle,

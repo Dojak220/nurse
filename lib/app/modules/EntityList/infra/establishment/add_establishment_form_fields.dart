@@ -44,7 +44,7 @@ class EstablishmentFormFieldsState extends State<EstablishmentFormFields> {
           semanticChildCount: 3,
           children: [
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.pin),
+              icon: const Icon(Icons.pin_rounded),
               label: FormLabels.establishmentLocalityName,
               items:
                   _localityCities.map<String>((Locality l) => l.city).toList(),
@@ -58,7 +58,7 @@ class EstablishmentFormFieldsState extends State<EstablishmentFormFields> {
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
-              icon: const Icon(Icons.local_hospital),
+              icon: const Icon(Icons.local_hospital_rounded),
               label: FormLabels.establishmentCNES,
               textEditingController: widget.controller.cnes,
               validatorType: ValidatorType.cnes,
@@ -66,7 +66,7 @@ class EstablishmentFormFieldsState extends State<EstablishmentFormFields> {
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
-              icon: const Icon(Icons.abc),
+              icon: const Icon(Icons.abc_rounded),
               label: FormLabels.establishmentName,
               textEditingController: widget.controller.name,
               validatorType: ValidatorType.name,

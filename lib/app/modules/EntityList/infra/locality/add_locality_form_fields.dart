@@ -28,7 +28,7 @@ class LocalityFormFieldsState extends State<LocalityFormFields> {
           semanticChildCount: 4,
           children: [
             CustomTextFormField(
-              icon: const Icon(Icons.abc),
+              icon: const Icon(Icons.abc_rounded),
               label: FormLabels.localityName,
               textEditingController: widget.controller.name,
               validatorType: ValidatorType.name,
@@ -36,7 +36,7 @@ class LocalityFormFieldsState extends State<LocalityFormFields> {
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
-              icon: const Icon(Icons.location_city),
+              icon: const Icon(Icons.location_city_rounded),
               label: FormLabels.localityCity,
               textEditingController: widget.controller.city,
               validatorType: ValidatorType.name,
@@ -44,7 +44,7 @@ class LocalityFormFieldsState extends State<LocalityFormFields> {
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
-              icon: const Icon(Icons.map),
+              icon: const Icon(Icons.map_rounded),
               label: FormLabels.localityState,
               textEditingController: widget.controller.state,
               validatorType: ValidatorType.name,
@@ -52,7 +52,7 @@ class LocalityFormFieldsState extends State<LocalityFormFields> {
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
-              icon: const Icon(Icons.numbers),
+              icon: const Icon(Icons.numbers_rounded),
               label: FormLabels.localityCode,
               textEditingController: widget.controller.ibgeCode,
               validatorType: ValidatorType.ibgeCode,

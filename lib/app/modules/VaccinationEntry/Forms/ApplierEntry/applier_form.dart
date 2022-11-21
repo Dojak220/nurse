@@ -24,7 +24,7 @@ class _ApplierFormState extends State<ApplierForm> {
         child: ListView(
           children: [
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.local_hospital),
+              icon: const Icon(Icons.local_hospital_rounded),
               label: FormLabels.establishmentCNES,
               items: widget.controller.establishments,
               onChanged: (Establishment? value) => setState(
@@ -34,7 +34,7 @@ class _ApplierFormState extends State<ApplierForm> {
             ),
             const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.person),
+              icon: const Icon(Icons.person_rounded),
               label: FormLabels.applierName,
               items: widget.controller.appliers,
               onChanged: (Applier? value) =>
@@ -89,7 +89,7 @@ class _ApplierFormState extends State<ApplierForm> {
   //           mainAxisAlignment: MainAxisAlignment.center,
   //           mainAxisSize: MainAxisSize.min,
   //           children: <Widget>[
-  //             const Icon(Icons.check_sharp, size: 120.0),
+  //             const Icon(Icons.check_rounded, size: 120.0),
   //             const Text(
   //               'Cadastro realizado com sucesso!',
   //               textAlign: TextAlign.center,

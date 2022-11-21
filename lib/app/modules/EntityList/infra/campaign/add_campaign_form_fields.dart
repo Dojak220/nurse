@@ -28,7 +28,7 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
           semanticChildCount: 4,
           children: [
             CustomTextFormField(
-              icon: const Icon(Icons.abc),
+              icon: const Icon(Icons.abc_rounded),
               label: FormLabels.campaignName,
               textEditingController: widget.controller.title,
               validatorType: ValidatorType.name,
@@ -36,7 +36,7 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
-              icon: const Icon(Icons.description),
+              icon: const Icon(Icons.description_rounded),
               label: FormLabels.campaignDescription,
               textEditingController: widget.controller.description,
               validatorType: ValidatorType.optionalName,
@@ -44,7 +44,7 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.today),
+              icon: const Icon(Icons.today_rounded),
               label: FormLabels.campaignStartDate,
               textEditingController: widget.controller.startDate,
               validatorType: ValidatorType.date,
@@ -54,7 +54,7 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.event),
+              icon: const Icon(Icons.event_rounded),
               label: FormLabels.campaignEndDate,
               textEditingController: widget.controller.endDate,
               validatorType: ValidatorType.optionalDate,

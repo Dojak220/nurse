@@ -25,7 +25,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
         child: ListView(
           children: [
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.vaccines),
+              icon: const Icon(Icons.vaccines_rounded),
               label: FormLabels.dose,
               items: VaccineDose.values,
               onChanged: (VaccineDose? value) =>
@@ -33,7 +33,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.calendar_month),
+              icon: const Icon(Icons.calendar_month_rounded),
               label: FormLabels.applicationDate,
               textEditingController: widget.controller.date,
               validatorType: ValidatorType.pastDate,
@@ -43,7 +43,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.person),
+              icon: const Icon(Icons.person_rounded),
               label: FormLabels.applierName,
               textEditingController: widget.controller.applierName,
               validatorType: ValidatorType.name,
@@ -53,7 +53,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.vaccines),
+              icon: const Icon(Icons.vaccines_rounded),
               label: FormLabels.vaccineBatch,
               validatorType: null,
               readOnly: true,
@@ -63,7 +63,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.person),
+              icon: const Icon(Icons.person_rounded),
               label: FormLabels.patientName,
               validatorType: ValidatorType.name,
               readOnly: true,
@@ -73,7 +73,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.campaign),
+              icon: const Icon(Icons.campaign_rounded),
               label: FormLabels.campaignName,
               validatorType: ValidatorType.name,
               readOnly: true,
@@ -130,7 +130,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
   //           mainAxisAlignment: MainAxisAlignment.center,
   //           mainAxisSize: MainAxisSize.min,
   //           children: <Widget>[
-  //             const Icon(Icons.check_sharp, size: 120.0),
+  //             const Icon(Icons.check_rounded, size: 120.0),
   //             const Text(
   //               'Cadastro realizado com sucesso!',
   //               textAlign: TextAlign.center,

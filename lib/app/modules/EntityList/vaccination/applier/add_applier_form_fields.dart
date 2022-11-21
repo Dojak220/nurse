@@ -51,7 +51,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
         child: ListView(
           children: [
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.local_hospital),
+              icon: const Icon(Icons.local_hospital_rounded),
               label: FormLabels.establishmentCNES,
               items: _establishments,
               value: widget.controller.selectedEstablishment,
@@ -62,7 +62,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.abc),
+              icon: const Icon(Icons.abc_rounded),
               label: FormLabels.applierName,
               textEditingController: widget.controller.name,
               validatorType: ValidatorType.name,
@@ -70,7 +70,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.badge),
+              icon: const Icon(Icons.badge_rounded),
               label: FormLabels.applierCns,
               textEditingController: widget.controller.cns,
               validatorType: ValidatorType.cns,
@@ -78,7 +78,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.badge),
+              icon: const Icon(Icons.badge_rounded),
               label: FormLabels.applierCpf,
               textEditingController: widget.controller.cpf,
               validatorType: ValidatorType.cpf,
@@ -86,7 +86,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.calendar_month),
+              icon: const Icon(Icons.calendar_month_rounded),
               label: FormLabels.birthDate,
               textEditingController: widget.controller.birthDate,
               validatorType: ValidatorType.birthDate,
@@ -96,7 +96,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.pin),
+              icon: const Icon(Icons.pin_rounded),
               label: FormLabels.establishmentLocalityName,
               items: _localities,
               value: widget.controller.selectedLocality,
@@ -108,10 +108,10 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
             const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
               icon: widget.controller.selectedSex == Sex.none
-                  ? const Icon(Icons.question_mark)
+                  ? const Icon(Icons.question_mark_rounded)
                   : widget.controller.selectedSex == Sex.female
-                      ? const Icon(Icons.female)
-                      : const Icon(Icons.male),
+                      ? const Icon(Icons.female_rounded)
+                      : const Icon(Icons.male_rounded),
               label: FormLabels.sex,
               items: Sex.values,
               value: widget.controller.selectedSex,
@@ -122,7 +122,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.abc),
+              icon: const Icon(Icons.abc_rounded),
               label: FormLabels.motherName,
               textEditingController: widget.controller.motherName,
               validatorType: ValidatorType.optionalName,
@@ -130,7 +130,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.abc),
+              icon: const Icon(Icons.abc_rounded),
               label: FormLabels.fatherName,
               textEditingController: widget.controller.fatherName,
               validatorType: ValidatorType.optionalName,

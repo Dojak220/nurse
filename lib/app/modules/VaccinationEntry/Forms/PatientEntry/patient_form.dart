@@ -27,7 +27,7 @@ class _PatientFormState extends State<PatientForm> {
         child: ListView(
           children: [
             CustomTextFormField(
-              icon: const Icon(Icons.badge),
+              icon: const Icon(Icons.badge_rounded),
               label: FormLabels.patientCns,
               validatorType: ValidatorType.cns,
               onChanged: (String? value) async {
@@ -39,7 +39,7 @@ class _PatientFormState extends State<PatientForm> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.badge),
+              icon: const Icon(Icons.badge_rounded),
               label: FormLabels.patientCpf,
               textEditingController: widget.controller.cpf,
               validatorType: ValidatorType.cpf,
@@ -52,7 +52,7 @@ class _PatientFormState extends State<PatientForm> {
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
-              icon: const Icon(Icons.abc),
+              icon: const Icon(Icons.abc_rounded),
               label: FormLabels.patientName,
               textEditingController: widget.controller.name,
               validatorType: ValidatorType.name,
@@ -63,10 +63,10 @@ class _PatientFormState extends State<PatientForm> {
             CustomDropdownButtonFormField(
               icon: (widget.controller.sex == Sex.none ||
                       widget.controller.sex == null)
-                  ? const Icon(Icons.question_mark)
+                  ? const Icon(Icons.question_mark_rounded)
                   : widget.controller.sex == Sex.female
-                      ? const Icon(Icons.female)
-                      : const Icon(Icons.male),
+                      ? const Icon(Icons.female_rounded)
+                      : const Icon(Icons.male_rounded),
               label: FormLabels.sex,
               items: Sex.values,
               value: widget.controller.sex,
@@ -77,7 +77,7 @@ class _PatientFormState extends State<PatientForm> {
             ),
             const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.category),
+              icon: const Icon(Icons.category_rounded),
               label: FormLabels.categoryName,
               items: widget.controller.categories,
               value: widget.controller.selectedCategory,
@@ -86,7 +86,7 @@ class _PatientFormState extends State<PatientForm> {
             ),
             const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: const Icon(Icons.pregnant_woman),
+              icon: const Icon(Icons.pregnant_woman_rounded),
               label: FormLabels.maternalCondition,
               items: MaternalCondition.values,
               value: widget.controller.maternalCondition,
@@ -142,7 +142,7 @@ class _PatientFormState extends State<PatientForm> {
   //           mainAxisAlignment: MainAxisAlignment.center,
   //           mainAxisSize: MainAxisSize.min,
   //           children: <Widget>[
-  //             const Icon(Icons.check_sharp, size: 120.0),
+  //             const Icon(Icons.check_rounded, size: 120.0),
   //             const Text(
   //               'Cadastro realizado com sucesso!',
   //               textAlign: TextAlign.center,
