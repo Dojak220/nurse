@@ -100,6 +100,10 @@ class Nurse extends StatelessWidget {
     );
   }
 
+  VaccinationEntry newVaccinationFormPage(BuildContext context) {
+    return VaccinationEntry(VaccinationEntryController());
+  }
+
   AddForm newPriorityCategoryFormPage(BuildContext context) {
     final priorityCategoryToEdit = getEntityToEdit<PriorityCategory>(context);
 
