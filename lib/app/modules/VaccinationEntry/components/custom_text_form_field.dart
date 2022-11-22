@@ -34,23 +34,26 @@ class CustomTextFormField extends CustomFormField {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: InputDecoration(
-        icon: icon,
-        border: const OutlineInputBorder(),
-        hintText: hint,
-        labelText: description,
+    return Padding(
+      padding: const EdgeInsets.only(top: 4.0),
+      child: TextFormField(
+        decoration: InputDecoration(
+          icon: icon,
+          border: const OutlineInputBorder(),
+          hintText: hint,
+          labelText: description,
+        ),
+        controller: textEditingController,
+        validator: validatorType != null
+            ? (String? value) => validate(value, validatorType!)
+            : null,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        readOnly: readOnly,
+        enabled: enabled,
+        onTap: onTap,
+        onChanged: onChanged,
+        onSaved: onSaved,
       ),
-      controller: textEditingController,
-      validator: validatorType != null
-          ? (String? value) => validate(value, validatorType!)
-          : null,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      readOnly: readOnly,
-      enabled: enabled,
-      onTap: onTap,
-      onChanged: onChanged,
-      onSaved: onSaved,
     );
   }
 

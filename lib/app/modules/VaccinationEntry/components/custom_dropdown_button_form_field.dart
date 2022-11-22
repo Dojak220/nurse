@@ -40,28 +40,32 @@ class CustomDropdownButtonFormField<T> extends CustomFormField {
   Widget build(BuildContext context) {
     final sortedItems = _sortItemsAlphabetically();
 
-    return DropdownButtonFormField(
-      decoration: InputDecoration(
-        icon: icon,
-        border: border,
-        hintText: hint,
-        labelText: description,
+    return Padding(
+      padding: const EdgeInsets.only(top: 4.0),
+      child: DropdownButtonFormField(
+        decoration: InputDecoration(
+          icon: icon,
+          border: border,
+          hintText: hint,
+          labelText: description,
+        ),
+        selectedItemBuilder: isEnum
+            ? (_) => sortedItems
+                .map((T item) => Text(enumToName(item as Enum)))
+                .toList()
+            : null,
+        isExpanded: true,
+        value: value ?? (sortedItems.length == 1 ? sortedItems.first : null),
+        items: sortedItems
+            .map((item) => DropdownMenuItem(
+                value: item,
+                child:
+                    Text(isEnum ? enumToName(item as Enum) : item.toString())))
+            .toList(),
+        onChanged: onChanged,
+        onSaved: onSaved,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
       ),
-      selectedItemBuilder: isEnum
-          ? (_) => sortedItems
-              .map((T item) => Text(enumToName(item as Enum)))
-              .toList()
-          : null,
-      isExpanded: true,
-      value: value ?? (sortedItems.length == 1 ? sortedItems.first : null),
-      items: sortedItems
-          .map((item) => DropdownMenuItem(
-              value: item,
-              child: Text(isEnum ? enumToName(item as Enum) : item.toString())))
-          .toList(),
-      onChanged: onChanged,
-      onSaved: onSaved,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
     );
   }
 }
