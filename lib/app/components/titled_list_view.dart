@@ -29,10 +29,7 @@ class TitledListView extends StatelessWidget {
               style: AppTheme.titleTextStyle,
             ),
           ),
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: maxHeight ?? MediaQuery.of(context).size.height * 0.52,
-            ),
+          Expanded(
             child: ListView.separated(
               padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
               itemCount: itemCount,
