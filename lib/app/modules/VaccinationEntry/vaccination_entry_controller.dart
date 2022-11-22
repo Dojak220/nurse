@@ -33,7 +33,6 @@ class VaccinationEntryController {
   late final ApplicationFormController applicationFormController;
 
   FormController getCurrentFormController() {
-    print(formIndex);
     switch (formIndex) {
       case 0:
         return campaignFormController;

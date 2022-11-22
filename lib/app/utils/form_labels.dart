@@ -52,7 +52,7 @@ extension LabelNamesAndHints on FormLabels {
       case FormLabels.birthDate:
         return "Data de Nascimento";
       case FormLabels.campaignName:
-        return "Campanha *";
+        return "Campanha";
       case FormLabels.campaignDescription:
         return "Descrição da Campanha";
       case FormLabels.campaignStartDate:
@@ -76,7 +76,7 @@ extension LabelNamesAndHints on FormLabels {
       case FormLabels.establishmentName:
         return "Nome do Estabelecimento *";
       case FormLabels.fatherName:
-        return "Nome do Pai *";
+        return "Nome do Pai";
       case FormLabels.localityName:
         return "Nome da Localidade *";
       case FormLabels.localityCity:
@@ -86,7 +86,7 @@ extension LabelNamesAndHints on FormLabels {
       case FormLabels.localityCode:
         return "Código da Localidade *";
       case FormLabels.motherName:
-        return "Nome da Mãe *";
+        return "Nome da Mãe";
       case FormLabels.groupCode:
         return "Código do Grupo *";
       case FormLabels.groupName:
@@ -104,11 +104,11 @@ extension LabelNamesAndHints on FormLabels {
       case FormLabels.sex:
         return "Sexo do(a) Paciente";
       case FormLabels.vaccineBatch:
-        return "Lote da Vacina*";
+        return "Lote da Vacina *";
       case FormLabels.vaccineBatchNumber:
-        return "Número do lote*";
+        return "Número do lote *";
       case FormLabels.vaccineBatchQuantity:
-        return "Quantidade do lote*";
+        return "Quantidade do lote *";
       case FormLabels.vaccineLaboratory:
         return "Laboratório *";
       case FormLabels.vaccineName:
