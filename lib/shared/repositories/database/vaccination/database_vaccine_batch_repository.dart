@@ -108,7 +108,8 @@ class DatabaseVaccineBatchRepository extends DatabaseInterface
 
   @override
   Future<int> updateVaccineBatch(VaccineBatch vaccineBatch) async {
-    final int count = await update(vaccineBatch.toMap());
+    int count = await update(vaccineBatch.toMap());
+    count += await _vaccineRepo.updateVaccine(vaccineBatch.vaccine);
 
     return count;
   }

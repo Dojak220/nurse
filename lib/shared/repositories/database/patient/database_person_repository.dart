@@ -103,7 +103,8 @@ class DatabasePersonRepository extends DatabaseInterface
 
   @override
   Future<int> updatePerson(Person person) async {
-    final int updatedCount = await update(person.toMap());
+    int updatedCount = await update(person.toMap());
+    updatedCount += await _localityRepo.updateLocality(person.locality!);
 
     return updatedCount;
   }

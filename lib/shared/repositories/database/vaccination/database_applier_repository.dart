@@ -144,7 +144,11 @@ class DatabaseApplierRepository extends DatabaseInterface
 
   @override
   Future<int> updateApplier(Applier applier) async {
-    final int updatedCount = await update(applier.toMap());
+    int updatedCount = await update(applier.toMap());
+    updatedCount += await _personRepo.updatePerson(applier.person);
+    updatedCount += await _establishmentRepo.updateEstablishment(
+      applier.establishment,
+    );
 
     return updatedCount;
   }

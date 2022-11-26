@@ -106,7 +106,8 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
 
   @override
   Future<int> updateEstablishment(Establishment establishment) async {
-    final int count = await update(establishment.toMap());
+    int count = await update(establishment.toMap());
+    count += await _localityRepo.updateLocality(establishment.locality);
 
     return count;
   }
