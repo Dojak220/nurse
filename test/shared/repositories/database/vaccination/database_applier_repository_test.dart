@@ -34,15 +34,20 @@ void main() {
 
   setUp(() {
     when(dbManagerMock.db).thenReturn(dbMock);
+
     when(personRepoMock.getPersonById(1)).thenAnswer((_) async => _validPerson);
     when(personRepoMock.createPerson(_validPerson)).thenAnswer((_) async => 1);
     when(personRepoMock.getPersons()).thenAnswer((_) async => _validPersons);
+    when(personRepoMock.updatePerson(any)).thenAnswer((_) async => 1);
+
     when(establishmentRepoMock.getEstablishmentById(1))
         .thenAnswer((_) async => _validEstablishment);
     when(establishmentRepoMock.getEstablishmentByCnes("1234567"))
         .thenAnswer((_) async => _validEstablishment);
     when(establishmentRepoMock.getEstablishments())
         .thenAnswer((_) async => _validEstablishments);
+    when(establishmentRepoMock.updateEstablishment(any))
+        .thenAnswer((_) async => 1);
   });
 
   testCreateApplier(dbMock, repository);
@@ -218,12 +223,12 @@ void testUpdateApplier(MockDatabase db, ApplierRepository repository) {
         )).thenAnswer((_) => Future.value(1));
       });
 
-      test("should update a applier entry and returns 1", () async {
-        final createdId = await repository.updateApplier(
+      test("should update a applier entry and returns 3", () async {
+        final updatedRows = await repository.updateApplier(
           _validApplier.copyWith(cns: "267174371730003"),
         );
 
-        expect(createdId, 1);
+        expect(updatedRows, 3); // applier, establishment and person
       });
     });
     group('try to update with invalid applier', () {
@@ -239,11 +244,11 @@ void testUpdateApplier(MockDatabase db, ApplierRepository repository) {
       });
 
       test("should return 0 if id doesn't exist", () async {
-        final updatedCount = await repository.updateApplier(
+        final updatedRows = await repository.updateApplier(
           _validApplier.copyWith(id: _invalidApplierId, cns: "267174371730003"),
         );
 
-        expect(updatedCount, 0);
+        expect(updatedRows, 0);
       });
     });
   });

@@ -49,38 +49,37 @@ void main() {
 
   setUp(() {
     when(dbManagerMock.db).thenReturn(dbMock);
-    when(applierRepoMock.getApplierById(1)).thenAnswer(
-      (_) async => _validApplier,
-    );
-    when(applierRepoMock.getApplierByCns("279197866950004")).thenAnswer(
-      (_) async => _validApplier,
-    );
+
+    when(applierRepoMock.getApplierById(1))
+        .thenAnswer((_) async => _validApplier);
+    when(applierRepoMock.getApplierByCns("279197866950004"))
+        .thenAnswer((_) async => _validApplier);
     when(applierRepoMock.getAppliers()).thenAnswer((_) async => _validAppliers);
-    when(vaccineBatchRepoMock.getVaccineBatchById(1)).thenAnswer(
-      (_) async => _validVaccineBatch,
-    );
-    when(vaccineBatchRepoMock.getVaccineBatchByNumber("123456")).thenAnswer(
-      (_) async => _validVaccineBatch,
-    );
-    when(vaccineBatchRepoMock.getVaccineBatches()).thenAnswer(
-      (_) async => _validVaccineBatches,
-    );
-    when(campaignRepoMock.getCampaignById(1)).thenAnswer(
-      (_) async => _validCampaign,
-    );
-    when(campaignRepoMock.getCampaignByTitle("Campaign Title")).thenAnswer(
-      (_) async => _validCampaign,
-    );
-    when(campaignRepoMock.getCampaigns()).thenAnswer(
-      (_) async => _validCampaigns,
-    );
-    when(patientRepoMock.getPatientById(1)).thenAnswer(
-      (_) async => _validPatient,
-    );
-    when(patientRepoMock.getPatientByCns("748477761910001")).thenAnswer(
-      (_) async => _validPatient,
-    );
+    when(applierRepoMock.updateApplier(any)).thenAnswer((_) async => 1);
+
+    when(vaccineBatchRepoMock.getVaccineBatchById(1))
+        .thenAnswer((_) async => _validVaccineBatch);
+    when(vaccineBatchRepoMock.getVaccineBatchByNumber("123456"))
+        .thenAnswer((_) async => _validVaccineBatch);
+    when(vaccineBatchRepoMock.getVaccineBatches())
+        .thenAnswer((_) async => _validVaccineBatches);
+    when(vaccineBatchRepoMock.updateVaccineBatch(any))
+        .thenAnswer((_) async => 1);
+
+    when(campaignRepoMock.getCampaignById(1))
+        .thenAnswer((_) async => _validCampaign);
+    when(campaignRepoMock.getCampaignByTitle("Campaign Title"))
+        .thenAnswer((_) async => _validCampaign);
+    when(campaignRepoMock.getCampaigns())
+        .thenAnswer((_) async => _validCampaigns);
+    when(campaignRepoMock.updateCampaign(any)).thenAnswer((_) async => 1);
+
+    when(patientRepoMock.getPatientById(1))
+        .thenAnswer((_) async => _validPatient);
+    when(patientRepoMock.getPatientByCns("748477761910001"))
+        .thenAnswer((_) async => _validPatient);
     when(patientRepoMock.getPatients()).thenAnswer((_) async => _validPatients);
+    when(patientRepoMock.updatePatient(any)).thenAnswer((_) async => 1);
   });
 
   testCreateApplication(dbMock, repository);
@@ -276,12 +275,12 @@ void testUpdateApplication(MockDatabase db, ApplicationRepository repository) {
         )).thenAnswer((_) => Future.value(1));
       });
 
-      test("should update a application entry and returns 1", () async {
-        final createdId = await repository.updateApplication(
+      test("should update a application entry and returns 5", () async {
+        final updatedRows = await repository.updateApplication(
           _validApplication.copyWith(dueDate: DateTime(2024)),
         );
 
-        expect(createdId, 1);
+        expect(updatedRows, 5);
       });
     });
 
@@ -301,14 +300,14 @@ void testUpdateApplication(MockDatabase db, ApplicationRepository repository) {
       });
 
       test("should return 0 if id doesn't exist", () async {
-        final updatedCount = await repository.updateApplication(
+        final updatedRows = await repository.updateApplication(
           _validApplication.copyWith(
             id: _invalidApplicationId,
             dueDate: DateTime(2024),
           ),
         );
 
-        expect(updatedCount, 0);
+        expect(updatedRows, 0);
       });
     });
   });

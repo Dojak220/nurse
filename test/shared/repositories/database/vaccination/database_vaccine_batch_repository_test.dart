@@ -24,15 +24,12 @@ void main() {
 
   setUp(() {
     when(dbManagerMock.db).thenReturn(dbMock);
-    when(vaccineRepo.getVaccineById(1)).thenAnswer(
-      (_) async => _validVaccine,
-    );
-    when(vaccineRepo.getVaccineBySipniCode("123456")).thenAnswer(
-      (_) async => _validVaccine,
-    );
-    when(vaccineRepo.getVaccines()).thenAnswer(
-      (_) async => _validVaccines,
-    );
+
+    when(vaccineRepo.getVaccineById(1)).thenAnswer((_) async => _validVaccine);
+    when(vaccineRepo.getVaccineBySipniCode("123456"))
+        .thenAnswer((_) async => _validVaccine);
+    when(vaccineRepo.getVaccines()).thenAnswer((_) async => _validVaccines);
+    when(vaccineRepo.updateVaccine(any)).thenAnswer((_) async => 1);
   });
 
   testCreateVaccineBatch(dbMock, repository);
@@ -246,12 +243,12 @@ void testUpdateVaccineBatch(
         )).thenAnswer((_) => Future.value(1));
       });
 
-      test("should update a vaccineBatch entry and returns 1", () async {
-        final updatedCount = await repository.updateVaccineBatch(
+      test("should update a vaccineBatch entry and returns 2", () async {
+        final updatedRows = await repository.updateVaccineBatch(
           _validVaccineBatch.copyWith(quantity: 50),
         );
 
-        expect(updatedCount, 1);
+        expect(updatedRows, 2);
       });
     });
 
@@ -268,11 +265,11 @@ void testUpdateVaccineBatch(
       });
 
       test("should return 0 if id doesn't exist", () async {
-        final updatedCount = await repository.updateVaccineBatch(
+        final updatedRows = await repository.updateVaccineBatch(
           _validVaccineBatch.copyWith(id: _invalidVaccineBatchId, quantity: 50),
         );
 
-        expect(updatedCount, 0);
+        expect(updatedRows, 0);
       });
     });
   });

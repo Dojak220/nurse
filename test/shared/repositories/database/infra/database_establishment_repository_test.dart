@@ -28,15 +28,14 @@ void main() {
 
   setUp(() {
     when(dbManagerMock.db).thenReturn(dbMock);
-    when(localityRepoMock.getLocalityById(1)).thenAnswer(
-      (_) async => _validLocality,
-    );
-    when(localityRepoMock.getLocalityByIbgeCode("1234567")).thenAnswer(
-      (_) async => _validLocality,
-    );
-    when(localityRepoMock.getLocalities()).thenAnswer(
-      (_) async => _validLocalities,
-    );
+
+    when(localityRepoMock.getLocalityById(1))
+        .thenAnswer((_) async => _validLocality);
+    when(localityRepoMock.getLocalityByIbgeCode("1234567"))
+        .thenAnswer((_) async => _validLocality);
+    when(localityRepoMock.getLocalities())
+        .thenAnswer((_) async => _validLocalities);
+    when(localityRepoMock.updateLocality(any)).thenAnswer((_) async => 1);
   });
 
   testCreateEstablishment(dbMock, repository);
@@ -251,12 +250,12 @@ void testUpdateEstablishment(
         )).thenAnswer((_) => Future.value(1));
       });
 
-      test("should update a establishment entry and returns 1", () async {
-        final createdId = await repository.updateEstablishment(
+      test("should update a establishment entry and returns 2", () async {
+        final updatedRows = await repository.updateEstablishment(
           _validEstablishment.copyWith(name: "Updated"),
         );
 
-        expect(createdId, 1);
+        expect(updatedRows, 2);
       });
     });
     group('try to update with invalid establishment', () {
@@ -272,12 +271,12 @@ void testUpdateEstablishment(
       });
 
       test("should return 0 if id doesn't exist", () async {
-        final updatedCount = await repository.updateEstablishment(
+        final updatedRows = await repository.updateEstablishment(
           _validEstablishment.copyWith(
               id: _invalidEstablishmentId, name: "Updated"),
         );
 
-        expect(updatedCount, 0);
+        expect(updatedRows, 0);
       });
     });
   });

@@ -35,15 +35,20 @@ void main() {
 
   setUp(() {
     when(dbManagerMock.db).thenReturn(dbMock);
+
     when(personRepoMock.getPersonById(1)).thenAnswer((_) async => _validPerson);
     when(personRepoMock.createPerson(_validPerson)).thenAnswer((_) async => 1);
     when(personRepoMock.getPersons()).thenAnswer((_) async => _validPersons);
+    when(personRepoMock.updatePerson(any)).thenAnswer((_) async => 1);
+
     when(categoryRepoMock.getPriorityCategoryById(1))
         .thenAnswer((_) async => _validPriorityCategory);
     when(categoryRepoMock.getPriorityCategoryByCode("Pessoas idosas"))
         .thenAnswer((_) async => _validPriorityCategory);
     when(categoryRepoMock.getPriorityCategories())
         .thenAnswer((_) async => _validPriorityCategories);
+    when(categoryRepoMock.updatePriorityCategory(any))
+        .thenAnswer((_) async => 1);
   });
 
   testCreatePatient(dbMock, repository);
@@ -278,12 +283,12 @@ void testUpdatePatient(MockDatabase db, PatientRepository repository) {
         )).thenAnswer((_) => Future.value(1));
       });
 
-      test("should update a patient entry and returns 1", () async {
-        final createdId = await repository.updatePatient(
+      test("should update a patient entry and returns 3", () async {
+        final updatedRows = await repository.updatePatient(
           validPatient.copyWith(cns: "793499756240009"),
         );
 
-        expect(createdId, 1);
+        expect(updatedRows, 3);
       });
     });
 
@@ -300,11 +305,11 @@ void testUpdatePatient(MockDatabase db, PatientRepository repository) {
       });
 
       test("should return 0 if id doesn't exist", () async {
-        final updatedCount = await repository.updatePatient(
+        final updatedRows = await repository.updatePatient(
           validPatient.copyWith(id: invalidPatientId, cns: "793499756240009"),
         );
 
-        expect(updatedCount, 0);
+        expect(updatedRows, 0);
       });
     });
   });

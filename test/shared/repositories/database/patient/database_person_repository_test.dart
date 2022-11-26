@@ -28,12 +28,14 @@ void main() {
 
   setUp(() {
     when(dbManagerMock.db).thenReturn(dbMock);
+
     when(localityRepoMock.getLocalityById(1))
         .thenAnswer((_) async => _validLocality);
     when(localityRepoMock.getLocalityByIbgeCode("1234567"))
         .thenAnswer((_) async => _validLocality);
     when(localityRepoMock.getLocalities())
         .thenAnswer((_) async => _validLocalities);
+    when(localityRepoMock.updateLocality(any)).thenAnswer((_) async => 1);
   });
 
   testCreatePerson(dbMock, repository);
@@ -219,12 +221,12 @@ void testUpdatePerson(MockDatabase db, PersonRepository repository) {
         )).thenAnswer((_) => Future.value(1));
       });
 
-      test("should update a person entry and returns 1", () async {
-        final createdId = await repository.updatePerson(
+      test("should update a person entry and returns 2", () async {
+        final updatedRows = await repository.updatePerson(
           _validPerson.copyWith(name: "Updated"),
         );
 
-        expect(createdId, 1);
+        expect(updatedRows, 2);
       });
     });
     group('try to update with invalid person', () {
@@ -238,11 +240,11 @@ void testUpdatePerson(MockDatabase db, PersonRepository repository) {
       });
 
       test("should return 0 if id doesn't exist", () async {
-        final updatedCount = await repository.updatePerson(
+        final updatedRows = await repository.updatePerson(
           _validPerson.copyWith(id: _invalidPersonId, name: "Updated"),
         );
 
-        expect(updatedCount, 0);
+        expect(updatedRows, 0);
       });
     });
   });

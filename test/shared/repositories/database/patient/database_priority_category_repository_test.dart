@@ -24,12 +24,14 @@ void main() {
 
   setUp(() {
     when(dbManagerMock.db).thenReturn(dbMock);
+
     when(groupRepoMock.getPriorityGroupById(1))
         .thenAnswer((_) async => _validPriorityGroup);
     when(groupRepoMock.getPriorityGroupByCode("Pessoas com mais de 60 anos"))
         .thenAnswer((_) async => _validPriorityGroup);
     when(groupRepoMock.getPriorityGroups())
         .thenAnswer((_) async => _validPriorityGroups);
+    when(groupRepoMock.updatePriorityGroup(any)).thenAnswer((_) async => 1);
   });
 
   testCreatePriorityCategory(dbMock, repository);
@@ -245,12 +247,12 @@ void testUpdatePriorityCategory(
         )).thenAnswer((_) => Future.value(1));
       });
 
-      test("should update a priorityCategory entry and returns 1", () async {
-        final updatedCount = await repository.updatePriorityCategory(
+      test("should update a priorityCategory entry and returns 2", () async {
+        final updatedRows = await repository.updatePriorityCategory(
           expectedPriorityCategory.copyWith(name: "Idosos"),
         );
 
-        expect(updatedCount, 1);
+        expect(updatedRows, 2);
       });
     });
 
@@ -267,12 +269,12 @@ void testUpdatePriorityCategory(
       });
 
       test("should return 0 if id doesn't exist", () async {
-        final updatedCount = await repository.updatePriorityCategory(
+        final updatedRows = await repository.updatePriorityCategory(
           expectedPriorityCategory.copyWith(
               id: _invalidPriorityCategoryId, name: "Idosos"),
         );
 
-        expect(updatedCount, 0);
+        expect(updatedRows, 0);
       });
     });
   });
