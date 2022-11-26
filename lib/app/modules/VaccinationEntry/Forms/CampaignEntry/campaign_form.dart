@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nurse/app/components/form_padding.dart';
 import 'package:nurse/app/modules/VaccinationEntry/Forms/CampaignEntry/campaign_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart';
 import 'package:nurse/app/utils/form_labels.dart';
@@ -32,8 +33,7 @@ class _CampaignFormState extends State<CampaignForm> {
   Widget build(BuildContext context) {
     return Form(
       key: widget.controller.formKey,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: FormPadding(
         child: ListView(
           children: [
             CustomDropdownButtonFormField(

@@ -73,24 +73,24 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
       child: Scaffold(
         appBar: AppBar(title: const Text("Nurse")),
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 32.0),
-            child: Column(
-              children: [
-                Expanded(
-                  child: IndexedStack(
-                    index: controller.formIndex,
-                    children: [
-                      CampaignForm(controller.campaignFormController),
-                      ApplierForm(controller.applierFormController),
-                      VaccineForm(controller.vaccineFormController),
-                      PatientForm(controller.patientFormController),
-                      ApplicationForm(controller.applicationFormController),
-                    ],
-                  ),
+          child: Column(
+            children: [
+              Expanded(
+                child: IndexedStack(
+                  index: controller.formIndex,
+                  children: [
+                    CampaignForm(controller.campaignFormController),
+                    ApplierForm(controller.applierFormController),
+                    VaccineForm(controller.vaccineFormController),
+                    PatientForm(controller.patientFormController),
+                    ApplicationForm(controller.applicationFormController),
+                  ],
                 ),
-                const SizedBox(height: 20),
-                Row(
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+                child: Row(
                   children: [
                     StepFormButton(
                       active: controller.formIndex != 0,
@@ -111,8 +111,8 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
                           ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

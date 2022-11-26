@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nurse/app/components/sex_icon.dart';
 import 'package:nurse/app/modules/EntityList/vaccination/applier/add_applier_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
@@ -107,11 +108,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: widget.controller.selectedSex == Sex.none
-                  ? const Icon(Icons.question_mark_rounded)
-                  : widget.controller.selectedSex == Sex.female
-                      ? const Icon(Icons.female_rounded)
-                      : const Icon(Icons.male_rounded),
+              icon: SexIcon(widget.controller.selectedSex),
               label: FormLabels.sex,
               items: Sex.values,
               value: widget.controller.selectedSex,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nurse/app/components/form_padding.dart';
+import 'package:nurse/app/components/sex_icon.dart';
 import 'package:nurse/app/modules/EntityList/patient/patient/add_patient_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
@@ -47,8 +49,7 @@ class PatientFormFieldsState extends State<PatientFormFields> {
   Widget build(BuildContext context) {
     return Form(
       key: widget.controller.formKey,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: FormPadding(
         child: ListView(
           children: [
             CustomTextFormField(
@@ -108,11 +109,7 @@ class PatientFormFieldsState extends State<PatientFormFields> {
             ),
             const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
-              icon: widget.controller.selectedSex == Sex.none
-                  ? const Icon(Icons.question_mark_rounded)
-                  : widget.controller.selectedSex == Sex.female
-                      ? const Icon(Icons.female_rounded)
-                      : const Icon(Icons.male_rounded),
+              icon: SexIcon(widget.controller.selectedSex),
               label: FormLabels.sex,
               items: Sex.values,
               value: widget.controller.selectedSex,

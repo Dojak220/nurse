@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nurse/app/components/form_padding.dart';
 import 'package:nurse/app/modules/EntityList/infra/establishment/add_establishment_form_controller.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart';
 import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
@@ -37,8 +38,7 @@ class EstablishmentFormFieldsState extends State<EstablishmentFormFields> {
   Widget build(BuildContext context) {
     return Form(
       key: widget.controller.formKey,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+      child: FormPadding(
         child: ListView(
           shrinkWrap: true,
           semanticChildCount: 3,
