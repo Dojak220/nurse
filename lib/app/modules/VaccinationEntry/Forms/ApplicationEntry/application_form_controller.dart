@@ -30,7 +30,7 @@ class ApplicationFormController extends FormController {
     Applier applier,
     VaccineBatch vaccineBatch,
     Patient patient,
-    Campaign campaign,
+    Campaign? campaign,
   ) {
     this.applier = applier;
     this.vaccineBatch = vaccineBatch;
@@ -40,7 +40,7 @@ class ApplicationFormController extends FormController {
     applierName.text = applier.person.name;
     vaccineBatchNumber.text = vaccineBatch.vaccine.toString();
     patientName.text = patient.person.name;
-    campaignTitle.text = campaign.title;
+    campaignTitle.text = campaign?.title ?? "";
   }
 
   Future<void> selectDate(BuildContext context) async {

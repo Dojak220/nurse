@@ -68,7 +68,7 @@ class VaccinationEntryController {
         applierFormController.applier!,
         vaccineFormController.vaccineBatch!,
         patientFormController.patient!,
-        campaignFormController.campaign!,
+        campaignFormController.campaign,
       );
     }
 

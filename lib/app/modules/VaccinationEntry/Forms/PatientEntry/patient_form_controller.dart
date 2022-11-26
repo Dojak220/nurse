@@ -124,15 +124,35 @@ abstract class _PatientFormControllerBase extends FormController with Store {
     final result = super.submitForm(formKey);
 
     if (result) {
-      _patient = Patient(
-        id: _patient?.id,
-        cns: cns.text,
-        priorityCategory: selectedCategory!,
-        maternalCondition: maternalCondition!,
-        person: Person(cpf: cpf.text, name: name.text),
-      );
+      _patient = _patient?.copyWith(
+              id: _patient?.id,
+              cns: cns.text,
+              priorityCategory: selectedCategory!,
+              maternalCondition: maternalCondition!,
+              person:
+                  _patient!.person.copyWith(cpf: cpf.text, name: name.text)) ??
+          Patient(
+            id: _patient?.id,
+            cns: cns.text,
+            priorityCategory: selectedCategory!,
+            maternalCondition: maternalCondition!,
+            person: _patient?.person.copyWith(cpf: cpf.text, name: name.text) ??
+                Person(cpf: cpf.text, name: name.text),
+          );
+
+      _saveOrUpdatePatient();
     }
 
     return result;
+  }
+
+  Future<void> _saveOrUpdatePatient() async {
+    if (patient == null) return;
+
+    if (patient!.id == null) {
+      await _patientRepository.createPatient(patient!);
+    } else {
+      await _patientRepository.updatePatient(patient!);
+    }
   }
 }
