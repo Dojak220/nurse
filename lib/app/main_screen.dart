@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:nurse/app/components/second_appbar.dart';
-import 'package:nurse/app/modules/EntityList/add_entities_menu_page.dart';
-import 'package:nurse/app/modules/Export/export_data_page.dart';
 import 'package:provider/provider.dart';
 
 import 'package:nurse/app/components/nurse_appbar.dart';
+import 'package:nurse/app/components/second_appbar.dart';
+import 'package:nurse/app/components/toolbar_icon.dart';
+import 'package:nurse/app/modules/EntityList/add_entities_menu_page.dart';
+import 'package:nurse/app/modules/Export/export_data_page.dart';
 import 'package:nurse/app/modules/Home/components/vaccination_button.dart';
 import 'package:nurse/app/modules/Home/home_controller.dart';
 import 'package:nurse/app/modules/Home/home_page.dart';
@@ -55,16 +56,21 @@ class _MainScreenState extends State<MainScreen> {
         onCallback: () => context.read<HomeController>().fetchApplications(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: NurseBottomAppBar(onItemTapped: _onItemTapped),
+      bottomNavigationBar: NurseBottomAppBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
+      ),
     );
   }
 }
 
 class NurseBottomAppBar extends StatelessWidget {
+  final int selectedIndex;
   final void Function(int) onItemTapped;
 
   const NurseBottomAppBar({
     Key? key,
+    required this.selectedIndex,
     required this.onItemTapped,
   }) : super(key: key);
 
@@ -93,28 +99,28 @@ class NurseBottomAppBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              IconButton(
-                tooltip: 'Home Page',
-                iconSize: 35,
-                onPressed: () => onItemTapped(0),
-                icon: const Icon(Icons.home_rounded),
+              ToolbarIcon(
+                0,
+                icon: Icons.home_rounded,
+                label: "Home Page",
+                selectedIndex: selectedIndex,
+                onItemTapped: onItemTapped,
               ),
-              IconButton(
-                tooltip: 'Share',
-                iconSize: 35,
-                onPressed: () => onItemTapped(1),
-                icon: const Icon(Icons.share_rounded),
+              ToolbarIcon(
+                1,
+                icon: Icons.share_rounded,
+                label: "Share",
+                selectedIndex: selectedIndex,
+                onItemTapped: onItemTapped,
               ),
-              IconButton(
-                tooltip: 'Entities',
-                iconSize: 35,
-                onPressed: () => onItemTapped(2),
-                icon: const Icon(Icons.apps_rounded),
+              ToolbarIcon(
+                2,
+                icon: Icons.apps_rounded,
+                label: "Entities",
+                selectedIndex: selectedIndex,
+                onItemTapped: onItemTapped,
               ),
-              const SizedBox(
-                width: 50,
-                height: 50,
-              ),
+              const SizedBox(width: 50, height: 50),
             ],
           ),
         ),
