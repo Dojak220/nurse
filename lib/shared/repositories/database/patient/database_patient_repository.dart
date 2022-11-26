@@ -171,9 +171,16 @@ class DatabasePatientRepository extends DatabaseInterface
 
   @override
   Future<int> updatePatient(Patient patient) async {
-    int updatedCount = await update(patient.toMap());
-    updatedCount += await _personRepo.updatePerson(patient.person);
+    int updatedRows = await _personRepo.updatePerson(patient.person);
+    if (updatedRows != 1) return 0;
 
-    return updatedCount;
+    updatedRows +=
+        await _categoryRepo.updatePriorityCategory(patient.priorityCategory);
+    if (updatedRows != 2) return 0;
+
+    updatedRows += await update(patient.toMap());
+    if (updatedRows != 3) return 0;
+
+    return updatedRows;
   }
 }

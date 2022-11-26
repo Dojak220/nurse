@@ -259,14 +259,24 @@ class DatabaseApplicationRepository extends DatabaseInterface
   }
 
   @override
-  Future<int> updateApplication(Application applier) async {
-    int updatedCount = await update(applier.toMap());
-    updatedCount += await _applierRepo.updateApplier(applier.applier);
-    updatedCount +=
-        await _vaccineBatchRepo.updateVaccineBatch(applier.vaccineBatch);
-    updatedCount += await _patientRepo.updatePatient(applier.patient);
-    updatedCount += await _campaignRepo.updateCampaign(applier.campaign);
+  Future<int> updateApplication(Application application) async {
+    int updatedRows = await _campaignRepo.updateCampaign(application.campaign);
+    if (updatedRows != 1) return 0;
 
-    return updatedCount;
+    updatedRows += await _applierRepo.updateApplier(application.applier);
+    if (updatedRows != 2) return 0;
+
+    updatedRows += await _vaccineBatchRepo.updateVaccineBatch(
+      application.vaccineBatch,
+    );
+    if (updatedRows != 3) return 0;
+
+    updatedRows += await _patientRepo.updatePatient(application.patient);
+    if (updatedRows != 4) return 0;
+
+    updatedRows += await update(application.toMap());
+    if (updatedRows != 5) return 0;
+
+    return updatedRows;
   }
 }

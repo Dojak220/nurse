@@ -111,11 +111,14 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
 
   @override
   Future<int> updatePriorityCategory(PriorityCategory priorityCategory) async {
-    int updatedCount = await update(priorityCategory.toMap());
-    updatedCount += await _groupRepo.updatePriorityGroup(
+    int updatedRows = await _groupRepo.updatePriorityGroup(
       priorityCategory.priorityGroup,
     );
+    if (updatedRows != 1) return 0;
 
-    return updatedCount;
+    updatedRows += await update(priorityCategory.toMap());
+    if (updatedRows != 2) return 0;
+
+    return updatedRows;
   }
 }
