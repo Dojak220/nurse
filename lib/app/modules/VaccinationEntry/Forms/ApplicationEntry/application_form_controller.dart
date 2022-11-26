@@ -85,4 +85,13 @@ class ApplicationFormController extends FormController {
 
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    applierName.dispose();
+    vaccineBatchNumber.dispose();
+    patientName.dispose();
+    campaignTitle.dispose();
+    date.dispose();
+  }
 }

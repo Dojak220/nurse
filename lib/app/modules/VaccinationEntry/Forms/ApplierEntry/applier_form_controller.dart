@@ -46,4 +46,9 @@ class ApplierFormController extends FormController {
 
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    /// Não tem o que desalocar aqui
+  }
 }

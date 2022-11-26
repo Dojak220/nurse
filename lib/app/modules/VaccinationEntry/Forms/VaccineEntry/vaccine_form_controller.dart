@@ -35,4 +35,9 @@ class VaccineFormController extends FormController {
     selectedBatch = null;
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    /// Não tem o que desalocar aqui
+  }
 }

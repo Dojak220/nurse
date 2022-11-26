@@ -76,4 +76,12 @@ class AddLocalityFormController extends AddFormController {
 
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    name.dispose();
+    city.dispose();
+    state.dispose();
+    ibgeCode.dispose();
+  }
 }

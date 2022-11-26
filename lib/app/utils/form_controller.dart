@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class FormController extends ChangeNotifier {
+abstract class FormController implements ChangeNotifier {
   final _formKey = GlobalKey<FormState>();
   GlobalKey<FormState> get formKey => _formKey;
 
@@ -15,4 +15,19 @@ abstract class FormController extends ChangeNotifier {
 
     return isValid;
   }
+
+  @override
+  void addListener(VoidCallback listener) {}
+
+  @override
+  void dispose();
+
+  @override
+  bool get hasListeners => throw UnimplementedError();
+
+  @override
+  void notifyListeners() {}
+
+  @override
+  void removeListener(VoidCallback listener) {}
 }

@@ -87,4 +87,10 @@ class AddVaccineBatchFormController extends AddFormController {
 
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    number.dispose();
+    quantity.dispose();
+  }
 }

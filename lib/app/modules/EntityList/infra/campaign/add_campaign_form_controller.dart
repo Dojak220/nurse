@@ -120,4 +120,12 @@ class AddCampaignFormController extends AddFormController {
       ..selection = TextSelection.fromPosition(TextPosition(
           offset: controller.text.length, affinity: TextAffinity.upstream));
   }
+
+  @override
+  void dispose() {
+    title.dispose();
+    description.dispose();
+    startDate.dispose();
+    endDate.dispose();
+  }
 }

@@ -25,4 +25,9 @@ class CampaignFormController extends FormController {
   void clearAllInfo() {
     selectedCampaign = null;
   }
+
+  @override
+  void dispose() {
+    /// Não tem o que desalocar aqui
+  }
 }

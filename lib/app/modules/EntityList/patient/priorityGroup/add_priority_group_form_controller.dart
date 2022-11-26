@@ -74,4 +74,11 @@ class AddPriorityGroupFormController extends AddFormController {
 
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    code.dispose();
+    name.dispose();
+    description.dispose();
+  }
 }

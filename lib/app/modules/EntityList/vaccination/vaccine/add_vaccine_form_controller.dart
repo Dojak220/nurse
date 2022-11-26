@@ -72,4 +72,11 @@ class AddVaccineFormController extends AddFormController {
 
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    sipniCode.dispose();
+    name.dispose();
+    laboratory.dispose();
+  }
 }

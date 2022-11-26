@@ -156,4 +156,14 @@ class AddApplierFormController extends AddFormController {
 
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    cns.dispose();
+    cpf.dispose();
+    name.dispose();
+    birthDate.dispose();
+    motherName.dispose();
+    fatherName.dispose();
+  }
 }

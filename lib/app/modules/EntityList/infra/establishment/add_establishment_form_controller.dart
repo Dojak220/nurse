@@ -103,4 +103,10 @@ class AddEstablishmentFormController extends AddFormController {
 
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    cnes.dispose();
+    name.dispose();
+  }
 }

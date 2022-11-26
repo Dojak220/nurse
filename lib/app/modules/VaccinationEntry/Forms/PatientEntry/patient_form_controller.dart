@@ -155,4 +155,11 @@ abstract class _PatientFormControllerBase extends FormController with Store {
       await _patientRepository.updatePatient(patient!);
     }
   }
+
+  @override
+  void dispose() {
+    cns.dispose();
+    cpf.dispose();
+    name.dispose();
+  }
 }
