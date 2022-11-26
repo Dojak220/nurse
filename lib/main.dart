@@ -35,9 +35,6 @@ void main() async {
           Provider<PriorityCategoriesPageController>(
             create: (_) => PriorityCategoriesPageController(),
           ),
-          Provider<PatientsPageController>(
-            create: (_) => PatientsPageController(),
-          ),
           Provider<AppliersPageController>(
             create: (_) => AppliersPageController(),
           ),

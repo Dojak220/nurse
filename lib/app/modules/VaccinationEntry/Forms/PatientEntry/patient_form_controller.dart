@@ -9,9 +9,16 @@ import 'package:nurse/shared/repositories/patient/patient_repository.dart';
 import 'package:nurse/shared/repositories/patient/priority_category_repository.dart';
 import 'package:nurse/shared/utils/validator.dart';
 
-class PatientFormController extends FormController {
+import 'package:mobx/mobx.dart';
+part 'patient_form_controller.g.dart';
+
+class PatientFormController = _PatientFormControllerBase
+    with _$PatientFormController;
+
+abstract class _PatientFormControllerBase extends FormController with Store {
   final PriorityCategoryRepository _priorityCategoryRepository;
   final PatientRepository _patientRepository;
+
   final _categories = List<PriorityCategory>.empty(growable: true);
   List<PriorityCategory> get categories => _categories;
 
@@ -20,11 +27,17 @@ class PatientFormController extends FormController {
   TextEditingController cns = TextEditingController();
   TextEditingController cpf = TextEditingController();
   TextEditingController name = TextEditingController();
+
+  @observable
   Sex? sex;
+
+  @observable
   PriorityCategory? selectedCategory;
+
+  @observable
   MaternalCondition? maternalCondition;
 
-  PatientFormController([
+  _PatientFormControllerBase([
     PatientRepository? patientRepository,
     PriorityCategoryRepository? priorityCategoryRepository,
   ])  : _patientRepository = patientRepository ?? DatabasePatientRepository(),
@@ -67,6 +80,7 @@ class PatientFormController extends FormController {
     }
   }
 
+  @action
   void _setPatientAndNotify(Patient patient) {
     cns.text = patient.cns;
     cpf.text = patient.person.cpf;
@@ -74,8 +88,6 @@ class PatientFormController extends FormController {
     sex = patient.person.sex;
     selectedCategory = patient.priorityCategory;
     maternalCondition = patient.maternalCondition;
-
-    notifyListeners();
   }
 
   Patient? get patient {

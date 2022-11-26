@@ -6,6 +6,7 @@ import 'package:nurse/app/modules/EntityList/add_form.dart';
 import 'package:nurse/app/modules/EntityList/infra/locality/add_locality_form_fields.dart';
 import 'package:nurse/app/modules/EntityList/patient/patient/add_patient_form_fields.dart';
 import 'package:nurse/app/modules/EntityList/patient/patient/add_patient_form_controller.dart';
+import 'package:nurse/app/modules/EntityList/patient/patient/patient_page_controller.dart';
 import 'package:nurse/app/modules/EntityList/patient/priorityCategory/add_priority_category_form_fields.dart';
 import 'package:nurse/app/modules/EntityList/patient/priorityCategory/add_priority_category_form_controller.dart';
 import 'package:nurse/app/modules/EntityList/patient/priorityGroup/add_priority_group_form_fields.dart';
@@ -77,7 +78,7 @@ class Nurse extends StatelessWidget {
         "/localities/new": (context) => newLocalityFormPage(context),
 
         // PATIENT ROUTES
-        "/patients": (context) => const Patients(),
+        "/patients": (context) => Patients(PatientsPageController()),
         "/patients/new": (context) => newPatientFormPage(context),
         "/priorityCategories": (context) => const PriorityCategories(),
         "/priorityCategories/new": (context) =>

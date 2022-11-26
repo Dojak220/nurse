@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nurse/app/components/form_padding.dart';
 import 'package:nurse/app/components/sex_icon.dart';
 import 'package:nurse/app/modules/VaccinationEntry/Forms/PatientEntry/patient_form_controller.dart';
@@ -30,10 +31,10 @@ class _PatientFormState extends State<PatientForm> {
             CustomTextFormField(
               icon: const Icon(Icons.badge_rounded),
               label: FormLabels.patientCns,
+              textEditingController: widget.controller.cns,
               validatorType: ValidatorType.cns,
               onChanged: (String? value) async {
                 await widget.controller.findPatientByCns(value);
-                setState(() {});
               },
               onSaved: (value) =>
                   setState(() => widget.controller.cns.text = value ?? ""),
@@ -46,7 +47,6 @@ class _PatientFormState extends State<PatientForm> {
               validatorType: ValidatorType.cpf,
               onChanged: (String? value) async {
                 await widget.controller.findPatientByCpf(value);
-                setState(() {});
               },
               onSaved: (value) =>
                   setState(() => widget.controller.cpf.text = value ?? ""),
@@ -57,40 +57,42 @@ class _PatientFormState extends State<PatientForm> {
               label: FormLabels.patientName,
               textEditingController: widget.controller.name,
               validatorType: ValidatorType.name,
-              onSaved: (value) =>
-                  setState(() => widget.controller.name.text = value ?? ""),
+              onSaved: (value) {},
             ),
             const Divider(color: Colors.black),
-            CustomDropdownButtonFormField(
-              icon: SexIcon(widget.controller.sex),
-              label: FormLabels.sex,
-              items: Sex.values,
-              value: widget.controller.sex,
-              isEnum: true,
-              onChanged: (Sex? value) => setState(() {
-                widget.controller.sex = value!;
-              }),
-            ),
+            Observer(builder: (_) {
+              return CustomDropdownButtonFormField(
+                icon: SexIcon(widget.controller.sex),
+                label: FormLabels.sex,
+                items: Sex.values,
+                value: widget.controller.sex,
+                isEnum: true,
+                onChanged: (Sex? value) => widget.controller.sex = value,
+              );
+            }),
             const Divider(color: Colors.black),
-            CustomDropdownButtonFormField(
-              icon: const Icon(Icons.category_rounded),
-              label: FormLabels.categoryName,
-              items: widget.controller.categories,
-              value: widget.controller.selectedCategory,
-              onChanged: (PriorityCategory? value) =>
-                  setState(() => widget.controller.selectedCategory = value),
-            ),
+            Observer(builder: (_) {
+              return CustomDropdownButtonFormField(
+                icon: const Icon(Icons.category_rounded),
+                label: FormLabels.categoryName,
+                items: widget.controller.categories,
+                value: widget.controller.selectedCategory,
+                onChanged: (PriorityCategory? value) =>
+                    widget.controller.selectedCategory = value,
+              );
+            }),
             const Divider(color: Colors.black),
-            CustomDropdownButtonFormField(
-              icon: const Icon(Icons.pregnant_woman_rounded),
-              label: FormLabels.maternalCondition,
-              items: MaternalCondition.values,
-              value: widget.controller.maternalCondition,
-              isEnum: true,
-              onChanged: (MaternalCondition? value) => setState(() {
-                widget.controller.maternalCondition = value!;
-              }),
-            ),
+            Observer(builder: (_) {
+              return CustomDropdownButtonFormField(
+                icon: const Icon(Icons.pregnant_woman_rounded),
+                label: FormLabels.maternalCondition,
+                items: MaternalCondition.values,
+                value: widget.controller.maternalCondition,
+                isEnum: true,
+                onChanged: (MaternalCondition? value) =>
+                    widget.controller.maternalCondition = value,
+              );
+            }),
           ],
         ),
       ),
