@@ -43,6 +43,7 @@ class CustomTextFormField extends CustomFormField {
           hintText: hint,
           labelText: description,
         ),
+        initialValue: initialValue,
         controller: textEditingController,
         validator: validatorType != null
             ? (String? value) => validate(value, validatorType!)

@@ -27,17 +27,16 @@ class Patients extends StatelessWidget {
                 final patient = patients[index];
 
                 return CustomCard(
-                    title: patient.person.name,
-                    upperTitle: patient.cns,
-                    startInfo: patient.priorityCategory.name,
-                    endInfo: patient.maternalCondition.name,
-                    onEditPressed: () => Navigator.of(context)
-                        .pushNamed("/patients/new", arguments: patient)
-                        .whenComplete(
-                          () => context
-                              .read<PatientsPageController>()
-                              .getPatients(),
-                        ));
+                  title: patient.person.name,
+                  upperTitle: patient.cns,
+                  startInfo: patient.priorityCategory.name,
+                  endInfo: patient.maternalCondition.name,
+                  onEditPressed: () => Navigator.of(context)
+                      .pushNamed("/patients/new", arguments: patient)
+                      .whenComplete(
+                        () => controller.getPatients(),
+                      ),
+                );
               },
             );
     });
