@@ -70,26 +70,32 @@ class DatabasePatientRepository extends DatabaseInterface
   @override
   Future<Patient> getPatientByCpf(String cpf) async {
     try {
-      return _getPatientFromMap(
-        await get(objs: [cpf], where: "cpf = ?").then(
-          (maps) => maps.single,
-        ),
+      final person = await _getPersonByCpf(cpf);
+      final patientMap = await get(objs: [person.id], where: "person = ?").then(
+        (maps) => maps.single,
       );
+
+      final patient = await _getPatientFromMap(patientMap, person);
+
+      return patient;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<Patient> _getPatientFromMap(Map<String, dynamic> patientMap) async {
-    final person = await _getPerson(patientMap["person"] as int);
+  Future<Patient> _getPatientFromMap(
+    Map<String, dynamic> patientMap, [
+    Person? person,
+  ]) async {
+    final p = person ?? await _getPersonById(patientMap["person"] as int);
     final priorityCategory = await _getPriorityCategory(
       patientMap["priority_category"] as int,
     );
 
     final updatedPatientMap = Map.of(patientMap);
 
-    updatedPatientMap["person"] = person.toMap();
-    updatedPatientMap["person"]["locality"] = person.locality?.toMap();
+    updatedPatientMap["person"] = p.toMap();
+    updatedPatientMap["person"]["locality"] = p.locality?.toMap();
 
     updatedPatientMap["priority_category"] = priorityCategory.toMap();
     updatedPatientMap["priority_category"]["priority_group"] =
@@ -98,8 +104,14 @@ class DatabasePatientRepository extends DatabaseInterface
     return Patient.fromMap(updatedPatientMap);
   }
 
-  Future<Person> _getPerson(int id) async {
+  Future<Person> _getPersonById(int id) async {
     final person = await _personRepo.getPersonById(id);
+
+    return person;
+  }
+
+  Future<Person> _getPersonByCpf(String cpf) async {
+    final person = await _personRepo.getPersonByCpf(cpf);
 
     return person;
   }

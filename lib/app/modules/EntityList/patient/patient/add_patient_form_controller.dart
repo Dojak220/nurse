@@ -16,6 +16,7 @@ class AddPatientFormController extends AddFormController {
   final LocalityRepository _localityRepository;
   final PriorityCategoryRepository _priorityCategoryRepository;
   final PatientRepository _repository;
+
   final Patient? initialPatientInfo;
 
   Locality? selectedLocality;

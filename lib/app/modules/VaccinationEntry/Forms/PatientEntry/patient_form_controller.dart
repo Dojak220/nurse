@@ -42,7 +42,7 @@ class PatientFormController extends FormController {
   Future<void> findPatientByCpf(String? cpf) async {
     bool isCpfValid = false;
     try {
-      isCpfValid = cpf != null && Validator.validate(ValidatorType.cns, cpf);
+      isCpfValid = cpf != null && Validator.validate(ValidatorType.cpf, cpf);
     } catch (e) {
       return;
     }
