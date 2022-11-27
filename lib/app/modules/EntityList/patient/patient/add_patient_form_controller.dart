@@ -23,6 +23,14 @@ abstract class _AddPatientFormControllerBase extends AddFormController
   final PriorityCategoryRepository _priorityCategoryRepository;
   final PatientRepository _repository;
 
+  @observable
+  ObservableList<Locality> localities =
+      ObservableList.of(List<Locality>.empty(growable: true));
+
+  @observable
+  ObservableList<PriorityCategory> categories =
+      ObservableList.of(List<PriorityCategory>.empty(growable: true));
+
   final Patient? initialPatientInfo;
 
   @observable
@@ -41,17 +49,30 @@ abstract class _AddPatientFormControllerBase extends AddFormController
     if (initialPatientInfo != null) {
       patientStore.setInfo(initialPatientInfo!);
     }
+
+    getLocalities();
+    getPriorityCategories();
   }
 
+  @action
   Future<List<Locality>> getLocalities() async {
     final localities = await _localityRepository.getLocalities();
+
+    this.localities
+      ..clear()
+      ..addAll(localities);
 
     return localities;
   }
 
+  @action
   Future<List<PriorityCategory>> getPriorityCategories() async {
     final priorityCategories =
         await _priorityCategoryRepository.getPriorityCategories();
+
+    categories
+      ..clear()
+      ..addAll(priorityCategories);
 
     return priorityCategories;
   }
