@@ -43,7 +43,7 @@ void main() {
     );
   });
 
-  group('patient model valid intance creation', () {
+  group('patient model valid instance creation', () {
     test('should create a valid instance', () {
       expect(validPatient, isA<Patient>());
       expect(validPatient.id, 1);
@@ -63,7 +63,7 @@ void main() {
     });
   });
 
-  group('patient model invalid intance creation', () {
+  group('patient model invalid instance creation', () {
     test("should throw exception if id is 0", () {
       expect(
         () => validPatient.copyWith(id: 0),
@@ -133,6 +133,26 @@ void main() {
         () async => validPatient.copyWith(cns: invalidRandomCns),
         throwsException,
       );
+    });
+  });
+  group('patient model instances comparison', () {
+    test("should return true if both instances are identical", () {
+      final actualPatient = validPatient;
+
+      expect(actualPatient, validPatient);
+      expect(actualPatient.hashCode, validPatient.hashCode);
+    });
+
+    test("should return true if two patients are equal", () {
+      final actualPatient = validPatient.copyWith();
+
+      expect(actualPatient, validPatient);
+    });
+
+    test("should return false if two patients are not equal", () {
+      final actualPatient = validPatient.copyWith(id: 2);
+
+      expect(actualPatient, isNot(validPatient));
     });
   });
 }

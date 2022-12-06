@@ -21,7 +21,7 @@ void main() {
     );
   });
 
-  group('vaccineBatch model valid intance creation', () {
+  group('vaccineBatch model valid instance creation', () {
     test('should create a valid instance', () {
       expect(validVaccineBatch, isA<VaccineBatch>());
       expect(validVaccineBatch.id, 1);
@@ -31,7 +31,7 @@ void main() {
     });
   });
 
-  group('vaccineBatch model invalid intance creation', () {
+  group('vaccineBatch model invalid instance creation', () {
     test("should throw exception if id is 0", () {
       expect(
         () => validVaccineBatch.copyWith(id: 0),
@@ -100,6 +100,26 @@ void main() {
         throwsException,
         reason: "it's not possible to create a vaccineBatch with quantity -1",
       );
+    });
+  });
+  group('vaccine batch model instances comparison', () {
+    test("should return true if both instances are identical", () {
+      final actualVaccineBatch = validVaccineBatch;
+
+      expect(actualVaccineBatch, validVaccineBatch);
+      expect(actualVaccineBatch.hashCode, validVaccineBatch.hashCode);
+    });
+
+    test("should return true if two vaccine batches are equal", () {
+      final actualVaccineBatch = validVaccineBatch.copyWith();
+
+      expect(actualVaccineBatch, validVaccineBatch);
+    });
+
+    test("should return false if two vaccine batches are not equal", () {
+      final actualVaccineBatch = validVaccineBatch.copyWith(id: 2);
+
+      expect(actualVaccineBatch, isNot(validVaccineBatch));
     });
   });
 }

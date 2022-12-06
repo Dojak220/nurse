@@ -23,7 +23,7 @@ void main() {
     );
   });
 
-  group('priorityCategory model valid intance creation', () {
+  group('priorityCategory model valid instance creation', () {
     test('should create a valid instance', () {
       expect(validPriorityCategory, isA<PriorityCategory>());
       expect(validPriorityCategory.id, 1);
@@ -71,7 +71,7 @@ void main() {
     });
   });
 
-  group('priorityCategory model invalid intance creation', () {
+  group('priorityCategory model invalid instance creation', () {
     test("should throw exception if id is 0", () {
       expect(
         () => validPriorityCategory.copyWith(id: 0),
@@ -144,6 +144,26 @@ void main() {
         reason:
             "it's not possible to create a priorityCategory with an invalid description",
       );
+    });
+  });
+  group('priority category model instances comparison', () {
+    test("should return true if both instances are identical", () {
+      final actualPriorityCategory = validPriorityCategory;
+
+      expect(actualPriorityCategory, validPriorityCategory);
+      expect(actualPriorityCategory.hashCode, validPriorityCategory.hashCode);
+    });
+
+    test("should return true if two priority categories are equal", () {
+      final actualPriorityCategory = validPriorityCategory.copyWith();
+
+      expect(actualPriorityCategory, validPriorityCategory);
+    });
+
+    test("should return false if two priority categories are not equal", () {
+      final actualPriorityCategory = validPriorityCategory.copyWith(id: 2);
+
+      expect(actualPriorityCategory, isNot(validPriorityCategory));
     });
   });
 }

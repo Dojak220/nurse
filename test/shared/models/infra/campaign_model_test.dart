@@ -14,7 +14,7 @@ void main() {
     );
   });
 
-  group('campaign model valid intance creation', () {
+  group('campaign model valid instance creation', () {
     test('should create a valid instance', () {
       expect(validCampaign, isA<Campaign>());
       expect(validCampaign.id, 1);
@@ -74,7 +74,7 @@ void main() {
     });
   });
 
-  group('campaign model invalid intance creation', () {
+  group('campaign model invalid instance creation', () {
     test("should throw exception if id is 0", () {
       expect(
         () => validCampaign.copyWith(id: 0),
@@ -154,6 +154,27 @@ void main() {
         reason:
             "it's not possible to create a campaign with end date after start date",
       );
+    });
+  });
+
+  group('campaign model instances comparison', () {
+    test("should return true if both instances are identical", () {
+      final actualCampaign = validCampaign;
+
+      expect(actualCampaign, validCampaign);
+      expect(actualCampaign.hashCode, validCampaign.hashCode);
+    });
+
+    test("should return true if two campaigns are equal", () {
+      final actualCampaign = validCampaign.copyWith();
+
+      expect(actualCampaign, validCampaign);
+    });
+
+    test("should return false if two campaigns are not equal", () {
+      final actualCampaign = validCampaign.copyWith(id: 2);
+
+      expect(actualCampaign, isNot(validCampaign));
     });
   });
 }

@@ -100,7 +100,7 @@ void main() {
     );
   });
 
-  group('application model valid intance creation', () {
+  group('application model valid instance creation', () {
     test('should create a valid instance', () {
       expect(validApplication, isA<Application>());
       expect(validApplication.id, 1);
@@ -124,7 +124,7 @@ void main() {
     });
   });
 
-  group('application model invalid intance creation', () {
+  group('application model invalid instance creation', () {
     test("should throw exception if id is 0", () {
       expect(
         () => validApplication.copyWith(id: 0),
@@ -155,6 +155,26 @@ void main() {
         reason:
             "it's not possible to create an application with an invalid date",
       );
+    });
+  });
+  group('application model instances comparison', () {
+    test("should return true if both instances are identical", () {
+      final actualApplication = validApplication;
+
+      expect(actualApplication, validApplication);
+      expect(actualApplication.hashCode, validApplication.hashCode);
+    });
+
+    test("should return true if two applications are equal", () {
+      final actualApplication = validApplication.copyWith();
+
+      expect(actualApplication, validApplication);
+    });
+
+    test("should return false if two applications are not equal", () {
+      final actualApplication = validApplication.copyWith(id: 2);
+
+      expect(actualApplication, isNot(validApplication));
     });
   });
 }

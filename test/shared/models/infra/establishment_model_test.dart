@@ -23,7 +23,7 @@ void main() {
     );
   });
 
-  group('establishment model valid intance creation', () {
+  group('establishment model valid instance creation', () {
     test('should create a valid instance', () {
       expect(validEstablishment, isA<Establishment>());
       expect(validEstablishment.id, 1);
@@ -33,7 +33,7 @@ void main() {
     });
   });
 
-  group('establishment model invalid intance creation', () {
+  group('establishment model invalid instance creation', () {
     test("should throw exception if id is 0", () async {
       expect(
         () async => validEstablishment.copyWith(id: 0),
@@ -99,6 +99,26 @@ void main() {
         ),
         throwsException,
       );
+    });
+  });
+  group('establishment model instances comparison', () {
+    test("should return true if both instances are identical", () {
+      final actualEstablishment = validEstablishment;
+
+      expect(actualEstablishment, validEstablishment);
+      expect(actualEstablishment.hashCode, validEstablishment.hashCode);
+    });
+
+    test("should return true if two establishments are equal", () {
+      final actualEstablishment = validEstablishment.copyWith();
+
+      expect(actualEstablishment, validEstablishment);
+    });
+
+    test("should return false if two establishments are not equal", () {
+      final actualEstablishment = validEstablishment.copyWith(id: 2);
+
+      expect(actualEstablishment, isNot(validEstablishment));
     });
   });
 }

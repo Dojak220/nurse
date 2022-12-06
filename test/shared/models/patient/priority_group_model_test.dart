@@ -13,7 +13,7 @@ void main() {
     );
   });
 
-  group('priorityGroup model valid intance creation', () {
+  group('priorityGroup model valid instance creation', () {
     test('should create a valid instance', () {
       expect(validPriorityGroup, isA<PriorityGroup>());
       expect(validPriorityGroup.id, 1);
@@ -49,7 +49,7 @@ void main() {
     });
   });
 
-  group('priorityGroup model invalid intance creation', () {
+  group('priorityGroup model invalid instance creation', () {
     test("should throw exception if id is 0", () {
       expect(
         () => validPriorityGroup.copyWith(id: 0),
@@ -122,6 +122,26 @@ void main() {
         reason:
             "it's not possible to create a priorityGroup with an invalid description",
       );
+    });
+  });
+  group('priority group model instances comparison', () {
+    test("should return true if both instances are identical", () {
+      final actualPriorityGroup = validPriorityGroup;
+
+      expect(actualPriorityGroup, validPriorityGroup);
+      expect(actualPriorityGroup.hashCode, validPriorityGroup.hashCode);
+    });
+
+    test("should return true if two priority groups are equal", () {
+      final actualPriorityGroup = validPriorityGroup.copyWith();
+
+      expect(actualPriorityGroup, validPriorityGroup);
+    });
+
+    test("should return false if two priority groups are not equal", () {
+      final actualPriorityGroup = validPriorityGroup.copyWith(id: 2);
+
+      expect(actualPriorityGroup, isNot(validPriorityGroup));
     });
   });
 }

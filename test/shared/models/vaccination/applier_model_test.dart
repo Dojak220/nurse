@@ -40,7 +40,7 @@ void main() {
         ));
   });
 
-  group('applier model valid intance creation', () {
+  group('applier model valid instance creation', () {
     test('should create a valid instance', () {
       expect(validApplier, isA<Applier>());
       expect(validApplier.id, 1);
@@ -58,7 +58,7 @@ void main() {
     });
   });
 
-  group('applier model invalid intance creation', () {
+  group('applier model invalid instance creation', () {
     test("should throw exception if id is 0", () {
       expect(
         () => validApplier.copyWith(id: 0),
@@ -128,6 +128,26 @@ void main() {
         () async => validApplier.copyWith(cns: invalidRandomCns),
         throwsException,
       );
+    });
+  });
+  group('applier model instances comparison', () {
+    test("should return true if both instances are identical", () {
+      final actualApplier = validApplier;
+
+      expect(actualApplier, validApplier);
+      expect(actualApplier.hashCode, validApplier.hashCode);
+    });
+
+    test("should return true if two appliers are equal", () {
+      final actualApplier = validApplier.copyWith();
+
+      expect(actualApplier, validApplier);
+    });
+
+    test("should return false if two appliers are not equal", () {
+      final actualApplier = validApplier.copyWith(id: 2);
+
+      expect(actualApplier, isNot(validApplier));
     });
   });
 }

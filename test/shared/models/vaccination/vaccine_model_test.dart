@@ -13,7 +13,7 @@ void main() {
     );
   });
 
-  group('vaccine model valid intance creation', () {
+  group('vaccine model valid instance creation', () {
     test('should create a valid instance', () {
       expect(validVaccine, isA<Vaccine>());
       expect(validVaccine.id, 1);
@@ -23,7 +23,7 @@ void main() {
     });
   });
 
-  group('vaccine model invalid intance creation', () {
+  group('vaccine model invalid instance creation', () {
     test("should throw exception if id is 0", () {
       expect(
         () => validVaccine.copyWith(id: 0),
@@ -120,6 +120,26 @@ void main() {
         reason:
             "it's not possible to create a vaccine with an invalid laboratory",
       );
+    });
+  });
+  group('vaccine model instances comparison', () {
+    test("should return true if both instances are identical", () {
+      final actualVaccine = validVaccine;
+
+      expect(actualVaccine, validVaccine);
+      expect(actualVaccine.hashCode, validVaccine.hashCode);
+    });
+
+    test("should return true if two vaccines are equal", () {
+      final actualVaccine = validVaccine.copyWith();
+
+      expect(actualVaccine, validVaccine);
+    });
+
+    test("should return false if two vaccines are not equal", () {
+      final actualVaccine = validVaccine.copyWith(id: 2);
+
+      expect(actualVaccine, isNot(validVaccine));
     });
   });
 }
