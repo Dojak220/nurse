@@ -360,7 +360,7 @@ final _validPerson = Person(
 final _validPatient = Patient(
   id: _validPatientId,
   cns: "748477761910001",
-  maternalCondition: MaternalCondition.gestante,
+  maternalCondition: MaternalCondition.puerpera,
   priorityCategory: PriorityCategory(
     id: 1,
     priorityGroup: PriorityGroup(

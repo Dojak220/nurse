@@ -188,16 +188,19 @@ void testGetPatients(MockDatabase db, PatientRepository repository) {
       _validPatient.copyWith(
         cns: "734759395100004",
         person: _validPersons[0],
+        maternalCondition: MaternalCondition.nenhum,
         priorityCategory: _validPriorityCategories[0],
       ),
       _validPatient.copyWith(
         cns: "982223824070006",
         person: _validPersons[1],
+        maternalCondition: MaternalCondition.gestante,
         priorityCategory: _validPriorityCategories[1],
       ),
       _validPatient.copyWith(
         cns: "293934886890002",
         person: _validPersons[2],
+        maternalCondition: MaternalCondition.nenhum,
         priorityCategory: _validPriorityCategories[2],
       ),
     ];
@@ -210,8 +213,7 @@ void testGetPatients(MockDatabase db, PatientRepository repository) {
               {
                 "id": expectedPatients[0].id,
                 "cns": expectedPatients[0].cns,
-                "maternal_condition":
-                    expectedPatients[0].maternalCondition.name,
+                "maternal_condition": null,
                 "person": expectedPatients[0].person.id,
                 "priority_category": expectedPatients[0].priorityCategory.id,
               },
@@ -360,7 +362,7 @@ final _validPriorityCategory = PriorityCategory(
 final _validPatient = Patient(
   id: _validPatientId,
   cns: "138068523490004",
-  maternalCondition: MaternalCondition.gestante,
+  maternalCondition: MaternalCondition.puerpera,
   priorityCategory: _validPriorityCategory,
   person: _validPerson,
 );
