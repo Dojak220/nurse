@@ -99,8 +99,10 @@ class Campaign implements GenericModel {
         endDate.hashCode;
   }
 
+  // coverage:ignore-start
   @override
   String toString() {
     return title;
   }
+  // coverage:ignore-end
 }

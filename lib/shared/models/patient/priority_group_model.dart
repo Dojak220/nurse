@@ -79,8 +79,10 @@ class PriorityGroup implements GenericModel {
     return id.hashCode ^ code.hashCode ^ name.hashCode ^ description.hashCode;
   }
 
+  // coverage:ignore-start
   @override
   String toString() {
     return name;
   }
+  // coverage:ignore-end
 }

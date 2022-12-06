@@ -90,10 +90,12 @@ class Application implements GenericModel {
     );
   }
 
+  // coverage:ignore-start
   @override
   String toString() {
     return 'Application(id: $id, applier: $applier, vaccineBatch: $vaccineBatch, patient: $patient, campaign: $campaign, dose: $dose, applicationDate: $applicationDate, dueDate: $dueDate)';
   }
+  // coverage:ignore-end
 
   @override
   bool operator ==(Object other) {

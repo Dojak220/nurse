@@ -61,10 +61,12 @@ class Vaccine implements GenericModel {
     );
   }
 
+  // coverage:ignore-start
   @override
   String toString() {
     return '$sipniCode | $name';
   }
+  // coverage:ignore-end
 
   @override
   bool operator ==(Object other) {

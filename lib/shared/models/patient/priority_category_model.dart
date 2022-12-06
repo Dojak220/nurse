@@ -92,8 +92,10 @@ class PriorityCategory implements GenericModel {
         description.hashCode;
   }
 
+  // coverage:ignore-start
   @override
   String toString() {
     return name.toUpperCase();
   }
+  // coverage:ignore-end
 }

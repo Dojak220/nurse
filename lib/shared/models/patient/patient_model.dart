@@ -83,10 +83,12 @@ class Patient implements GenericModel {
         person.hashCode;
   }
 
+  // coverage:ignore-start
   @override
   String toString() {
     return 'Patient(id: $id, cns: $cns, priorityCategory: $priorityCategory, maternalCondition: $maternalCondition, person: $person)';
   }
+  // coverage:ignore-end
 }
 
 enum MaternalCondition { nenhum, gestante, puerpera }

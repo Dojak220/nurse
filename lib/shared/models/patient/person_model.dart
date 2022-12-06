@@ -116,10 +116,12 @@ class Person implements GenericModel {
         fatherName.hashCode;
   }
 
+  // coverage:ignore-start
   @override
   String toString() {
     return 'cpf: $cpf, name: $name';
   }
+  // coverage:ignore-end
 }
 
 enum Sex { female, male, none }

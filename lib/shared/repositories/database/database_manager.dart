@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_sqlcipher/sqflite.dart';
 
+// coverage:ignore-file
 class DatabaseManager {
   static final DatabaseManager _instance = DatabaseManager._internal();
   DatabaseManager._internal();

@@ -73,8 +73,10 @@ class Applier implements GenericModel {
         establishment.hashCode;
   }
 
+  // coverage:ignore-start
   @override
   String toString() {
     return '${cns.replaceRange(3, 12, "...")} - ${person.name}';
   }
+  // coverage:ignore-end
 }

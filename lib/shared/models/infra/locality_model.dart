@@ -89,8 +89,10 @@ class Locality implements GenericModel {
         ibgeCode.hashCode;
   }
 
+  // coverage:ignore-start
   @override
   String toString() {
     return '$ibgeCode - $name, $city / $state';
   }
+  // coverage:ignore-end
 }

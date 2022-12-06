@@ -50,10 +50,12 @@ class Establishment implements GenericModel {
     );
   }
 
+  // coverage:ignore-start
   @override
   String toString() {
     return '$cnes - $name';
   }
+  // coverage:ignore-end
 
   Establishment copyWith({
     int? id,

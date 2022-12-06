@@ -1,3 +1,4 @@
+// coverage:ignore-file
 abstract class GenericModel {
   final int? id;
 
