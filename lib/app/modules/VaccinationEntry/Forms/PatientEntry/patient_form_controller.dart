@@ -61,7 +61,12 @@ abstract class _PatientFormControllerBase extends FormController with Store {
     }
 
     if (isCpfValid) {
-      _patient = await _patientRepository.getPatientByCpf(cpf);
+      try {
+        _patient = await _patientRepository.getPatientByCpf(cpf);
+      } catch (e) {
+        _patient = null;
+      }
+
       if (_patient != null) _setPatientAndNotify(_patient!);
     }
   }

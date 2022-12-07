@@ -71,6 +71,8 @@ class DatabasePatientRepository extends DatabaseInterface
   Future<Patient> getPatientByCpf(String cpf) async {
     try {
       final person = await _getPersonByCpf(cpf);
+      if (person == null) throw Exception("Paciente não encontrado");
+
       final patientMap = await get(objs: [person.id], where: "person = ?").then(
         (maps) => maps.single,
       );
@@ -110,8 +112,13 @@ class DatabasePatientRepository extends DatabaseInterface
     return person;
   }
 
-  Future<Person> _getPersonByCpf(String cpf) async {
-    final person = await _personRepo.getPersonByCpf(cpf);
+  Future<Person?> _getPersonByCpf(String cpf) async {
+    Person? person;
+    try {
+      person = await _personRepo.getPersonByCpf(cpf);
+    } catch (e) {
+      rethrow;
+    }
 
     return person;
   }
