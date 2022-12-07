@@ -86,11 +86,13 @@ class _PatientFormState extends State<PatientForm> {
               return CustomDropdownButtonFormField(
                 icon: const Icon(Icons.pregnant_woman_rounded),
                 label: FormLabels.maternalCondition,
-                items: MaternalCondition.values,
+                items: widget.controller.sex == Sex.male
+                    ? [MaternalCondition.nenhum]
+                    : MaternalCondition.values,
                 value: widget.controller.maternalCondition,
                 isEnum: true,
-                onChanged: (MaternalCondition? value) =>
-                    widget.controller.maternalCondition = value,
+                onChanged: (MaternalCondition? value) => widget.controller
+                    .maternalCondition = value ?? MaternalCondition.nenhum,
               );
             }),
           ],

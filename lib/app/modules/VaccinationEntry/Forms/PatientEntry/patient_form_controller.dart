@@ -35,7 +35,7 @@ abstract class _PatientFormControllerBase extends FormController with Store {
   PriorityCategory? selectedCategory;
 
   @observable
-  MaternalCondition? maternalCondition;
+  MaternalCondition maternalCondition = MaternalCondition.nenhum;
 
   _PatientFormControllerBase([
     PatientRepository? patientRepository,
@@ -119,7 +119,7 @@ abstract class _PatientFormControllerBase extends FormController with Store {
     name.clear();
     sex = null;
     selectedCategory = null;
-    maternalCondition = null;
+    maternalCondition = MaternalCondition.nenhum;
 
     notifyListeners();
   }
@@ -133,14 +133,14 @@ abstract class _PatientFormControllerBase extends FormController with Store {
               id: _patient?.id,
               cns: cns.text,
               priorityCategory: selectedCategory!,
-              maternalCondition: maternalCondition!,
+              maternalCondition: maternalCondition,
               person:
                   _patient!.person.copyWith(cpf: cpf.text, name: name.text)) ??
           Patient(
             id: _patient?.id,
             cns: cns.text,
             priorityCategory: selectedCategory!,
-            maternalCondition: maternalCondition!,
+            maternalCondition: maternalCondition,
             person: _patient?.person.copyWith(cpf: cpf.text, name: name.text) ??
                 Person(cpf: cpf.text, name: name.text),
           );
