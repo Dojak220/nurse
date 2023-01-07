@@ -67,7 +67,7 @@ abstract class _PatientFormControllerBase extends FormController with Store {
         _patient = null;
       }
 
-      if (_patient != null) _setPatientAndNotify(_patient!);
+      if (_patient != null) setPatient(_patient!);
     }
   }
 
@@ -78,7 +78,7 @@ abstract class _PatientFormControllerBase extends FormController with Store {
 
       if (isCnsValid) {
         _patient = await _patientRepository.getPatientByCns(cns);
-        if (_patient != null) _setPatientAndNotify(_patient!);
+        if (_patient != null) setPatient(_patient!);
       }
     } catch (e) {
       return;
@@ -86,7 +86,7 @@ abstract class _PatientFormControllerBase extends FormController with Store {
   }
 
   @action
-  void _setPatientAndNotify(Patient patient) {
+  void setPatient(Patient patient) {
     cns.text = patient.cns;
     cpf.text = patient.person.cpf;
     name.text = patient.person.name;

@@ -10,11 +10,17 @@ import 'package:nurse/shared/repositories/database/vaccination/database_applicat
 import 'package:nurse/shared/repositories/vaccination/application_repository.dart';
 
 class VaccinationEntryController {
-  VaccinationEntryController([
+  VaccinationEntryController(
+    this.initialApplicationInfo, [
     ApplicationRepository? applicationRepository,
   ]) : _repository = applicationRepository ?? DatabaseApplicationRepository() {
     applicationFormController = ApplicationFormController(_repository);
+    if (initialApplicationInfo != null) {
+      setInfo(initialApplicationInfo!);
+    }
   }
+
+  final Application? initialApplicationInfo;
 
   final _formKey = GlobalKey<FormState>();
   GlobalKey<FormState> get formKey => _formKey;
@@ -61,9 +67,9 @@ class VaccinationEntryController {
 
   void nextForm() {
     final currentFormController = getCurrentFormController();
-    final wasSubmited = submitIfFormValid(currentFormController);
+    final wasSubmitted = submitIfFormValid(currentFormController);
 
-    if (wasSubmited && nextFormIsApplicationForm) {
+    if (wasSubmitted && nextFormIsApplicationForm) {
       applicationFormController.setApplicationDependencies(
         applierFormController.applier!,
         vaccineFormController.vaccineBatch!,
@@ -72,7 +78,7 @@ class VaccinationEntryController {
       );
     }
 
-    if (wasSubmited) updateFormIndex(_formIndex + 1);
+    if (wasSubmitted) updateFormIndex(_formIndex + 1);
   }
 
   bool submitIfFormValid(FormController formController) {
@@ -100,6 +106,14 @@ class VaccinationEntryController {
     } else {
       return false;
     }
+  }
+
+  void setInfo(Application application) {
+    campaignFormController.setCampaign(application.campaign);
+    applierFormController.setApplier(application.applier);
+    vaccineFormController.setVaccineBatch(application.vaccineBatch);
+    patientFormController.setPatient(application.patient);
+    applicationFormController.setApplication(application);
   }
 
   Future<int> save(Application application) async {

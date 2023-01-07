@@ -39,6 +39,12 @@ class ApplierFormController extends FormController {
     );
   }
 
+  void setApplier(Applier applier) {
+    selectedApplier = applier;
+    selectedEstablishment = applier.establishment;
+    notifyListeners();
+  }
+
   @override
   void clearAllInfo() {
     selectedApplier = null;

@@ -42,6 +42,7 @@ import 'package:nurse/shared/models/infra/locality_model.dart';
 import 'package:nurse/shared/models/patient/patient_model.dart';
 import 'package:nurse/shared/models/patient/priority_category_model.dart';
 import 'package:nurse/shared/models/patient/priority_group_model.dart';
+import 'package:nurse/shared/models/vaccination/application_model.dart';
 import 'package:nurse/shared/models/vaccination/applier_model.dart';
 import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
 import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
@@ -102,7 +103,11 @@ class Nurse extends StatelessWidget {
   }
 
   VaccinationEntry newVaccinationFormPage(BuildContext context) {
-    return VaccinationEntry(VaccinationEntryController());
+    final applicationToEdit = getEntityToEdit<Application>(context);
+
+    final controller = VaccinationEntryController(applicationToEdit);
+
+    return VaccinationEntry(controller);
   }
 
   AddForm newPriorityCategoryFormPage(BuildContext context) {

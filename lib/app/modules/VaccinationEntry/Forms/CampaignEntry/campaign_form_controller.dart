@@ -21,6 +21,11 @@ class CampaignFormController extends FormController {
 
   Campaign? get campaign => selectedCampaign;
 
+  void setCampaign(Campaign campaign) {
+    selectedCampaign = campaign;
+    notifyListeners();
+  }
+
   @override
   void clearAllInfo() {
     selectedCampaign = null;

@@ -29,6 +29,12 @@ class VaccineFormController extends FormController {
 
   VaccineBatch? get vaccineBatch => selectedBatch;
 
+  void setVaccineBatch(VaccineBatch vaccineBatch) {
+    selectedBatch = vaccineBatch;
+    selectedVaccine = vaccineBatch.vaccine;
+    notifyListeners();
+  }
+
   @override
   void clearAllInfo() {
     selectedVaccine = null;

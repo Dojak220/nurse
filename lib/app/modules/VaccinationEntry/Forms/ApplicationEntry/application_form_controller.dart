@@ -78,6 +78,19 @@ class ApplicationFormController extends FormController {
         selectedDate != null;
   }
 
+  void setApplication(Application application) {
+    setApplicationDependencies(
+      application.applier,
+      application.vaccineBatch,
+      application.patient,
+      application.campaign,
+    );
+
+    selectedDose = application.dose.toString();
+    selectedDate = application.applicationDate;
+    date.text = DatePicker.formatDateDDMMYYYY(selectedDate!);
+  }
+
   @override
   void clearAllInfo() {
     selectedDose = null;
