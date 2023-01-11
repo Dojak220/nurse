@@ -107,8 +107,7 @@ abstract class _PatientFormControllerBase extends FormController with Store {
         cpf.text.isNotEmpty &&
         name.text.isNotEmpty &&
         sex != null &&
-        selectedCategory != null &&
-        maternalCondition != null;
+        selectedCategory != null;
   }
 
   @override

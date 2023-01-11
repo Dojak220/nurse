@@ -67,7 +67,6 @@ class PatientFormFields extends StatelessWidget {
                 validatorType: ValidatorType.birthDate,
                 initialValue: controller.patientStore.birthDate,
                 onTap: () async => controller.patientStore.selectDate(context),
-                readOnly: true,
                 onSaved: (value) => {},
               );
             }),

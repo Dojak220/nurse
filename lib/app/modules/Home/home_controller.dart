@@ -15,7 +15,9 @@ class HomeController {
   );
   late final fetchApplications = Action(getApplications);
 
-  HomeController() : applicationRepository = DatabaseApplicationRepository() {
+  HomeController({ApplicationRepository? applicationRepository})
+      : applicationRepository =
+            applicationRepository ?? DatabaseApplicationRepository() {
     fetchApplications();
   }
 
