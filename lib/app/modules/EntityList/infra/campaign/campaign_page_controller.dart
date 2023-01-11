@@ -1,36 +1,40 @@
-import 'package:nurse/app/modules/EntityList/entity_page_controller.dart';
+import 'package:mobx/mobx.dart';
 
+import 'package:nurse/app/modules/EntityList/entity_page_controller.dart';
+import 'package:nurse/app/utils/sort_campaign_by_date.dart';
 import 'package:nurse/shared/models/infra/campaign_model.dart';
 import 'package:nurse/shared/repositories/database/infra/database_campaign_repository.dart';
 import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
 
-class CampaignsPageController extends EntityPageController<Campaign> {
+part 'campaign_page_controller.g.dart';
+
+class CampaignsPageController = _CampaignsPageControllerBase
+    with _$CampaignsPageController;
+
+abstract class _CampaignsPageControllerBase
+    extends EntityPageController<Campaign> with Store {
   final CampaignRepository campaignRepository;
 
-  CampaignsPageController()
+  @observable
+  bool isLoading = true;
+
+  _CampaignsPageControllerBase()
       : campaignRepository = DatabaseCampaignRepository() {
     getCampaigns();
   }
 
+  @action
   Future<List<Campaign>> getCampaigns() async {
     final result = await campaignRepository.getCampaigns();
-    entities.clear();
 
-    result.sort((date1, date2) {
-      final int comparisonByStartDate = _sortByStartDate(date1, date2);
+    result.sortByDate();
 
-      return comparisonByStartDate != 0
-          ? comparisonByStartDate
-          : _sortByEndDate(date1, date2);
-    });
+    entities
+      ..clear()
+      ..addAll(result);
 
-    entities.addAll(result);
+    isLoading = false;
 
     return entities;
   }
-
-  int _sortByStartDate(Campaign a, Campaign b) =>
-      a.startDate.compareTo(b.startDate);
-
-  int _sortByEndDate(Campaign a, Campaign b) => a.endDate.compareTo(b.endDate);
 }
