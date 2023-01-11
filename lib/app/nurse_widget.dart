@@ -3,16 +3,23 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:nurse/app/main_screen.dart';
 import 'package:nurse/app/modules/EntityList/add_entities_menu_page.dart';
 import 'package:nurse/app/modules/EntityList/add_form.dart';
+import 'package:nurse/app/modules/EntityList/infra/campaign/campaign_page_controller.dart';
+import 'package:nurse/app/modules/EntityList/infra/establishment/establishment_page_controller.dart';
 import 'package:nurse/app/modules/EntityList/infra/locality/add_locality_form_fields.dart';
+import 'package:nurse/app/modules/EntityList/infra/locality/locality_page_controller.dart';
 import 'package:nurse/app/modules/EntityList/patient/patient/add_patient_form_fields.dart';
 import 'package:nurse/app/modules/EntityList/patient/patient/add_patient_form_controller.dart';
 import 'package:nurse/app/modules/EntityList/patient/patient/patient_page_controller.dart';
 import 'package:nurse/app/modules/EntityList/patient/priorityCategory/add_priority_category_form_fields.dart';
 import 'package:nurse/app/modules/EntityList/patient/priorityCategory/add_priority_category_form_controller.dart';
+import 'package:nurse/app/modules/EntityList/patient/priorityCategory/priority_category_page_controller.dart';
 import 'package:nurse/app/modules/EntityList/patient/priorityGroup/add_priority_group_form_fields.dart';
 import 'package:nurse/app/modules/EntityList/patient/priorityGroup/add_priority_group_form_controller.dart';
+import 'package:nurse/app/modules/EntityList/patient/priorityGroup/priority_group_page_controller.dart';
 import 'package:nurse/app/modules/EntityList/vaccination/applier/add_applier_form_fields.dart';
 import 'package:nurse/app/modules/EntityList/vaccination/applier/add_applier_form_controller.dart';
+import 'package:nurse/app/modules/EntityList/vaccination/applier/applier_page_controller.dart';
+import 'package:nurse/app/modules/EntityList/vaccination/vaccine/vaccine_page_controller.dart';
 import 'package:nurse/app/modules/EntityList/vaccination/vaccineBatch/add_vaccine_batch_form_fields.dart';
 import 'package:nurse/app/modules/EntityList/vaccination/vaccineBatch/add_vaccine_batch_form_controller.dart';
 import 'package:nurse/app/modules/EntityList/vaccination/vaccine/add_vaccine_form_fields.dart';
@@ -31,6 +38,7 @@ import 'package:nurse/app/modules/EntityList/patient/priorityGroup/priority_grou
 import 'package:nurse/app/modules/EntityList/vaccination/applier/applier_page.dart';
 import 'package:nurse/app/modules/EntityList/vaccination/vaccineBatch/vaccine_batch_page.dart';
 import 'package:nurse/app/modules/EntityList/vaccination/vaccine/vaccine_page.dart';
+import 'package:nurse/app/modules/EntityList/vaccination/vaccineBatch/vaccine_batch_page_controller.dart';
 import 'package:nurse/app/modules/Export/export_data_page.dart';
 import 'package:nurse/app/modules/Home/home_page.dart';
 import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry.dart';
@@ -71,29 +79,33 @@ class Nurse extends StatelessWidget {
         "/entities": (context) => const AddEntitiesMenuPage(),
 
         // INFRA ROUTES
-        "/campaigns": (context) => const Campaigns(),
+        "/campaigns": (context) => Campaigns(CampaignsPageController()),
         "/campaigns/new": (context) => newCampaignFormPage(context),
-        "/establishments": (context) => const Establishments(),
+        "/establishments": (context) =>
+            Establishments(EstablishmentsPageController()),
         "/establishments/new": (context) => newEstablishmentFormPage(context),
-        "/localities": (context) => const Localities(),
+        "/localities": (context) => Localities(LocalitiesPageController()),
         "/localities/new": (context) => newLocalityFormPage(context),
 
         // PATIENT ROUTES
         "/patients": (context) => Patients(PatientsPageController()),
         "/patients/new": (context) => newPatientFormPage(context),
-        "/priorityCategories": (context) => const PriorityCategories(),
+        "/priorityCategories": (context) =>
+            PriorityCategories(PriorityCategoriesPageController()),
         "/priorityCategories/new": (context) =>
             newPriorityCategoryFormPage(context),
-        "/priorityGroups": (context) => const PriorityGroups(),
+        "/priorityGroups": (context) =>
+            PriorityGroups(PriorityGroupsPageController()),
         "/priorityGroups/new": (context) => newPriorityGroupFormPage(context),
 
         // VACCINATION ROUTES
         "/vaccinations/new": (context) => newVaccinationFormPage(context),
-        "/appliers": (context) => const Appliers(),
+        "/appliers": (context) => Appliers(AppliersPageController()),
         "/appliers/new": (context) => newApplierFormPage(context),
-        "/vaccineBatches": (context) => const VaccineBatches(),
+        "/vaccineBatches": (context) =>
+            VaccineBatches(VaccineBatchesPageController()),
         "/vaccineBatches/new": (context) => newVaccineBatchFormPage(context),
-        "/vaccines": (context) => const Vaccines(),
+        "/vaccines": (context) => Vaccines(VaccinesPageController()),
         "/vaccines/new": (context) => newVaccineFormPage(context),
 
         // SHARE ROUTE
