@@ -22,9 +22,9 @@ linter:
     - annotate_overrides
     - avoid_annotating_with_dynamic
     - avoid_bool_literals_in_conditional_expressions
-    - avoid_catches_without_on_clauses
-    - avoid_catching_errors
-    - avoid_classes_with_only_static_members
+    # - avoid_catches_without_on_clauses
+    # - avoid_catching_errors
+    # - avoid_classes_with_only_static_members
     - avoid_double_and_int_checks
     - avoid_dynamic_calls
     - avoid_empty_else
@@ -86,7 +86,7 @@ linter:
     - eol_at_end_of_file
     - exhaustive_cases
     - file_names
-    - flutter_style_todos
+    # - flutter_style_todos
     - hash_and_equals
     - implementation_imports
     - implicit_call_tearoffs
@@ -97,7 +97,7 @@ linter:
     - library_names
     - library_prefixes
     - library_private_types_in_public_api
-    - lines_longer_than_80_chars
+    # - lines_longer_than_80_chars
     - list_remove_unrelated_type
     - literal_only_boolean_expressions
     - missing_whitespace_between_adjacent_strings
