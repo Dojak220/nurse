@@ -54,6 +54,8 @@ class Validator {
         return _isType<String>(value)
             ? _validateDescription(value as String)
             : throw ValidatorException.incompatibleType(String, value);
+      case ValidatorType.email:
+        throw ValidatorException.unimplementedType(type);
       case ValidatorType.cpf:
         return _isType<String>(value)
             ? _validateCPF(value as String)
@@ -88,8 +90,6 @@ class Validator {
             ? _validateIBGECode(value as String)
             : throw ValidatorException.incompatibleType(String, value);
     }
-
-    throw ValidatorException.unimplementedType(type);
   }
 
   static bool _isType<T>(Object? value) {
