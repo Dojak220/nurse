@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_form_field.dart';
-import 'package:nurse/app/utils/enum_to_name.dart';
-import 'package:nurse/app/utils/form_labels.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/custom_form_field.dart";
+import "package:nurse/app/utils/enum_to_name.dart";
+import "package:nurse/app/utils/form_labels.dart";
 
 class CustomDropdownButtonFormField<T> extends CustomFormField {
   final List<T> items;
@@ -27,11 +27,13 @@ class CustomDropdownButtonFormField<T> extends CustomFormField {
         );
 
   List<T> _sortItemsAlphabetically() {
-    final sortedList = List.of(items);
+    final sortedList = List.of(items)
+      ..sort((T a, T b) {
+        final aLowerString = a.toString().toLowerCase();
+        final bLowerString = b.toString().toLowerCase();
 
-    sortedList.sort((a, b) {
-      return a.toString().toLowerCase().compareTo(b.toString().toLowerCase());
-    });
+        return aLowerString.compareTo(bLowerString);
+      });
 
     return sortedList;
   }
@@ -42,7 +44,7 @@ class CustomDropdownButtonFormField<T> extends CustomFormField {
 
     return Padding(
       padding: const EdgeInsets.only(top: 4.0),
-      child: DropdownButtonFormField(
+      child: DropdownButtonFormField<T>(
         decoration: InputDecoration(
           icon: icon,
           border: border,
@@ -57,10 +59,13 @@ class CustomDropdownButtonFormField<T> extends CustomFormField {
         isExpanded: true,
         value: value ?? (sortedItems.length == 1 ? sortedItems.first : null),
         items: sortedItems
-            .map((item) => DropdownMenuItem(
+            .map(
+              (T item) => DropdownMenuItem<T>(
                 value: item,
                 child:
-                    Text(isEnum ? enumToName(item as Enum) : item.toString())))
+                    Text(isEnum ? enumToName(item as Enum) : item.toString()),
+              ),
+            )
             .toList(),
         onChanged: onChanged,
         onSaved: onSaved,

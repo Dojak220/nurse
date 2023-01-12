@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/theme/app_theme.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/theme/app_theme.dart";
 
 class DialogCancelButton extends StatelessWidget {
   const DialogCancelButton({
@@ -16,7 +16,7 @@ class DialogCancelButton extends StatelessWidget {
       style: AppTheme.dialogButtonStyle.copyWith(
         backgroundColor: MaterialStateProperty.all(null),
       ),
-      child: const Text('Não'),
+      child: const Text("Não"),
     );
   }
 }

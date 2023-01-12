@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_form_field.dart';
-import 'package:nurse/app/utils/form_labels.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/custom_form_field.dart";
+import "package:nurse/app/utils/form_labels.dart";
+import "package:nurse/shared/utils/validator.dart";
 
 class CustomTextFormField extends CustomFormField {
   final ValidatorType? validatorType;
@@ -60,14 +60,14 @@ class CustomTextFormField extends CustomFormField {
 
   String? validate(String? value, ValidatorType type) {
     if (value == null) {
-      return 'Please enter some text';
+      return "Please enter some text";
     }
 
     try {
       return Validator.validate(type, value)
           ? null
           : "Please enter a valid value";
-    } catch (e) {
+    } on ValidatorException {
       return "Please enter a valid value";
     }
   }

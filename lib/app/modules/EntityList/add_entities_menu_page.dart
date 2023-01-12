@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/theme/app_colors.dart';
-import 'package:nurse/app/theme/app_theme.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/theme/app_colors.dart";
+import "package:nurse/app/theme/app_theme.dart";
 
 class AddEntitiesMenuPage extends StatelessWidget {
   const AddEntitiesMenuPage({Key? key}) : super(key: key);
@@ -23,74 +23,74 @@ class AddEntitiesMenuPage extends StatelessWidget {
               EntityButton(
                 title: "Campanha",
                 icon: Icons.campaign_rounded,
-                onPressed: () =>
-                    Navigator.of(context).pushNamed("/campaigns", arguments: {
-                  "title": "Campanha",
-                }),
+                onPressed: () async => Navigator.of(context).pushNamed(
+                  "/campaigns",
+                  arguments: {"title": "Campanha"},
+                ),
               ),
               EntityButton(
                 title: "Estabelecimento",
                 icon: Icons.local_hospital_rounded,
-                onPressed: () => Navigator.of(context)
-                    .pushNamed("/establishments", arguments: {
-                  "title": "Estabelecimento",
-                }),
+                onPressed: () async => Navigator.of(context).pushNamed(
+                  "/establishments",
+                  arguments: {"title": "Estabelecimento"},
+                ),
               ),
               EntityButton(
                 title: "Vacina",
                 icon: Icons.vaccines_rounded,
-                onPressed: () =>
-                    Navigator.of(context).pushNamed("/vaccines", arguments: {
-                  "title": "Vacina",
-                }),
+                onPressed: () async => Navigator.of(context).pushNamed(
+                  "/vaccines",
+                  arguments: {"title": "Vacina"},
+                ),
               ),
               EntityButton(
                 title: "Lote de Vacina",
                 icon: Icons.local_pharmacy_rounded,
-                onPressed: () => Navigator.of(context)
-                    .pushNamed("/vaccineBatches", arguments: {
-                  "title": "Lote de Vacina",
-                }),
+                onPressed: () async => Navigator.of(context).pushNamed(
+                  "/vaccineBatches",
+                  arguments: {"title": "Lote de Vacina"},
+                ),
               ),
               EntityButton(
                 title: "Paciente",
                 icon: Icons.person_rounded,
-                onPressed: () =>
-                    Navigator.of(context).pushNamed("/patients", arguments: {
-                  "title": "Paciente",
-                }),
+                onPressed: () async => Navigator.of(context).pushNamed(
+                  "/patients",
+                  arguments: {"title": "Paciente"},
+                ),
               ),
               EntityButton(
                 title: "Aplicante",
                 icon: Icons.person_rounded,
-                onPressed: () =>
-                    Navigator.of(context).pushNamed("/appliers", arguments: {
-                  "title": "Aplicante",
-                }),
+                onPressed: () async => Navigator.of(context).pushNamed(
+                  "/appliers",
+                  arguments: {"title": "Aplicante"},
+                ),
               ),
               EntityButton(
                 title: "Localidade",
                 icon: Icons.location_city_rounded,
-                onPressed: () =>
-                    Navigator.of(context).pushNamed("/localities", arguments: {
-                  "title": "Localidade",
-                }),
+                onPressed: () async => Navigator.of(context).pushNamed(
+                  "/localities",
+                  arguments: {"title": "Localidade"},
+                ),
               ),
               EntityButton(
                 title: "Grupo Prioritário",
                 icon: Icons.group_rounded,
-                onPressed: () => Navigator.of(context)
-                    .pushNamed("/priorityGroups", arguments: {
-                  "title": "Grupo Prioritário",
-                }),
+                onPressed: () async => Navigator.of(context).pushNamed(
+                  "/priorityGroups",
+                  arguments: {"title": "Grupo Prioritário"},
+                ),
               ),
               EntityButton(
                 title: "Categoria Prioritária",
                 icon: Icons.category_rounded,
-                onPressed: () => Navigator.of(context)
-                    .pushNamed("/priorityCategories", arguments: {
-                  "title": "Categoria Prioritária",
-                }),
+                onPressed: () async => Navigator.of(context).pushNamed(
+                  "/priorityCategories",
+                  arguments: {"title": "Categoria Prioritária"},
+                ),
               ),
             ],
           ),

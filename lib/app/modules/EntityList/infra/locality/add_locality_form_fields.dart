@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/components/form_padding.dart';
-import 'package:nurse/app/modules/EntityList/infra/locality/add_locality_form_controller.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
-import 'package:nurse/app/utils/form_labels.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/components/form_padding.dart";
+import "package:nurse/app/modules/EntityList/infra/locality/add_locality_form_controller.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart";
+import "package:nurse/app/utils/form_labels.dart";
+import "package:nurse/shared/utils/validator.dart";
 
 class LocalityFormFields extends StatefulWidget {
   final AddLocalityFormController controller;
@@ -32,7 +32,7 @@ class LocalityFormFieldsState extends State<LocalityFormFields> {
               label: FormLabels.localityName,
               textEditingController: widget.controller.name,
               validatorType: ValidatorType.name,
-              onSaved: (value) => {},
+              onSaved: (_) {},
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
@@ -40,7 +40,7 @@ class LocalityFormFieldsState extends State<LocalityFormFields> {
               label: FormLabels.localityCity,
               textEditingController: widget.controller.city,
               validatorType: ValidatorType.name,
-              onSaved: (value) => {},
+              onSaved: (_) {},
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
@@ -48,7 +48,7 @@ class LocalityFormFieldsState extends State<LocalityFormFields> {
               label: FormLabels.localityState,
               textEditingController: widget.controller.state,
               validatorType: ValidatorType.name,
-              onSaved: (value) => {},
+              onSaved: (_) {},
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
@@ -56,7 +56,7 @@ class LocalityFormFieldsState extends State<LocalityFormFields> {
               label: FormLabels.localityCode,
               textEditingController: widget.controller.ibgeCode,
               validatorType: ValidatorType.ibgeCode,
-              onSaved: (value) => {},
+              onSaved: (_) {},
             ),
           ],
         ),

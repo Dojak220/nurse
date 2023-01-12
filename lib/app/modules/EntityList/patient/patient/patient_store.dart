@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:mobx/mobx.dart';
-import 'package:nurse/app/utils/date_picker.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/models/patient/patient_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/models/patient/priority_category_model.dart';
+import "package:flutter/material.dart";
+import "package:mobx/mobx.dart";
+import "package:nurse/app/utils/date_picker.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/models/patient/patient_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/models/patient/priority_category_model.dart";
 
-part 'patient_store.g.dart';
+part "patient_store.g.dart";
 
 class PatientStore = _PatientStoreBase with _$PatientStore;
 

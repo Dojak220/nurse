@@ -1,15 +1,15 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
-import 'package:nurse/shared/repositories/database/patient/database_person_repository.dart';
-import 'package:nurse/shared/repositories/patient/person_repository.dart';
-import 'package:sqflite_sqlcipher/sqflite.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:mockito/annotations.dart";
+import "package:mockito/mockito.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/infra/database_locality_repository.dart";
+import "package:nurse/shared/repositories/database/patient/database_person_repository.dart";
+import "package:nurse/shared/repositories/patient/person_repository.dart";
+import "package:sqflite_sqlcipher/sqflite.dart";
 
-import 'database_person_repository_test.mocks.dart';
+import "database_person_repository_test.mocks.dart";
 
 @GenerateMocks([
   DatabaseManager,
@@ -47,11 +47,15 @@ void main() {
 
 void testCreatePerson(MockDatabase db, PersonRepository repository) {
   group("createPerson function:", () {
-    group('try to create a valid person', () {
+    group("try to create a valid person", () {
       setUp(() {
-        when(db.insert(DatabasePersonRepository.TABLE, any,
-                conflictAlgorithm: anyNamed("conflictAlgorithm")))
-            .thenAnswer((_) => Future.value(1));
+        when(
+          db.insert(
+            DatabasePersonRepository.TABLE,
+            any,
+            conflictAlgorithm: anyNamed("conflictAlgorithm"),
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should create a new person entry and return its id", () async {
@@ -65,13 +69,15 @@ void testCreatePerson(MockDatabase db, PersonRepository repository) {
 
 void testDeletePerson(MockDatabase db, PersonRepository repository) {
   group("deletePerson function:", () {
-    group('try to delete valid person', () {
+    group("try to delete valid person", () {
       setUp(() {
-        when(db.delete(
-          DatabasePersonRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validPersonId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.delete(
+            DatabasePersonRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validPersonId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should delete a person entry and returns 1", () async {
@@ -81,13 +87,15 @@ void testDeletePerson(MockDatabase db, PersonRepository repository) {
       });
     });
 
-    group('try to delete invalid person', () {
+    group("try to delete invalid person", () {
       setUp(() {
-        when(db.delete(
-          DatabasePersonRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_invalidPersonId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.delete(
+            DatabasePersonRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_invalidPersonId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesnt exist", () async {
@@ -103,24 +111,28 @@ void testGetPerson(MockDatabase db, PersonRepository repository) {
   group("getPerson function:", () {
     final expectedPerson = _validPerson.copyWith(cpf: "82675387630");
 
-    group('try to get valid person', () {
+    group("try to get valid person", () {
       setUp(() {
-        when(db.query(
-          DatabasePersonRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validPersonId],
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": expectedPerson.id,
-                "cpf": expectedPerson.cpf,
-                "name": expectedPerson.name,
-                "birth_date": expectedPerson.birthDate.toString(),
-                "locality": expectedPerson.locality!.id,
-                "sex": expectedPerson.sex.name,
-                "mother_name": expectedPerson.motherName,
-                "father_name": expectedPerson.fatherName,
-              }
-            ]));
+        when(
+          db.query(
+            DatabasePersonRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validPersonId],
+          ),
+        ).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": expectedPerson.id,
+              "cpf": expectedPerson.cpf,
+              "name": expectedPerson.name,
+              "birth_date": expectedPerson.birthDate.toString(),
+              "locality": expectedPerson.locality!.id,
+              "sex": expectedPerson.sex.name,
+              "mother_name": expectedPerson.motherName,
+              "father_name": expectedPerson.fatherName,
+            }
+          ]),
+        );
       });
 
       test("should get a person entry by its id", () async {
@@ -131,18 +143,20 @@ void testGetPerson(MockDatabase db, PersonRepository repository) {
       });
     });
 
-    group('try to get an invalid person', () {
+    group("try to get an invalid person", () {
       setUp(() {
-        when(db.query(
-          DatabasePersonRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [2],
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabasePersonRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [2],
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should throw exception if id doesn't exist", () async {
         expect(
-          () async => await repository.getPersonById(2),
+          () async => repository.getPersonById(2),
           throwsStateError,
         );
       });
@@ -154,32 +168,36 @@ void testGetPersons(MockDatabase db, PersonRepository repository) {
   group("getPersons function:", () {
     final expectedPersons = _validPersons;
 
-    group('try to get all persons', () {
+    group("try to get all persons", () {
       setUp(() {
-        when(db.query(
-          DatabasePersonRepository.TABLE,
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": expectedPersons[0].id,
-                "cpf": expectedPersons[0].cpf,
-                "name": expectedPersons[0].name,
-                "birth_date": expectedPersons[0].birthDate.toString(),
-                "locality": expectedPersons[0].locality!.id,
-                "sex": expectedPersons[0].sex.name,
-                "mother_name": expectedPersons[0].motherName,
-                "father_name": expectedPersons[0].fatherName,
-              },
-              {
-                "id": expectedPersons[1].id,
-                "cpf": expectedPersons[1].cpf,
-                "name": expectedPersons[1].name,
-                "birth_date": expectedPersons[1].birthDate.toString(),
-                "locality": expectedPersons[1].locality!.id,
-                "sex": expectedPersons[1].sex.name,
-                "mother_name": expectedPersons[1].motherName,
-                "father_name": expectedPersons[1].fatherName,
-              },
-            ]));
+        when(
+          db.query(
+            DatabasePersonRepository.TABLE,
+          ),
+        ).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": expectedPersons[0].id,
+              "cpf": expectedPersons[0].cpf,
+              "name": expectedPersons[0].name,
+              "birth_date": expectedPersons[0].birthDate.toString(),
+              "locality": expectedPersons[0].locality!.id,
+              "sex": expectedPersons[0].sex.name,
+              "mother_name": expectedPersons[0].motherName,
+              "father_name": expectedPersons[0].fatherName,
+            },
+            {
+              "id": expectedPersons[1].id,
+              "cpf": expectedPersons[1].cpf,
+              "name": expectedPersons[1].name,
+              "birth_date": expectedPersons[1].birthDate.toString(),
+              "locality": expectedPersons[1].locality!.id,
+              "sex": expectedPersons[1].sex.name,
+              "mother_name": expectedPersons[1].motherName,
+              "father_name": expectedPersons[1].fatherName,
+            },
+          ]),
+        );
       });
 
       test("should return all persons", () async {
@@ -192,11 +210,13 @@ void testGetPersons(MockDatabase db, PersonRepository repository) {
       });
     });
 
-    group('try to get all persons when there is none', () {
+    group("try to get all persons when there is none", () {
       setUp(() {
-        when(db.query(
-          DatabasePersonRepository.TABLE,
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabasePersonRepository.TABLE,
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should return an empty list", () async {
@@ -211,14 +231,16 @@ void testGetPersons(MockDatabase db, PersonRepository repository) {
 
 void testUpdatePerson(MockDatabase db, PersonRepository repository) {
   group("updatePerson function:", () {
-    group('try to update a valid person', () {
+    group("try to update a valid person", () {
       setUp(() {
-        when(db.update(
-          DatabasePersonRepository.TABLE,
-          _validPerson.copyWith(name: "Updated").toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_validPersonId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.update(
+            DatabasePersonRepository.TABLE,
+            _validPerson.copyWith(name: "Updated").toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_validPersonId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should update a person entry and returns 2", () async {
@@ -229,14 +251,18 @@ void testUpdatePerson(MockDatabase db, PersonRepository repository) {
         expect(updatedRows, 2);
       });
     });
-    group('try to update with invalid person', () {
+    group("try to update with invalid person", () {
       setUp(() {
-        when(db.update(
-          DatabasePersonRepository.TABLE,
-          _validPerson.copyWith(id: _invalidPersonId, name: "Updated").toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_invalidPersonId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.update(
+            DatabasePersonRepository.TABLE,
+            _validPerson
+                .copyWith(id: _invalidPersonId, name: "Updated")
+                .toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_invalidPersonId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {

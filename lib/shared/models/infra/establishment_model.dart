@@ -1,7 +1,9 @@
-import 'package:nurse/shared/models/generic_model.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/foundation.dart";
+import "package:nurse/shared/models/generic_model.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/utils/validator.dart";
 
+@immutable
 class Establishment implements GenericModel {
   @override
   final int? id;
@@ -24,36 +26,36 @@ class Establishment implements GenericModel {
     Validator.validate(ValidatorType.name, name);
 
     if (cnes.trim().length != 7) {
-      throw Exception('Establishment cnes must be 7 characters long');
+      throw Exception("Establishment cnes must be 7 characters long");
     }
     if (int.tryParse(cnes) == null) {
-      throw Exception('Establishment cnes must be numeric');
+      throw Exception("Establishment cnes must be numeric");
     }
   }
 
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'cnes': cnes,
-      'name': name,
-      'locality': locality.id,
+      "id": id,
+      "cnes": cnes,
+      "name": name,
+      "locality": locality.id,
     };
   }
 
   factory Establishment.fromMap(Map<String, dynamic> map) {
     return Establishment(
-      id: map['id'] as int?,
-      cnes: map['cnes'] as String? ?? '',
-      name: map['name'] as String? ?? '',
-      locality: Locality.fromMap(map['locality'] as Map<String, dynamic>),
+      id: map["id"] as int?,
+      cnes: map["cnes"] as String? ?? "",
+      name: map["name"] as String? ?? "",
+      locality: Locality.fromMap(map["locality"] as Map<String, dynamic>),
     );
   }
 
   // coverage:ignore-start
   @override
   String toString() {
-    return '$cnes - $name';
+    return "$cnes - $name";
   }
   // coverage:ignore-end
 

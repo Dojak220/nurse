@@ -1,12 +1,14 @@
-import 'package:mobx/mobx.dart';
+import "dart:async";
 
-import 'package:nurse/app/modules/EntityList/entity_page_controller.dart';
-import 'package:nurse/app/utils/sort_campaign_by_date.dart';
-import 'package:nurse/shared/models/infra/campaign_model.dart';
-import 'package:nurse/shared/repositories/database/infra/database_campaign_repository.dart';
-import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
+import "package:mobx/mobx.dart";
 
-part 'campaign_page_controller.g.dart';
+import "package:nurse/app/modules/EntityList/entity_page_controller.dart";
+import "package:nurse/app/utils/sort_campaign_by_date.dart";
+import "package:nurse/shared/models/infra/campaign_model.dart";
+import "package:nurse/shared/repositories/database/infra/database_campaign_repository.dart";
+import "package:nurse/shared/repositories/infra/campaign_repository.dart";
+
+part "campaign_page_controller.g.dart";
 
 class CampaignsPageController = _CampaignsPageControllerBase
     with _$CampaignsPageController;

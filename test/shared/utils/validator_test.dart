@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:nurse/shared/utils/validator.dart";
 
 void main() {
   group("incompatible type for [ValidatorType.id]", () {

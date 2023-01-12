@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/utils/form_controller.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/utils/form_controller.dart";
 
 abstract class AddFormController extends FormController {
   Future<bool> saveInfo();
@@ -7,18 +7,24 @@ abstract class AddFormController extends FormController {
 
   @protected
   Future<bool> createEntity<T>(
-      T entity, Future<int> Function(T entity) create) async {
-    return await _handleEntity(entity, create);
+    T entity,
+    Future<int> Function(T entity) create,
+  ) async {
+    return _handleEntity(entity, create);
   }
 
   @protected
   Future<bool> updateEntity<T>(
-      T entity, Future<int> Function(T entity) update) async {
-    return await _handleEntity(entity, update);
+    T entity,
+    Future<int> Function(T entity) update,
+  ) async {
+    return _handleEntity(entity, update);
   }
 
   Future<bool> _handleEntity<T>(
-      T entity, Future<int> Function(T entity) handler) async {
+    T entity,
+    Future<int> Function(T entity) handler,
+  ) async {
     final allFieldsValid = submitForm(formKey);
 
     if (allFieldsValid) {

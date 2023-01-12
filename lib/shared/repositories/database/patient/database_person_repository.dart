@@ -1,10 +1,10 @@
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
-import 'package:nurse/shared/repositories/infra/locality_repository.dart';
-import 'package:nurse/shared/repositories/patient/person_repository.dart';
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/repositories/database/database_interface.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/infra/database_locality_repository.dart";
+import "package:nurse/shared/repositories/infra/locality_repository.dart";
+import "package:nurse/shared/repositories/patient/person_repository.dart";
 
 class DatabasePersonRepository extends DatabaseInterface
     implements PersonRepository {
@@ -12,16 +12,17 @@ class DatabasePersonRepository extends DatabaseInterface
   static const String TABLE = "Person";
   final LocalityRepository _localityRepo;
 
-  DatabasePersonRepository(
-      {DatabaseManager? dbManager, LocalityRepository? localityRepo})
-      : _localityRepo = localityRepo ?? DatabaseLocalityRepository(),
+  DatabasePersonRepository({
+    DatabaseManager? dbManager,
+    LocalityRepository? localityRepo,
+  })  : _localityRepo = localityRepo ?? DatabaseLocalityRepository(),
         super(TABLE, dbManager);
 
   @override
   Future<int> createPerson(Person person) async {
     final map = person.toMap();
 
-    map['locality'] = person.locality != null
+    map["locality"] = person.locality != null
         ? await _localityRepo
             .getLocalityByIbgeCode(person.locality!.ibgeCode)
             .then((locality) => locality.id)

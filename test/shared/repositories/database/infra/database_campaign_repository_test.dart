@@ -1,13 +1,13 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:nurse/shared/models/infra/campaign_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/infra/database_campaign_repository.dart';
-import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
-import 'package:sqflite_sqlcipher/sqflite.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:mockito/annotations.dart";
+import "package:mockito/mockito.dart";
+import "package:nurse/shared/models/infra/campaign_model.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/infra/database_campaign_repository.dart";
+import "package:nurse/shared/repositories/infra/campaign_repository.dart";
+import "package:sqflite_sqlcipher/sqflite.dart";
 
-import 'database_campaign_repository_test.mocks.dart';
+import "database_campaign_repository_test.mocks.dart";
 
 @GenerateMocks([DatabaseManager, Database, DatabaseCampaignRepository])
 void main() {
@@ -29,15 +29,19 @@ void main() {
 
 void testCreateCampaign(MockDatabase db, CampaignRepository repository) {
   group("createCampaign function:", () {
-    group('try to create a valid campaign', () {
+    group("try to create a valid campaign", () {
       setUp(() {
-        when(db.insert(DatabaseCampaignRepository.TABLE, any,
-                conflictAlgorithm: anyNamed("conflictAlgorithm")))
-            .thenAnswer((_) => Future.value(1));
+        when(
+          db.insert(
+            DatabaseCampaignRepository.TABLE,
+            any,
+            conflictAlgorithm: anyNamed("conflictAlgorithm"),
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should create a new campaign entry and return its id", () async {
-        final createdId = await repository.createCampaign(_validCampaign);
+        final int createdId = await repository.createCampaign(_validCampaign);
 
         expect(createdId, 1);
       });
@@ -47,33 +51,38 @@ void testCreateCampaign(MockDatabase db, CampaignRepository repository) {
 
 void testDeleteCampaign(MockDatabase db, CampaignRepository repository) {
   group("deleteCampaign function:", () {
-    group('try to delete valid campaign', () {
+    group("try to delete valid campaign", () {
       setUp(() {
-        when(db.delete(
-          DatabaseCampaignRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validCampaignId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.delete(
+            DatabaseCampaignRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: <int>[_validCampaignId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should delete a campaign entry and returns 1", () async {
-        final deletedCount = await repository.deleteCampaign(_validCampaignId);
+        final int deletedCount =
+            await repository.deleteCampaign(_validCampaignId);
 
         expect(deletedCount, 1);
       });
     });
 
-    group('try to delete invalid campaign', () {
+    group("try to delete invalid campaign", () {
       setUp(() {
-        when(db.delete(
-          DatabaseCampaignRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_invalidCampaignId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.delete(
+            DatabaseCampaignRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_invalidCampaignId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {
-        final deletedCount =
+        final int deletedCount =
             await repository.deleteCampaign(_invalidCampaignId);
 
         expect(deletedCount, 0);
@@ -84,26 +93,30 @@ void testDeleteCampaign(MockDatabase db, CampaignRepository repository) {
 
 void testGetCampaign(MockDatabase db, CampaignRepository repository) {
   group("getCampaign function:", () {
-    final expectedCampaign = _validCampaign;
-    group('try to get valid campaign', () {
+    final Campaign expectedCampaign = _validCampaign;
+    group("try to get valid campaign", () {
       setUp(() {
-        when(db.query(
-          DatabaseCampaignRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validCampaignId],
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": expectedCampaign.id,
-                "title": expectedCampaign.title,
-                "description": expectedCampaign.description,
-                "start_date": expectedCampaign.startDate.toString(),
-                "end_date": expectedCampaign.endDate.toString(),
-              }
-            ]));
+        when(
+          db.query(
+            DatabaseCampaignRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validCampaignId],
+          ),
+        ).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": expectedCampaign.id,
+              "title": expectedCampaign.title,
+              "description": expectedCampaign.description,
+              "start_date": expectedCampaign.startDate.toString(),
+              "end_date": expectedCampaign.endDate.toString(),
+            }
+          ]),
+        );
       });
 
       test("should get a campaign entry by its id", () async {
-        final actualCampaign =
+        final Campaign actualCampaign =
             await repository.getCampaignById(_validCampaignId);
 
         expect(actualCampaign, isA<Campaign>());
@@ -111,18 +124,20 @@ void testGetCampaign(MockDatabase db, CampaignRepository repository) {
       });
     });
 
-    group('try to get an invalid campaign', () {
+    group("try to get an invalid campaign", () {
       setUp(() {
-        when(db.query(
-          DatabaseCampaignRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [2],
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabaseCampaignRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [2],
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should throw exception if id doesn't exist", () async {
         expect(
-          () async => await repository.getCampaignById(2),
+          () async => repository.getCampaignById(2),
           throwsStateError,
         );
       });
@@ -132,13 +147,15 @@ void testGetCampaign(MockDatabase db, CampaignRepository repository) {
 
 void testGetCampaigns(MockDatabase db, CampaignRepository repository) {
   group("getCampaigns function:", () {
-    final expectedCampaigns = _validCampaigns;
+    final List<Campaign> expectedCampaigns = _validCampaigns;
 
-    group('try to get all campaigns', () {
+    group("try to get all campaigns", () {
       setUp(() {
-        when(db.query(
-          DatabaseCampaignRepository.TABLE,
-        )).thenAnswer(
+        when(
+          db.query(
+            DatabaseCampaignRepository.TABLE,
+          ),
+        ).thenAnswer(
           (_) => Future.value([
             {
               "id": expectedCampaigns[0].id,
@@ -166,7 +183,7 @@ void testGetCampaigns(MockDatabase db, CampaignRepository repository) {
       });
 
       test("should return all campaigns", () async {
-        final actualCampaigns = await repository.getCampaigns();
+        final List<Campaign> actualCampaigns = await repository.getCampaigns();
 
         expect(actualCampaigns, isA<List<Campaign>>());
         for (int i = 0; i < actualCampaigns.length; i++) {
@@ -175,15 +192,19 @@ void testGetCampaigns(MockDatabase db, CampaignRepository repository) {
       });
     });
 
-    group('try to get all campaigns when there is none', () {
+    group("try to get all campaigns when there is none", () {
       setUp(() {
-        when(db.query(
-          DatabaseCampaignRepository.TABLE,
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabaseCampaignRepository.TABLE,
+          ),
+        ).thenAnswer(
+          (_) => Future.value([]),
+        );
       });
 
       test("should return an empty list", () async {
-        final actualCampaigns = await repository.getCampaigns();
+        final List<Campaign> actualCampaigns = await repository.getCampaigns();
 
         expect(actualCampaigns, isA<List<Campaign>>());
         expect(actualCampaigns, isEmpty);
@@ -194,18 +215,20 @@ void testGetCampaigns(MockDatabase db, CampaignRepository repository) {
 
 void testUpdateCampaign(MockDatabase db, CampaignRepository repository) {
   group("updateCampaign function:", () {
-    group('try to update a valid campaign', () {
+    group("try to update a valid campaign", () {
       setUp(() {
-        when(db.update(
-          DatabaseCampaignRepository.TABLE,
-          _validCampaign.copyWith(title: "Updated").toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_validCampaignId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.update(
+            DatabaseCampaignRepository.TABLE,
+            _validCampaign.copyWith(title: "Updated").toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_validCampaignId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should update a campaign entry and returns 1", () async {
-        final updatedCount = await repository.updateCampaign(
+        final int updatedCount = await repository.updateCampaign(
           _validCampaign.copyWith(title: "Updated"),
         );
 
@@ -213,20 +236,22 @@ void testUpdateCampaign(MockDatabase db, CampaignRepository repository) {
       });
     });
 
-    group('try to update invalid campaign', () {
+    group("try to update invalid campaign", () {
       setUp(() {
-        when(db.update(
-          DatabaseCampaignRepository.TABLE,
-          _validCampaign
-              .copyWith(id: _invalidCampaignId, title: "Updated")
-              .toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_invalidCampaignId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.update(
+            DatabaseCampaignRepository.TABLE,
+            _validCampaign
+                .copyWith(id: _invalidCampaignId, title: "Updated")
+                .toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_invalidCampaignId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {
-        final updatedCount = await repository.updateCampaign(
+        final int updatedCount = await repository.updateCampaign(
           _validCampaign.copyWith(id: _invalidCampaignId, title: "Updated"),
         );
 
@@ -247,7 +272,7 @@ final _validCampaign = Campaign(
   description: "Campaign Description",
 );
 
-final _validCampaigns = [
+final _validCampaigns = <Campaign>[
   _validCampaign,
   _validCampaign.copyWith(
     id: _validCampaignId + 1,

@@ -1,7 +1,7 @@
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/infra/locality_repository.dart';
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/repositories/database/database_interface.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/infra/locality_repository.dart";
 
 class DatabaseLocalityRepository extends DatabaseInterface
     implements LocalityRepository {
@@ -71,7 +71,9 @@ class DatabaseLocalityRepository extends DatabaseInterface
 
   @override
   Future<List<Locality>> getLocalitiesByStateAndCity(
-      String state, String city) async {
+    String state,
+    String city,
+  ) async {
     try {
       final localityMaps = await get(
         objs: [state, city],

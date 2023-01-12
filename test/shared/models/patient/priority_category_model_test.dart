@@ -1,6 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:nurse/shared/models/patient/priority_category_model.dart';
-import 'package:nurse/shared/models/patient/priority_group_model.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:nurse/shared/models/patient/priority_category_model.dart";
+import "package:nurse/shared/models/patient/priority_group_model.dart";
 
 void main() {
   late PriorityGroup expectedPriorityGroup;
@@ -23,8 +23,8 @@ void main() {
     );
   });
 
-  group('priorityCategory model valid instance creation', () {
-    test('should create a valid instance', () {
+  group("priorityCategory model valid instance creation", () {
+    test("should create a valid instance", () {
       expect(validPriorityCategory, isA<PriorityCategory>());
       expect(validPriorityCategory.id, 1);
       expect(validPriorityCategory.priorityGroup, expectedPriorityGroup);
@@ -46,7 +46,7 @@ void main() {
     });
 
     test("should return a priority category with description empty", () {
-      final actualPriorityCategory =
+      final PriorityCategory actualPriorityCategory =
           validPriorityCategory.copyWith(description: "");
 
       expect(actualPriorityCategory.description, "");
@@ -55,7 +55,8 @@ void main() {
     test(
         "should return a priority category with categoryCode and name equals when name is empty",
         () {
-      final actualPriorityCategory = validPriorityCategory.copyWith(name: "");
+      final PriorityCategory actualPriorityCategory =
+          validPriorityCategory.copyWith(name: "");
 
       expect(actualPriorityCategory.name, actualPriorityCategory.code);
       expect(actualPriorityCategory.name, validPriorityCategory.code);
@@ -64,14 +65,14 @@ void main() {
     test(
         "should return a priority category with description empty if description has only spaces",
         () {
-      final actualPriorityGroup =
+      final PriorityCategory actualPriorityGroup =
           validPriorityCategory.copyWith(description: " ");
 
       expect(actualPriorityGroup.description, "");
     });
   });
 
-  group('priorityCategory model invalid instance creation', () {
+  group("priorityCategory model invalid instance creation", () {
     test("should throw exception if id is 0", () {
       expect(
         () => validPriorityCategory.copyWith(id: 0),
@@ -109,7 +110,8 @@ void main() {
     test("should throw exception if categoryCode has weird characters", () {
       expect(
         () => validPriorityCategory.copyWith(
-            code: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+          code: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
+        ),
         throwsException,
         reason:
             "it's not possible to create a priorityCategory with an invalid categoryCode",
@@ -128,7 +130,8 @@ void main() {
     test("should throw exception if name has weird characters", () {
       expect(
         () => validPriorityCategory.copyWith(
-            name: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+          name: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
+        ),
         throwsException,
         reason:
             "it's not possible to create a priorityCategory with an invalid name",
@@ -138,30 +141,33 @@ void main() {
     test("should throw exception if description has weird characters", () {
       expect(
         () => validPriorityCategory.copyWith(
-            description:
-                "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+          description:
+              "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
+        ),
         throwsException,
         reason:
             "it's not possible to create a priorityCategory with an invalid description",
       );
     });
   });
-  group('priority category model instances comparison', () {
+  group("priority category model instances comparison", () {
     test("should return true if both instances are identical", () {
-      final actualPriorityCategory = validPriorityCategory;
+      final PriorityCategory actualPriorityCategory = validPriorityCategory;
 
       expect(actualPriorityCategory, validPriorityCategory);
       expect(actualPriorityCategory.hashCode, validPriorityCategory.hashCode);
     });
 
     test("should return true if two priority categories are equal", () {
-      final actualPriorityCategory = validPriorityCategory.copyWith();
+      final PriorityCategory actualPriorityCategory =
+          validPriorityCategory.copyWith();
 
       expect(actualPriorityCategory, validPriorityCategory);
     });
 
     test("should return false if two priority categories are not equal", () {
-      final actualPriorityCategory = validPriorityCategory.copyWith(id: 2);
+      final PriorityCategory actualPriorityCategory =
+          validPriorityCategory.copyWith(id: 2);
 
       expect(actualPriorityCategory, isNot(validPriorityCategory));
     });

@@ -1,11 +1,10 @@
-import 'package:nurse/app/modules/EntityList/entity_page_controller.dart';
+import "package:mobx/mobx.dart";
+import "package:nurse/app/modules/EntityList/entity_page_controller.dart";
+import "package:nurse/shared/models/vaccination/applier_model.dart";
+import "package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart";
+import "package:nurse/shared/repositories/vaccination/applier_repository.dart";
 
-import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
-
-import 'package:mobx/mobx.dart';
-part 'applier_page_controller.g.dart';
+part "applier_page_controller.g.dart";
 
 class AppliersPageController = _AppliersPageControllerBase
     with _$AppliersPageController;
@@ -28,7 +27,12 @@ abstract class _AppliersPageControllerBase extends EntityPageController<Applier>
 
     entities
       ..clear()
-      ..addAll(result..sort((a, b) => a.person.name.compareTo(b.person.name)));
+      ..addAll(
+        result
+          ..sort(
+            (Applier a, Applier b) => a.person.name.compareTo(b.person.name),
+          ),
+      );
 
     isLoading = false;
 

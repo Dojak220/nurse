@@ -1,7 +1,7 @@
-import 'package:nurse/shared/models/patient/priority_group_model.dart';
-import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/patient/priority_group_repository.dart';
+import "package:nurse/shared/models/patient/priority_group_model.dart";
+import "package:nurse/shared/repositories/database/database_interface.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/patient/priority_group_repository.dart";
 
 class DatabasePriorityGroupRepository extends DatabaseInterface
     implements PriorityGroupRepository {

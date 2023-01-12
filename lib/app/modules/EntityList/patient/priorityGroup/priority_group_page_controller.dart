@@ -1,11 +1,11 @@
-import 'package:mobx/mobx.dart';
-import 'package:nurse/app/modules/EntityList/entity_page_controller.dart';
+import "package:mobx/mobx.dart";
+import "package:nurse/app/modules/EntityList/entity_page_controller.dart";
 
-import 'package:nurse/shared/models/patient/priority_group_model.dart';
-import 'package:nurse/shared/repositories/database/patient/database_priority_group_repository.dart';
-import 'package:nurse/shared/repositories/patient/priority_group_repository.dart';
+import "package:nurse/shared/models/patient/priority_group_model.dart";
+import "package:nurse/shared/repositories/database/patient/database_priority_group_repository.dart";
+import "package:nurse/shared/repositories/patient/priority_group_repository.dart";
 
-part 'priority_group_page_controller.g.dart';
+part "priority_group_page_controller.g.dart";
 
 class PriorityGroupsPageController = _PriorityGroupsPageControllerBase
     with _$PriorityGroupsPageController;

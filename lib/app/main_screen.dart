@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:nurse/app/components/nurse_appbar.dart';
-import 'package:nurse/app/components/second_appbar.dart';
-import 'package:nurse/app/components/toolbar_icon.dart';
-import 'package:nurse/app/modules/EntityList/add_entities_menu_page.dart';
-import 'package:nurse/app/modules/Export/export_data_page.dart';
-import 'package:nurse/app/modules/Home/components/vaccination_button.dart';
-import 'package:nurse/app/modules/Home/home_controller.dart';
-import 'package:nurse/app/modules/Home/home_page.dart';
-import 'package:nurse/app/theme/app_colors.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/components/nurse_appbar.dart";
+import "package:nurse/app/components/second_appbar.dart";
+import "package:nurse/app/components/toolbar_icon.dart";
+import "package:nurse/app/modules/EntityList/add_entities_menu_page.dart";
+import "package:nurse/app/modules/Export/export_data_page.dart";
+import "package:nurse/app/modules/Home/components/vaccination_button.dart";
+import "package:nurse/app/modules/Home/home_controller.dart";
+import "package:nurse/app/modules/Home/home_page.dart";
+import "package:nurse/app/theme/app_colors.dart";
+import "package:provider/provider.dart";
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -78,14 +77,7 @@ class NurseBottomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.cinzaMedio2,
-            blurRadius: 15.0,
-            spreadRadius: 0.0,
-            offset: Offset(0.0, 0.0),
-          )
-        ],
+        boxShadow: [BoxShadow(color: AppColors.cinzaMedio2, blurRadius: 15.0)],
       ),
       child: BottomAppBar(
         shape: const AutomaticNotchedShape(
@@ -98,7 +90,7 @@ class NurseBottomAppBar extends StatelessWidget {
           data: const IconThemeData(color: AppColors.cinzaEscuro),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
+            children: [
               ToolbarIcon(
                 0,
                 icon: Icons.home_rounded,

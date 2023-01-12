@@ -1,22 +1,23 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:path/path.dart';
-import 'package:sqflite_sqlcipher/sqflite.dart';
+import "package:flutter/services.dart";
+import "package:flutter_dotenv/flutter_dotenv.dart";
+import "package:path/path.dart";
+import "package:sqflite_sqlcipher/sqflite.dart";
 
 // coverage:ignore-file
 class DatabaseManager {
-  static final DatabaseManager _instance = DatabaseManager._internal();
-  DatabaseManager._internal();
-
   Database? _db;
   Database get db => _db!;
   bool _isDatabaseInitialized = false;
 
+  static final DatabaseManager _instance = DatabaseManager._internal();
+
   factory DatabaseManager() {
     return _instance;
   }
+
+  DatabaseManager._internal();
 
   Future<void> tryToInit() async {
     if (!_isDatabaseInitialized || _db == null) {
@@ -25,8 +26,11 @@ class DatabaseManager {
   }
 
   Future<void> _init() async {
-    String path = join(await getDatabasesPath(), dotenv.get('DATABASE_NAME'));
-    String password = dotenv.get('DATABASE_PASSWORD');
+    final String path = join(
+      await getDatabasesPath(),
+      dotenv.get("DATABASE_NAME"),
+    );
+    final String password = dotenv.get("DATABASE_PASSWORD");
 
     _db = await openDatabase(
       path,
@@ -52,5 +56,5 @@ class DatabaseManager {
     await batch.commit();
   }
 
-  bool isValidScript(String script) => script.isNotEmpty && script != ' ';
+  bool isValidScript(String script) => script.isNotEmpty && script != " ";
 }

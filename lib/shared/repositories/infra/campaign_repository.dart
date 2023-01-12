@@ -1,4 +1,4 @@
-import 'package:nurse/shared/models/infra/campaign_model.dart';
+import "package:nurse/shared/models/infra/campaign_model.dart";
 
 abstract class CampaignRepository {
   Future<int> createCampaign(Campaign campaign);

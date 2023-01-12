@@ -1,7 +1,9 @@
-import 'package:intl/intl.dart';
-import 'package:nurse/shared/models/generic_model.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/foundation.dart";
+import "package:intl/intl.dart";
+import "package:nurse/shared/models/generic_model.dart";
+import "package:nurse/shared/utils/validator.dart";
 
+@immutable
 class Campaign implements GenericModel {
   @override
   final int? id;
@@ -26,7 +28,7 @@ class Campaign implements GenericModel {
     if (id != null) Validator.validate(ValidatorType.id, id!);
 
     if (endDate.isBefore(startDate)) {
-      throw Exception('End date must be after start date');
+      throw Exception("End date must be after start date");
     }
 
     Validator.validateAll(
@@ -58,22 +60,22 @@ class Campaign implements GenericModel {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'title': title,
-      'description': description,
-      'start_date': DateFormat("yyyy-MM-dd").format(startDate),
-      'end_date': DateFormat("yyyy-MM-dd").format(endDate),
+      "id": id,
+      "title": title,
+      "description": description,
+      "start_date": DateFormat("yyyy-MM-dd").format(startDate),
+      "end_date": DateFormat("yyyy-MM-dd").format(endDate),
     };
   }
 
   factory Campaign.fromMap(Map<String, dynamic> map) {
     return Campaign(
-      id: map['id'] as int?,
-      title: map['title'] as String? ?? '',
-      description: map['description'] as String? ?? '',
-      startDate: DateTime.parse(map['start_date'] as String),
-      endDate: map['end_date'] != null
-          ? DateTime.parse(map['end_date'] as String)
+      id: map["id"] as int?,
+      title: map["title"] as String? ?? "",
+      description: map["description"] as String? ?? "",
+      startDate: DateTime.parse(map["start_date"] as String),
+      endDate: map["end_date"] != null
+          ? DateTime.parse(map["end_date"] as String)
           : null,
     );
   }

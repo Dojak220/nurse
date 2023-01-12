@@ -1,6 +1,8 @@
-import 'package:nurse/shared/models/generic_model.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/foundation.dart";
+import "package:nurse/shared/models/generic_model.dart";
+import "package:nurse/shared/utils/validator.dart";
 
+@immutable
 class Locality implements GenericModel {
   @override
   final int? id;
@@ -50,21 +52,21 @@ class Locality implements GenericModel {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'name': name,
-      'city': city,
-      'state': state,
-      'ibge_code': ibgeCode,
+      "id": id,
+      "name": name,
+      "city": city,
+      "state": state,
+      "ibge_code": ibgeCode,
     };
   }
 
   factory Locality.fromMap(Map<String, dynamic> map) {
     return Locality(
-      id: map['id'] as int?,
-      name: map['name'] as String? ?? '',
-      city: map['city'] as String? ?? '',
-      state: map['state'] as String? ?? '',
-      ibgeCode: map['ibge_code'] as String? ?? '',
+      id: map["id"] as int?,
+      name: map["name"] as String? ?? "",
+      city: map["city"] as String? ?? "",
+      state: map["state"] as String? ?? "",
+      ibgeCode: map["ibge_code"] as String? ?? "",
     );
   }
 
@@ -92,7 +94,7 @@ class Locality implements GenericModel {
   // coverage:ignore-start
   @override
   String toString() {
-    return '$ibgeCode - $name, $city / $state';
+    return "$ibgeCode - $name, $city / $state";
   }
   // coverage:ignore-end
 }

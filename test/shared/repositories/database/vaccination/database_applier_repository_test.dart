@@ -1,18 +1,18 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/infra/database_establishment_repository.dart';
-import 'package:nurse/shared/repositories/database/patient/database_person_repository.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
-import 'package:sqflite_sqlcipher/sqflite.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:mockito/annotations.dart";
+import "package:mockito/mockito.dart";
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/models/vaccination/applier_model.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/infra/database_establishment_repository.dart";
+import "package:nurse/shared/repositories/database/patient/database_person_repository.dart";
+import "package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart";
+import "package:nurse/shared/repositories/vaccination/applier_repository.dart";
+import "package:sqflite_sqlcipher/sqflite.dart";
 
-import 'database_applier_repository_test.mocks.dart';
+import "database_applier_repository_test.mocks.dart";
 
 @GenerateMocks([
   DatabaseManager,
@@ -59,11 +59,15 @@ void main() {
 
 void testCreateApplier(MockDatabase db, ApplierRepository repository) {
   group("createApplier function:", () {
-    group('try to create a valid applier', () {
+    group("try to create a valid applier", () {
       setUp(() {
-        when(db.insert(DatabaseApplierRepository.TABLE, any,
-                conflictAlgorithm: anyNamed("conflictAlgorithm")))
-            .thenAnswer((_) => Future.value(1));
+        when(
+          db.insert(
+            DatabaseApplierRepository.TABLE,
+            any,
+            conflictAlgorithm: anyNamed("conflictAlgorithm"),
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should create a new applier entry and return its id", () async {
@@ -77,13 +81,15 @@ void testCreateApplier(MockDatabase db, ApplierRepository repository) {
 
 void testDeleteApplier(MockDatabase db, ApplierRepository repository) {
   group("deleteApplier function:", () {
-    group('try to delete valid applier', () {
+    group("try to delete valid applier", () {
       setUp(() {
-        when(db.delete(
-          DatabaseApplierRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validApplierId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.delete(
+            DatabaseApplierRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validApplierId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should delete a applier entry and returns 1", () async {
@@ -93,13 +99,15 @@ void testDeleteApplier(MockDatabase db, ApplierRepository repository) {
       });
     });
 
-    group('try to delete invalid applier', () {
+    group("try to delete invalid applier", () {
       setUp(() {
-        when(db.delete(
-          DatabaseApplierRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_invalidApplierId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.delete(
+            DatabaseApplierRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_invalidApplierId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesnt exist", () async {
@@ -115,20 +123,24 @@ void testGetApplier(MockDatabase db, ApplierRepository repository) {
   group("getApplier function:", () {
     final expectedApplier = _validApplier;
 
-    group('try to get valid applier', () {
+    group("try to get valid applier", () {
       setUp(() {
-        when(db.query(
-          DatabaseApplierRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validApplierId],
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": expectedApplier.id,
-                "cns": expectedApplier.cns,
-                "person": expectedApplier.person.id,
-                "establishment": expectedApplier.establishment.id,
-              }
-            ]));
+        when(
+          db.query(
+            DatabaseApplierRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validApplierId],
+          ),
+        ).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": expectedApplier.id,
+              "cns": expectedApplier.cns,
+              "person": expectedApplier.person.id,
+              "establishment": expectedApplier.establishment.id,
+            }
+          ]),
+        );
       });
 
       test("should get a applier entry by its id", () async {
@@ -139,18 +151,20 @@ void testGetApplier(MockDatabase db, ApplierRepository repository) {
       });
     });
 
-    group('try to get an invalid applier', () {
+    group("try to get an invalid applier", () {
       setUp(() {
-        when(db.query(
-          DatabaseApplierRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [2],
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabaseApplierRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [2],
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should throw exception if id doesn't exist", () async {
         expect(
-          () async => await repository.getApplierById(2),
+          () async => repository.getApplierById(2),
           throwsStateError,
         );
       });
@@ -162,11 +176,13 @@ void testGetAppliers(MockDatabase db, ApplierRepository repository) {
   group("getAppliers function:", () {
     final expectedAppliers = _validAppliers;
 
-    group('try to get all appliers', () {
+    group("try to get all appliers", () {
       setUp(() {
-        when(db.query(
-          DatabaseApplierRepository.TABLE,
-        )).thenAnswer(
+        when(
+          db.query(
+            DatabaseApplierRepository.TABLE,
+          ),
+        ).thenAnswer(
           (_) => Future.value([
             {
               "id": expectedAppliers[0].id,
@@ -194,11 +210,13 @@ void testGetAppliers(MockDatabase db, ApplierRepository repository) {
       });
     });
 
-    group('try to get all appliers when there is none', () {
+    group("try to get all appliers when there is none", () {
       setUp(() {
-        when(db.query(
-          DatabaseApplierRepository.TABLE,
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabaseApplierRepository.TABLE,
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should return an empty list", () async {
@@ -213,14 +231,16 @@ void testGetAppliers(MockDatabase db, ApplierRepository repository) {
 
 void testUpdateApplier(MockDatabase db, ApplierRepository repository) {
   group("updateApplier function:", () {
-    group('try to update a valid applier', () {
+    group("try to update a valid applier", () {
       setUp(() {
-        when(db.update(
-          DatabaseApplierRepository.TABLE,
-          _validApplier.copyWith(cns: "267174371730003").toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_validApplierId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.update(
+            DatabaseApplierRepository.TABLE,
+            _validApplier.copyWith(cns: "267174371730003").toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_validApplierId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should update a applier entry and returns 3", () async {
@@ -231,16 +251,18 @@ void testUpdateApplier(MockDatabase db, ApplierRepository repository) {
         expect(updatedRows, 3); // applier, establishment and person
       });
     });
-    group('try to update with invalid applier', () {
+    group("try to update with invalid applier", () {
       setUp(() {
-        when(db.update(
-          DatabaseApplierRepository.TABLE,
-          _validApplier
-              .copyWith(id: _invalidApplierId, cns: "267174371730003")
-              .toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_invalidApplierId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.update(
+            DatabaseApplierRepository.TABLE,
+            _validApplier
+                .copyWith(id: _invalidApplierId, cns: "267174371730003")
+                .toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_invalidApplierId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {

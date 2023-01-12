@@ -1,7 +1,9 @@
-import 'package:nurse/shared/models/generic_model.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/foundation.dart";
+import "package:nurse/shared/models/generic_model.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/utils/validator.dart";
 
+@immutable
 class Person implements GenericModel {
   @override
   final int? id;
@@ -61,31 +63,31 @@ class Person implements GenericModel {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'cpf': cpf,
-      'name': name,
-      'birth_date': birthDate?.toString(),
-      'locality': locality?.id,
-      'sex': sex.name,
-      'mother_name': motherName,
-      'father_name': fatherName,
+      "id": id,
+      "cpf": cpf,
+      "name": name,
+      "birth_date": birthDate?.toString(),
+      "locality": locality?.id,
+      "sex": sex.name,
+      "mother_name": motherName,
+      "father_name": fatherName,
     };
   }
 
   factory Person.fromMap(Map<String, dynamic> map) {
     return Person(
-      id: map['id'] as int?,
-      cpf: map['cpf'] as String,
-      name: map['name'] as String,
-      birthDate: map['birth_date'] != null
-          ? DateTime.parse(map['birth_date'] as String)
+      id: map["id"] as int?,
+      cpf: map["cpf"] as String,
+      name: map["name"] as String,
+      birthDate: map["birth_date"] != null
+          ? DateTime.parse(map["birth_date"] as String)
           : null,
-      locality: map['locality'] != null
-          ? Locality.fromMap(map['locality'] as Map<String, dynamic>)
+      locality: map["locality"] != null
+          ? Locality.fromMap(map["locality"] as Map<String, dynamic>)
           : null,
-      sex: SexExtension.fromName(map['sex'] as String? ?? Sex.none.name),
-      motherName: map['mother_name'] as String? ?? "",
-      fatherName: map['father_name'] as String? ?? "",
+      sex: SexExtension.fromName(map["sex"] as String? ?? Sex.none.name),
+      motherName: map["mother_name"] as String? ?? "",
+      fatherName: map["father_name"] as String? ?? "",
     );
   }
 
@@ -119,7 +121,7 @@ class Person implements GenericModel {
   // coverage:ignore-start
   @override
   String toString() {
-    return 'cpf: $cpf, name: $name';
+    return "cpf: $cpf, name: $name";
   }
   // coverage:ignore-end
 }
@@ -140,9 +142,10 @@ extension SexExtension on Sex {
       case "N":
       case "NONE":
       case "NENHUM":
-      default:
         return Sex.none;
     }
+
+    return Sex.none;
   }
 
   String get name {
@@ -152,7 +155,6 @@ extension SexExtension on Sex {
       case Sex.male:
         return "MASCULINO";
       case Sex.none:
-      default:
         return "NÃO SE APLICA";
     }
   }

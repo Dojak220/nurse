@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/theme/app_colors.dart';
-import 'package:nurse/app/utils/strings_and_styles.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/theme/app_colors.dart";
+import "package:nurse/app/utils/strings_and_styles.dart";
 
 class NurseAppBar extends StatelessWidget with PreferredSizeWidget {
   const NurseAppBar({

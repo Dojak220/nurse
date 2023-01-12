@@ -1,13 +1,13 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:nurse/shared/models/patient/priority_group_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/patient/database_priority_group_repository.dart';
-import 'package:nurse/shared/repositories/patient/priority_group_repository.dart';
-import 'package:sqflite_sqlcipher/sqflite.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:mockito/annotations.dart";
+import "package:mockito/mockito.dart";
+import "package:nurse/shared/models/patient/priority_group_model.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/patient/database_priority_group_repository.dart";
+import "package:nurse/shared/repositories/patient/priority_group_repository.dart";
+import "package:sqflite_sqlcipher/sqflite.dart";
 
-import 'database_priority_group_repository_test.mocks.dart';
+import "database_priority_group_repository_test.mocks.dart";
 
 @GenerateMocks([DatabaseManager, Database, DatabasePriorityGroupRepository])
 void main() {
@@ -32,11 +32,15 @@ void testCreatePriorityGroup(
   PriorityGroupRepository repository,
 ) {
   group("createPriorityGroup function:", () {
-    group('try to create a valid priorityGroup', () {
+    group("try to create a valid priorityGroup", () {
       setUp(() {
-        when(db.insert(DatabasePriorityGroupRepository.TABLE, any,
-                conflictAlgorithm: anyNamed("conflictAlgorithm")))
-            .thenAnswer((_) => Future.value(1));
+        when(
+          db.insert(
+            DatabasePriorityGroupRepository.TABLE,
+            any,
+            conflictAlgorithm: anyNamed("conflictAlgorithm"),
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should create a new priorityGroup entry and return its id",
@@ -55,13 +59,15 @@ void testDeletePriorityGroup(
   PriorityGroupRepository repository,
 ) {
   group("deletePriorityGroup function:", () {
-    group('try to delete valid priorityGroup', () {
+    group("try to delete valid priorityGroup", () {
       setUp(() {
-        when(db.delete(
-          DatabasePriorityGroupRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validPriorityGroupId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.delete(
+            DatabasePriorityGroupRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validPriorityGroupId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should delete a priorityGroup entry and returns 1", () async {
@@ -72,13 +78,15 @@ void testDeletePriorityGroup(
       });
     });
 
-    group('try to delete invalid priorityGroup', () {
+    group("try to delete invalid priorityGroup", () {
       setUp(() {
-        when(db.delete(
-          DatabasePriorityGroupRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_invalidPriorityGroupId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.delete(
+            DatabasePriorityGroupRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_invalidPriorityGroupId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {
@@ -98,13 +106,15 @@ void testGetPriorityGroup(
   group("getPriorityGroup function:", () {
     final expectedPriorityGroup = _validPriorityGroup;
 
-    group('try to get valid priorityGroup', () {
+    group("try to get valid priorityGroup", () {
       setUp(() {
-        when(db.query(
-          DatabasePriorityGroupRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validPriorityGroupId],
-        )).thenAnswer(
+        when(
+          db.query(
+            DatabasePriorityGroupRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validPriorityGroupId],
+          ),
+        ).thenAnswer(
           (_) => Future.value([
             {
               "id": expectedPriorityGroup.id,
@@ -125,18 +135,20 @@ void testGetPriorityGroup(
       });
     });
 
-    group('try to get an invalid priorityGroup', () {
+    group("try to get an invalid priorityGroup", () {
       setUp(() {
-        when(db.query(
-          DatabasePriorityGroupRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_invalidPriorityGroupId],
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabasePriorityGroupRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_invalidPriorityGroupId],
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should throw exception if id doesn't exist", () async {
         expect(
-          () async => await repository.getPriorityGroupById(2),
+          () async => repository.getPriorityGroupById(2),
           throwsStateError,
         );
       });
@@ -151,30 +163,34 @@ void testGetPriorityGroups(
   group("getPriorityGroups function:", () {
     final expectedPriorityGroups = _validPriorityGroups;
 
-    group('try to get all priorityGroups', () {
+    group("try to get all priorityGroups", () {
       setUp(() {
-        when(db.query(
-          DatabasePriorityGroupRepository.TABLE,
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": _validPriorityGroupId,
-                "code": "Pessoas com mais de 60 anos",
-                "name": "Idosos",
-                "description": "Grupo de pessoas com mais de 60 anos",
-              },
-              {
-                "id": _validPriorityGroupId + 1,
-                "code": "Pessoas com idade entre 12 e 18 anos",
-                "name": "Adolescentes",
-                "description": "Grupo de adolescentes",
-              },
-              {
-                "id": _validPriorityGroupId + 3,
-                "code": "Pessoas com menos de 12 anos",
-                "name": "Crianças",
-                "description": "Grupo de crianças",
-              },
-            ]));
+        when(
+          db.query(
+            DatabasePriorityGroupRepository.TABLE,
+          ),
+        ).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": _validPriorityGroupId,
+              "code": "Pessoas com mais de 60 anos",
+              "name": "Idosos",
+              "description": "Grupo de pessoas com mais de 60 anos",
+            },
+            {
+              "id": _validPriorityGroupId + 1,
+              "code": "Pessoas com idade entre 12 e 18 anos",
+              "name": "Adolescentes",
+              "description": "Grupo de adolescentes",
+            },
+            {
+              "id": _validPriorityGroupId + 3,
+              "code": "Pessoas com menos de 12 anos",
+              "name": "Crianças",
+              "description": "Grupo de crianças",
+            },
+          ]),
+        );
       });
 
       test("should return all priorityGroups", () async {
@@ -187,11 +203,13 @@ void testGetPriorityGroups(
       });
     });
 
-    group('try to get all priorityGroups when there is none', () {
+    group("try to get all priorityGroups when there is none", () {
       setUp(() {
-        when(db.query(
-          DatabasePriorityGroupRepository.TABLE,
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabasePriorityGroupRepository.TABLE,
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should return an empty list", () async {
@@ -209,14 +227,16 @@ void testUpdatePriorityGroup(
   PriorityGroupRepository repository,
 ) {
   group("updatePriorityGroup function:", () {
-    group('try to update a valid priorityGroup', () {
+    group("try to update a valid priorityGroup", () {
       setUp(() {
-        when(db.update(
-          DatabasePriorityGroupRepository.TABLE,
-          _validPriorityGroup.copyWith(name: "Idosos").toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_validPriorityGroupId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.update(
+            DatabasePriorityGroupRepository.TABLE,
+            _validPriorityGroup.copyWith(name: "Idosos").toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_validPriorityGroupId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should update a priorityGroup entry and returns 1", () async {
@@ -228,22 +248,26 @@ void testUpdatePriorityGroup(
       });
     });
 
-    group('try to update invalid priorityGroup', () {
+    group("try to update invalid priorityGroup", () {
       setUp(() {
-        when(db.update(
-          DatabasePriorityGroupRepository.TABLE,
-          _validPriorityGroup
-              .copyWith(id: _invalidPriorityGroupId, name: "Idosos")
-              .toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_invalidPriorityGroupId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.update(
+            DatabasePriorityGroupRepository.TABLE,
+            _validPriorityGroup
+                .copyWith(id: _invalidPriorityGroupId, name: "Idosos")
+                .toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_invalidPriorityGroupId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {
         final updatedCount = await repository.updatePriorityGroup(
           _validPriorityGroup.copyWith(
-              id: _invalidPriorityGroupId, name: "Idosos"),
+            id: _invalidPriorityGroupId,
+            name: "Idosos",
+          ),
         );
 
         expect(updatedCount, 0);

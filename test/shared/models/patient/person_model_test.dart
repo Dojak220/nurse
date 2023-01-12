@@ -1,6 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
 
 void main() {
   late Person validPerson;
@@ -21,8 +21,8 @@ void main() {
     );
   });
 
-  group('person model valid instance creation', () {
-    test('should create a valid instance', () {
+  group("person model valid instance creation", () {
+    test("should create a valid instance", () {
       expect(validPerson, isA<Person>());
       expect(validPerson.id, 1);
       expect(validPerson.cpf, "67732120817");
@@ -36,7 +36,7 @@ void main() {
     });
   });
 
-  group('person model invalid instance creation', () {
+  group("person model invalid instance creation", () {
     test("should throw exception if id is 0", () {
       expect(
         () => validPerson.copyWith(id: 0),
@@ -72,7 +72,8 @@ void main() {
     test("should throw exception if name has weird characters", () {
       expect(
         () => validPerson.copyWith(
-            name: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+          name: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
+        ),
         throwsException,
         reason: "it's not possible to create a person with an invalid name",
       );
@@ -92,22 +93,22 @@ void main() {
       );
     });
   });
-  group('person model instances comparison', () {
+  group("person model instances comparison", () {
     test("should return true if both instances are identical", () {
-      final actualPerson = validPerson;
+      final Person actualPerson = validPerson;
 
       expect(actualPerson, validPerson);
       expect(actualPerson.hashCode, validPerson.hashCode);
     });
 
     test("should return true if two persons are equal", () {
-      final actualPerson = validPerson.copyWith();
+      final Person actualPerson = validPerson.copyWith();
 
       expect(actualPerson, validPerson);
     });
 
     test("should return false if two persons are not equal", () {
-      final actualPerson = validPerson.copyWith(id: 2);
+      final Person actualPerson = validPerson.copyWith(id: 2);
 
       expect(actualPerson, isNot(validPerson));
     });

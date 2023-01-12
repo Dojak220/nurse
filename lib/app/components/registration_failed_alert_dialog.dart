@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/dialog_confirm_button.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/dialog_confirm_button.dart";
 
 class RegistrationFailedAlertDialog extends StatelessWidget {
   final String entityName;
@@ -15,16 +15,16 @@ class RegistrationFailedAlertDialog extends StatelessWidget {
       title: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
+        children: [
           const Icon(Icons.warning_rounded, size: 120.0),
           Text(
-            'Falha ao cadastrar novo(a) $entityName!',
+            "Falha ao cadastrar novo(a) $entityName!",
             textAlign: TextAlign.center,
           ),
         ],
       ),
       content: const Text(
-        'Cadastro já existia no banco de dados!',
+        "Cadastro já existia no banco de dados!",
         textAlign: TextAlign.center,
       ),
       actions: const [DialogConfirmButton(text: "Ok")],

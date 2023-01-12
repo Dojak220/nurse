@@ -1,7 +1,9 @@
-import 'package:nurse/shared/models/generic_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/foundation.dart";
+import "package:nurse/shared/models/generic_model.dart";
+import "package:nurse/shared/models/vaccination/vaccine_model.dart";
+import "package:nurse/shared/utils/validator.dart";
 
+@immutable
 class VaccineBatch implements GenericModel {
   @override
   final int? id;
@@ -21,7 +23,7 @@ class VaccineBatch implements GenericModel {
   void _validateVaccineBatch() {
     if (id != null) Validator.validate(ValidatorType.id, id!);
     if (quantity <= 0) {
-      throw Exception('Quantity must be greater than 0');
+      throw Exception("Quantity must be greater than 0");
     }
 
     Validator.validate(ValidatorType.numericalString, number);
@@ -44,24 +46,24 @@ class VaccineBatch implements GenericModel {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'number': number,
-      'quantity': quantity,
-      'vaccine': vaccine.id,
+      "id": id,
+      "number": number,
+      "quantity": quantity,
+      "vaccine": vaccine.id,
     };
   }
 
   factory VaccineBatch.fromMap(Map<String, dynamic> map) {
     return VaccineBatch(
-      id: map['id'] as int?,
-      number: map['number'] as String? ?? '',
-      quantity: map['quantity'] as int? ?? 0,
-      vaccine: Vaccine.fromMap(map['vaccine'] as Map<String, dynamic>),
+      id: map["id"] as int?,
+      number: map["number"] as String? ?? "",
+      quantity: map["quantity"] as int? ?? 0,
+      vaccine: Vaccine.fromMap(map["vaccine"] as Map<String, dynamic>),
     );
   }
 
   @override
-  String toString() => 'Batch $number';
+  String toString() => "Batch $number";
 
   @override
   bool operator ==(Object other) {

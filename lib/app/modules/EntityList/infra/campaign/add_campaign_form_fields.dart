@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/components/form_padding.dart';
-import 'package:nurse/app/modules/EntityList/infra/campaign/add_campaign_form_controller.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
-import 'package:nurse/app/utils/form_labels.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/components/form_padding.dart";
+import "package:nurse/app/modules/EntityList/infra/campaign/add_campaign_form_controller.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart";
+import "package:nurse/app/utils/form_labels.dart";
+import "package:nurse/shared/utils/validator.dart";
 
 class CampaignFormFields extends StatefulWidget {
   final AddCampaignFormController controller;
@@ -32,7 +32,7 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
               label: FormLabels.campaignName,
               textEditingController: widget.controller.title,
               validatorType: ValidatorType.name,
-              onSaved: (value) => {},
+              onSaved: (value) {},
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
@@ -40,7 +40,7 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
               label: FormLabels.campaignDescription,
               textEditingController: widget.controller.description,
               validatorType: ValidatorType.optionalName,
-              onSaved: (value) => {},
+              onSaved: (value) {},
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
@@ -60,7 +60,7 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
               validatorType: ValidatorType.optionalDate,
               onTap: () async => widget.controller.selectEndDate(context),
               readOnly: true,
-              onSaved: (value) => {},
+              onSaved: (value) {},
             ),
           ],
         ),

@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/components/sex_icon.dart';
-import 'package:nurse/app/modules/EntityList/vaccination/applier/add_applier_form_controller.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
-import 'package:nurse/app/utils/form_labels.dart';
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/components/sex_icon.dart";
+import "package:nurse/app/modules/EntityList/vaccination/applier/add_applier_form_controller.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart";
+import "package:nurse/app/utils/form_labels.dart";
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/utils/validator.dart";
 
 class ApplierFormFields extends StatefulWidget {
   final AddApplierFormController controller;
@@ -56,8 +56,9 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
               label: FormLabels.establishmentCNES,
               items: _establishments,
               value: widget.controller.selectedEstablishment,
-              onChanged: (Establishment? value) => setState(
-                  () => widget.controller.selectedEstablishment = value),
+              onChanged: (Establishment? value) => setState(() {
+                widget.controller.selectedEstablishment = value;
+              }),
               onSaved: (Establishment? value) =>
                   widget.controller.selectedEstablishment = value,
             ),
@@ -67,7 +68,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
               label: FormLabels.applierName,
               textEditingController: widget.controller.name,
               validatorType: ValidatorType.name,
-              onSaved: (value) => {},
+              onSaved: (value) {},
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
@@ -75,7 +76,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
               label: FormLabels.applierCns,
               textEditingController: widget.controller.cns,
               validatorType: ValidatorType.cns,
-              onSaved: (value) => {},
+              onSaved: (value) {},
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
@@ -83,7 +84,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
               label: FormLabels.applierCpf,
               textEditingController: widget.controller.cpf,
               validatorType: ValidatorType.cpf,
-              onSaved: (value) => {},
+              onSaved: (value) {},
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
@@ -93,7 +94,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
               validatorType: ValidatorType.birthDate,
               onTap: () async => widget.controller.selectDate(context),
               readOnly: true,
-              onSaved: (value) => {},
+              onSaved: (value) {},
             ),
             const Divider(color: Colors.black),
             CustomDropdownButtonFormField(
@@ -123,7 +124,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
               label: FormLabels.motherName,
               textEditingController: widget.controller.motherName,
               validatorType: ValidatorType.optionalName,
-              onSaved: (value) => {},
+              onSaved: (value) {},
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
@@ -131,7 +132,7 @@ class ApplierFormFieldsState extends State<ApplierFormFields> {
               label: FormLabels.fatherName,
               textEditingController: widget.controller.fatherName,
               validatorType: ValidatorType.optionalName,
-              onSaved: (value) => {},
+              onSaved: (value) {},
             ),
           ],
         ),

@@ -1,7 +1,7 @@
-import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
-import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/vaccination/vaccine_repository.dart';
+import "package:nurse/shared/models/vaccination/vaccine_model.dart";
+import "package:nurse/shared/repositories/database/database_interface.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/vaccination/vaccine_repository.dart";
 
 class DatabaseVaccineRepository extends DatabaseInterface
     implements VaccineRepository {

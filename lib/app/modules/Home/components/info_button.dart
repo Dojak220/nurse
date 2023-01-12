@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/theme/app_theme.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/theme/app_theme.dart";
 
 class InfoButton extends StatelessWidget {
   const InfoButton({
@@ -23,8 +23,6 @@ class InfoButton extends StatelessWidget {
           BoxShadow(
             color: Color(0x29000000),
             blurRadius: 6.0,
-            spreadRadius: 0,
-            blurStyle: BlurStyle.normal,
             offset: Offset(
               0.0,
               3.0,

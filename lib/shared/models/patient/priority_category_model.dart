@@ -1,7 +1,9 @@
-import 'package:nurse/shared/models/generic_model.dart';
-import 'package:nurse/shared/models/patient/priority_group_model.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/foundation.dart";
+import "package:nurse/shared/models/generic_model.dart";
+import "package:nurse/shared/models/patient/priority_group_model.dart";
+import "package:nurse/shared/utils/validator.dart";
 
+@immutable
 class PriorityCategory implements GenericModel {
   @override
   final int? id;
@@ -52,22 +54,22 @@ class PriorityCategory implements GenericModel {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'priority_group': priorityGroup.id,
-      'code': code,
-      'name': name,
-      'description': description,
+      "id": id,
+      "priority_group": priorityGroup.id,
+      "code": code,
+      "name": name,
+      "description": description,
     };
   }
 
   factory PriorityCategory.fromMap(Map<String, dynamic> map) {
     return PriorityCategory(
-      id: map['id'] as int?,
+      id: map["id"] as int?,
       priorityGroup:
-          PriorityGroup.fromMap(map['priority_group'] as Map<String, dynamic>),
-      code: map['code'] as String? ?? '',
-      name: map['name'] as String? ?? '',
-      description: map['description'] as String? ?? '',
+          PriorityGroup.fromMap(map["priority_group"] as Map<String, dynamic>),
+      code: map["code"] as String? ?? "",
+      name: map["name"] as String? ?? "",
+      description: map["description"] as String? ?? "",
     );
   }
 

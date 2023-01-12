@@ -1,15 +1,15 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:nurse/shared/models/infra/campaign_model.dart';
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/models/patient/patient_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/models/patient/priority_category_model.dart';
-import 'package:nurse/shared/models/patient/priority_group_model.dart';
-import 'package:nurse/shared/models/vaccination/application_model.dart';
-import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:nurse/shared/models/infra/campaign_model.dart";
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/models/patient/patient_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/models/patient/priority_category_model.dart";
+import "package:nurse/shared/models/patient/priority_group_model.dart";
+import "package:nurse/shared/models/vaccination/application_model.dart";
+import "package:nurse/shared/models/vaccination/applier_model.dart";
+import "package:nurse/shared/models/vaccination/vaccine_batch_model.dart";
+import "package:nurse/shared/models/vaccination/vaccine_model.dart";
 
 void main() {
   late Application validApplication;
@@ -100,8 +100,8 @@ void main() {
     );
   });
 
-  group('application model valid instance creation', () {
-    test('should create a valid instance', () {
+  group("application model valid instance creation", () {
+    test("should create a valid instance", () {
       expect(validApplication, isA<Application>());
       expect(validApplication.id, 1);
 
@@ -111,20 +111,19 @@ void main() {
     });
 
     test("should create a valid instance if dueDate is null", () {
-      final actualApplication = validApplication.copyWith(
-        applicationDate: DateTime(2022, 1, 1),
-        dueDate: null,
+      final Application actualApplication = validApplication.copyWith(
+        applicationDate: DateTime(2022),
       );
 
       expect(actualApplication.id, 1);
       expect(
         actualApplication.dueDate,
-        DateTime(2022, 1, 1).add(const Duration(days: 3 * 30)),
+        DateTime(2022).add(const Duration(days: 3 * 30)),
       );
     });
   });
 
-  group('application model invalid instance creation', () {
+  group("application model invalid instance creation", () {
     test("should throw exception if id is 0", () {
       expect(
         () => validApplication.copyWith(id: 0),
@@ -157,22 +156,22 @@ void main() {
       );
     });
   });
-  group('application model instances comparison', () {
+  group("application model instances comparison", () {
     test("should return true if both instances are identical", () {
-      final actualApplication = validApplication;
+      final Application actualApplication = validApplication;
 
       expect(actualApplication, validApplication);
       expect(actualApplication.hashCode, validApplication.hashCode);
     });
 
     test("should return true if two applications are equal", () {
-      final actualApplication = validApplication.copyWith();
+      final Application actualApplication = validApplication.copyWith();
 
       expect(actualApplication, validApplication);
     });
 
     test("should return false if two applications are not equal", () {
-      final actualApplication = validApplication.copyWith(id: 2);
+      final Application actualApplication = validApplication.copyWith(id: 2);
 
       expect(actualApplication, isNot(validApplication));
     });

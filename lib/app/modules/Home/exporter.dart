@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:mobx/mobx.dart';
-import 'package:nurse/app/utils/date_picker.dart';
-import 'package:nurse/shared/models/vaccination/application_model.dart';
-import 'package:nurse/shared/services/excel_service.dart';
+import "package:flutter/material.dart";
+import "package:mobx/mobx.dart";
+import "package:nurse/app/utils/date_picker.dart";
+import "package:nurse/shared/models/vaccination/application_model.dart";
+import "package:nurse/shared/services/excel_service.dart";
 
-part 'exporter.g.dart';
+part "exporter.g.dart";
 
 class Exporter = _ExporterBase with _$Exporter;
 
@@ -29,7 +29,9 @@ abstract class _ExporterBase with Store {
   void setStartDate(DateTime startDate) {
     this.startDate = startDate;
     if (endDate != null) {
-      setDateRange(DateTimeRange(start: startDate, end: endDate!));
+      setDateRange(
+        DateTimeRange(start: startDate, end: endDate!),
+      );
     }
   }
 
@@ -37,7 +39,9 @@ abstract class _ExporterBase with Store {
   void setEndDate(DateTime endDate) {
     this.endDate = endDate;
     if (startDate != null) {
-      setDateRange(DateTimeRange(start: startDate!, end: endDate));
+      setDateRange(
+        DateTimeRange(start: startDate!, end: endDate),
+      );
     }
   }
 
@@ -50,12 +54,16 @@ abstract class _ExporterBase with Store {
       endDate != null ? DatePicker.formatDateDDMMYYYY(endDate!) : null;
 
   Future<void> shareExcelFile(
-      List<Application> applications, DateTimeRange dateRange) {
+    List<Application> applications,
+    DateTimeRange dateRange,
+  ) {
     return excelService.shareExcelFile(applications, dateRange);
   }
 
   Future<void> openExcelFile(
-      List<Application> applications, DateTimeRange dateRange) {
+    List<Application> applications,
+    DateTimeRange dateRange,
+  ) {
     return excelService.openExcelFile(applications, dateRange);
   }
 }

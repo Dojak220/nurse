@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:nurse/shared/models/patient/priority_group_model.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:nurse/shared/models/patient/priority_group_model.dart";
 
 void main() {
   late PriorityGroup validPriorityGroup;
@@ -13,8 +13,8 @@ void main() {
     );
   });
 
-  group('priorityGroup model valid instance creation', () {
-    test('should create a valid instance', () {
+  group("priorityGroup model valid instance creation", () {
+    test("should create a valid instance", () {
       expect(validPriorityGroup, isA<PriorityGroup>());
       expect(validPriorityGroup.id, 1);
       expect(validPriorityGroup.code, "Pessoas com mais de 60 anos");
@@ -26,7 +26,8 @@ void main() {
     });
 
     test("should return a priority group with description empty", () {
-      final actualPriorityGroup = validPriorityGroup.copyWith(description: "");
+      final PriorityGroup actualPriorityGroup =
+          validPriorityGroup.copyWith(description: "");
 
       expect(actualPriorityGroup.description, "");
     });
@@ -34,7 +35,8 @@ void main() {
     test(
         "should return a priority group with description empty if description has only spaces",
         () {
-      final actualPriorityGroup = validPriorityGroup.copyWith(description: " ");
+      final PriorityGroup actualPriorityGroup =
+          validPriorityGroup.copyWith(description: " ");
 
       expect(actualPriorityGroup.description, "");
     });
@@ -42,14 +44,15 @@ void main() {
     test(
         "should return a priority group with groupCode and name equals when name is empty",
         () {
-      final actualPriorityGroup = validPriorityGroup.copyWith(name: "");
+      final PriorityGroup actualPriorityGroup =
+          validPriorityGroup.copyWith(name: "");
 
       expect(actualPriorityGroup.name, actualPriorityGroup.code);
       expect(actualPriorityGroup.name, validPriorityGroup.code);
     });
   });
 
-  group('priorityGroup model invalid instance creation', () {
+  group("priorityGroup model invalid instance creation", () {
     test("should throw exception if id is 0", () {
       expect(
         () => validPriorityGroup.copyWith(id: 0),
@@ -87,7 +90,8 @@ void main() {
     test("should throw exception if groupCode has weird characters", () {
       expect(
         () => validPriorityGroup.copyWith(
-            code: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+          code: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
+        ),
         throwsException,
         reason:
             "it's not possible to create a priorityGroup with an invalid groupCode",
@@ -106,7 +110,8 @@ void main() {
     test("should throw exception if name has weird characters", () {
       expect(
         () => validPriorityGroup.copyWith(
-            name: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+          name: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
+        ),
         throwsException,
         reason:
             "it's not possible to create a priorityGroup with an invalid name",
@@ -116,30 +121,32 @@ void main() {
     test("should throw exception if description has weird characters", () {
       expect(
         () => validPriorityGroup.copyWith(
-            description:
-                "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+          description:
+              "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
+        ),
         throwsException,
         reason:
             "it's not possible to create a priorityGroup with an invalid description",
       );
     });
   });
-  group('priority group model instances comparison', () {
+  group("priority group model instances comparison", () {
     test("should return true if both instances are identical", () {
-      final actualPriorityGroup = validPriorityGroup;
+      final PriorityGroup actualPriorityGroup = validPriorityGroup;
 
       expect(actualPriorityGroup, validPriorityGroup);
       expect(actualPriorityGroup.hashCode, validPriorityGroup.hashCode);
     });
 
     test("should return true if two priority groups are equal", () {
-      final actualPriorityGroup = validPriorityGroup.copyWith();
+      final PriorityGroup actualPriorityGroup = validPriorityGroup.copyWith();
 
       expect(actualPriorityGroup, validPriorityGroup);
     });
 
     test("should return false if two priority groups are not equal", () {
-      final actualPriorityGroup = validPriorityGroup.copyWith(id: 2);
+      final PriorityGroup actualPriorityGroup =
+          validPriorityGroup.copyWith(id: 2);
 
       expect(actualPriorityGroup, isNot(validPriorityGroup));
     });

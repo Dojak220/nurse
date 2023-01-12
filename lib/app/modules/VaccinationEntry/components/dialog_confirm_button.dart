@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/theme/app_theme.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/theme/app_theme.dart";
 
 class DialogConfirmButton extends StatelessWidget {
   const DialogConfirmButton({

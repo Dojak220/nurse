@@ -1,19 +1,19 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/models/patient/patient_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/models/patient/priority_category_model.dart';
-import 'package:nurse/shared/models/patient/priority_group_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/patient/database_patient_repository.dart';
-import 'package:nurse/shared/repositories/database/patient/database_person_repository.dart';
-import 'package:nurse/shared/repositories/database/patient/database_priority_category_repository.dart';
-import 'package:nurse/shared/repositories/patient/patient_repository.dart';
-import 'package:sqflite_sqlcipher/sqflite.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:mockito/annotations.dart";
+import "package:mockito/mockito.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/models/patient/patient_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/models/patient/priority_category_model.dart";
+import "package:nurse/shared/models/patient/priority_group_model.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/patient/database_patient_repository.dart";
+import "package:nurse/shared/repositories/database/patient/database_person_repository.dart";
+import "package:nurse/shared/repositories/database/patient/database_priority_category_repository.dart";
+import "package:nurse/shared/repositories/patient/patient_repository.dart";
+import "package:sqflite_sqlcipher/sqflite.dart";
 
-import 'database_patient_repository_test.mocks.dart';
+import "database_patient_repository_test.mocks.dart";
 
 @GenerateMocks([
   DatabaseManager,
@@ -60,11 +60,11 @@ void main() {
 
 void testCreatePatient(MockDatabase db, PatientRepository repository) {
   group("createPatient function:", () {
-    group('try to create a valid patient', () {
+    group("try to create a valid patient", () {
       setUp(() {
-        when(db.insert(any, any,
-                conflictAlgorithm: anyNamed("conflictAlgorithm")))
-            .thenAnswer((_) => Future.value(1));
+        when(
+          db.insert(any, any, conflictAlgorithm: anyNamed("conflictAlgorithm")),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should create a new patient entry and return its id", () async {
@@ -74,9 +74,8 @@ void testCreatePatient(MockDatabase db, PatientRepository repository) {
       });
 
       test("should create a new patient entry and return its id", () async {
-        final createdId = await repository.createPatient(
-          _validPatient.copyWith(cns: "856359713320003"),
-        );
+        final createdId = await repository
+            .createPatient(_validPatient.copyWith(cns: "856359713320003"));
 
         expect(createdId, 1);
       });
@@ -86,13 +85,15 @@ void testCreatePatient(MockDatabase db, PatientRepository repository) {
 
 void testDeletePatient(MockDatabase db, PatientRepository repository) {
   group("deletePatient function:", () {
-    group('try to delete valid patient', () {
+    group("try to delete valid patient", () {
       setUp(() {
-        when(db.delete(
-          DatabasePatientRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validPatientId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.delete(
+            DatabasePatientRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validPatientId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should delete an patient entry and returns 1", () async {
@@ -102,25 +103,27 @@ void testDeletePatient(MockDatabase db, PatientRepository repository) {
       });
     });
 
-    group('try to delete invalid patient', () {
+    group("try to delete invalid patient", () {
       setUp(() {
-        when(db.delete(
-          DatabasePatientRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_invalidPatientId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.delete(
+            DatabasePatientRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_invalidPatientId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should throw exception if id is 0", () async {
         expect(
-          () async => await repository.deletePatient(0),
+          () async => repository.deletePatient(0),
           throwsException,
         );
       });
 
       test("should throw exception if id is negative", () async {
         expect(
-          () async => await repository.deletePatient(-1),
+          () async => repository.deletePatient(-1),
           throwsException,
         );
       });
@@ -138,21 +141,25 @@ void testGetPatient(MockDatabase db, PatientRepository repository) {
   group("getPatient function:", () {
     final expectedPatient = _validPatient.copyWith(cns: "734759395100004");
 
-    group('try to get valid patient', () {
+    group("try to get valid patient", () {
       setUp(() {
-        when(db.query(
-          DatabasePatientRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validPatientId],
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": expectedPatient.id,
-                "cns": expectedPatient.cns,
-                "maternal_condition": expectedPatient.maternalCondition.name,
-                "person": expectedPatient.person.id,
-                "priority_category": expectedPatient.priorityCategory.id,
-              }
-            ]));
+        when(
+          db.query(
+            DatabasePatientRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validPatientId],
+          ),
+        ).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": expectedPatient.id,
+              "cns": expectedPatient.cns,
+              "maternal_condition": expectedPatient.maternalCondition.name,
+              "person": expectedPatient.person.id,
+              "priority_category": expectedPatient.priorityCategory.id,
+            }
+          ]),
+        );
       });
 
       test("should get a patient entry by its id", () async {
@@ -163,18 +170,20 @@ void testGetPatient(MockDatabase db, PatientRepository repository) {
       });
     });
 
-    group('try to get an invalid patient', () {
+    group("try to get an invalid patient", () {
       setUp(() {
-        when(db.query(
-          DatabasePatientRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [2],
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabasePatientRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [2],
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should throw exception if id doesn't exist", () async {
         expect(
-          () async => await repository.getPatientById(2),
+          () async => repository.getPatientById(2),
           throwsStateError,
         );
       });
@@ -205,35 +214,37 @@ void testGetPatients(MockDatabase db, PatientRepository repository) {
       ),
     ];
 
-    group('try to get all patients', () {
+    group("try to get all patients", () {
       setUp(() {
-        when(db.query(
-          DatabasePatientRepository.TABLE,
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": expectedPatients[0].id,
-                "cns": expectedPatients[0].cns,
-                "maternal_condition": null,
-                "person": expectedPatients[0].person.id,
-                "priority_category": expectedPatients[0].priorityCategory.id,
-              },
-              {
-                "id": expectedPatients[1].id,
-                "cns": expectedPatients[1].cns,
-                "maternal_condition":
-                    expectedPatients[1].maternalCondition.name,
-                "person": expectedPatients[1].person.id,
-                "priority_category": expectedPatients[1].priorityCategory.id,
-              },
-              {
-                "id": expectedPatients[2].id,
-                "cns": expectedPatients[2].cns,
-                "maternal_condition":
-                    expectedPatients[2].maternalCondition.name,
-                "person": expectedPatients[2].person.id,
-                "priority_category": expectedPatients[2].priorityCategory.id,
-              },
-            ]));
+        when(
+          db.query(
+            DatabasePatientRepository.TABLE,
+          ),
+        ).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": expectedPatients[0].id,
+              "cns": expectedPatients[0].cns,
+              "maternal_condition": null,
+              "person": expectedPatients[0].person.id,
+              "priority_category": expectedPatients[0].priorityCategory.id,
+            },
+            {
+              "id": expectedPatients[1].id,
+              "cns": expectedPatients[1].cns,
+              "maternal_condition": expectedPatients[1].maternalCondition.name,
+              "person": expectedPatients[1].person.id,
+              "priority_category": expectedPatients[1].priorityCategory.id,
+            },
+            {
+              "id": expectedPatients[2].id,
+              "cns": expectedPatients[2].cns,
+              "maternal_condition": expectedPatients[2].maternalCondition.name,
+              "person": expectedPatients[2].person.id,
+              "priority_category": expectedPatients[2].priorityCategory.id,
+            },
+          ]),
+        );
       });
 
       test("should return all patients", () async {
@@ -246,11 +257,13 @@ void testGetPatients(MockDatabase db, PatientRepository repository) {
       });
     });
 
-    group('try to get all patients when there is none', () {
+    group("try to get all patients when there is none", () {
       setUp(() {
-        when(db.query(
-          DatabasePatientRepository.TABLE,
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabasePatientRepository.TABLE,
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should return an empty list", () async {
@@ -275,35 +288,38 @@ void testUpdatePatient(MockDatabase db, PatientRepository repository) {
       priorityCategory: _validPriorityCategory,
     );
 
-    group('try to update a valid patient', () {
+    group("try to update a valid patient", () {
       setUp(() {
-        when(db.update(
-          DatabasePatientRepository.TABLE,
-          validPatient.copyWith(cns: "793499756240009").toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_validPatientId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.update(
+            DatabasePatientRepository.TABLE,
+            validPatient.copyWith(cns: "793499756240009").toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_validPatientId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should update a patient entry and returns 3", () async {
-        final updatedRows = await repository.updatePatient(
-          validPatient.copyWith(cns: "793499756240009"),
-        );
+        final updatedRows = await repository
+            .updatePatient(validPatient.copyWith(cns: "793499756240009"));
 
         expect(updatedRows, 3);
       });
     });
 
-    group('try to update with invalid patient', () {
+    group("try to update with invalid patient", () {
       setUp(() {
-        when(db.update(
-          DatabasePatientRepository.TABLE,
-          validPatient
-              .copyWith(id: invalidPatientId, cns: "793499756240009")
-              .toMap(),
-          where: anyNamed("where"),
-          whereArgs: [invalidPatientId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.update(
+            DatabasePatientRepository.TABLE,
+            validPatient
+                .copyWith(id: invalidPatientId, cns: "793499756240009")
+                .toMap(),
+            where: anyNamed("where"),
+            whereArgs: [invalidPatientId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {

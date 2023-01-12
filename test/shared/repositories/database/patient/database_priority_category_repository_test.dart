@@ -1,15 +1,15 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:nurse/shared/models/patient/priority_category_model.dart';
-import 'package:nurse/shared/models/patient/priority_group_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/patient/database_priority_category_repository.dart';
-import 'package:nurse/shared/repositories/database/patient/database_priority_group_repository.dart';
-import 'package:nurse/shared/repositories/patient/priority_category_repository.dart';
-import 'package:sqflite_sqlcipher/sqflite.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:mockito/annotations.dart";
+import "package:mockito/mockito.dart";
+import "package:nurse/shared/models/patient/priority_category_model.dart";
+import "package:nurse/shared/models/patient/priority_group_model.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/patient/database_priority_category_repository.dart";
+import "package:nurse/shared/repositories/database/patient/database_priority_group_repository.dart";
+import "package:nurse/shared/repositories/patient/priority_category_repository.dart";
+import "package:sqflite_sqlcipher/sqflite.dart";
 
-import 'database_priority_group_repository_test.mocks.dart';
+import "database_priority_group_repository_test.mocks.dart";
 
 @GenerateMocks([DatabaseManager, Database, DatabasePriorityGroupRepository])
 void main() {
@@ -46,11 +46,15 @@ void testCreatePriorityCategory(
   PriorityCategoryRepository repository,
 ) {
   group("createPriorityCategory function:", () {
-    group('try to create a valid priorityCategory', () {
+    group("try to create a valid priorityCategory", () {
       setUp(() {
-        when(db.insert(DatabasePriorityCategoryRepository.TABLE, any,
-                conflictAlgorithm: anyNamed("conflictAlgorithm")))
-            .thenAnswer((_) => Future.value(1));
+        when(
+          db.insert(
+            DatabasePriorityCategoryRepository.TABLE,
+            any,
+            conflictAlgorithm: anyNamed("conflictAlgorithm"),
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should create a new priorityCategory entry and return its id",
@@ -69,13 +73,15 @@ void testDeletePriorityCategory(
   PriorityCategoryRepository repository,
 ) {
   group("deletePriorityCategory function:", () {
-    group('try to delete valid priorityCategory', () {
+    group("try to delete valid priorityCategory", () {
       setUp(() {
-        when(db.delete(
-          DatabasePriorityCategoryRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validPriorityCategoryId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.delete(
+            DatabasePriorityCategoryRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validPriorityCategoryId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should delete a priorityCategory entry and returns 1", () async {
@@ -86,13 +92,15 @@ void testDeletePriorityCategory(
       });
     });
 
-    group('try to delete invalid priorityCategory', () {
+    group("try to delete invalid priorityCategory", () {
       setUp(() {
-        when(db.delete(
-          DatabasePriorityCategoryRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_invalidPriorityCategoryId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.delete(
+            DatabasePriorityCategoryRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_invalidPriorityCategoryId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {
@@ -112,13 +120,15 @@ void testGetPriorityCategory(
   group("getPriorityCategory function:", () {
     final expectedPriorityCategory = _validPriorityCategory;
 
-    group('try to get valid priorityCategory', () {
+    group("try to get valid priorityCategory", () {
       setUp(() {
-        when(db.query(
-          DatabasePriorityCategoryRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validPriorityCategoryId],
-        )).thenAnswer(
+        when(
+          db.query(
+            DatabasePriorityCategoryRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validPriorityCategoryId],
+          ),
+        ).thenAnswer(
           (_) => Future.value([
             {
               "id": expectedPriorityCategory.id,
@@ -140,18 +150,20 @@ void testGetPriorityCategory(
       });
     });
 
-    group('try to get an invalid priorityCategory', () {
+    group("try to get an invalid priorityCategory", () {
       setUp(() {
-        when(db.query(
-          DatabasePriorityCategoryRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_invalidPriorityCategoryId],
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabasePriorityCategoryRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_invalidPriorityCategoryId],
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should throw exception if id doesn't exist", () async {
         expect(
-          () async => await repository.getPriorityCategoryById(2),
+          () async => repository.getPriorityCategoryById(2),
           throwsStateError,
         );
       });
@@ -166,12 +178,14 @@ void testGetPriorityCategories(
   group("getPriorityCategories function:", () {
     final expecPriorityCategories = _validPriorityCategories;
 
-    group('try to get all priorityCategories', () {
+    group("try to get all priorityCategories", () {
       setUp(
         () {
-          when(db.query(
-            DatabasePriorityCategoryRepository.TABLE,
-          )).thenAnswer(
+          when(
+            db.query(
+              DatabasePriorityCategoryRepository.TABLE,
+            ),
+          ).thenAnswer(
             (_) => Future.value(
               [
                 {
@@ -212,11 +226,13 @@ void testGetPriorityCategories(
       });
     });
 
-    group('try to get all priorityCategories when there is none', () {
+    group("try to get all priorityCategories when there is none", () {
       setUp(() {
-        when(db.query(
-          DatabasePriorityCategoryRepository.TABLE,
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabasePriorityCategoryRepository.TABLE,
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should return an empty list", () async {
@@ -237,14 +253,16 @@ void testUpdatePriorityCategory(
   group("updatePriorityCategory function:", () {
     final expectedPriorityCategory = _validPriorityCategory;
 
-    group('try to update a valid priorityCategory', () {
+    group("try to update a valid priorityCategory", () {
       setUp(() {
-        when(db.update(
-          DatabasePriorityCategoryRepository.TABLE,
-          expectedPriorityCategory.copyWith(name: "Idosos").toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_validPriorityCategoryId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.update(
+            DatabasePriorityCategoryRepository.TABLE,
+            expectedPriorityCategory.copyWith(name: "Idosos").toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_validPriorityCategoryId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should update a priorityCategory entry and returns 2", () async {
@@ -256,22 +274,26 @@ void testUpdatePriorityCategory(
       });
     });
 
-    group('try to update invalid priorityCategory', () {
+    group("try to update invalid priorityCategory", () {
       setUp(() {
-        when(db.update(
-          DatabasePriorityCategoryRepository.TABLE,
-          expectedPriorityCategory
-              .copyWith(id: _invalidPriorityCategoryId, name: "Idosos")
-              .toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_invalidPriorityCategoryId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.update(
+            DatabasePriorityCategoryRepository.TABLE,
+            expectedPriorityCategory
+                .copyWith(id: _invalidPriorityCategoryId, name: "Idosos")
+                .toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_invalidPriorityCategoryId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {
         final updatedRows = await repository.updatePriorityCategory(
           expectedPriorityCategory.copyWith(
-              id: _invalidPriorityCategoryId, name: "Idosos"),
+            id: _invalidPriorityCategoryId,
+            name: "Idosos",
+          ),
         );
 
         expect(updatedRows, 0);

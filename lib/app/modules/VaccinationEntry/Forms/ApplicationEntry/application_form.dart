@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/components/form_padding.dart';
-import 'package:nurse/app/modules/VaccinationEntry/Forms/ApplicationEntry/application_form_controller.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
-import 'package:nurse/app/utils/form_labels.dart';
-import 'package:nurse/shared/models/vaccination/application_model.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/components/form_padding.dart";
+import "package:nurse/app/modules/VaccinationEntry/Forms/ApplicationEntry/application_form_controller.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart";
+import "package:nurse/app/utils/form_labels.dart";
+import "package:nurse/shared/models/vaccination/application_model.dart";
+import "package:nurse/shared/utils/validator.dart";
 
 class ApplicationForm extends StatefulWidget {
   final ApplicationFormController controller;
@@ -39,7 +39,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
               validatorType: ValidatorType.pastDate,
               onTap: () async => widget.controller.selectDate(context),
               readOnly: true,
-              onSaved: (value) => {},
+              onSaved: (value) {},
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
@@ -49,7 +49,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
               validatorType: ValidatorType.name,
               readOnly: true,
               enabled: false,
-              onSaved: (value) => {},
+              onSaved: (value) {},
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
@@ -59,7 +59,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
               readOnly: true,
               enabled: false,
               textEditingController: widget.controller.vaccineBatchNumber,
-              onSaved: (value) => {},
+              onSaved: (value) {},
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
@@ -69,7 +69,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
               readOnly: true,
               enabled: false,
               textEditingController: widget.controller.patientName,
-              onSaved: (value) => {},
+              onSaved: (value) {},
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
@@ -79,7 +79,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
               readOnly: true,
               enabled: false,
               textEditingController: widget.controller.campaignTitle,
-              onSaved: (value) => {},
+              onSaved: (value) {},
             ),
           ],
         ),
@@ -97,7 +97,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
   //         title: Column(
   //           mainAxisAlignment: MainAxisAlignment.center,
   //           mainAxisSize: MainAxisSize.min,
-  //           children: <Widget>[
+  //           children: [
   //             const Icon(
   //               Icons.question_mark_rounded,
   //               size: 120.0,
@@ -129,7 +129,7 @@ class _ApplicationFormState extends State<ApplicationForm> {
   //         title: Column(
   //           mainAxisAlignment: MainAxisAlignment.center,
   //           mainAxisSize: MainAxisSize.min,
-  //           children: <Widget>[
+  //           children: [
   //             const Icon(Icons.check_rounded, size: 120.0),
   //             const Text(
   //               'Cadastro realizado com sucesso!',

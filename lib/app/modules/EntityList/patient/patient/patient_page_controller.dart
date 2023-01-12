@@ -1,11 +1,13 @@
-import 'package:mobx/mobx.dart';
-import 'package:nurse/app/modules/EntityList/entity_page_controller.dart';
+import "dart:async";
 
-import 'package:nurse/shared/models/patient/patient_model.dart';
-import 'package:nurse/shared/repositories/database/patient/database_patient_repository.dart';
-import 'package:nurse/shared/repositories/patient/patient_repository.dart';
+import "package:mobx/mobx.dart";
+import "package:nurse/app/modules/EntityList/entity_page_controller.dart";
 
-part 'patient_page_controller.g.dart';
+import "package:nurse/shared/models/patient/patient_model.dart";
+import "package:nurse/shared/repositories/database/patient/database_patient_repository.dart";
+import "package:nurse/shared/repositories/patient/patient_repository.dart";
+
+part "patient_page_controller.g.dart";
 
 class PatientsPageController = _PatientsPageControllerBase
     with _$PatientsPageController;
@@ -24,12 +26,17 @@ abstract class _PatientsPageControllerBase extends EntityPageController<Patient>
 
   @action
   Future<List<Patient>> getPatients() async {
-    final result = await patientRepository.getPatients();
+    final List<Patient> result = await patientRepository.getPatients();
 
     entities
       ..clear()
       ..addAll(
-        result..sort((a, b) => a.person.name.compareTo(b.person.name)),
+        result
+          ..sort(
+            (Patient a, Patient b) {
+              return a.person.name.compareTo(b.person.name);
+            },
+          ),
       );
 
     isLoading = false;

@@ -1,27 +1,27 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:nurse/shared/models/infra/campaign_model.dart';
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/models/patient/patient_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/models/patient/priority_category_model.dart';
-import 'package:nurse/shared/models/patient/priority_group_model.dart';
-import 'package:nurse/shared/models/vaccination/application_model.dart';
-import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/infra/database_campaign_repository.dart';
-import 'package:nurse/shared/repositories/database/patient/database_patient_repository.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_application_repository.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_batch_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/application_repository.dart';
-import 'package:sqflite_sqlcipher/sqflite.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:mockito/annotations.dart";
+import "package:mockito/mockito.dart";
+import "package:nurse/shared/models/infra/campaign_model.dart";
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/models/patient/patient_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/models/patient/priority_category_model.dart";
+import "package:nurse/shared/models/patient/priority_group_model.dart";
+import "package:nurse/shared/models/vaccination/application_model.dart";
+import "package:nurse/shared/models/vaccination/applier_model.dart";
+import "package:nurse/shared/models/vaccination/vaccine_batch_model.dart";
+import "package:nurse/shared/models/vaccination/vaccine_model.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/infra/database_campaign_repository.dart";
+import "package:nurse/shared/repositories/database/patient/database_patient_repository.dart";
+import "package:nurse/shared/repositories/database/vaccination/database_application_repository.dart";
+import "package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart";
+import "package:nurse/shared/repositories/database/vaccination/database_vaccine_batch_repository.dart";
+import "package:nurse/shared/repositories/vaccination/application_repository.dart";
+import "package:sqflite_sqlcipher/sqflite.dart";
 
-import 'database_application_repository_test.mocks.dart';
+import "database_application_repository_test.mocks.dart";
 
 @GenerateMocks([
   DatabaseManager,
@@ -91,11 +91,15 @@ void main() {
 
 void testCreateApplication(MockDatabase db, ApplicationRepository repository) {
   group("createApplication function:", () {
-    group('try to create a valid application', () {
+    group("try to create a valid application", () {
       setUp(() {
-        when(db.insert(DatabaseApplicationRepository.TABLE, any,
-                conflictAlgorithm: anyNamed("conflictAlgorithm")))
-            .thenAnswer((_) => Future.value(1));
+        when(
+          db.insert(
+            DatabaseApplicationRepository.TABLE,
+            any,
+            conflictAlgorithm: anyNamed("conflictAlgorithm"),
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should create a new application entry and return its id", () async {
@@ -109,13 +113,15 @@ void testCreateApplication(MockDatabase db, ApplicationRepository repository) {
 
 void testDeleteApplication(MockDatabase db, ApplicationRepository repository) {
   group("deleteApplication function:", () {
-    group('try to delete valid application', () {
+    group("try to delete valid application", () {
       setUp(() {
-        when(db.delete(
-          DatabaseApplicationRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validApplicationId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.delete(
+            DatabaseApplicationRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validApplicationId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should delete an application entry and returns 1", () async {
@@ -126,13 +132,15 @@ void testDeleteApplication(MockDatabase db, ApplicationRepository repository) {
       });
     });
 
-    group('try to delete invalid application', () {
+    group("try to delete invalid application", () {
       setUp(() {
-        when(db.delete(
-          DatabaseApplicationRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_invalidApplicationId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.delete(
+            DatabaseApplicationRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_invalidApplicationId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesnt exist", () async {
@@ -149,13 +157,15 @@ void testGetApplication(MockDatabase db, ApplicationRepository repository) {
   group("getApplication function:", () {
     final expectedApplication = _validApplication;
 
-    group('try to get valid application', () {
+    group("try to get valid application", () {
       setUp(() {
-        when(db.query(
-          DatabaseApplicationRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validApplicationId],
-        )).thenAnswer(
+        when(
+          db.query(
+            DatabaseApplicationRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validApplicationId],
+          ),
+        ).thenAnswer(
           (_) => Future.value([
             {
               "id": expectedApplication.id,
@@ -181,18 +191,20 @@ void testGetApplication(MockDatabase db, ApplicationRepository repository) {
       });
     });
 
-    group('try to get an invalid application', () {
+    group("try to get an invalid application", () {
       setUp(() {
-        when(db.query(
-          DatabaseApplicationRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [2],
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabaseApplicationRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [2],
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should throw exception if id doesn't exist", () async {
         expect(
-          () async => await repository.getApplicationById(2),
+          () async => repository.getApplicationById(2),
           throwsStateError,
         );
       });
@@ -204,11 +216,13 @@ void testGetApplications(MockDatabase db, ApplicationRepository repository) {
   group("getApplications function:", () {
     final expectedApplications = _validApplications;
 
-    group('try to get all applications', () {
+    group("try to get all applications", () {
       setUp(() {
-        when(db.query(
-          DatabaseApplicationRepository.TABLE,
-        )).thenAnswer(
+        when(
+          db.query(
+            DatabaseApplicationRepository.TABLE,
+          ),
+        ).thenAnswer(
           (_) => Future.value([
             {
               "id": expectedApplications[0].id,
@@ -246,11 +260,13 @@ void testGetApplications(MockDatabase db, ApplicationRepository repository) {
       });
     });
 
-    group('try to get all applications when there is none', () {
+    group("try to get all applications when there is none", () {
       setUp(() {
-        when(db.query(
-          DatabaseApplicationRepository.TABLE,
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabaseApplicationRepository.TABLE,
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should return an empty list", () async {
@@ -265,14 +281,16 @@ void testGetApplications(MockDatabase db, ApplicationRepository repository) {
 
 void testUpdateApplication(MockDatabase db, ApplicationRepository repository) {
   group("updateApplication function:", () {
-    group('try to update a valid application', () {
+    group("try to update a valid application", () {
       setUp(() {
-        when(db.update(
-          DatabaseApplicationRepository.TABLE,
-          _validApplication.copyWith(dueDate: DateTime(2024)).toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_validApplicationId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.update(
+            DatabaseApplicationRepository.TABLE,
+            _validApplication.copyWith(dueDate: DateTime(2024)).toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_validApplicationId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should update a application entry and returns 5", () async {
@@ -284,19 +302,21 @@ void testUpdateApplication(MockDatabase db, ApplicationRepository repository) {
       });
     });
 
-    group('try to update with invalid application', () {
+    group("try to update with invalid application", () {
       setUp(() {
-        when(db.update(
-          DatabaseApplicationRepository.TABLE,
-          _validApplication
-              .copyWith(
-                id: _invalidApplicationId,
-                dueDate: DateTime(2024),
-              )
-              .toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_invalidApplicationId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.update(
+            DatabaseApplicationRepository.TABLE,
+            _validApplication
+                .copyWith(
+                  id: _invalidApplicationId,
+                  dueDate: DateTime(2024),
+                )
+                .toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_invalidApplicationId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {

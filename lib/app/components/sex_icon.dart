@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
+import "package:flutter/material.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
 
 class SexIcon extends Icon {
   final Sex? sex;

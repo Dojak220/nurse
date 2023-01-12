@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/modules/VaccinationEntry/Forms/ApplicationEntry/application_form_controller.dart';
-import 'package:nurse/app/modules/VaccinationEntry/Forms/ApplierEntry/applier_form_controller.dart';
-import 'package:nurse/app/modules/VaccinationEntry/Forms/CampaignEntry/campaign_form_controller.dart';
-import 'package:nurse/app/modules/VaccinationEntry/Forms/PatientEntry/patient_form_controller.dart';
-import 'package:nurse/app/modules/VaccinationEntry/Forms/VaccineEntry/vaccine_form_controller.dart';
-import 'package:nurse/app/utils/form_controller.dart';
-import 'package:nurse/shared/models/vaccination/application_model.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_application_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/application_repository.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/modules/VaccinationEntry/Forms/ApplicationEntry/application_form_controller.dart";
+import "package:nurse/app/modules/VaccinationEntry/Forms/ApplierEntry/applier_form_controller.dart";
+import "package:nurse/app/modules/VaccinationEntry/Forms/CampaignEntry/campaign_form_controller.dart";
+import "package:nurse/app/modules/VaccinationEntry/Forms/PatientEntry/patient_form_controller.dart";
+import "package:nurse/app/modules/VaccinationEntry/Forms/VaccineEntry/vaccine_form_controller.dart";
+import "package:nurse/app/utils/form_controller.dart";
+import "package:nurse/shared/models/vaccination/application_model.dart";
+import "package:nurse/shared/repositories/database/vaccination/database_application_repository.dart";
+import "package:nurse/shared/repositories/vaccination/application_repository.dart";
 
 class VaccinationEntryController {
   VaccinationEntryController(
@@ -51,7 +51,7 @@ class VaccinationEntryController {
       case 4:
         return applicationFormController;
       default:
-        throw Exception('Unknown form index');
+        throw Exception("Unknown form index");
     }
   }
 
@@ -102,7 +102,7 @@ class VaccinationEntryController {
   Future<bool> verifyIfApplicationExists() async {
     if (applicationFormController.application != null &&
         applicationFormController.application!.patient.id != null) {
-      return await _repository.exists(applicationFormController.application!);
+      return _repository.exists(applicationFormController.application!);
     } else {
       return false;
     }
@@ -117,7 +117,7 @@ class VaccinationEntryController {
   }
 
   Future<int> save(Application application) async {
-    return await _repository.createApplication(application);
+    return _repository.createApplication(application);
   }
 
   bool cleanAllForms() {

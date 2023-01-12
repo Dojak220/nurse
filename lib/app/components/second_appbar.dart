@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/theme/app_colors.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/theme/app_colors.dart";
 
 class SecondAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;

@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/modules/VaccinationEntry/Forms/ApplicationEntry/application_form.dart';
-import 'package:nurse/app/modules/VaccinationEntry/Forms/ApplierEntry/applier_form.dart';
-import 'package:nurse/app/modules/VaccinationEntry/Forms/CampaignEntry/campaign_form.dart';
-import 'package:nurse/app/modules/VaccinationEntry/Forms/PatientEntry/patient_form.dart';
-import 'package:nurse/app/modules/VaccinationEntry/Forms/VaccineEntry/vaccine_form.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/dialog_confirm_button.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/form_save_step_button.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/form_step_button.dart';
-import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/modules/VaccinationEntry/Forms/ApplicationEntry/application_form.dart";
+import "package:nurse/app/modules/VaccinationEntry/Forms/ApplierEntry/applier_form.dart";
+import "package:nurse/app/modules/VaccinationEntry/Forms/CampaignEntry/campaign_form.dart";
+import "package:nurse/app/modules/VaccinationEntry/Forms/PatientEntry/patient_form.dart";
+import "package:nurse/app/modules/VaccinationEntry/Forms/VaccineEntry/vaccine_form.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/dialog_confirm_button.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/form_save_step_button.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/form_step_button.dart";
+import "package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart";
 
 class VaccinationEntry extends StatefulWidget {
   final VaccinationEntryController controller;
@@ -24,7 +24,7 @@ class VaccinationEntry extends StatefulWidget {
 class _VaccinationEntryState extends State<VaccinationEntry> {
   /// TODO: Verificar se o build context é necessário, dado que o contexto pode
   ///  ser acessado globalmente.
-  void tryToSave(
+  Future<void> tryToSave(
     BuildContext context,
     VaccinationEntryController controller,
   ) async {
@@ -47,13 +47,13 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
             title: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
-              children: const <Widget>[
+              children: const [
                 Icon(Icons.warning_rounded, size: 120.0),
-                Text('Falha ao cadastrar!', textAlign: TextAlign.center),
+                Text("Falha ao cadastrar!", textAlign: TextAlign.center),
               ],
             ),
             content: const Text(
-              'Cadastro já existia no banco de dados!',
+              "Cadastro já existia no banco de dados!",
               textAlign: TextAlign.center,
             ),
             actions: const [DialogConfirmButton(text: "Ok")],
@@ -99,16 +99,16 @@ class _VaccinationEntryState extends State<VaccinationEntry> {
                       text: "Voltar",
                     ),
                     const SizedBox(width: 20),
-                    controller.isLastForm
-                        ? SaveStepFormButton(
-                            () => tryToSave(context, controller),
-                          )
-                        : StepFormButton(
-                            active: !controller.isLastForm,
-                            onPressed: () =>
-                                setState(() => controller.nextForm()),
-                            text: "Avançar",
-                          ),
+                    if (controller.isLastForm)
+                      SaveStepFormButton(
+                        () => tryToSave(context, controller),
+                      )
+                    else
+                      StepFormButton(
+                        active: !controller.isLastForm,
+                        onPressed: () => setState(() => controller.nextForm()),
+                        text: "Avançar",
+                      ),
                   ],
                 ),
               ),

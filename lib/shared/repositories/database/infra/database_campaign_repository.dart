@@ -1,7 +1,7 @@
-import 'package:nurse/shared/models/infra/campaign_model.dart';
-import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
+import "package:nurse/shared/models/infra/campaign_model.dart";
+import "package:nurse/shared/repositories/database/database_interface.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/infra/campaign_repository.dart";
 
 class DatabaseCampaignRepository extends DatabaseInterface
     implements CampaignRepository {

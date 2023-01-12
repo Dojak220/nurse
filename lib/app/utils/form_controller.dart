@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 abstract class FormController implements ChangeNotifier {
   final _formKey = GlobalKey<FormState>();
@@ -7,7 +7,7 @@ abstract class FormController implements ChangeNotifier {
   void clearAllInfo();
 
   bool submitForm(GlobalKey<FormState> formKey) {
-    bool isValid = formKey.currentState!.validate();
+    final bool isValid = formKey.currentState!.validate();
 
     if (isValid) {
       formKey.currentState!.save();

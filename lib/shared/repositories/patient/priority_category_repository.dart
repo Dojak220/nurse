@@ -1,4 +1,4 @@
-import 'package:nurse/shared/models/patient/priority_category_model.dart';
+import "package:nurse/shared/models/patient/priority_category_model.dart";
 
 abstract class PriorityCategoryRepository {
   Future<int> createPriorityCategory(PriorityCategory priorityCategory);

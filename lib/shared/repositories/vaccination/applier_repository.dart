@@ -1,4 +1,4 @@
-import 'package:nurse/shared/models/vaccination/applier_model.dart';
+import "package:nurse/shared/models/vaccination/applier_model.dart";
 
 abstract class ApplierRepository {
   Future<int> createApplier(Applier applier);

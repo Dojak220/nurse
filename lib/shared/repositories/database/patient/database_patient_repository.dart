@@ -1,13 +1,13 @@
-import 'package:nurse/shared/models/patient/patient_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/models/patient/priority_category_model.dart';
-import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/patient/database_person_repository.dart';
-import 'package:nurse/shared/repositories/database/patient/database_priority_category_repository.dart';
-import 'package:nurse/shared/repositories/patient/patient_repository.dart';
-import 'package:nurse/shared/repositories/patient/person_repository.dart';
-import 'package:nurse/shared/repositories/patient/priority_category_repository.dart';
+import "package:nurse/shared/models/patient/patient_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/models/patient/priority_category_model.dart";
+import "package:nurse/shared/repositories/database/database_interface.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/patient/database_person_repository.dart";
+import "package:nurse/shared/repositories/database/patient/database_priority_category_repository.dart";
+import "package:nurse/shared/repositories/patient/patient_repository.dart";
+import "package:nurse/shared/repositories/patient/person_repository.dart";
+import "package:nurse/shared/repositories/patient/priority_category_repository.dart";
 
 class DatabasePatientRepository extends DatabaseInterface
     implements PatientRepository {
@@ -28,8 +28,8 @@ class DatabasePatientRepository extends DatabaseInterface
   Future<int> createPatient(Patient patient) async {
     final map = patient.toMap();
 
-    map['person'] = await _personRepo.createPerson(patient.person);
-    map['priority_category'] = await _categoryRepo
+    map["person"] = await _personRepo.createPerson(patient.person);
+    map["priority_category"] = await _categoryRepo
         .getPriorityCategoryByCode(patient.priorityCategory.code)
         .then((priorityCategory) => priorityCategory.id!);
 

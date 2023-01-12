@@ -1,6 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:nurse/shared/models/vaccination/vaccine_batch_model.dart";
+import "package:nurse/shared/models/vaccination/vaccine_model.dart";
 
 void main() {
   late VaccineBatch validVaccineBatch;
@@ -21,8 +21,8 @@ void main() {
     );
   });
 
-  group('vaccineBatch model valid instance creation', () {
-    test('should create a valid instance', () {
+  group("vaccineBatch model valid instance creation", () {
+    test("should create a valid instance", () {
       expect(validVaccineBatch, isA<VaccineBatch>());
       expect(validVaccineBatch.id, 1);
       expect(validVaccineBatch.number, "01234");
@@ -31,7 +31,7 @@ void main() {
     });
   });
 
-  group('vaccineBatch model invalid instance creation', () {
+  group("vaccineBatch model invalid instance creation", () {
     test("should throw exception if id is 0", () {
       expect(
         () => validVaccineBatch.copyWith(id: 0),
@@ -78,8 +78,8 @@ void main() {
     test("should throw exception if batchNo has weird characters", () {
       expect(
         () => validVaccineBatch.copyWith(
-            number:
-                "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+          number: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
+        ),
         throwsException,
         reason:
             "it's not possible to create a vaccineBatch with an invalid batchNo",
@@ -102,22 +102,22 @@ void main() {
       );
     });
   });
-  group('vaccine batch model instances comparison', () {
+  group("vaccine batch model instances comparison", () {
     test("should return true if both instances are identical", () {
-      final actualVaccineBatch = validVaccineBatch;
+      final VaccineBatch actualVaccineBatch = validVaccineBatch;
 
       expect(actualVaccineBatch, validVaccineBatch);
       expect(actualVaccineBatch.hashCode, validVaccineBatch.hashCode);
     });
 
     test("should return true if two vaccine batches are equal", () {
-      final actualVaccineBatch = validVaccineBatch.copyWith();
+      final VaccineBatch actualVaccineBatch = validVaccineBatch.copyWith();
 
       expect(actualVaccineBatch, validVaccineBatch);
     });
 
     test("should return false if two vaccine batches are not equal", () {
-      final actualVaccineBatch = validVaccineBatch.copyWith(id: 2);
+      final VaccineBatch actualVaccineBatch = validVaccineBatch.copyWith(id: 2);
 
       expect(actualVaccineBatch, isNot(validVaccineBatch));
     });

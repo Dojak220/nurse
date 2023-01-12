@@ -1,10 +1,10 @@
-import 'package:nurse/shared/models/patient/priority_category_model.dart';
-import 'package:nurse/shared/models/patient/priority_group_model.dart';
-import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/patient/database_priority_group_repository.dart';
-import 'package:nurse/shared/repositories/patient/priority_category_repository.dart';
-import 'package:nurse/shared/repositories/patient/priority_group_repository.dart';
+import "package:nurse/shared/models/patient/priority_category_model.dart";
+import "package:nurse/shared/models/patient/priority_group_model.dart";
+import "package:nurse/shared/repositories/database/database_interface.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/patient/database_priority_group_repository.dart";
+import "package:nurse/shared/repositories/patient/priority_category_repository.dart";
+import "package:nurse/shared/repositories/patient/priority_group_repository.dart";
 
 class DatabasePriorityCategoryRepository extends DatabaseInterface
     implements PriorityCategoryRepository {
@@ -22,7 +22,7 @@ class DatabasePriorityCategoryRepository extends DatabaseInterface
   Future<int> createPriorityCategory(PriorityCategory priorityCategory) async {
     final map = priorityCategory.toMap();
 
-    map['priority_group'] = await _groupRepo
+    map["priority_group"] = await _groupRepo
         .getPriorityGroupByCode(priorityCategory.priorityGroup.code)
         .then((priorityGroup) => priorityGroup.id!);
 

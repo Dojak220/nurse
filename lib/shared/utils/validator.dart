@@ -1,14 +1,14 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:intl/intl.dart';
+import "package:intl/intl.dart";
 
 class Validator {
-  static const _CPF_LENGTH = 11;
-  static const _CNS_LENGTH = 15;
-  static const _CNES_LENGTH = 7;
-  static const _IBGE_CODE_LENGTH = 7;
-  static const _NAME_MAX_LENGTH = 100;
-  static const _DESCRIPTION_MAX_LENGTH = 100;
+  static const int _CPF_LENGTH = 11;
+  static const int _CNS_LENGTH = 15;
+  static const int _CNES_LENGTH = 7;
+  static const int _IBGE_CODE_LENGTH = 7;
+  static const int _NAME_MAX_LENGTH = 100;
+  static const int _DESCRIPTION_MAX_LENGTH = 100;
 
   static bool _isValidCharactersRegex(String value) => RegExp(
         r"^[a-zA-Z0-9-/\sáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ()≥]*$",
@@ -87,9 +87,9 @@ class Validator {
         return _isType<String>(value)
             ? _validateIBGECode(value as String)
             : throw ValidatorException.incompatibleType(String, value);
-      default:
-        throw ValidatorException.unimplementedType(type);
     }
+
+    throw ValidatorException.unimplementedType(type);
   }
 
   static bool _isType<T>(Object? value) {
@@ -97,9 +97,9 @@ class Validator {
   }
 
   static bool _validateName(String value) {
-    final isEmpty = value.trim().isEmpty;
-    final isTooLong = value.length > _NAME_MAX_LENGTH;
-    final allCharactersValid = _isValidCharactersRegex(value);
+    final bool isEmpty = value.trim().isEmpty;
+    final bool isTooLong = value.length > _NAME_MAX_LENGTH;
+    final bool allCharactersValid = _isValidCharactersRegex(value);
 
     return !isEmpty && !isTooLong && allCharactersValid
         ? true
@@ -107,8 +107,8 @@ class Validator {
   }
 
   static bool _validateOptionalName(String value) {
-    final isTooLong = value.length > _NAME_MAX_LENGTH;
-    final allCharactersValid = _isValidCharactersRegex(value);
+    final bool isTooLong = value.length > _NAME_MAX_LENGTH;
+    final bool allCharactersValid = _isValidCharactersRegex(value);
 
     return !isTooLong && allCharactersValid
         ? true
@@ -116,8 +116,8 @@ class Validator {
   }
 
   static bool _validateDescription(String value) {
-    final isTooLong = value.length > _DESCRIPTION_MAX_LENGTH;
-    final allCharactersValid = _isValidCharactersRegex(value);
+    final bool isTooLong = value.length > _DESCRIPTION_MAX_LENGTH;
+    final bool allCharactersValid = _isValidCharactersRegex(value);
 
     return !isTooLong && allCharactersValid
         ? true
@@ -125,10 +125,10 @@ class Validator {
   }
 
   static bool _validateCPF(String cpf) {
-    String cleanCPF = cpf.replaceAll('.', '').replaceAll('-', '').trim();
+    final String cleanCPF = cpf.replaceAll(".", "").replaceAll("-", "").trim();
 
-    final isExactLength = cleanCPF.length == _CPF_LENGTH;
-    final isExceptionFormat = cleanCPF == "0" * 11;
+    final bool isExactLength = cleanCPF.length == _CPF_LENGTH;
+    final bool isExceptionFormat = cleanCPF == "0" * 11;
 
     if (isExceptionFormat || !isExactLength) {
       throw ValidatorException.invalid(ValidatorType.cpf, cpf);
@@ -146,7 +146,7 @@ class Validator {
 
     for (int i = 1; i <= 9; i++) {
       final cpfDigit = int.parse(cpf.substring(i - 1, i));
-      final int multiplier = (11 - i);
+      final int multiplier = 11 - i;
 
       soma += cpfDigit * multiplier;
     }
@@ -166,7 +166,7 @@ class Validator {
 
     for (int i = 1; i <= 10; i++) {
       final cpfDigit = int.parse(cpf.substring(i - 1, i));
-      final int multiplier = (12 - i);
+      final int multiplier = 12 - i;
 
       soma += cpfDigit * multiplier;
     }
@@ -181,17 +181,17 @@ class Validator {
   }
 
   static bool _validateCNS(String cns) {
-    String cleanCNS = cns.replaceAll('.', '').replaceAll('-', '').trim();
+    final String cleanCNS = cns.replaceAll(".", "").replaceAll("-", "").trim();
 
-    final isExactLength = cleanCNS.length == _CNS_LENGTH;
-    final isNumericalString = _isValidNumbersRegex(cleanCNS);
+    final bool isExactLength = cleanCNS.length == _CNS_LENGTH;
+    final bool isNumericalString = _isValidNumbersRegex(cleanCNS);
     if (!isExactLength || !isNumericalString) {
       throw ValidatorException.invalid(ValidatorType.cns, cns);
     }
 
-    if (cleanCNS.startsWith(RegExp(r"[1-2]"))) {
+    if (cleanCNS.startsWith(RegExp("[1-2]"))) {
       _validateCnsStartingWith1Or2(cleanCNS);
-    } else if (cleanCNS.startsWith(RegExp(r"[7-9]"))) {
+    } else if (cleanCNS.startsWith(RegExp("[7-9]"))) {
       _validateCnsStartingWith7To9(cleanCNS);
     } else {
       throw ValidatorException.invalid(ValidatorType.cns, cns);
@@ -201,10 +201,10 @@ class Validator {
   }
 
   static bool _validateCNES(String cnes) {
-    String cleanCNES = cnes.trim();
+    final String cleanCNES = cnes.trim();
 
-    final isExactLength = cleanCNES.length == _CNES_LENGTH;
-    final isNumericalString = _isValidNumbersRegex(cleanCNES);
+    final bool isExactLength = cleanCNES.length == _CNES_LENGTH;
+    final bool isNumericalString = _isValidNumbersRegex(cleanCNES);
     if (!isExactLength || !isNumericalString) {
       throw ValidatorException.invalid(ValidatorType.cnes, cnes);
     }
@@ -213,8 +213,8 @@ class Validator {
   }
 
   static bool _validateNumericalString(String value) {
-    final isEmpty = value.trim().isEmpty;
-    final allCharactersValid = _isValidNumbersRegex(value);
+    final bool isEmpty = value.trim().isEmpty;
+    final bool allCharactersValid = _isValidNumbersRegex(value);
 
     return !isEmpty && allCharactersValid
         ? true
@@ -226,14 +226,15 @@ class Validator {
 
   static void _validateCnsStartingWith1Or2(String cns) {
     int soma = 0;
-    int resto = 0, dv = 0;
+    int resto = 0;
+    int dv = 0;
     String pis = "";
     String resultado = "";
     pis = cns.substring(0, 11);
 
     for (int i = 1; i <= 11; i++) {
       final cnsDigit = int.parse(cns.substring(i - 1, i));
-      final int multiplier = (16 - i);
+      final int multiplier = 16 - i;
 
       soma += cnsDigit * multiplier;
     }
@@ -264,7 +265,7 @@ class Validator {
 
     for (int i = 1; i <= 15; i++) {
       final cnsDigit = int.parse(cns.substring(i - 1, i));
-      final int multiplier = (16 - i);
+      final int multiplier = 16 - i;
 
       soma += cnsDigit * multiplier;
     }
@@ -277,15 +278,15 @@ class Validator {
   }
 
   static String _formatDate(String oldFormattedDate) {
-    final date = DateFormat("dd/MM/yyyy").parse(oldFormattedDate);
-    final newFormattedDate = DateFormat("yyyy-MM-dd").format(date);
+    final DateTime date = DateFormat("dd/MM/yyyy").parse(oldFormattedDate);
+    final String newFormattedDate = DateFormat("yyyy-MM-dd").format(date);
 
     return newFormattedDate;
   }
 
   static bool _validateDate(DateTime date) {
-    final isBefore1900 = date.year < 1900;
-    final isAfter5YearsFromNow = date.isAfter(
+    final bool isBefore1900 = date.year < 1900;
+    final bool isAfter5YearsFromNow = date.isAfter(
       DateTime.now().add(const Duration(days: 365 * 5)),
     );
 
@@ -297,8 +298,8 @@ class Validator {
   }
 
   static bool _validateBirth(DateTime birth) {
-    final isBefore1900 = birth.year < 1900;
-    final isAfterNow = birth.isAfter(DateTime.now());
+    final bool isBefore1900 = birth.year < 1900;
+    final bool isAfterNow = birth.isAfter(DateTime.now());
 
     if (isBefore1900 || isAfterNow) {
       throw ValidatorException.invalid(ValidatorType.birthDate, birth);
@@ -310,20 +311,22 @@ class Validator {
   static bool _validateOptionalDate(DateTime? optionalDate) {
     if (optionalDate == null) return true;
 
-    final isBefore1900 = optionalDate.year < 1900;
-    final isAfterNow = optionalDate.isAfter(DateTime.now());
+    final bool isBefore1900 = optionalDate.year < 1900;
+    final bool isAfterNow = optionalDate.isAfter(DateTime.now());
 
     if (isBefore1900 || isAfterNow) {
       throw ValidatorException.invalid(
-          ValidatorType.optionalDate, optionalDate);
+        ValidatorType.optionalDate,
+        optionalDate,
+      );
     }
 
     return true;
   }
 
   static bool _validateIBGECode(String code) {
-    final isCorrectLength = code.length == _IBGE_CODE_LENGTH;
-    final isOnlyNumbers = int.tryParse(code) != null;
+    final bool isCorrectLength = code.length == _IBGE_CODE_LENGTH;
+    final bool isOnlyNumbers = int.tryParse(code) != null;
 
     return isCorrectLength && isOnlyNumbers
         ? true
@@ -332,7 +335,7 @@ class Validator {
 
   static bool _validateId(int id) {
     if (id <= 0) {
-      throw Exception('Id must be greater than 0');
+      throw Exception("Id must be greater than 0");
     }
 
     return true;
@@ -379,10 +382,10 @@ class ValidatorException implements Exception {
   final String message;
 
   ValidatorException.incompatibleType(Type type, Object value)
-      : message = '''
-It was expected that the value '$value' would be of type '$type',
+      : message = """
+It was expected that the value "$value" would be of type '$type',
 but it was of type '${value.runtimeType}'.
-''';
+""";
 
   ValidatorException.unimplementedType(ValidatorType type)
       : message = "Unimplemented type: '$type'";

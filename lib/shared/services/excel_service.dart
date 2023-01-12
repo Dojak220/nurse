@@ -1,17 +1,19 @@
-import 'dart:io';
+import "dart:io";
 
-import 'package:flutter/material.dart';
-import 'package:flutter_archive/flutter_archive.dart';
-import 'package:nurse/shared/models/vaccination/application_model.dart';
-import 'package:nurse/shared/utils/helper.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:syncfusion_flutter_xlsio/xlsio.dart';
+import "package:flutter/material.dart";
+import "package:flutter_archive/flutter_archive.dart";
+import "package:nurse/shared/models/vaccination/application_model.dart";
+import "package:nurse/shared/utils/helper.dart";
+import "package:open_file/open_file.dart";
+import "package:path_provider/path_provider.dart";
+import "package:share_plus/share_plus.dart";
+import "package:syncfusion_flutter_xlsio/xlsio.dart";
 
 class ExcelService {
   Future<void> shareExcelFile(
-      List<Application> items, DateTimeRange dateRange) async {
+    List<Application> items,
+    DateTimeRange dateRange,
+  ) async {
     final applicationsForRange = Helper.applicationsForRange(
       items,
       dateRange,
@@ -40,7 +42,10 @@ class ExcelService {
 
     try {
       await ZipFile.createFromFiles(
-          sourceDir: sourceDir, files: files, zipFile: zipFile);
+        sourceDir: sourceDir,
+        files: files,
+        zipFile: zipFile,
+      );
     } catch (e) {
       print(e);
     }
@@ -49,7 +54,9 @@ class ExcelService {
   }
 
   Future<void> openExcelFile(
-      List<Application> items, DateTimeRange dateRange) async {
+    List<Application> items,
+    DateTimeRange dateRange,
+  ) async {
     final applicationsForRange = Helper.applicationsForRange(
       items,
       dateRange,
@@ -74,15 +81,16 @@ class ExcelService {
 
   //Create a Excel document.
   Future<Map<DateTime, Map<VaccineDose, List<int>>>> _generateSheetData(
-      Map<DateTime, List<Application>> data) async {
+    Map<DateTime, List<Application>> data,
+  ) async {
     /// https://pub.dev/packages/syncfusion_flutter_xlsio
 
     final works = Map<DateTime, Map<VaccineDose, List<int>>>.of({});
 
     for (final DateTime dateKey in data.keys) {
-      Workbook workbook = Workbook();
+      final Workbook workbook = Workbook();
 
-      Worksheet sheet = _setTemplateForWorkSheet(workbook, 0);
+      Worksheet sheet = _setTemplateForWorkSheet(workbook);
 
       final doseApplications = Helper.applicationsByDose(data[dateKey]!);
 
@@ -100,37 +108,35 @@ class ExcelService {
     return works;
   }
 
-  Worksheet _setTemplateForWorkSheet(Workbook workbook, [int page = 0]) {
-    final Worksheet sheet = workbook.worksheets[0];
-    sheet.name = 'Aplicações';
-
-    sheet.getRangeByName('A1:G1').columnWidth = 40;
-    sheet.getRangeByName('A1:G1').cellStyle.backColor = '#333F4F';
-    sheet.getRangeByName('A1:G1').cellStyle.fontSize = 16;
-
-    sheet.getRangeByName('A1').setText('CPF/CNS CIDADAO');
-    sheet.getRangeByName('B1').setText('CODIGO SEQUENCIAL LOTE');
-    sheet.getRangeByName('C1').setText('SIGLA DOSE');
-    sheet.getRangeByName('D1').setText('CPF/CNS VACINADOR');
-    sheet.getRangeByName('E1').setText('DATA DE VACINACAO');
-    sheet.getRangeByName('F1').setText('GRUPO DE ATENDIMENTO');
-    sheet.getRangeByName('G1').setText('CONDICAO MATERNAL');
+  Worksheet _setTemplateForWorkSheet(Workbook workbook) {
+    final Worksheet sheet = workbook.worksheets[0]
+      ..name = "Aplicações"
+      ..getRangeByName("A1:G1").columnWidth = 40
+      ..getRangeByName("A1:G1").cellStyle.backColor = "#333F4F"
+      ..getRangeByName("A1:G1").cellStyle.fontSize = 16
+      ..getRangeByName("A1").setText("CPF/CNS CIDADAO")
+      ..getRangeByName("B1").setText("CODIGO SEQUENCIAL LOTE")
+      ..getRangeByName("C1").setText("SIGLA DOSE")
+      ..getRangeByName("D1").setText("CPF/CNS VACINADOR")
+      ..getRangeByName("E1").setText("DATA DE VACINACAO")
+      ..getRangeByName("F1").setText("GRUPO DE ATENDIMENTO")
+      ..getRangeByName("G1").setText("CONDICAO MATERNAL");
 
     return sheet;
   }
 
   Worksheet _setDataInWorkSheet(Worksheet sheet, List<Application> data) {
     for (int i = 0; i < data.length; i++) {
-      sheet.getRangeByName('A${i + 2}').setText(data[i].patient.cns);
-      sheet.getRangeByName('B${i + 2}').setText(data[i].vaccineBatch.number);
-      sheet.getRangeByName('C${i + 2}').setText(data[i].dose.name);
-      sheet.getRangeByName('D${i + 2}').setText(data[i].applier.cns);
-      sheet.getRangeByName('E${i + 2}').setText("${data[i].applicationDate}");
+      sheet.getRangeByName("A${i + 2}").setText(data[i].patient.cns);
+      sheet.getRangeByName("B${i + 2}").setText(data[i].vaccineBatch.number);
+      sheet.getRangeByName("C${i + 2}").setText(data[i].dose.name);
+      sheet.getRangeByName("D${i + 2}").setText(data[i].applier.cns);
+      sheet.getRangeByName("E${i + 2}").setText("${data[i].applicationDate}");
       sheet
-          .getRangeByName('F${i + 2}')
+          .getRangeByName("F${i + 2}")
           .setText("${data[i].patient.priorityCategory.priorityGroup}");
       sheet
-          .getRangeByName('G${i + 2}')
+          .getRangeByName("G${i + 2}")
           .setText(data[i].patient.maternalCondition.name);
     }
 
@@ -139,7 +145,7 @@ class ExcelService {
 
   Future<File> _createFile(List<int> bytes, String fileName) async {
     final String path = (await getTemporaryDirectory()).path;
-    final String fullPath = '$path/$fileName';
+    final String fullPath = "$path/$fileName";
     final File file = File(fullPath);
     await file.writeAsBytes(bytes, flush: true);
 

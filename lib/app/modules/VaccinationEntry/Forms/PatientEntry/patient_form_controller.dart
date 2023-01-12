@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/utils/form_controller.dart';
-import 'package:nurse/shared/models/patient/patient_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/models/patient/priority_category_model.dart';
-import 'package:nurse/shared/repositories/database/patient/database_patient_repository.dart';
-import 'package:nurse/shared/repositories/database/patient/database_priority_category_repository.dart';
-import 'package:nurse/shared/repositories/patient/patient_repository.dart';
-import 'package:nurse/shared/repositories/patient/priority_category_repository.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/material.dart";
+import "package:mobx/mobx.dart";
+import "package:nurse/app/utils/form_controller.dart";
+import "package:nurse/shared/models/patient/patient_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/models/patient/priority_category_model.dart";
+import "package:nurse/shared/repositories/database/patient/database_patient_repository.dart";
+import "package:nurse/shared/repositories/database/patient/database_priority_category_repository.dart";
+import "package:nurse/shared/repositories/patient/patient_repository.dart";
+import "package:nurse/shared/repositories/patient/priority_category_repository.dart";
+import "package:nurse/shared/utils/validator.dart";
 
-import 'package:mobx/mobx.dart';
-part 'patient_form_controller.g.dart';
+part "patient_form_controller.g.dart";
 
 class PatientFormController = _PatientFormControllerBase
     with _$PatientFormController;
@@ -47,9 +47,10 @@ abstract class _PatientFormControllerBase extends FormController with Store {
     notifyListeners();
   }
 
-  void _getCategories() async {
-    _categories
-        .addAll(await _priorityCategoryRepository.getPriorityCategories());
+  Future<void> _getCategories() async {
+    _categories.addAll(
+      await _priorityCategoryRepository.getPriorityCategories(),
+    );
   }
 
   Future<void> findPatientByCpf(String? cpf) async {
@@ -129,12 +130,12 @@ abstract class _PatientFormControllerBase extends FormController with Store {
 
     if (result) {
       _patient = _patient?.copyWith(
-              id: _patient?.id,
-              cns: cns.text,
-              priorityCategory: selectedCategory!,
-              maternalCondition: maternalCondition,
-              person:
-                  _patient!.person.copyWith(cpf: cpf.text, name: name.text)) ??
+            id: _patient?.id,
+            cns: cns.text,
+            priorityCategory: selectedCategory,
+            maternalCondition: maternalCondition,
+            person: _patient!.person.copyWith(cpf: cpf.text, name: name.text),
+          ) ??
           Patient(
             id: _patient?.id,
             cns: cns.text,

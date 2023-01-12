@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/shared/models/vaccination/application_model.dart';
+import "package:flutter/material.dart";
+import "package:nurse/shared/models/vaccination/application_model.dart";
 
 class Helper {
   static int applicationsForPeriod(
@@ -9,10 +9,12 @@ class Helper {
     switch (period) {
       case Period.day:
         return applications
-            .where((element) =>
-                DateTime.now().difference(element.applicationDate).inDays ==
-                    0 &&
-                element.applicationDate.day == DateTime.now().day)
+            .where(
+              (element) =>
+                  DateTime.now().difference(element.applicationDate).inDays ==
+                      0 &&
+                  element.applicationDate.day == DateTime.now().day,
+            )
             .toList()
             .length;
       case Period.week:
@@ -26,11 +28,12 @@ class Helper {
             .toList()
             .length;
       case Period.month:
-      default:
         return applications
-            .where((element) =>
-                element.applicationDate.year == DateTime.now().year &&
-                element.applicationDate.month == DateTime.now().month)
+            .where(
+              (element) =>
+                  element.applicationDate.year == DateTime.now().year &&
+                  element.applicationDate.month == DateTime.now().month,
+            )
             .toList()
             .length;
     }

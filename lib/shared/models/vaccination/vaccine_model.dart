@@ -1,6 +1,8 @@
-import 'package:nurse/shared/models/generic_model.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/foundation.dart";
+import "package:nurse/shared/models/generic_model.dart";
+import "package:nurse/shared/utils/validator.dart";
 
+@immutable
 class Vaccine implements GenericModel {
   @override
   final int? id;
@@ -45,26 +47,26 @@ class Vaccine implements GenericModel {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'sipni_code': sipniCode,
-      'name': name,
-      'laboratory': laboratory,
+      "id": id,
+      "sipni_code": sipniCode,
+      "name": name,
+      "laboratory": laboratory,
     };
   }
 
   factory Vaccine.fromMap(Map<String, dynamic> map) {
     return Vaccine(
-      id: map['id'] as int?,
-      sipniCode: map['sipni_code'] as String? ?? '',
-      name: map['name'] as String? ?? '',
-      laboratory: map['laboratory'] as String? ?? '',
+      id: map["id"] as int?,
+      sipniCode: map["sipni_code"] as String? ?? "",
+      name: map["name"] as String? ?? "",
+      laboratory: map["laboratory"] as String? ?? "",
     );
   }
 
   // coverage:ignore-start
   @override
   String toString() {
-    return '$sipniCode | $name';
+    return "$sipniCode | $name";
   }
   // coverage:ignore-end
 

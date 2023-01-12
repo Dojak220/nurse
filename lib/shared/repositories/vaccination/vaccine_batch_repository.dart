@@ -1,4 +1,4 @@
-import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
+import "package:nurse/shared/models/vaccination/vaccine_batch_model.dart";
 
 abstract class VaccineBatchRepository {
   Future<int> createVaccineBatch(VaccineBatch vaccineBatch);

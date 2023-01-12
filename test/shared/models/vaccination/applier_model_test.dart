@@ -1,8 +1,8 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/models/vaccination/applier_model.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/models/vaccination/applier_model.dart";
 
 void main() {
   late Applier validApplier;
@@ -17,31 +17,32 @@ void main() {
     );
 
     validApplier = Applier(
+      id: 1,
+      cns: "279197866950004",
+      person: Person(
         id: 1,
-        cns: "279197866950004",
-        person: Person(
+        cpf: "82675387630",
+        name: "Name Middlename Lastname",
+        birthDate: DateTime(2000),
+        locality: expectedLocality,
+      ),
+      establishment: Establishment(
+        id: 1,
+        cnes: "1234567",
+        name: "Old Name",
+        locality: Locality(
           id: 1,
-          cpf: "82675387630",
-          name: "Name Middlename Lastname",
-          birthDate: DateTime(2000),
-          locality: expectedLocality,
+          name: "Locality Name",
+          city: "City Name",
+          state: "State Name",
+          ibgeCode: "1234567",
         ),
-        establishment: Establishment(
-          id: 1,
-          cnes: "1234567",
-          name: "Old Name",
-          locality: Locality(
-            id: 1,
-            name: "Locality Name",
-            city: "City Name",
-            state: "State Name",
-            ibgeCode: "1234567",
-          ),
-        ));
+      ),
+    );
   });
 
-  group('applier model valid instance creation', () {
-    test('should create a valid instance', () {
+  group("applier model valid instance creation", () {
+    test("should create a valid instance", () {
       expect(validApplier, isA<Applier>());
       expect(validApplier.id, 1);
       expect(validApplier.cns, "279197866950004");
@@ -58,7 +59,7 @@ void main() {
     });
   });
 
-  group('applier model invalid instance creation', () {
+  group("applier model invalid instance creation", () {
     test("should throw exception if id is 0", () {
       expect(
         () => validApplier.copyWith(id: 0),
@@ -130,22 +131,22 @@ void main() {
       );
     });
   });
-  group('applier model instances comparison', () {
+  group("applier model instances comparison", () {
     test("should return true if both instances are identical", () {
-      final actualApplier = validApplier;
+      final Applier actualApplier = validApplier;
 
       expect(actualApplier, validApplier);
       expect(actualApplier.hashCode, validApplier.hashCode);
     });
 
     test("should return true if two appliers are equal", () {
-      final actualApplier = validApplier.copyWith();
+      final Applier actualApplier = validApplier.copyWith();
 
       expect(actualApplier, validApplier);
     });
 
     test("should return false if two appliers are not equal", () {
-      final actualApplier = validApplier.copyWith(id: 2);
+      final Applier actualApplier = validApplier.copyWith(id: 2);
 
       expect(actualApplier, isNot(validApplier));
     });

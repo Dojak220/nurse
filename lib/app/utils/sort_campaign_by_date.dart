@@ -1,13 +1,13 @@
-import 'package:nurse/shared/models/infra/campaign_model.dart';
+import "package:nurse/shared/models/infra/campaign_model.dart";
 
 extension SortByDate on List<Campaign> {
   void sortByDate() {
-    sort((date1, date2) {
-      final int comparisonByStartDate = _sortByStartDate(date1, date2);
+    sort((Campaign a, Campaign b) {
+      final int comparisonByStartDate = _sortByStartDate(a, b);
 
       return comparisonByStartDate != 0
           ? comparisonByStartDate
-          : _sortByEndDate(date1, date2);
+          : _sortByEndDate(a, b);
     });
   }
 

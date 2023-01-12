@@ -1,8 +1,10 @@
-import 'package:nurse/shared/models/generic_model.dart';
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/foundation.dart";
+import "package:nurse/shared/models/generic_model.dart";
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/utils/validator.dart";
 
+@immutable
 class Applier implements GenericModel {
   @override
   final int? id;
@@ -37,20 +39,20 @@ class Applier implements GenericModel {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'cns': cns,
-      'person': person.id,
-      'establishment': establishment.id,
+      "id": id,
+      "cns": cns,
+      "person": person.id,
+      "establishment": establishment.id,
     };
   }
 
   factory Applier.fromMap(Map<String, dynamic> map) {
     return Applier(
-      id: map['id'] as int?,
-      cns: map['cns'] as String? ?? '',
-      person: Person.fromMap(map['person'] as Map<String, dynamic>),
+      id: map["id"] as int?,
+      cns: map["cns"] as String? ?? "",
+      person: Person.fromMap(map["person"] as Map<String, dynamic>),
       establishment:
-          Establishment.fromMap(map['establishment'] as Map<String, dynamic>),
+          Establishment.fromMap(map["establishment"] as Map<String, dynamic>),
     );
   }
 
@@ -76,7 +78,7 @@ class Applier implements GenericModel {
   // coverage:ignore-start
   @override
   String toString() {
-    return '${cns.replaceRange(3, 12, "...")} - ${person.name}';
+    return "${cns.replaceRange(3, 12, "...")} - ${person.name}";
   }
   // coverage:ignore-end
 }

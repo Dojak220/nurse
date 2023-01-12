@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/theme/app_colors.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/theme/app_colors.dart";
 
 class VaccinationButton extends StatelessWidget {
   final String newPage;
@@ -27,7 +27,7 @@ class VaccinationButton extends StatelessWidget {
           color: AppColors.white,
           size: 40,
         ),
-        onPressed: () => Navigator.of(context)
+        onPressed: () async => Navigator.of(context)
             .pushNamed(newPage)
             .whenComplete(() => onCallback()),
       ),

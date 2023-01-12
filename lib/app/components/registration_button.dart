@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/components/main_button.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/components/main_button.dart";
 
 class RegistrationButton extends StatelessWidget {
   final String text;
@@ -17,7 +17,7 @@ class RegistrationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainButton(
       text: text,
-      onPressed: () => Navigator.of(context)
+      onPressed: () async => Navigator.of(context)
           .pushNamed(newPage)
           .whenComplete(() => onCallback()),
     );

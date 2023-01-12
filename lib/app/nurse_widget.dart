@@ -1,59 +1,59 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:nurse/app/main_screen.dart';
-import 'package:nurse/app/modules/EntityList/add_entities_menu_page.dart';
-import 'package:nurse/app/modules/EntityList/add_form.dart';
-import 'package:nurse/app/modules/EntityList/infra/campaign/campaign_page_controller.dart';
-import 'package:nurse/app/modules/EntityList/infra/establishment/establishment_page_controller.dart';
-import 'package:nurse/app/modules/EntityList/infra/locality/add_locality_form_fields.dart';
-import 'package:nurse/app/modules/EntityList/infra/locality/locality_page_controller.dart';
-import 'package:nurse/app/modules/EntityList/patient/patient/add_patient_form_fields.dart';
-import 'package:nurse/app/modules/EntityList/patient/patient/add_patient_form_controller.dart';
-import 'package:nurse/app/modules/EntityList/patient/patient/patient_page_controller.dart';
-import 'package:nurse/app/modules/EntityList/patient/priorityCategory/add_priority_category_form_fields.dart';
-import 'package:nurse/app/modules/EntityList/patient/priorityCategory/add_priority_category_form_controller.dart';
-import 'package:nurse/app/modules/EntityList/patient/priorityCategory/priority_category_page_controller.dart';
-import 'package:nurse/app/modules/EntityList/patient/priorityGroup/add_priority_group_form_fields.dart';
-import 'package:nurse/app/modules/EntityList/patient/priorityGroup/add_priority_group_form_controller.dart';
-import 'package:nurse/app/modules/EntityList/patient/priorityGroup/priority_group_page_controller.dart';
-import 'package:nurse/app/modules/EntityList/vaccination/applier/add_applier_form_fields.dart';
-import 'package:nurse/app/modules/EntityList/vaccination/applier/add_applier_form_controller.dart';
-import 'package:nurse/app/modules/EntityList/vaccination/applier/applier_page_controller.dart';
-import 'package:nurse/app/modules/EntityList/vaccination/vaccine/vaccine_page_controller.dart';
-import 'package:nurse/app/modules/EntityList/vaccination/vaccineBatch/add_vaccine_batch_form_fields.dart';
-import 'package:nurse/app/modules/EntityList/vaccination/vaccineBatch/add_vaccine_batch_form_controller.dart';
-import 'package:nurse/app/modules/EntityList/vaccination/vaccine/add_vaccine_form_fields.dart';
-import 'package:nurse/app/modules/EntityList/vaccination/vaccine/add_vaccine_form_controller.dart';
-import 'package:nurse/app/modules/EntityList/infra/locality/add_locality_form_controller.dart';
-import 'package:nurse/app/modules/EntityList/infra/campaign/add_campaign_form_controller.dart';
-import 'package:nurse/app/modules/EntityList/infra/campaign/add_campaign_form_fields.dart';
-import 'package:nurse/app/modules/EntityList/infra/campaign/campaigns_page.dart';
-import 'package:nurse/app/modules/EntityList/infra/establishment/add_establishment_form_controller.dart';
-import 'package:nurse/app/modules/EntityList/infra/establishment/add_establishment_form_fields.dart';
-import 'package:nurse/app/modules/EntityList/infra/establishment/establishment_page.dart';
-import 'package:nurse/app/modules/EntityList/infra/locality/locality_page.dart';
-import 'package:nurse/app/modules/EntityList/patient/patient/patient_page.dart';
-import 'package:nurse/app/modules/EntityList/patient/priorityCategory/priority_category_page.dart';
-import 'package:nurse/app/modules/EntityList/patient/priorityGroup/priority_group_page.dart';
-import 'package:nurse/app/modules/EntityList/vaccination/applier/applier_page.dart';
-import 'package:nurse/app/modules/EntityList/vaccination/vaccineBatch/vaccine_batch_page.dart';
-import 'package:nurse/app/modules/EntityList/vaccination/vaccine/vaccine_page.dart';
-import 'package:nurse/app/modules/EntityList/vaccination/vaccineBatch/vaccine_batch_page_controller.dart';
-import 'package:nurse/app/modules/Export/export_data_page.dart';
-import 'package:nurse/app/modules/Home/home_page.dart';
-import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry.dart';
-import 'package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart';
-import 'package:nurse/app/theme/app_theme.dart';
-import 'package:nurse/shared/models/infra/campaign_model.dart';
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/models/patient/patient_model.dart';
-import 'package:nurse/shared/models/patient/priority_category_model.dart';
-import 'package:nurse/shared/models/patient/priority_group_model.dart';
-import 'package:nurse/shared/models/vaccination/application_model.dart';
-import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
+import "package:flutter/material.dart";
+import "package:flutter_localizations/flutter_localizations.dart";
+import "package:nurse/app/main_screen.dart";
+import "package:nurse/app/modules/EntityList/add_entities_menu_page.dart";
+import "package:nurse/app/modules/EntityList/add_form.dart";
+import "package:nurse/app/modules/EntityList/infra/campaign/add_campaign_form_controller.dart";
+import "package:nurse/app/modules/EntityList/infra/campaign/add_campaign_form_fields.dart";
+import "package:nurse/app/modules/EntityList/infra/campaign/campaign_page_controller.dart";
+import "package:nurse/app/modules/EntityList/infra/campaign/campaigns_page.dart";
+import "package:nurse/app/modules/EntityList/infra/establishment/add_establishment_form_controller.dart";
+import "package:nurse/app/modules/EntityList/infra/establishment/add_establishment_form_fields.dart";
+import "package:nurse/app/modules/EntityList/infra/establishment/establishment_page.dart";
+import "package:nurse/app/modules/EntityList/infra/establishment/establishment_page_controller.dart";
+import "package:nurse/app/modules/EntityList/infra/locality/add_locality_form_controller.dart";
+import "package:nurse/app/modules/EntityList/infra/locality/add_locality_form_fields.dart";
+import "package:nurse/app/modules/EntityList/infra/locality/locality_page.dart";
+import "package:nurse/app/modules/EntityList/infra/locality/locality_page_controller.dart";
+import "package:nurse/app/modules/EntityList/patient/patient/add_patient_form_controller.dart";
+import "package:nurse/app/modules/EntityList/patient/patient/add_patient_form_fields.dart";
+import "package:nurse/app/modules/EntityList/patient/patient/patient_page.dart";
+import "package:nurse/app/modules/EntityList/patient/patient/patient_page_controller.dart";
+import "package:nurse/app/modules/EntityList/patient/priorityCategory/add_priority_category_form_controller.dart";
+import "package:nurse/app/modules/EntityList/patient/priorityCategory/add_priority_category_form_fields.dart";
+import "package:nurse/app/modules/EntityList/patient/priorityCategory/priority_category_page.dart";
+import "package:nurse/app/modules/EntityList/patient/priorityCategory/priority_category_page_controller.dart";
+import "package:nurse/app/modules/EntityList/patient/priorityGroup/add_priority_group_form_controller.dart";
+import "package:nurse/app/modules/EntityList/patient/priorityGroup/add_priority_group_form_fields.dart";
+import "package:nurse/app/modules/EntityList/patient/priorityGroup/priority_group_page.dart";
+import "package:nurse/app/modules/EntityList/patient/priorityGroup/priority_group_page_controller.dart";
+import "package:nurse/app/modules/EntityList/vaccination/applier/add_applier_form_controller.dart";
+import "package:nurse/app/modules/EntityList/vaccination/applier/add_applier_form_fields.dart";
+import "package:nurse/app/modules/EntityList/vaccination/applier/applier_page.dart";
+import "package:nurse/app/modules/EntityList/vaccination/applier/applier_page_controller.dart";
+import "package:nurse/app/modules/EntityList/vaccination/vaccine/add_vaccine_form_controller.dart";
+import "package:nurse/app/modules/EntityList/vaccination/vaccine/add_vaccine_form_fields.dart";
+import "package:nurse/app/modules/EntityList/vaccination/vaccine/vaccine_page.dart";
+import "package:nurse/app/modules/EntityList/vaccination/vaccine/vaccine_page_controller.dart";
+import "package:nurse/app/modules/EntityList/vaccination/vaccineBatch/add_vaccine_batch_form_controller.dart";
+import "package:nurse/app/modules/EntityList/vaccination/vaccineBatch/add_vaccine_batch_form_fields.dart";
+import "package:nurse/app/modules/EntityList/vaccination/vaccineBatch/vaccine_batch_page.dart";
+import "package:nurse/app/modules/EntityList/vaccination/vaccineBatch/vaccine_batch_page_controller.dart";
+import "package:nurse/app/modules/Export/export_data_page.dart";
+import "package:nurse/app/modules/Home/home_page.dart";
+import "package:nurse/app/modules/VaccinationEntry/vaccination_entry.dart";
+import "package:nurse/app/modules/VaccinationEntry/vaccination_entry_controller.dart";
+import "package:nurse/app/theme/app_theme.dart";
+import "package:nurse/shared/models/infra/campaign_model.dart";
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/models/patient/patient_model.dart";
+import "package:nurse/shared/models/patient/priority_category_model.dart";
+import "package:nurse/shared/models/patient/priority_group_model.dart";
+import "package:nurse/shared/models/vaccination/application_model.dart";
+import "package:nurse/shared/models/vaccination/applier_model.dart";
+import "package:nurse/shared/models/vaccination/vaccine_batch_model.dart";
+import "package:nurse/shared/models/vaccination/vaccine_model.dart";
 
 class Nurse extends StatelessWidget {
   const Nurse({Key? key}) : super(key: key);
@@ -62,14 +62,14 @@ class Nurse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'NURSE',
+      title: "NURSE",
       theme: AppTheme.themeData,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [Locale('pt', 'BR')],
+      supportedLocales: const [Locale("pt", "BR")],
       initialRoute: "/",
       routes: {
         "/": (context) => const MainScreen(),

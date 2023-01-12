@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/components/form_padding.dart';
-import 'package:nurse/app/modules/VaccinationEntry/Forms/ApplierEntry/applier_form_controller.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart';
-import 'package:nurse/app/utils/form_labels.dart';
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/vaccination/applier_model.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/components/form_padding.dart";
+import "package:nurse/app/modules/VaccinationEntry/Forms/ApplierEntry/applier_form_controller.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart";
+import "package:nurse/app/utils/form_labels.dart";
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/vaccination/applier_model.dart";
 
 class ApplierForm extends StatefulWidget {
   final ApplierFormController controller;
@@ -28,7 +28,8 @@ class _ApplierFormState extends State<ApplierForm> {
               label: FormLabels.establishmentCNES,
               items: widget.controller.establishments,
               onChanged: (Establishment? value) => setState(
-                  () => widget.controller.selectedEstablishment = value),
+                () => widget.controller.selectedEstablishment = value,
+              ),
               onSaved: (Establishment? value) =>
                   widget.controller.selectedEstablishment = value,
             ),
@@ -56,7 +57,7 @@ class _ApplierFormState extends State<ApplierForm> {
   //         title: Column(
   //           mainAxisAlignment: MainAxisAlignment.center,
   //           mainAxisSize: MainAxisSize.min,
-  //           children: <Widget>[
+  //           children: [
   //             const Icon(
   //               Icons.question_mark_rounded,
   //               size: 120.0,
@@ -88,7 +89,7 @@ class _ApplierFormState extends State<ApplierForm> {
   //         title: Column(
   //           mainAxisAlignment: MainAxisAlignment.center,
   //           mainAxisSize: MainAxisSize.min,
-  //           children: <Widget>[
+  //           children: [
   //             const Icon(Icons.check_rounded, size: 120.0),
   //             const Text(
   //               'Cadastro realizado com sucesso!',

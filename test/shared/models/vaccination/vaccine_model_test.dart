@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:nurse/shared/models/vaccination/vaccine_model.dart";
 
 void main() {
   late Vaccine validVaccine;
@@ -13,8 +13,8 @@ void main() {
     );
   });
 
-  group('vaccine model valid instance creation', () {
-    test('should create a valid instance', () {
+  group("vaccine model valid instance creation", () {
+    test("should create a valid instance", () {
       expect(validVaccine, isA<Vaccine>());
       expect(validVaccine.id, 1);
       expect(validVaccine.sipniCode, "123456");
@@ -23,7 +23,7 @@ void main() {
     });
   });
 
-  group('vaccine model invalid instance creation', () {
+  group("vaccine model invalid instance creation", () {
     test("should throw exception if id is 0", () {
       expect(
         () => validVaccine.copyWith(id: 0),
@@ -60,8 +60,9 @@ void main() {
     test("should throw exception if sipniCode has weird characters", () {
       expect(
         () => validVaccine.copyWith(
-            sipniCode:
-                "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+          sipniCode:
+              "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
+        ),
         throwsException,
         reason:
             "it's not possible to create a vaccine with an invalid sipniCode",
@@ -87,7 +88,8 @@ void main() {
     test("should throw exception if name has weird characters", () {
       expect(
         () => validVaccine.copyWith(
-            name: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+          name: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
+        ),
         throwsException,
         reason: "it's not possible to create a vaccine with an invalid name",
       );
@@ -114,30 +116,31 @@ void main() {
     test("should throw exception if laboratory has weird characters", () {
       expect(
         () => validVaccine.copyWith(
-            laboratory:
-                "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+          laboratory:
+              "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
+        ),
         throwsException,
         reason:
             "it's not possible to create a vaccine with an invalid laboratory",
       );
     });
   });
-  group('vaccine model instances comparison', () {
+  group("vaccine model instances comparison", () {
     test("should return true if both instances are identical", () {
-      final actualVaccine = validVaccine;
+      final Vaccine actualVaccine = validVaccine;
 
       expect(actualVaccine, validVaccine);
       expect(actualVaccine.hashCode, validVaccine.hashCode);
     });
 
     test("should return true if two vaccines are equal", () {
-      final actualVaccine = validVaccine.copyWith();
+      final Vaccine actualVaccine = validVaccine.copyWith();
 
       expect(actualVaccine, validVaccine);
     });
 
     test("should return false if two vaccines are not equal", () {
-      final actualVaccine = validVaccine.copyWith(id: 2);
+      final Vaccine actualVaccine = validVaccine.copyWith(id: 2);
 
       expect(actualVaccine, isNot(validVaccine));
     });

@@ -1,10 +1,10 @@
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
-import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
-import 'package:nurse/shared/repositories/infra/locality_repository.dart';
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/repositories/database/database_interface.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/infra/database_locality_repository.dart";
+import "package:nurse/shared/repositories/infra/establishment_repository.dart";
+import "package:nurse/shared/repositories/infra/locality_repository.dart";
 
 class DatabaseEstablishmentRepository extends DatabaseInterface
     implements EstablishmentRepository {
@@ -22,7 +22,7 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
   Future<int> createEstablishment(Establishment establishment) async {
     final map = establishment.toMap();
 
-    map['locality'] = await _localityRepo
+    map["locality"] = await _localityRepo
         .getLocalityByIbgeCode(establishment.locality.ibgeCode)
         .then((locality) => locality.id!);
 
@@ -59,7 +59,8 @@ class DatabaseEstablishmentRepository extends DatabaseInterface
   }
 
   Future<Establishment> _getEstablishmentFromMap(
-      Map<String, dynamic> establishmentMap) async {
+    Map<String, dynamic> establishmentMap,
+  ) async {
     final locality = await _getLocality(establishmentMap["locality"] as int);
 
     final updatedEstablishmentMap = Map.of(establishmentMap);

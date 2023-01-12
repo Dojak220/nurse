@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/utils/date_picker.dart';
-import 'package:nurse/app/utils/form_controller.dart';
-import 'package:nurse/shared/models/infra/campaign_model.dart';
-import 'package:nurse/shared/models/patient/patient_model.dart';
-import 'package:nurse/shared/models/vaccination/application_model.dart';
-import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
-import 'package:nurse/shared/repositories/vaccination/application_repository.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/utils/date_picker.dart";
+import "package:nurse/app/utils/form_controller.dart";
+import "package:nurse/shared/models/infra/campaign_model.dart";
+import "package:nurse/shared/models/patient/patient_model.dart";
+import "package:nurse/shared/models/vaccination/application_model.dart";
+import "package:nurse/shared/models/vaccination/applier_model.dart";
+import "package:nurse/shared/models/vaccination/vaccine_batch_model.dart";
+import "package:nurse/shared/repositories/vaccination/application_repository.dart";
 
 class ApplicationFormController extends FormController {
   Applier? applier;
@@ -50,8 +50,12 @@ class ApplicationFormController extends FormController {
       selectedDate = newSelectedDate;
       date
         ..text = DatePicker.formatDateDDMMYYYY(selectedDate!)
-        ..selection = TextSelection.fromPosition(TextPosition(
-            offset: date.text.length, affinity: TextAffinity.upstream));
+        ..selection = TextSelection.fromPosition(
+          TextPosition(
+            offset: date.text.length,
+            affinity: TextAffinity.upstream,
+          ),
+        );
     }
   }
 

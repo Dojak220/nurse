@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/utils/date_picker.dart';
-import 'package:nurse/app/utils/add_form_controller.dart';
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/repositories/database/infra/database_establishment_repository.dart';
-import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart';
-import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
-import 'package:nurse/shared/repositories/infra/locality_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/utils/add_form_controller.dart";
+import "package:nurse/app/utils/date_picker.dart";
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/models/vaccination/applier_model.dart";
+import "package:nurse/shared/repositories/database/infra/database_establishment_repository.dart";
+import "package:nurse/shared/repositories/database/infra/database_locality_repository.dart";
+import "package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart";
+import "package:nurse/shared/repositories/infra/establishment_repository.dart";
+import "package:nurse/shared/repositories/infra/locality_repository.dart";
+import "package:nurse/shared/repositories/vaccination/applier_repository.dart";
 
 class AddApplierFormController extends AddFormController {
   final LocalityRepository _localityRepository;
@@ -64,8 +64,12 @@ class AddApplierFormController extends AddFormController {
       selectedBirthDate = newSelectedDate;
       birthDate
         ..text = DatePicker.formatDateDDMMYYYY(selectedBirthDate!)
-        ..selection = TextSelection.fromPosition(TextPosition(
-            offset: birthDate.text.length, affinity: TextAffinity.upstream));
+        ..selection = TextSelection.fromPosition(
+          TextPosition(
+            offset: birthDate.text.length,
+            affinity: TextAffinity.upstream,
+          ),
+        );
     }
   }
 
@@ -111,7 +115,7 @@ class AddApplierFormController extends AddFormController {
           fatherName: fatherName.text,
           motherName: motherName.text,
         ),
-        establishment: selectedEstablishment!,
+        establishment: selectedEstablishment,
       );
 
       return super.updateEntity<Applier>(

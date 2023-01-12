@@ -1,5 +1,5 @@
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:sqflite_sqlcipher/sqflite.dart';
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:sqflite_sqlcipher/sqflite.dart";
 
 class DatabaseInterface {
   final DatabaseManager dbManager;
@@ -24,12 +24,12 @@ class DatabaseInterface {
 
   Future<int> delete(int id) async {
     if (id <= 0) {
-      throw Exception('Id must be greater than 0');
+      throw Exception("Id must be greater than 0");
     }
 
     final int count = await dbManager.db.delete(
       tableName,
-      where: 'id = ?',
+      where: "id = ?",
       whereArgs: [id],
     );
 
@@ -45,16 +45,12 @@ class DatabaseInterface {
     List<Object?>? objs,
     String? where,
   }) async {
-    List<Map<String, dynamic>> entityMap;
-
     try {
-      entityMap = await dbManager.db.query(
+      return await dbManager.db.query(
         tableName,
         where: where,
         whereArgs: objs,
       );
-
-      return entityMap;
     } catch (e) {
       rethrow;
     }
@@ -64,7 +60,9 @@ class DatabaseInterface {
     try {
       final List<Map<String, dynamic>> immutableMapList = await get();
 
-      return List.of(immutableMapList.map((map) => Map.from(map)));
+      return List.of(
+        immutableMapList.map((map) => Map.from(map)),
+      );
     } catch (e) {
       rethrow;
     }
@@ -75,8 +73,8 @@ class DatabaseInterface {
       final int count = await dbManager.db.update(
         tableName,
         entity,
-        where: 'id = ?',
-        whereArgs: [entity['id']],
+        where: "id = ?",
+        whereArgs: [entity["id"]],
       );
 
       return count;

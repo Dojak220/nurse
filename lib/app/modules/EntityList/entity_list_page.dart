@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/components/nurse_appbar.dart';
-import 'package:nurse/app/components/registration_button.dart';
-import 'package:nurse/app/components/titled_list_view.dart';
-import 'package:nurse/app/theme/app_colors.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/components/nurse_appbar.dart";
+import "package:nurse/app/components/registration_button.dart";
+import "package:nurse/app/components/titled_list_view.dart";
+import "package:nurse/app/theme/app_colors.dart";
 
 class EntityList<T> extends StatelessWidget {
   final String title;

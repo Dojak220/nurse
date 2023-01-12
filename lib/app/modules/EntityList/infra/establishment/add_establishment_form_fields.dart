@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/components/form_padding.dart';
-import 'package:nurse/app/modules/EntityList/infra/establishment/add_establishment_form_controller.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
-import 'package:nurse/app/utils/form_labels.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/components/form_padding.dart";
+import "package:nurse/app/modules/EntityList/infra/establishment/add_establishment_form_controller.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart";
+import "package:nurse/app/utils/form_labels.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/utils/validator.dart";
 
 class EstablishmentFormFields extends StatefulWidget {
   final AddEstablishmentFormController controller;
@@ -43,18 +43,18 @@ class EstablishmentFormFieldsState extends State<EstablishmentFormFields> {
           shrinkWrap: true,
           semanticChildCount: 3,
           children: [
-            CustomDropdownButtonFormField(
+            CustomDropdownButtonFormField<String>(
               icon: const Icon(Icons.pin_rounded),
               label: FormLabels.establishmentLocalityName,
               items:
                   _localityCities.map<String>((Locality l) => l.city).toList(),
               value: widget.controller.locality?.city,
               onChanged: (String? city) => setState(
-                () => widget.controller.locality =
-                    _localityCities.singleWhere((lc) => lc.city == city),
+                () => widget.controller.locality = _localityCities
+                    .singleWhere((Locality lc) => lc.city == city),
               ),
               onSaved: (String? city) => widget.controller.locality =
-                  _localityCities.singleWhere((lc) => lc.city == city),
+                  _localityCities.singleWhere((Locality lc) => lc.city == city),
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
@@ -62,7 +62,7 @@ class EstablishmentFormFieldsState extends State<EstablishmentFormFields> {
               label: FormLabels.establishmentCNES,
               textEditingController: widget.controller.cnes,
               validatorType: ValidatorType.cnes,
-              onSaved: (value) => {},
+              onSaved: (_) {},
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
@@ -70,7 +70,7 @@ class EstablishmentFormFieldsState extends State<EstablishmentFormFields> {
               label: FormLabels.establishmentName,
               textEditingController: widget.controller.name,
               validatorType: ValidatorType.name,
-              onSaved: (value) => {},
+              onSaved: (_) {},
             ),
           ],
         ),

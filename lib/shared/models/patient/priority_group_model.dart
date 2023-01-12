@@ -1,6 +1,8 @@
-import 'package:nurse/shared/models/generic_model.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/foundation.dart";
+import "package:nurse/shared/models/generic_model.dart";
+import "package:nurse/shared/utils/validator.dart";
 
+@immutable
 class PriorityGroup implements GenericModel {
   @override
   final int? id;
@@ -33,10 +35,10 @@ class PriorityGroup implements GenericModel {
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'code': code,
-      'name': name,
-      'description': description,
+      "id": id,
+      "code": code,
+      "name": name,
+      "description": description,
     };
   }
 
@@ -56,10 +58,10 @@ class PriorityGroup implements GenericModel {
 
   factory PriorityGroup.fromMap(Map<String, dynamic> map) {
     return PriorityGroup(
-      id: map['id'] as int?,
-      code: map['code'] as String? ?? '',
-      name: map['name'] as String? ?? '',
-      description: map['description'] as String? ?? '',
+      id: map["id"] as int?,
+      code: map["code"] as String? ?? "",
+      name: map["name"] as String? ?? "",
+      description: map["description"] as String? ?? "",
     );
   }
 

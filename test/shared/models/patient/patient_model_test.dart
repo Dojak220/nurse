@@ -1,9 +1,9 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/models/patient/patient_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/models/patient/priority_category_model.dart';
-import 'package:nurse/shared/models/patient/priority_group_model.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/models/patient/patient_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/models/patient/priority_category_model.dart";
+import "package:nurse/shared/models/patient/priority_group_model.dart";
 
 void main() {
   late PriorityCategory expectedPriorityCategory;
@@ -43,8 +43,8 @@ void main() {
     );
   });
 
-  group('patient model valid instance creation', () {
-    test('should create a valid instance', () {
+  group("patient model valid instance creation", () {
+    test("should create a valid instance", () {
       expect(validPatient, isA<Patient>());
       expect(validPatient.id, 1);
       expect(validPatient.cns, "748477761910001");
@@ -63,7 +63,7 @@ void main() {
     });
   });
 
-  group('patient model invalid instance creation', () {
+  group("patient model invalid instance creation", () {
     test("should throw exception if id is 0", () {
       expect(
         () => validPatient.copyWith(id: 0),
@@ -135,22 +135,22 @@ void main() {
       );
     });
   });
-  group('patient model instances comparison', () {
+  group("patient model instances comparison", () {
     test("should return true if both instances are identical", () {
-      final actualPatient = validPatient;
+      final Patient actualPatient = validPatient;
 
       expect(actualPatient, validPatient);
       expect(actualPatient.hashCode, validPatient.hashCode);
     });
 
     test("should return true if two patients are equal", () {
-      final actualPatient = validPatient.copyWith();
+      final Patient actualPatient = validPatient.copyWith();
 
       expect(actualPatient, validPatient);
     });
 
     test("should return false if two patients are not equal", () {
-      final actualPatient = validPatient.copyWith(id: 2);
+      final Patient actualPatient = validPatient.copyWith(id: 2);
 
       expect(actualPatient, isNot(validPatient));
     });

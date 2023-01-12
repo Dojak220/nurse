@@ -1,8 +1,8 @@
-import 'package:nurse/app/utils/form_controller.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_batch_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/vaccine_batch_repository.dart';
+import "package:nurse/app/utils/form_controller.dart";
+import "package:nurse/shared/models/vaccination/vaccine_batch_model.dart";
+import "package:nurse/shared/models/vaccination/vaccine_model.dart";
+import "package:nurse/shared/repositories/database/vaccination/database_vaccine_batch_repository.dart";
+import "package:nurse/shared/repositories/vaccination/vaccine_batch_repository.dart";
 
 class VaccineFormController extends FormController {
   final VaccineBatchRepository _batchRepository;
@@ -24,7 +24,9 @@ class VaccineFormController extends FormController {
   }
 
   Future<void> _getVaccineBatches() async {
-    _vaccineBatches.addAll(await _batchRepository.getVaccineBatches());
+    _vaccineBatches.addAll(
+      await _batchRepository.getVaccineBatches(),
+    );
   }
 
   VaccineBatch? get vaccineBatch => selectedBatch;

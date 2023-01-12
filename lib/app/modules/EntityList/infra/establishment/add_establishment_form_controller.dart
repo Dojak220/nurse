@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/utils/add_form_controller.dart';
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/repositories/database/infra/database_establishment_repository.dart';
-import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
-import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
-import 'package:nurse/shared/repositories/infra/locality_repository.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/utils/add_form_controller.dart";
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/repositories/database/infra/database_establishment_repository.dart";
+import "package:nurse/shared/repositories/database/infra/database_locality_repository.dart";
+import "package:nurse/shared/repositories/infra/establishment_repository.dart";
+import "package:nurse/shared/repositories/infra/locality_repository.dart";
 
 class AddEstablishmentFormController extends AddFormController {
   final EstablishmentRepository _repository;
@@ -36,10 +36,12 @@ class AddEstablishmentFormController extends AddFormController {
     final localities = await _localityRepository.getLocalities();
     final oneLocalityByCity = List<Locality>.empty(growable: true);
 
-    for (final locality in localities) {
-      final isCityAlreadyAdded = oneLocalityByCity.any((city) {
-        return city.city == locality.city;
-      });
+    for (final Locality locality in localities) {
+      final bool isCityAlreadyAdded = oneLocalityByCity.any(
+        (Locality city) {
+          return city.city == locality.city;
+        },
+      );
 
       if (isCityAlreadyAdded) continue;
 
@@ -77,7 +79,7 @@ class AddEstablishmentFormController extends AddFormController {
       final updatedEstablishment = initialEstablishmentInfo!.copyWith(
         cnes: cnes.text,
         name: name.text,
-        locality: locality!,
+        locality: locality,
       );
 
       return super.updateEntity<Establishment>(

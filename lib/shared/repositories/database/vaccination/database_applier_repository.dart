@@ -1,13 +1,13 @@
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/infra/database_establishment_repository.dart';
-import 'package:nurse/shared/repositories/database/patient/database_person_repository.dart';
-import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
-import 'package:nurse/shared/repositories/patient/person_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/models/vaccination/applier_model.dart";
+import "package:nurse/shared/repositories/database/database_interface.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/infra/database_establishment_repository.dart";
+import "package:nurse/shared/repositories/database/patient/database_person_repository.dart";
+import "package:nurse/shared/repositories/infra/establishment_repository.dart";
+import "package:nurse/shared/repositories/patient/person_repository.dart";
+import "package:nurse/shared/repositories/vaccination/applier_repository.dart";
 
 class DatabaseApplierRepository extends DatabaseInterface
     implements ApplierRepository {
@@ -29,8 +29,8 @@ class DatabaseApplierRepository extends DatabaseInterface
   Future<int> createApplier(Applier applier) async {
     final map = applier.toMap();
 
-    map['person'] = await _personRepo.createPerson(applier.person);
-    map['establishment'] = await _establishmentRepo
+    map["person"] = await _personRepo.createPerson(applier.person);
+    map["establishment"] = await _establishmentRepo
         .getEstablishmentByCnes(applier.establishment.cnes)
         .then((establishment) => establishment.id!);
 

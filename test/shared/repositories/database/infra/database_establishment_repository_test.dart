@@ -1,15 +1,15 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/infra/database_establishment_repository.dart';
-import 'package:nurse/shared/repositories/database/infra/database_locality_repository.dart';
-import 'package:nurse/shared/repositories/infra/establishment_repository.dart';
-import 'package:sqflite_sqlcipher/sqflite.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:mockito/annotations.dart";
+import "package:mockito/mockito.dart";
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/infra/database_establishment_repository.dart";
+import "package:nurse/shared/repositories/database/infra/database_locality_repository.dart";
+import "package:nurse/shared/repositories/infra/establishment_repository.dart";
+import "package:sqflite_sqlcipher/sqflite.dart";
 
-import 'database_establishment_repository_test.mocks.dart';
+import "database_establishment_repository_test.mocks.dart";
 
 @GenerateMocks([
   DatabaseManager,
@@ -50,11 +50,15 @@ void testCreateEstablishment(
   EstablishmentRepository repository,
 ) {
   group("createEstablishment function:", () {
-    group('try to create a valid establishment', () {
+    group("try to create a valid establishment", () {
       setUp(() {
-        when(db.insert(DatabaseEstablishmentRepository.TABLE, any,
-                conflictAlgorithm: anyNamed("conflictAlgorithm")))
-            .thenAnswer((_) => Future.value(1));
+        when(
+          db.insert(
+            DatabaseEstablishmentRepository.TABLE,
+            any,
+            conflictAlgorithm: anyNamed("conflictAlgorithm"),
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should create a new establishment entry and return its id",
@@ -69,15 +73,19 @@ void testCreateEstablishment(
 }
 
 void testDeleteEstablishment(
-    MockDatabase db, EstablishmentRepository repository) {
+  MockDatabase db,
+  EstablishmentRepository repository,
+) {
   group("deleteEstablishment function:", () {
-    group('try to delete valid establishment', () {
+    group("try to delete valid establishment", () {
       setUp(() {
-        when(db.delete(
-          DatabaseEstablishmentRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validEstablishmentId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.delete(
+            DatabaseEstablishmentRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validEstablishmentId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should delete an establishment entry and returns 1", () async {
@@ -88,13 +96,15 @@ void testDeleteEstablishment(
       });
     });
 
-    group('try to delete invalid establishment', () {
+    group("try to delete invalid establishment", () {
       setUp(() {
-        when(db.delete(
-          DatabaseEstablishmentRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_invalidEstablishmentId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.delete(
+            DatabaseEstablishmentRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_invalidEstablishmentId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesnt exist", () async {
@@ -125,26 +135,32 @@ void testGetEstablishment(MockDatabase db, EstablishmentRepository repository) {
       locality: expectedLocality,
     );
 
-    group('try to get valid establishment', () {
+    group("try to get valid establishment", () {
       setUp(() {
-        when(db.query(
-          DatabaseEstablishmentRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [validEstablishmentId],
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": expectedEstablishment.id,
-                "cnes": expectedEstablishment.cnes,
-                "name": expectedEstablishment.name,
-                "locality": expectedEstablishment.locality.id,
-              }
-            ]));
+        when(
+          db.query(
+            DatabaseEstablishmentRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [validEstablishmentId],
+          ),
+        ).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": expectedEstablishment.id,
+              "cnes": expectedEstablishment.cnes,
+              "name": expectedEstablishment.name,
+              "locality": expectedEstablishment.locality.id,
+            }
+          ]),
+        );
 
-        when(db.query(
-          DatabaseLocalityRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [validLocalityId],
-        )).thenAnswer(
+        when(
+          db.query(
+            DatabaseLocalityRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [validLocalityId],
+          ),
+        ).thenAnswer(
           (_) => Future.value([
             {
               "id": expectedLocality.id,
@@ -166,18 +182,20 @@ void testGetEstablishment(MockDatabase db, EstablishmentRepository repository) {
       });
     });
 
-    group('try to get an invalid establishment', () {
+    group("try to get an invalid establishment", () {
       setUp(() {
-        when(db.query(
-          DatabaseEstablishmentRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [2],
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabaseEstablishmentRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [2],
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should throw exception if id doesn't exist", () async {
         expect(
-          () async => await repository.getEstablishmentById(2),
+          () async => repository.getEstablishmentById(2),
           throwsStateError,
         );
       });
@@ -186,28 +204,34 @@ void testGetEstablishment(MockDatabase db, EstablishmentRepository repository) {
 }
 
 void testGetEstablishments(
-    MockDatabase db, EstablishmentRepository repository) {
+  MockDatabase db,
+  EstablishmentRepository repository,
+) {
   group("getEstablishments function:", () {
     final expectedEstablishments = _validEstablishments;
 
-    group('try to get all establishments', () {
+    group("try to get all establishments", () {
       setUp(() {
-        when(db.query(
-          DatabaseEstablishmentRepository.TABLE,
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": expectedEstablishments[0].id,
-                "cnes": expectedEstablishments[0].cnes,
-                "name": expectedEstablishments[0].name,
-                "locality": expectedEstablishments[0].locality.id,
-              },
-              {
-                "id": expectedEstablishments[1].id,
-                "cnes": expectedEstablishments[1].cnes,
-                "name": expectedEstablishments[1].name,
-                "locality": expectedEstablishments[1].locality.id,
-              },
-            ]));
+        when(
+          db.query(
+            DatabaseEstablishmentRepository.TABLE,
+          ),
+        ).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": expectedEstablishments[0].id,
+              "cnes": expectedEstablishments[0].cnes,
+              "name": expectedEstablishments[0].name,
+              "locality": expectedEstablishments[0].locality.id,
+            },
+            {
+              "id": expectedEstablishments[1].id,
+              "cnes": expectedEstablishments[1].cnes,
+              "name": expectedEstablishments[1].name,
+              "locality": expectedEstablishments[1].locality.id,
+            },
+          ]),
+        );
       });
 
       test("should return all establishments", () async {
@@ -220,11 +244,13 @@ void testGetEstablishments(
       });
     });
 
-    group('try to get all establishments when there is none', () {
+    group("try to get all establishments when there is none", () {
       setUp(() {
-        when(db.query(
-          DatabaseEstablishmentRepository.TABLE,
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabaseEstablishmentRepository.TABLE,
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should return an empty list", () async {
@@ -238,42 +264,49 @@ void testGetEstablishments(
 }
 
 void testUpdateEstablishment(
-    MockDatabase db, EstablishmentRepository repository) {
+  MockDatabase db,
+  EstablishmentRepository repository,
+) {
   group("updateEstablishment function:", () {
-    group('try to update a valid establishment', () {
+    group("try to update a valid establishment", () {
       setUp(() {
-        when(db.update(
-          DatabaseEstablishmentRepository.TABLE,
-          _validEstablishment.copyWith(name: "Updated").toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_validEstablishmentId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.update(
+            DatabaseEstablishmentRepository.TABLE,
+            _validEstablishment.copyWith(name: "Updated").toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_validEstablishmentId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should update a establishment entry and returns 2", () async {
-        final updatedRows = await repository.updateEstablishment(
-          _validEstablishment.copyWith(name: "Updated"),
-        );
+        final updatedRows = await repository
+            .updateEstablishment(_validEstablishment.copyWith(name: "Updated"));
 
         expect(updatedRows, 2);
       });
     });
-    group('try to update with invalid establishment', () {
+    group("try to update with invalid establishment", () {
       setUp(() {
-        when(db.update(
-          DatabaseEstablishmentRepository.TABLE,
-          _validEstablishment
-              .copyWith(id: _invalidEstablishmentId, name: "Updated")
-              .toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_invalidEstablishmentId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.update(
+            DatabaseEstablishmentRepository.TABLE,
+            _validEstablishment
+                .copyWith(id: _invalidEstablishmentId, name: "Updated")
+                .toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_invalidEstablishmentId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {
         final updatedRows = await repository.updateEstablishment(
           _validEstablishment.copyWith(
-              id: _invalidEstablishmentId, name: "Updated"),
+            id: _invalidEstablishmentId,
+            name: "Updated",
+          ),
         );
 
         expect(updatedRows, 0);

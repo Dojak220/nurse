@@ -7,14 +7,14 @@
 // Vermelho fita: #B92636
 // Azul sodalina: #253668
 
-import 'package:flutter/material.dart';
-import 'package:nurse/app/theme/app_colors.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/theme/app_colors.dart";
 
 class AppTheme {
   const AppTheme._();
 
   static ThemeData themeData = ThemeData(
-    fontFamily: 'OpenSans',
+    fontFamily: "OpenSans",
     appBarTheme: _appBarTheme,
     textTheme: _textTheme,
   );
@@ -30,7 +30,7 @@ class AppTheme {
 
   static const TextStyle _appBarTextStyle = TextStyle(
     fontSize: 38.0,
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
     color: AppColors.verdeEscuro,
@@ -38,7 +38,7 @@ class AppTheme {
 
   static TextStyle titleTextStyle = const TextStyle(
     fontSize: 17.0,
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
     color: AppColors.cinzaEscuro,
@@ -46,7 +46,7 @@ class AppTheme {
 
   static TextStyle defaultTextStyle = const TextStyle(
     fontSize: 18.0,
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontWeight: FontWeight.normal,
     fontStyle: FontStyle.normal,
     color: AppColors.black,
@@ -54,7 +54,7 @@ class AppTheme {
 
   static TextStyle infoButtonNumberStyle = const TextStyle(
     fontSize: 41.0,
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
     color: AppColors.verdeEscuro,
@@ -62,7 +62,7 @@ class AppTheme {
 
   static TextStyle infoButtonTextStyle = const TextStyle(
     fontSize: 14.0,
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontWeight: FontWeight.normal,
     fontStyle: FontStyle.normal,
     height: 1.0,
@@ -71,7 +71,7 @@ class AppTheme {
 
   static TextStyle tileHeaderStyle = const TextStyle(
     fontSize: 10.0,
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontWeight: FontWeight.normal,
     fontStyle: FontStyle.normal,
     color: AppColors.cinzaEscuro,
@@ -79,7 +79,7 @@ class AppTheme {
 
   static TextStyle tileTitleStyle = const TextStyle(
     fontSize: 18.0,
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     height: 0,
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,

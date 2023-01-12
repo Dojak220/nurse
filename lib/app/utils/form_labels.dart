@@ -115,8 +115,6 @@ extension LabelNamesAndHints on FormLabels {
         return "Nome da Vacina *";
       case FormLabels.vaccineSipniCode:
         return "Código SIPNI *";
-      default:
-        return "";
     }
   }
 
@@ -154,6 +152,8 @@ extension LabelNamesAndHints on FormLabels {
         return "CNES do estabelecimento";
       case FormLabels.establishmentName:
         return "Nome do estabelecimento";
+      case FormLabels.establishmentLocalityName:
+        return "Nome da localidade do estabelecimento";
       case FormLabels.fatherName:
         return "Nome do pai";
       case FormLabels.localityName:
@@ -194,8 +194,6 @@ extension LabelNamesAndHints on FormLabels {
         return "Nome da vacina";
       case FormLabels.vaccineSipniCode:
         return "Código SIPNI da vacina";
-      default:
-        return "";
     }
   }
 }

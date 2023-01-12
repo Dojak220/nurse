@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:nurse/app/components/form_padding.dart';
-import 'package:nurse/app/components/sex_icon.dart';
-import 'package:nurse/app/modules/VaccinationEntry/Forms/PatientEntry/patient_form_controller.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart';
-import 'package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart';
-import 'package:nurse/app/utils/form_labels.dart';
-import 'package:nurse/shared/models/patient/patient_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/models/patient/priority_category_model.dart';
-import 'package:nurse/shared/utils/validator.dart';
+import "package:flutter/material.dart";
+import "package:flutter_mobx/flutter_mobx.dart";
+import "package:nurse/app/components/form_padding.dart";
+import "package:nurse/app/components/sex_icon.dart";
+import "package:nurse/app/modules/VaccinationEntry/Forms/PatientEntry/patient_form_controller.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/custom_dropdown_button_form_field.dart";
+import "package:nurse/app/modules/VaccinationEntry/components/custom_text_form_field.dart";
+import "package:nurse/app/utils/form_labels.dart";
+import "package:nurse/shared/models/patient/patient_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/models/patient/priority_category_model.dart";
+import "package:nurse/shared/utils/validator.dart";
 
 class PatientForm extends StatefulWidget {
   final PatientFormController controller;
@@ -60,41 +60,47 @@ class _PatientFormState extends State<PatientForm> {
               onSaved: (value) {},
             ),
             const Divider(color: Colors.black),
-            Observer(builder: (_) {
-              return CustomDropdownButtonFormField(
-                icon: SexIcon(widget.controller.sex),
-                label: FormLabels.sex,
-                items: Sex.values,
-                value: widget.controller.sex,
-                isEnum: true,
-                onChanged: (Sex? value) => widget.controller.sex = value,
-              );
-            }),
+            Observer(
+              builder: (_) {
+                return CustomDropdownButtonFormField(
+                  icon: SexIcon(widget.controller.sex),
+                  label: FormLabels.sex,
+                  items: Sex.values,
+                  value: widget.controller.sex,
+                  isEnum: true,
+                  onChanged: (Sex? value) => widget.controller.sex = value,
+                );
+              },
+            ),
             const Divider(color: Colors.black),
-            Observer(builder: (_) {
-              return CustomDropdownButtonFormField(
-                icon: const Icon(Icons.category_rounded),
-                label: FormLabels.categoryName,
-                items: widget.controller.categories,
-                value: widget.controller.selectedCategory,
-                onChanged: (PriorityCategory? value) =>
-                    widget.controller.selectedCategory = value,
-              );
-            }),
+            Observer(
+              builder: (_) {
+                return CustomDropdownButtonFormField(
+                  icon: const Icon(Icons.category_rounded),
+                  label: FormLabels.categoryName,
+                  items: widget.controller.categories,
+                  value: widget.controller.selectedCategory,
+                  onChanged: (PriorityCategory? value) =>
+                      widget.controller.selectedCategory = value,
+                );
+              },
+            ),
             const Divider(color: Colors.black),
-            Observer(builder: (_) {
-              return CustomDropdownButtonFormField(
-                icon: const Icon(Icons.pregnant_woman_rounded),
-                label: FormLabels.maternalCondition,
-                items: widget.controller.sex == Sex.male
-                    ? [MaternalCondition.nenhum]
-                    : MaternalCondition.values,
-                value: widget.controller.maternalCondition,
-                isEnum: true,
-                onChanged: (MaternalCondition? value) => widget.controller
-                    .maternalCondition = value ?? MaternalCondition.nenhum,
-              );
-            }),
+            Observer(
+              builder: (_) {
+                return CustomDropdownButtonFormField(
+                  icon: const Icon(Icons.pregnant_woman_rounded),
+                  label: FormLabels.maternalCondition,
+                  items: widget.controller.sex == Sex.male
+                      ? [MaternalCondition.nenhum]
+                      : MaternalCondition.values,
+                  value: widget.controller.maternalCondition,
+                  isEnum: true,
+                  onChanged: (MaternalCondition? value) => widget.controller
+                      .maternalCondition = value ?? MaternalCondition.nenhum,
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -109,7 +115,7 @@ class _PatientFormState extends State<PatientForm> {
   //         title: Column(
   //           mainAxisAlignment: MainAxisAlignment.center,
   //           mainAxisSize: MainAxisSize.min,
-  //           children: <Widget>[
+  //           children: [
   //             const Icon(
   //               Icons.question_mark_rounded,
   //               size: 120.0,
@@ -141,7 +147,7 @@ class _PatientFormState extends State<PatientForm> {
   //         title: Column(
   //           mainAxisAlignment: MainAxisAlignment.center,
   //           mainAxisSize: MainAxisSize.min,
-  //           children: <Widget>[
+  //           children: [
   //             const Icon(Icons.check_rounded, size: 120.0),
   //             const Text(
   //               'Cadastro realizado com sucesso!',

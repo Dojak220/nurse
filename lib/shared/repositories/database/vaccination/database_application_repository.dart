@@ -1,20 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/shared/models/infra/campaign_model.dart';
-import 'package:nurse/shared/models/patient/patient_model.dart';
-import 'package:nurse/shared/models/vaccination/application_model.dart';
-import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
-import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/infra/database_campaign_repository.dart';
-import 'package:nurse/shared/repositories/database/patient/database_patient_repository.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_batch_repository.dart';
-import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
-import 'package:nurse/shared/repositories/patient/patient_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/application_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/vaccine_batch_repository.dart';
+import "package:flutter/material.dart";
+import "package:nurse/shared/models/infra/campaign_model.dart";
+import "package:nurse/shared/models/patient/patient_model.dart";
+import "package:nurse/shared/models/vaccination/application_model.dart";
+import "package:nurse/shared/models/vaccination/applier_model.dart";
+import "package:nurse/shared/models/vaccination/vaccine_batch_model.dart";
+import "package:nurse/shared/repositories/database/database_interface.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/infra/database_campaign_repository.dart";
+import "package:nurse/shared/repositories/database/patient/database_patient_repository.dart";
+import "package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart";
+import "package:nurse/shared/repositories/database/vaccination/database_vaccine_batch_repository.dart";
+import "package:nurse/shared/repositories/infra/campaign_repository.dart";
+import "package:nurse/shared/repositories/patient/patient_repository.dart";
+import "package:nurse/shared/repositories/vaccination/application_repository.dart";
+import "package:nurse/shared/repositories/vaccination/applier_repository.dart";
+import "package:nurse/shared/repositories/vaccination/vaccine_batch_repository.dart";
 
 class DatabaseApplicationRepository extends DatabaseInterface
     with ChangeNotifier

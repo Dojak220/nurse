@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/theme/app_colors.dart';
-import 'package:nurse/app/theme/app_theme.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/theme/app_colors.dart";
+import "package:nurse/app/theme/app_theme.dart";
 
 class DateField extends StatelessWidget {
   final String label;
@@ -18,14 +18,10 @@ class DateField extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         border: Border(
-          bottom: BorderSide(
-            color: AppColors.verdeEscuro,
-            width: 1.0,
-          ),
+          bottom: BorderSide(color: AppColors.verdeEscuro),
         ),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(

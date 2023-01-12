@@ -1,6 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/infra/locality_model.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/infra/locality_model.dart";
 
 void main() {
   late Locality expectedLocality;
@@ -23,8 +23,8 @@ void main() {
     );
   });
 
-  group('establishment model valid instance creation', () {
-    test('should create a valid instance', () {
+  group("establishment model valid instance creation", () {
+    test("should create a valid instance", () {
       expect(validEstablishment, isA<Establishment>());
       expect(validEstablishment.id, 1);
       expect(validEstablishment.cnes, "1234567");
@@ -33,7 +33,7 @@ void main() {
     });
   });
 
-  group('establishment model invalid instance creation', () {
+  group("establishment model invalid instance creation", () {
     test("should throw exception if id is 0", () async {
       expect(
         () async => validEstablishment.copyWith(id: 0),
@@ -101,22 +101,23 @@ void main() {
       );
     });
   });
-  group('establishment model instances comparison', () {
+  group("establishment model instances comparison", () {
     test("should return true if both instances are identical", () {
-      final actualEstablishment = validEstablishment;
+      final Establishment actualEstablishment = validEstablishment;
 
       expect(actualEstablishment, validEstablishment);
       expect(actualEstablishment.hashCode, validEstablishment.hashCode);
     });
 
     test("should return true if two establishments are equal", () {
-      final actualEstablishment = validEstablishment.copyWith();
+      final Establishment actualEstablishment = validEstablishment.copyWith();
 
       expect(actualEstablishment, validEstablishment);
     });
 
     test("should return false if two establishments are not equal", () {
-      final actualEstablishment = validEstablishment.copyWith(id: 2);
+      final Establishment actualEstablishment =
+          validEstablishment.copyWith(id: 2);
 
       expect(actualEstablishment, isNot(validEstablishment));
     });

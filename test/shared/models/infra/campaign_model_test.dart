@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:nurse/shared/models/infra/campaign_model.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:nurse/shared/models/infra/campaign_model.dart";
 
 void main() {
   late Campaign validCampaign;
@@ -14,8 +14,8 @@ void main() {
     );
   });
 
-  group('campaign model valid instance creation', () {
-    test('should create a valid instance', () {
+  group("campaign model valid instance creation", () {
+    test("should create a valid instance", () {
       expect(validCampaign, isA<Campaign>());
       expect(validCampaign.id, 1);
       expect(validCampaign.title, "Campaign Title");
@@ -27,21 +27,21 @@ void main() {
     test(
         "should return a campaign with title and description equals when description is empty",
         () {
-      final actualCampaign = validCampaign.copyWith(description: "");
+      final Campaign actualCampaign = validCampaign.copyWith(description: "");
 
       expect(actualCampaign.description, actualCampaign.title);
       expect(actualCampaign.description, validCampaign.title);
     });
 
     test("should create a valid instance of a future campaign", () {
-      final today = DateTime.now();
-      final tomorrow = DateTime(
+      final DateTime today = DateTime.now();
+      final DateTime tomorrow = DateTime(
         today.year,
         today.month,
         today.day,
       ).add(const Duration(days: 1));
 
-      final actualCampaign = validCampaign.copyWith(
+      final Campaign actualCampaign = validCampaign.copyWith(
         startDate: tomorrow,
       );
 
@@ -56,7 +56,7 @@ void main() {
         today.day,
       ).add(const Duration(days: -1));
 
-      final actualCampaign = validCampaign.copyWith(
+      final Campaign actualCampaign = validCampaign.copyWith(
         startDate: DateTime(2022),
         endDate: yesterday,
       );
@@ -67,14 +67,14 @@ void main() {
     test(
         "should return a campaign with description empty if description has only spaces",
         () {
-      final actualCampaign = validCampaign.copyWith(description: " ");
+      final Campaign actualCampaign = validCampaign.copyWith(description: " ");
 
       expect(actualCampaign.description, actualCampaign.title);
       expect(actualCampaign.description, validCampaign.title);
     });
   });
 
-  group('campaign model invalid instance creation', () {
+  group("campaign model invalid instance creation", () {
     test("should throw exception if id is 0", () {
       expect(
         () => validCampaign.copyWith(id: 0),
@@ -110,8 +110,8 @@ void main() {
     test("should throw exception if title has weird characters", () {
       expect(
         () => validCampaign.copyWith(
-            title:
-                "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+          title: "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
+        ),
         throwsException,
         reason: "it's not possible to create a campaign with an invalid title",
       );
@@ -120,8 +120,9 @@ void main() {
     test("should throw exception if description has weird characters", () {
       expect(
         () => validCampaign.copyWith(
-            description:
-                "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?"),
+          description:
+              "\\ ! ? @ # \$ % ¨ & * + § = ^ ~ ` ´ { } ; : ' \" , . < > ?",
+        ),
         throwsException,
         reason:
             "it's not possible to create a campaign with an invalid description",
@@ -149,7 +150,9 @@ void main() {
     test("should throw exception if endDate is after startDate", () {
       expect(
         () => validCampaign.copyWith(
-            startDate: DateTime(2022), endDate: DateTime(2021)),
+          startDate: DateTime(2022),
+          endDate: DateTime(2021),
+        ),
         throwsException,
         reason:
             "it's not possible to create a campaign with end date after start date",
@@ -157,22 +160,22 @@ void main() {
     });
   });
 
-  group('campaign model instances comparison', () {
+  group("campaign model instances comparison", () {
     test("should return true if both instances are identical", () {
-      final actualCampaign = validCampaign;
+      final Campaign actualCampaign = validCampaign;
 
       expect(actualCampaign, validCampaign);
       expect(actualCampaign.hashCode, validCampaign.hashCode);
     });
 
     test("should return true if two campaigns are equal", () {
-      final actualCampaign = validCampaign.copyWith();
+      final Campaign actualCampaign = validCampaign.copyWith();
 
       expect(actualCampaign, validCampaign);
     });
 
     test("should return false if two campaigns are not equal", () {
-      final actualCampaign = validCampaign.copyWith(id: 2);
+      final Campaign actualCampaign = validCampaign.copyWith(id: 2);
 
       expect(actualCampaign, isNot(validCampaign));
     });

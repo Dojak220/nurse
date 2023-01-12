@@ -1,4 +1,4 @@
-import 'package:nurse/shared/models/infra/locality_model.dart';
+import "package:nurse/shared/models/infra/locality_model.dart";
 
 abstract class LocalityRepository {
   Future<int> createLocality(Locality locality);

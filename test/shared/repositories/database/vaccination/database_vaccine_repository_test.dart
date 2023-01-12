@@ -1,13 +1,13 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/vaccine_repository.dart';
-import 'package:sqflite_sqlcipher/sqflite.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:mockito/annotations.dart";
+import "package:mockito/mockito.dart";
+import "package:nurse/shared/models/vaccination/vaccine_model.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/vaccination/database_vaccine_repository.dart";
+import "package:nurse/shared/repositories/vaccination/vaccine_repository.dart";
+import "package:sqflite_sqlcipher/sqflite.dart";
 
-import 'database_vaccine_repository_test.mocks.dart';
+import "database_vaccine_repository_test.mocks.dart";
 
 @GenerateMocks([
   DatabaseManager,
@@ -34,11 +34,15 @@ void main() {
 
 void testCreateVaccine(MockDatabase db, VaccineRepository repository) {
   group("createVaccine function:", () {
-    group('try to create a valid vaccine', () {
+    group("try to create a valid vaccine", () {
       setUp(() {
-        when(db.insert(DatabaseVaccineRepository.TABLE, any,
-                conflictAlgorithm: anyNamed("conflictAlgorithm")))
-            .thenAnswer((_) => Future.value(1));
+        when(
+          db.insert(
+            DatabaseVaccineRepository.TABLE,
+            any,
+            conflictAlgorithm: anyNamed("conflictAlgorithm"),
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should create a new vaccine entry and return its id", () async {
@@ -52,13 +56,15 @@ void testCreateVaccine(MockDatabase db, VaccineRepository repository) {
 
 void testDeleteVaccine(MockDatabase db, VaccineRepository repository) {
   group("deleteVaccine function:", () {
-    group('try to delete valid vaccine', () {
+    group("try to delete valid vaccine", () {
       setUp(() {
-        when(db.delete(
-          DatabaseVaccineRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validVaccineId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.delete(
+            DatabaseVaccineRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validVaccineId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should delete a vaccine entry and returns 1", () async {
@@ -68,13 +74,15 @@ void testDeleteVaccine(MockDatabase db, VaccineRepository repository) {
       });
     });
 
-    group('try to delete invalid vaccine', () {
+    group("try to delete invalid vaccine", () {
       setUp(() {
-        when(db.delete(
-          DatabaseVaccineRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_invalidVaccineId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.delete(
+            DatabaseVaccineRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_invalidVaccineId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesnt exist", () async {
@@ -90,20 +98,24 @@ void testGetVaccine(MockDatabase db, VaccineRepository repository) {
   group("getVaccine function:", () {
     final expectedVaccine = _validVaccine;
 
-    group('try to get valid vaccine', () {
+    group("try to get valid vaccine", () {
       setUp(() {
-        when(db.query(
-          DatabaseVaccineRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [_validVaccineId],
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": expectedVaccine.id,
-                "sipni_code": expectedVaccine.sipniCode,
-                "name": expectedVaccine.name,
-                "laboratory": expectedVaccine.laboratory,
-              }
-            ]));
+        when(
+          db.query(
+            DatabaseVaccineRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [_validVaccineId],
+          ),
+        ).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": expectedVaccine.id,
+              "sipni_code": expectedVaccine.sipniCode,
+              "name": expectedVaccine.name,
+              "laboratory": expectedVaccine.laboratory,
+            }
+          ]),
+        );
       });
 
       test("should get a vaccine entry by its id", () async {
@@ -114,18 +126,20 @@ void testGetVaccine(MockDatabase db, VaccineRepository repository) {
       });
     });
 
-    group('try to get an invalid vaccine', () {
+    group("try to get an invalid vaccine", () {
       setUp(() {
-        when(db.query(
-          DatabaseVaccineRepository.TABLE,
-          where: anyNamed("where"),
-          whereArgs: [2],
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabaseVaccineRepository.TABLE,
+            where: anyNamed("where"),
+            whereArgs: [2],
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should throw exception if id doesn't exist", () async {
         expect(
-          () async => await repository.getVaccineById(2),
+          () async => repository.getVaccineById(2),
           throwsStateError,
         );
       });
@@ -137,24 +151,28 @@ void testGetVaccines(MockDatabase db, VaccineRepository repository) {
   group("getVaccines function:", () {
     final expectedVaccines = _validVaccines;
 
-    group('try to get all vaccines', () {
+    group("try to get all vaccines", () {
       setUp(() {
-        when(db.query(
-          DatabaseVaccineRepository.TABLE,
-        )).thenAnswer((_) => Future.value([
-              {
-                "id": expectedVaccines[0].id,
-                "sipni_code": expectedVaccines[0].sipniCode,
-                "name": expectedVaccines[0].name,
-                "laboratory": expectedVaccines[0].laboratory,
-              },
-              {
-                "id": expectedVaccines[1].id,
-                "sipni_code": expectedVaccines[1].sipniCode,
-                "name": expectedVaccines[1].name,
-                "laboratory": expectedVaccines[1].laboratory,
-              },
-            ]));
+        when(
+          db.query(
+            DatabaseVaccineRepository.TABLE,
+          ),
+        ).thenAnswer(
+          (_) => Future.value([
+            {
+              "id": expectedVaccines[0].id,
+              "sipni_code": expectedVaccines[0].sipniCode,
+              "name": expectedVaccines[0].name,
+              "laboratory": expectedVaccines[0].laboratory,
+            },
+            {
+              "id": expectedVaccines[1].id,
+              "sipni_code": expectedVaccines[1].sipniCode,
+              "name": expectedVaccines[1].name,
+              "laboratory": expectedVaccines[1].laboratory,
+            },
+          ]),
+        );
       });
 
       test("should return all vaccines", () async {
@@ -167,11 +185,13 @@ void testGetVaccines(MockDatabase db, VaccineRepository repository) {
       });
     });
 
-    group('try to get all vaccines when there is none', () {
+    group("try to get all vaccines when there is none", () {
       setUp(() {
-        when(db.query(
-          DatabaseVaccineRepository.TABLE,
-        )).thenAnswer((_) => Future.value([]));
+        when(
+          db.query(
+            DatabaseVaccineRepository.TABLE,
+          ),
+        ).thenAnswer((_) => Future.value([]));
       });
 
       test("should return an empty list", () async {
@@ -187,14 +207,16 @@ void testGetVaccines(MockDatabase db, VaccineRepository repository) {
 void testUpdateVaccine(MockDatabase db, VaccineRepository repository) {
   const int invalidVaccineId = 2;
   group("updateVaccine function:", () {
-    group('try to update a valid vaccine', () {
+    group("try to update a valid vaccine", () {
       setUp(() {
-        when(db.update(
-          DatabaseVaccineRepository.TABLE,
-          _validVaccine.copyWith(name: "Updated").toMap(),
-          where: anyNamed("where"),
-          whereArgs: [_validVaccineId],
-        )).thenAnswer((_) => Future.value(1));
+        when(
+          db.update(
+            DatabaseVaccineRepository.TABLE,
+            _validVaccine.copyWith(name: "Updated").toMap(),
+            where: anyNamed("where"),
+            whereArgs: [_validVaccineId],
+          ),
+        ).thenAnswer((_) => Future.value(1));
       });
 
       test("should update a vaccine entry and returns 1", () async {
@@ -205,14 +227,18 @@ void testUpdateVaccine(MockDatabase db, VaccineRepository repository) {
         expect(createdId, 1);
       });
     });
-    group('try to update with invalid vaccine', () {
+    group("try to update with invalid vaccine", () {
       setUp(() {
-        when(db.update(
-          DatabaseVaccineRepository.TABLE,
-          _validVaccine.copyWith(id: invalidVaccineId, name: "Updated").toMap(),
-          where: anyNamed("where"),
-          whereArgs: [invalidVaccineId],
-        )).thenAnswer((_) => Future.value(0));
+        when(
+          db.update(
+            DatabaseVaccineRepository.TABLE,
+            _validVaccine
+                .copyWith(id: invalidVaccineId, name: "Updated")
+                .toMap(),
+            where: anyNamed("where"),
+            whereArgs: [invalidVaccineId],
+          ),
+        ).thenAnswer((_) => Future.value(0));
       });
 
       test("should return 0 if id doesn't exist", () async {

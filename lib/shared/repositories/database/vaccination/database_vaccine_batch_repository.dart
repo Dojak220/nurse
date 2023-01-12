@@ -1,10 +1,10 @@
-import 'package:nurse/shared/models/vaccination/vaccine_batch_model.dart';
-import 'package:nurse/shared/models/vaccination/vaccine_model.dart';
-import 'package:nurse/shared/repositories/database/database_interface.dart';
-import 'package:nurse/shared/repositories/database/database_manager.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_vaccine_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/vaccine_batch_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/vaccine_repository.dart';
+import "package:nurse/shared/models/vaccination/vaccine_batch_model.dart";
+import "package:nurse/shared/models/vaccination/vaccine_model.dart";
+import "package:nurse/shared/repositories/database/database_interface.dart";
+import "package:nurse/shared/repositories/database/database_manager.dart";
+import "package:nurse/shared/repositories/database/vaccination/database_vaccine_repository.dart";
+import "package:nurse/shared/repositories/vaccination/vaccine_batch_repository.dart";
+import "package:nurse/shared/repositories/vaccination/vaccine_repository.dart";
 
 class DatabaseVaccineBatchRepository extends DatabaseInterface
     implements VaccineBatchRepository {
@@ -22,7 +22,7 @@ class DatabaseVaccineBatchRepository extends DatabaseInterface
   Future<int> createVaccineBatch(VaccineBatch vaccineBatch) async {
     final map = vaccineBatch.toMap();
 
-    map['vaccine'] = await _vaccineRepo
+    map["vaccine"] = await _vaccineRepo
         .getVaccineBySipniCode(vaccineBatch.vaccine.sipniCode)
         .then((vaccine) => vaccine.id!);
 
@@ -61,7 +61,8 @@ class DatabaseVaccineBatchRepository extends DatabaseInterface
   }
 
   Future<VaccineBatch> _getVaccineBatchFromMap(
-      Map<String, dynamic> vaccineBatchMap) async {
+    Map<String, dynamic> vaccineBatchMap,
+  ) async {
     final vaccine = await _getVaccine(vaccineBatchMap["vaccine"] as int);
 
     final updatedVaccineBatchMap = Map.of(vaccineBatchMap);

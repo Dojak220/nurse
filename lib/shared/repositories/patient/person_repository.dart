@@ -1,4 +1,4 @@
-import 'package:nurse/shared/models/patient/person_model.dart';
+import "package:nurse/shared/models/patient/person_model.dart";
 
 abstract class PersonRepository {
   Future<int> createPerson(Person patient);

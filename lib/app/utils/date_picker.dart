@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:nurse/app/theme/app_colors.dart';
+import "package:flutter/material.dart";
+import "package:intl/intl.dart";
+import "package:nurse/app/theme/app_colors.dart";
 
 class DatePicker {
   static Future<DateTime?> getNewDate(
@@ -19,9 +19,6 @@ class DatePicker {
           data: ThemeData.light().copyWith(
             colorScheme: const ColorScheme.light(
               primary: AppColors.verdeEscuro,
-              onPrimary: AppColors.white,
-              surface: AppColors.white,
-              onSurface: AppColors.black,
             ),
             dialogBackgroundColor: AppColors.white,
           ),

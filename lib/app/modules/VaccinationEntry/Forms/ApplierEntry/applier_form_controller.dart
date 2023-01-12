@@ -1,8 +1,8 @@
-import 'package:nurse/app/utils/form_controller.dart';
-import 'package:nurse/shared/models/infra/establishment_model.dart';
-import 'package:nurse/shared/models/vaccination/applier_model.dart';
-import 'package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart';
-import 'package:nurse/shared/repositories/vaccination/applier_repository.dart';
+import "package:nurse/app/utils/form_controller.dart";
+import "package:nurse/shared/models/infra/establishment_model.dart";
+import "package:nurse/shared/models/vaccination/applier_model.dart";
+import "package:nurse/shared/repositories/database/vaccination/database_applier_repository.dart";
+import "package:nurse/shared/repositories/vaccination/applier_repository.dart";
 
 class ApplierFormController extends FormController {
   Applier? selectedApplier;
@@ -22,8 +22,10 @@ class ApplierFormController extends FormController {
     notifyListeners();
   }
 
-  void _getAppliers() async {
-    _appliers.addAll(await _applierRepository.getAppliers());
+  Future<void> _getAppliers() async {
+    _appliers.addAll(
+      await _applierRepository.getAppliers(),
+    );
   }
 
   List<Applier> getAppliersFromSelectedEstablishment() {

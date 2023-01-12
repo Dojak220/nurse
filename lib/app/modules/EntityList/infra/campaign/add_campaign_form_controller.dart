@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:nurse/app/utils/date_picker.dart';
-import 'package:nurse/app/utils/add_form_controller.dart';
-import 'package:nurse/shared/models/infra/campaign_model.dart';
-import 'package:nurse/shared/repositories/database/infra/database_campaign_repository.dart';
-import 'package:nurse/shared/repositories/infra/campaign_repository.dart';
+import "package:flutter/material.dart";
+import "package:nurse/app/utils/add_form_controller.dart";
+import "package:nurse/app/utils/date_picker.dart";
+import "package:nurse/shared/models/infra/campaign_model.dart";
+import "package:nurse/shared/repositories/database/infra/database_campaign_repository.dart";
+import "package:nurse/shared/repositories/infra/campaign_repository.dart";
 
 class AddCampaignFormController extends AddFormController {
   final CampaignRepository _repository;
@@ -19,9 +19,10 @@ class AddCampaignFormController extends AddFormController {
   TextEditingController startDate = TextEditingController();
   TextEditingController endDate = TextEditingController();
 
-  AddCampaignFormController(this.initialCampaignInfo,
-      [CampaignRepository? campaignRepository])
-      : _repository = campaignRepository ?? DatabaseCampaignRepository() {
+  AddCampaignFormController(
+    this.initialCampaignInfo, [
+    CampaignRepository? campaignRepository,
+  ]) : _repository = campaignRepository ?? DatabaseCampaignRepository() {
     if (initialCampaignInfo != null) {
       setInfo(initialCampaignInfo!);
     }
@@ -54,7 +55,7 @@ class AddCampaignFormController extends AddFormController {
       final updatedCampaign = initialCampaignInfo!.copyWith(
         title: title.text,
         description: description.text,
-        startDate: selectedStartDate!,
+        startDate: selectedStartDate,
         endDate: selectedEndDate,
       );
 
@@ -87,7 +88,7 @@ class AddCampaignFormController extends AddFormController {
   }
 
   Future<void> selectStartDate(BuildContext context) async {
-    final newSelectedDate = await DatePicker.getNewDate(
+    final DateTime? newSelectedDate = await DatePicker.getNewDate(
       context,
       selectedStartDate,
       lastDate: selectedEndDate,
@@ -102,7 +103,7 @@ class AddCampaignFormController extends AddFormController {
   }
 
   Future<void> selectEndDate(BuildContext context) async {
-    final newSelectedDate = await DatePicker.getNewDate(
+    final DateTime? newSelectedDate = await DatePicker.getNewDate(
       context,
       selectedEndDate,
       firstDate: selectedStartDate,
@@ -117,8 +118,12 @@ class AddCampaignFormController extends AddFormController {
   void _updateDateText(TextEditingController controller, DateTime date) {
     controller
       ..text = DatePicker.formatDateDDMMYYYY(date)
-      ..selection = TextSelection.fromPosition(TextPosition(
-          offset: controller.text.length, affinity: TextAffinity.upstream));
+      ..selection = TextSelection.fromPosition(
+        TextPosition(
+          offset: controller.text.length,
+          affinity: TextAffinity.upstream,
+        ),
+      );
   }
 
   @override

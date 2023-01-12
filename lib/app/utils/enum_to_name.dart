@@ -1,6 +1,6 @@
-import 'package:nurse/shared/models/patient/patient_model.dart';
-import 'package:nurse/shared/models/patient/person_model.dart';
-import 'package:nurse/shared/models/vaccination/application_model.dart';
+import "package:nurse/shared/models/patient/patient_model.dart";
+import "package:nurse/shared/models/patient/person_model.dart";
+import "package:nurse/shared/models/vaccination/application_model.dart";
 
 String enumToName(Enum enumValue) {
   final type = enumValue.runtimeType;
