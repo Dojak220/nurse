@@ -1,4 +1,5 @@
-import "package:flutter/material.dart";
+import "package:mobx/mobx.dart";
+import "package:nurse/app/modules/EntityList/patient/priorityCategory/priority_category_store.dart";
 import "package:nurse/app/utils/add_form_controller.dart";
 import "package:nurse/shared/models/patient/priority_category_model.dart";
 import "package:nurse/shared/models/patient/priority_group_model.dart";
@@ -7,17 +8,27 @@ import "package:nurse/shared/repositories/database/patient/database_priority_gro
 import "package:nurse/shared/repositories/patient/priority_category_repository.dart";
 import "package:nurse/shared/repositories/patient/priority_group_repository.dart";
 
-class AddPriorityCategoryFormController extends AddFormController {
+part "add_priority_category_form_controller.g.dart";
+
+class AddPriorityCategoryFormController = _AddPriorityCategoryFormControllerBase
+    with _$AddPriorityCategoryFormController;
+
+abstract class _AddPriorityCategoryFormControllerBase extends AddFormController
+    with Store {
   final PriorityGroupRepository _priorityGroupRepository;
   final PriorityCategoryRepository _repository;
+
+  @observable
+  ObservableList<PriorityGroup> groups = ObservableList.of(
+    List<PriorityGroup>.empty(growable: true),
+  );
+
   final PriorityCategory? initialPriorityCategoryInfo;
 
-  PriorityGroup? selectedPriorityGroup;
-  TextEditingController code = TextEditingController();
-  TextEditingController name = TextEditingController();
-  TextEditingController description = TextEditingController();
+  @observable
+  PriorityCategoryStore priorityCategoryStore = PriorityCategoryStore();
 
-  AddPriorityCategoryFormController(
+  _AddPriorityCategoryFormControllerBase(
     this.initialPriorityCategoryInfo, [
     PriorityGroupRepository? priorityGroupRepository,
     PriorityCategoryRepository? priorityCategoryRepository,
@@ -26,12 +37,19 @@ class AddPriorityCategoryFormController extends AddFormController {
         _repository =
             priorityCategoryRepository ?? DatabasePriorityCategoryRepository() {
     if (initialPriorityCategoryInfo != null) {
-      setInfo(initialPriorityCategoryInfo!);
+      priorityCategoryStore.setInfo(initialPriorityCategoryInfo!);
     }
+
+    getPriorityGroups();
   }
 
+  @action
   Future<List<PriorityGroup>> getPriorityGroups() async {
     final priorityGroups = await _priorityGroupRepository.getPriorityGroups();
+
+    groups
+      ..clear()
+      ..addAll(priorityGroups);
 
     return priorityGroups;
   }
@@ -39,11 +57,12 @@ class AddPriorityCategoryFormController extends AddFormController {
   @override
   Future<bool> saveInfo() async {
     if (submitForm(formKey)) {
+      final PriorityCategoryStore cStore = priorityCategoryStore;
       final newPriorityCategory = PriorityCategory(
-        priorityGroup: selectedPriorityGroup!,
-        code: code.text,
-        name: name.text,
-        description: description.text,
+        priorityGroup: cStore.selectedPriorityGroup!,
+        code: cStore.code!,
+        name: cStore.name!,
+        description: cStore.description!,
       );
 
       return super.createEntity<PriorityCategory>(
@@ -60,11 +79,12 @@ class AddPriorityCategoryFormController extends AddFormController {
     if (initialPriorityCategoryInfo == null) return false;
 
     if (submitForm(formKey)) {
+      final PriorityCategoryStore cStore = priorityCategoryStore;
       final updatedPriorityCategory = initialPriorityCategoryInfo!.copyWith(
-        priorityGroup: selectedPriorityGroup,
-        code: code.text,
-        name: name.text,
-        description: description.text,
+        priorityGroup: cStore.selectedPriorityGroup,
+        code: cStore.code,
+        name: cStore.name,
+        description: cStore.description,
       );
 
       return super.updateEntity<PriorityCategory>(
@@ -76,28 +96,13 @@ class AddPriorityCategoryFormController extends AddFormController {
     }
   }
 
-  void setInfo(PriorityCategory priorityCategory) {
-    selectedPriorityGroup = priorityCategory.priorityGroup;
-    code.text = priorityCategory.code;
-    name.text = priorityCategory.name;
-    description.text = priorityCategory.description;
-  }
-
   @override
   void clearAllInfo() {
-    selectedPriorityGroup = null;
-
-    code.clear();
-    name.clear();
-    description.clear();
-
-    notifyListeners();
+    priorityCategoryStore.clearAllInfo();
   }
 
   @override
   void dispose() {
-    code.dispose();
-    name.dispose();
-    description.dispose();
+    /// Não tem o que ser desalocado aqui
   }
 }
