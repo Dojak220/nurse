@@ -5,7 +5,7 @@ import "package:nurse/app/modules/VaccinationEntry/components/custom_text_form_f
 import "package:nurse/app/utils/form_labels.dart";
 import "package:nurse/shared/utils/validator.dart";
 
-class PriorityGroupFormFields extends StatefulWidget {
+class PriorityGroupFormFields extends StatelessWidget {
   final AddPriorityGroupFormController controller;
 
   const PriorityGroupFormFields({
@@ -14,39 +14,39 @@ class PriorityGroupFormFields extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<PriorityGroupFormFields> createState() =>
-      PriorityGroupFormFieldsState();
-}
-
-class PriorityGroupFormFieldsState extends State<PriorityGroupFormFields> {
-  @override
   Widget build(BuildContext context) {
     return Form(
-      key: widget.controller.formKey,
+      key: controller.formKey,
       child: FormPadding(
         child: ListView(
           children: [
             CustomTextFormField(
               icon: const Icon(Icons.group_rounded),
               label: FormLabels.groupCode,
-              textEditingController: widget.controller.code,
+              initialValue: controller.priorityGroupStore.code,
               validatorType: ValidatorType.name,
+              onChanged: (String? value) =>
+                  controller.priorityGroupStore.code = value,
               onSaved: (value) {},
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
               icon: const Icon(Icons.abc_rounded),
               label: FormLabels.groupName,
-              textEditingController: widget.controller.name,
+              initialValue: controller.priorityGroupStore.name,
               validatorType: ValidatorType.optionalName,
+              onChanged: (String? value) =>
+                  controller.priorityGroupStore.name = value,
               onSaved: (value) {},
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
               icon: const Icon(Icons.description_rounded),
               label: FormLabels.groupDescription,
-              textEditingController: widget.controller.description,
+              initialValue: controller.priorityGroupStore.description,
               validatorType: ValidatorType.description,
+              onChanged: (String? value) =>
+                  controller.priorityGroupStore.description = value,
               onSaved: (value) {},
             ),
           ],

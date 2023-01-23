@@ -1,34 +1,42 @@
-import "package:flutter/material.dart";
+import "package:mobx/mobx.dart";
+import "package:nurse/app/modules/EntityList/patient/priorityGroup/priority_group_store.dart";
 import "package:nurse/app/utils/add_form_controller.dart";
 import "package:nurse/shared/models/patient/priority_group_model.dart";
 import "package:nurse/shared/repositories/database/patient/database_priority_group_repository.dart";
 import "package:nurse/shared/repositories/patient/priority_group_repository.dart";
 
-class AddPriorityGroupFormController extends AddFormController {
+part "add_priority_group_form_controller.g.dart";
+
+class AddPriorityGroupFormController = _AddPriorityGroupFormControllerBase
+    with _$AddPriorityGroupFormController;
+
+abstract class _AddPriorityGroupFormControllerBase extends AddFormController
+    with Store {
   final PriorityGroupRepository _repository;
   final PriorityGroup? initialPriorityGroupInfo;
 
-  TextEditingController code = TextEditingController();
-  TextEditingController name = TextEditingController();
-  TextEditingController description = TextEditingController();
+  @observable
+  PriorityGroupStore priorityGroupStore = PriorityGroupStore();
 
-  AddPriorityGroupFormController(
+  _AddPriorityGroupFormControllerBase(
     this.initialPriorityGroupInfo, [
     PriorityGroupRepository? priorityGroupRepository,
   ]) : _repository =
             priorityGroupRepository ?? DatabasePriorityGroupRepository() {
     if (initialPriorityGroupInfo != null) {
-      setInfo(initialPriorityGroupInfo!);
+      priorityGroupStore.setInfo(initialPriorityGroupInfo!);
     }
   }
 
   @override
   Future<bool> saveInfo() async {
     if (submitForm(formKey)) {
+      final PriorityGroupStore gStore = priorityGroupStore;
+
       final newPriorityGroup = PriorityGroup(
-        code: code.text,
-        name: name.text,
-        description: description.text,
+        code: gStore.code!,
+        name: gStore.name!,
+        description: gStore.description!,
       );
 
       return super.createEntity<PriorityGroup>(
@@ -45,10 +53,12 @@ class AddPriorityGroupFormController extends AddFormController {
     if (initialPriorityGroupInfo == null) return false;
 
     if (submitForm(formKey)) {
+      final PriorityGroupStore gStore = priorityGroupStore;
+
       final updatedPriorityGroup = initialPriorityGroupInfo!.copyWith(
-        code: code.text,
-        name: name.text,
-        description: description.text,
+        code: gStore.code,
+        name: gStore.name,
+        description: gStore.description,
       );
 
       return super.updateEntity<PriorityGroup>(
@@ -60,25 +70,13 @@ class AddPriorityGroupFormController extends AddFormController {
     }
   }
 
-  void setInfo(PriorityGroup priorityGroup) {
-    code.text = priorityGroup.code;
-    name.text = priorityGroup.name;
-    description.text = priorityGroup.description;
-  }
-
   @override
   void clearAllInfo() {
-    code.clear();
-    name.clear();
-    description.clear();
-
-    notifyListeners();
+    priorityGroupStore.clearAllInfo();
   }
 
   @override
   void dispose() {
-    code.dispose();
-    name.dispose();
-    description.dispose();
+    /// Não tem o que ser desalocado aqui
   }
 }
