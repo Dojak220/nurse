@@ -84,20 +84,20 @@ abstract class _AddPatientFormControllerBase extends AddFormController
   @override
   Future<bool> saveInfo() async {
     if (submitForm(formKey)) {
-      final PatientStore p = patientStore;
+      final PatientStore pStore = patientStore;
       final newPatient = Patient(
-        cns: p.cns!,
+        cns: pStore.cns!,
         person: Person(
-          cpf: p.cpf!,
-          name: p.name!,
-          locality: p.selectedLocality,
-          sex: p.selectedSex,
-          birthDate: p.selectedBirthDate,
-          fatherName: p.fatherName!,
-          motherName: p.motherName!,
+          cpf: pStore.cpf!,
+          name: pStore.name!,
+          locality: pStore.selectedLocality,
+          sex: pStore.selectedSex,
+          birthDate: pStore.selectedBirthDate,
+          fatherName: pStore.fatherName!,
+          motherName: pStore.motherName!,
         ),
-        maternalCondition: p.selectedMaternalCondition,
-        priorityCategory: p.selectedPriorityCategory!,
+        maternalCondition: pStore.selectedMaternalCondition,
+        priorityCategory: pStore.selectedPriorityCategory!,
       );
 
       return super.createEntity<Patient>(newPatient, _repository.createPatient);
@@ -111,20 +111,20 @@ abstract class _AddPatientFormControllerBase extends AddFormController
     if (initialPatientInfo == null) return false;
 
     if (submitForm(formKey)) {
-      final PatientStore p = patientStore;
+      final PatientStore pStore = patientStore;
       final updatedPatient = initialPatientInfo!.copyWith(
-        cns: p.cns,
+        cns: pStore.cns,
         person: initialPatientInfo!.person.copyWith(
-          cpf: p.cpf,
-          name: p.name,
-          locality: p.selectedLocality,
-          sex: p.selectedSex,
-          birthDate: p.selectedBirthDate,
-          fatherName: p.fatherName,
-          motherName: p.motherName,
+          cpf: pStore.cpf,
+          name: pStore.name,
+          locality: pStore.selectedLocality,
+          sex: pStore.selectedSex,
+          birthDate: pStore.selectedBirthDate,
+          fatherName: pStore.fatherName,
+          motherName: pStore.motherName,
         ),
-        maternalCondition: p.selectedMaternalCondition,
-        priorityCategory: p.selectedPriorityCategory,
+        maternalCondition: pStore.selectedMaternalCondition,
+        priorityCategory: pStore.selectedPriorityCategory,
       );
 
       return super.updateEntity<Patient>(
