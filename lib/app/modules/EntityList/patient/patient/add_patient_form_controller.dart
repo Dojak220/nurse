@@ -25,6 +25,8 @@ abstract class _AddPatientFormControllerBase extends AddFormController
   final PriorityCategoryRepository _priorityCategoryRepository;
   final PatientRepository _repository;
 
+  final Patient? initialPatientInfo;
+
   @observable
   ObservableList<Locality> localities = ObservableList.of(
     List<Locality>.empty(growable: true),
@@ -34,8 +36,6 @@ abstract class _AddPatientFormControllerBase extends AddFormController
   ObservableList<PriorityCategory> categories = ObservableList.of(
     List<PriorityCategory>.empty(growable: true),
   );
-
-  final Patient? initialPatientInfo;
 
   @observable
   PatientStore patientStore = PatientStore();
@@ -84,20 +84,19 @@ abstract class _AddPatientFormControllerBase extends AddFormController
   @override
   Future<bool> saveInfo() async {
     if (submitForm(formKey)) {
-      final PatientStore pStore = patientStore;
       final newPatient = Patient(
-        cns: pStore.cns!,
+        cns: patientStore.cns!,
         person: Person(
-          cpf: pStore.cpf!,
-          name: pStore.name!,
-          locality: pStore.selectedLocality,
-          sex: pStore.selectedSex,
-          birthDate: pStore.selectedBirthDate,
-          fatherName: pStore.fatherName!,
-          motherName: pStore.motherName!,
+          cpf: patientStore.cpf!,
+          name: patientStore.name!,
+          locality: patientStore.selectedLocality,
+          sex: patientStore.selectedSex,
+          birthDate: patientStore.selectedBirthDate,
+          fatherName: patientStore.fatherName!,
+          motherName: patientStore.motherName!,
         ),
-        maternalCondition: pStore.selectedMaternalCondition,
-        priorityCategory: pStore.selectedPriorityCategory!,
+        maternalCondition: patientStore.selectedMaternalCondition,
+        priorityCategory: patientStore.selectedPriorityCategory!,
       );
 
       return super.createEntity<Patient>(newPatient, _repository.createPatient);
@@ -111,20 +110,19 @@ abstract class _AddPatientFormControllerBase extends AddFormController
     if (initialPatientInfo == null) return false;
 
     if (submitForm(formKey)) {
-      final PatientStore pStore = patientStore;
       final updatedPatient = initialPatientInfo!.copyWith(
-        cns: pStore.cns,
+        cns: patientStore.cns,
         person: initialPatientInfo!.person.copyWith(
-          cpf: pStore.cpf,
-          name: pStore.name,
-          locality: pStore.selectedLocality,
-          sex: pStore.selectedSex,
-          birthDate: pStore.selectedBirthDate,
-          fatherName: pStore.fatherName,
-          motherName: pStore.motherName,
+          cpf: patientStore.cpf,
+          name: patientStore.name,
+          locality: patientStore.selectedLocality,
+          sex: patientStore.selectedSex,
+          birthDate: patientStore.selectedBirthDate,
+          fatherName: patientStore.fatherName,
+          motherName: patientStore.motherName,
         ),
-        maternalCondition: pStore.selectedMaternalCondition,
-        priorityCategory: pStore.selectedPriorityCategory,
+        maternalCondition: patientStore.selectedMaternalCondition,
+        priorityCategory: patientStore.selectedPriorityCategory,
       );
 
       return super.updateEntity<Patient>(

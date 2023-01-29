@@ -5,7 +5,7 @@ import "package:nurse/app/modules/VaccinationEntry/components/custom_text_form_f
 import "package:nurse/app/utils/form_labels.dart";
 import "package:nurse/shared/utils/validator.dart";
 
-class CampaignFormFields extends StatefulWidget {
+class CampaignFormFields extends StatelessWidget {
   final AddCampaignFormController controller;
 
   const CampaignFormFields({
@@ -14,14 +14,9 @@ class CampaignFormFields extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CampaignFormFields> createState() => _CampaignFormFieldsState();
-}
-
-class _CampaignFormFieldsState extends State<CampaignFormFields> {
-  @override
   Widget build(BuildContext context) {
     return Form(
-      key: widget.controller.formKey,
+      key: controller.formKey,
       child: FormPadding(
         child: ListView(
           shrinkWrap: true,
@@ -30,37 +25,42 @@ class _CampaignFormFieldsState extends State<CampaignFormFields> {
             CustomTextFormField(
               icon: const Icon(Icons.abc_rounded),
               label: FormLabels.campaignName,
-              textEditingController: widget.controller.title,
+              initialValue: controller.campaignStore.title,
               validatorType: ValidatorType.name,
-              onSaved: (value) {},
+              onChanged: (String? value) =>
+                  controller.campaignStore.title = value,
+              onSaved: (_) {},
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
               icon: const Icon(Icons.description_rounded),
               label: FormLabels.campaignDescription,
-              textEditingController: widget.controller.description,
+              initialValue: controller.campaignStore.description,
               validatorType: ValidatorType.optionalName,
-              onSaved: (value) {},
+              onChanged: (String? value) =>
+                  controller.campaignStore.description = value,
+              onSaved: (_) {},
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
               icon: const Icon(Icons.today_rounded),
               label: FormLabels.campaignStartDate,
-              textEditingController: widget.controller.startDate,
+              initialValue: controller.campaignStore.startDate,
               validatorType: ValidatorType.date,
-              onTap: () async => widget.controller.selectStartDate(context),
-              readOnly: true,
-              onSaved: (_) => widget.controller.selectedStartDate != null,
+              onTap: () async =>
+                  controller.campaignStore.selectStartDate(context),
+              onSaved: (_) {},
             ),
             const Divider(color: Colors.black),
             CustomTextFormField(
               icon: const Icon(Icons.event_rounded),
               label: FormLabels.campaignEndDate,
-              textEditingController: widget.controller.endDate,
+              initialValue: controller.campaignStore.endDate,
               validatorType: ValidatorType.optionalDate,
-              onTap: () async => widget.controller.selectEndDate(context),
+              onTap: () async =>
+                  controller.campaignStore.selectEndDate(context),
               readOnly: true,
-              onSaved: (value) {},
+              onSaved: (_) {},
             ),
           ],
         ),
