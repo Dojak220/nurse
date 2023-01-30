@@ -1,3 +1,4 @@
+import "package:flutter/material.dart";
 import "package:mobx/mobx.dart";
 import "package:nurse/app/modules/EntityList/infra/campaign/campaign_store.dart";
 import "package:nurse/app/utils/add_form_controller.dart";
@@ -74,6 +75,7 @@ abstract class _AddCampaignFormControllerBase extends AddFormController
 
   @override
   void dispose() {
-    /// Não tem o que ser desalocado aqui
+    campaignStore.startDate?.dispose();
+    campaignStore.endDate?.dispose();
   }
 }

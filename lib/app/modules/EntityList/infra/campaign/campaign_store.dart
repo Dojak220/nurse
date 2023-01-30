@@ -1,11 +1,7 @@
 import "package:flutter/material.dart";
 import "package:mobx/mobx.dart";
 import "package:nurse/app/utils/date_picker.dart";
-import 'package:nurse/shared/models/infra/campaign_model.dart';
-import "package:nurse/shared/models/infra/locality_model.dart";
-import "package:nurse/shared/models/patient/patient_model.dart";
-import "package:nurse/shared/models/patient/person_model.dart";
-import "package:nurse/shared/models/patient/priority_category_model.dart";
+import "package:nurse/shared/models/infra/campaign_model.dart";
 
 part "campaign_store.g.dart";
 
@@ -25,13 +21,17 @@ abstract class _CampaignStoreBase with Store {
   DateTime? selectedEndDate;
 
   @computed
-  String? get startDate => selectedStartDate != null
-      ? DatePicker.formatDateDDMMYYYY(selectedStartDate!)
+  TextEditingController? get startDate => selectedStartDate != null
+      ? TextEditingController(
+          text: DatePicker.formatDateDDMMYYYY(selectedStartDate!),
+        )
       : null;
 
   @computed
-  String? get endDate => selectedEndDate != null
-      ? DatePicker.formatDateDDMMYYYY(selectedEndDate!)
+  TextEditingController? get endDate => selectedEndDate != null
+      ? TextEditingController(
+          text: DatePicker.formatDateDDMMYYYY(selectedEndDate!),
+        )
       : null;
 
   @action

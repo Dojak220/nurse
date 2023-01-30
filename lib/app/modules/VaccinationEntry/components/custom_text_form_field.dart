@@ -1,14 +1,16 @@
 import "package:flutter/material.dart";
 import "package:nurse/app/modules/VaccinationEntry/components/custom_form_field.dart";
+import "package:nurse/app/theme/app_colors.dart";
 import "package:nurse/app/utils/form_labels.dart";
 import "package:nurse/shared/utils/validator.dart";
 
 class CustomTextFormField extends CustomFormField {
   final ValidatorType? validatorType;
   final TextEditingController? textEditingController;
-  final bool readOnly;
   final String? initialValue;
+  final bool readOnly;
   final bool enabled;
+  final TextInputType? keyboardType;
   final void Function()? onTap;
   final ValueChanged<String?>? onChanged;
   final void Function(String?) onSaved;
@@ -19,6 +21,7 @@ class CustomTextFormField extends CustomFormField {
     required FormLabels label,
     this.readOnly = false,
     this.enabled = true,
+    this.keyboardType,
     this.initialValue,
     required this.validatorType,
     this.textEditingController,
@@ -43,6 +46,7 @@ class CustomTextFormField extends CustomFormField {
           hintText: hint,
           labelText: description,
         ),
+        keyboardType: keyboardType,
         initialValue: initialValue,
         controller: textEditingController,
         validator: validatorType != null
