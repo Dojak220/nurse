@@ -1,4 +1,5 @@
-import "package:flutter/material.dart";
+import "package:mobx/mobx.dart";
+import "package:nurse/app/modules/EntityList/infra/establishment/establishment_store.dart";
 import "package:nurse/app/utils/add_form_controller.dart";
 import "package:nurse/shared/models/infra/establishment_model.dart";
 import "package:nurse/shared/models/infra/locality_model.dart";
@@ -7,19 +8,26 @@ import "package:nurse/shared/repositories/database/infra/database_locality_repos
 import "package:nurse/shared/repositories/infra/establishment_repository.dart";
 import "package:nurse/shared/repositories/infra/locality_repository.dart";
 
-class AddEstablishmentFormController extends AddFormController {
+part "add_establishment_form_controller.g.dart";
+
+class AddEstablishmentFormController = _AddEstablishmentFormControllerBase
+    with _$AddEstablishmentFormController;
+
+abstract class _AddEstablishmentFormControllerBase extends AddFormController
+    with Store {
   final EstablishmentRepository _repository;
   final LocalityRepository _localityRepository;
+
   final Establishment? initialEstablishmentInfo;
 
-  final _localityCities = List<Locality>.empty(growable: true);
-  List<Locality> get localityCities => _localityCities;
+  @observable
+  ObservableList<Locality> localityCities =
+      ObservableList.of(List<Locality>.empty(growable: true));
 
-  TextEditingController cnes = TextEditingController();
-  TextEditingController name = TextEditingController();
-  Locality? locality;
+  @observable
+  EstablishmentStore establishmentStore = EstablishmentStore();
 
-  AddEstablishmentFormController(
+  _AddEstablishmentFormControllerBase(
     this.initialEstablishmentInfo, [
     EstablishmentRepository? establishmentRepository,
     LocalityRepository? localityRepository,
@@ -28,10 +36,13 @@ class AddEstablishmentFormController extends AddFormController {
         _localityRepository =
             localityRepository ?? DatabaseLocalityRepository() {
     if (initialEstablishmentInfo != null) {
-      setInfo(initialEstablishmentInfo!);
+      establishmentStore.setInfo(initialEstablishmentInfo!);
     }
+
+    getCitiesFromLocalities();
   }
 
+  @action
   Future<List<Locality>> getCitiesFromLocalities() async {
     final localities = await _localityRepository.getLocalities();
     final oneLocalityByCity = List<Locality>.empty(growable: true);
@@ -48,18 +59,20 @@ class AddEstablishmentFormController extends AddFormController {
       oneLocalityByCity.add(locality);
     }
 
-    _localityCities.addAll(oneLocalityByCity);
+    localityCities
+      ..clear()
+      ..addAll(oneLocalityByCity);
 
-    return _localityCities;
+    return localityCities;
   }
 
   @override
   Future<bool> saveInfo() async {
     if (submitForm(formKey)) {
       final newEstablishment = Establishment(
-        cnes: cnes.text,
-        name: name.text,
-        locality: locality!,
+        cnes: establishmentStore.cnes!,
+        name: establishmentStore.name!,
+        locality: establishmentStore.selectedLocality!,
       );
 
       return super.createEntity<Establishment>(
@@ -77,9 +90,9 @@ class AddEstablishmentFormController extends AddFormController {
 
     if (submitForm(formKey)) {
       final updatedEstablishment = initialEstablishmentInfo!.copyWith(
-        cnes: cnes.text,
-        name: name.text,
-        locality: locality,
+        cnes: establishmentStore.cnes,
+        name: establishmentStore.name,
+        locality: establishmentStore.selectedLocality,
       );
 
       return super.updateEntity<Establishment>(
@@ -91,24 +104,13 @@ class AddEstablishmentFormController extends AddFormController {
     }
   }
 
-  void setInfo(Establishment campaign) {
-    cnes.text = campaign.cnes;
-    name.text = campaign.name;
-    locality = campaign.locality;
-  }
-
   @override
   void clearAllInfo() {
-    cnes.clear();
-    name.clear();
-    locality = null;
-
-    notifyListeners();
+    establishmentStore.clearAllInfo();
   }
 
   @override
   void dispose() {
-    cnes.dispose();
-    name.dispose();
+    /// Não tem o que ser desalocado aqui
   }
 }
